@@ -1,0 +1,27 @@
+.login-title {
+  margin-bottom: 4px;
+  font-size: 48px;
+  color: #eb762c;
+}
+
+.col-lg-8 {
+  /* overflow-y: auto; */
+  /* max-height: 100vh;*/
+}
+
+.form-scrollable-container {
+  /* overflow-y: scroll;
+  max-height: 100vh;  */
+}
+html,
+body {
+  height: 100%;
+ /*  overflow-y: scroll !important;*/
+} 
+.d-flex {
+  height: 100vh; /* Set explicit height instead of relying on .vh-100 */
+}
+#map {
+  height: 300px; /* Adjust height as needed */
+  width:65%;
+}

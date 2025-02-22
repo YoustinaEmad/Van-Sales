@@ -1,0 +1,10 @@
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background-color:#4a0d67 ; 
+}
+p-inputswitch{
+  width: 50px;
+  height: 24px;
+}
+.p-inputswitch-slider{
+  height: 24px;
+}

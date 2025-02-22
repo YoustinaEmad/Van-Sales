@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center py-2">
+    <p class="mb-2 color-gray-800 ts-3">
+      <img src="../assets/icons/expand_more.png" class="pointer" routerLink="/profile"> Address
+    </p>
+  </div>
+  <hr class="m-1 color-gray-300 mb-4" />
+
+  <ng-container>
+    <div class="row g-4">
+      <form [formGroup]="page.form" (ngSubmit)="saveAddress()">
+        <!-- Governorate Name, City Name, Street in one row -->
+        <div class="row">
+          <div class="col-md-4">
+            <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+              (change)="onGovernorateChange($event.id)" label="Governorate Name" placeholder="Governorate Name"
+              [items]="governorates">
+            </ng-control>
+          </div>
+          <div class="col-md-4">
+            <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId" label="City Name"
+              placeholder="City Name" [items]="cities">
+            </ng-control>
+          </div>
+          <div class="col-md-4">
+            <ng-control [form]="page.form" control="street" label="Street" placeholder="Enter street"></ng-control>
+          </div>
+        </div>
+
+        <!-- Landmark, Latitude, Longitude in one row -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <ng-control [form]="page.form" control="landmark" label="Landmark"
+              placeholder="Enter your Landmark"></ng-control>
+          </div>
+          <div class="col-md-4">
+            <ng-control [form]="page.form" label="Latitude" control="latitude" placeholder="Enter latitude">
+            </ng-control>
+          </div>
+          <div class="col-md-4">
+            <ng-control [form]="page.form" label="Longitude" control="longitude" placeholder="Enter longitude">
+            </ng-control>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+         
+          <div class="col-md-4">
+            <ng-control [form]="page.form" label="buildingData" control="buildingData" placeholder="Enter buildingData">
+            </ng-control>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="map">Map</label>
+              <div id="map" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end mt-4">
+          <button class="bg-brand-50 py-2 px-4 color-brand-500 cr3 border border-warning bg-white me-2" (click)="onCancel()">
+            Cancel
+          </button>
+          <button type="submit" class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" [disabled]="page.form.invalid">
+            {{ isEditMode ? 'Save' : 'Send Request' }}
+          </button>
+
+          
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</div>

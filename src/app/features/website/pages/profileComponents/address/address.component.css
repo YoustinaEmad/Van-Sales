@@ -1,0 +1,72 @@
+.address-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .status-badge {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .text-danger {
+    font-size: 0.875rem;
+  }
+  .card-header {
+    font-size: 0.975rem;
+   
+  }
+  .status-custom {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+   
+  }
+  .status-approved {
+    background-color: #d4edda;
+    color: #12B76A;
+    border: 1px solid #D1fADF;
+  }
+  .status-rejected {
+    background-color: #fee4e2;
+    color: #f04438;
+    border: 1px solid #fee4e2;
+  }
+  .status-Pending{
+    background-color: #FFFAEB;
+    color: #EB762C;
+    border: 1px solid #FFFAEB;
+  }
+  .address-error {
+    height: 2.5rem;
+    background-color: #fee4e2;
+    color: #f04438;
+    border: 1px solid #fee4e2;
+    align-items: center;
+    padding-left: 10px;
+    padding-top: 8px;
+  }
+  .selected-address {
+    border: 2px solid #EB762C; 
+    background-color: #FEF7EE;
+}
+.address-card {
+  position: relative; 
+}
+
+.default-label {
+  color: #EB762C;
+  font-size: 0.9rem; 
+  padding: 0.3rem 0.6rem;
+  border-radius: 10px; 
+  position: absolute; 
+  top: 0px; 
+  right: 10px; 
+}
+
+.edit-Add {
+  background-color: #EB762C;
+  position: absolute; 
+  right: 10px; 
+}

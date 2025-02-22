@@ -1,0 +1,14 @@
+.extra-meta-tag ul{
+    width: 100%;
+    border: 1px solid #D5D7DA;
+    border-radius: 4px;
+    max-height: 85px;
+    overflow-y: auto;
+    font-size: 1rem !important;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 4px 12px !important;
+    margin-top: 13px;
+    font-family: "AMPLESOFTPRO-MEDIUM", "CAIRO-MEDIUM";
+    color: var(--bs-body-color);
+}

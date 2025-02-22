@@ -1,0 +1,149 @@
+<div class="row mx-0">
+  <div class="col-12 col-lg-8 p-0">
+    <div class="form-scrollable-container">
+      <div class="d-flex flex-column align-items-center justify-content-center vh-100">
+        <div class="w-100 px-5">
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h1 class="login-title bold pt-3">Sign up</h1>
+            <p class="color-gray-700 mb-4">Continue your journey with oil car.</p>
+            <div class="row mb-2">
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="nationalNumber" label="National ID" placeholder="Enter your National ID"
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="name" label="Name" placeholder="Enter Your Name"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="userName" label="User Name" placeholder="Enter Your UserName"></ng-control>
+              </div>
+            </div>
+            <div class="row mb-2">
+
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="email" label="Email" placeholder="Enter your Email"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="password" label="Password" [type]="controlType.PASSWORD"
+                  placeholder="********"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" [type]="controlType.PASSWORD" control="confirmPassword"
+                  label="Confirm Password" placeholder="*******" (blur)="confirmPassword()"></ng-control>
+                <p class="text text-danger font-12" *ngIf="!isEqualPassword">
+                  Passwords do not match
+                </p>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="mobile" label="Mobile" placeholder="01-xxx-xxx-xxx"
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="phone" label="Phone" placeholder=""
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="gender" label="Gender" [type]="controlType.SELECT"
+                  [items]="genderOptions" placeholder="Select Gender" [clearable]="false"></ng-control>
+              </div>
+            </div>
+            <div class="row mb-2">
+
+              <!-- <div class="col-md-4">
+                <ng-control [form]="registerForm" control="workInfo" label="Work Info" placeholder="Enter your Work Info"></ng-control>
+              </div> -->
+              
+              <div class="col-md-4 mb-3">
+                <ng-control [type]="controlType.SELECT" [form]="registerForm" control="governorateId"
+                  label="Governorate " placeholder="Governorate " [items]="governorates" [clearable]="false"
+                  (change)="onGovernorateChange($event.id)"></ng-control>
+              </div>
+              <div class="col-md-4 mb-3">
+                <ng-control [type]="controlType.SELECT" [form]="registerForm" control="cityId" label="City "
+                  placeholder="City " [items]="cities" [clearable]="false"></ng-control>
+              </div>
+              <div class="mb-3 col-md-4">
+                <ng-control [form]="registerForm" control="street" label="Street" placeholder="Enter Your Street"></ng-control>
+              </div>
+            </div>
+
+            <div class="row">
+              
+              <div class="mb-3 col-md-4">
+                <ng-control [form]="registerForm" control="buildingData" label="Building Data"
+                  placeholder="Enter your Building Data"></ng-control>
+              </div>
+              <div class="col-md-4 mb-3">
+                <ng-control [form]="registerForm" control="age" label="Age" placeholder="Enter Your Age"
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [type]="controlType.SELECT" [form]="registerForm" control="clientActivity"
+                  label="Client Activity" placeholder="Customer Activity" [items]="customerActivity"
+                  [clearable]="false"></ng-control>
+              </div>
+            </div>
+            <div class="row g-3 mb-4">
+
+            
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="latitude" label="Latitude" placeholder=""></ng-control>
+              </div>
+              <div class="col-md-4">
+                <ng-control [form]="registerForm" control="longitude" label="Longitude" placeholder=""></ng-control>
+              </div>
+            </div>
+            <div class="row g-3 mb-4" style="display: flex; justify-content: space-between;">
+              <div class=" col-4 mb-2 h-50 w-50">
+                <label for="map" class="form-label">Set Location on Map</label>
+                <div id="map" ></div>
+              </div>
+              <div class="col-4 col-md-4 col-lg-4 mt-5 h-100" *ngFor="let image of images; let i = index">
+                <div class="border p-3 text-center h-60">
+                  <div *ngIf="image.uploaded; else uploadTemplate">
+                    <img [src]="environment.api+'/'+image.src" alt="Uploaded Image"
+                      class="img-fluid mb-2 img-thumbnail" />
+                  </div>
+                  <ng-template #uploadTemplate>
+                    <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
+                      <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
+                      <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
+                      <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+                    </label>
+                    <input #file type="file" id="fileInput-{{ i }}" class="d-none"
+                      (change)="onImageUpload(file.files, i)" />
+                  </ng-template>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-12">
+                <button class="btn bg-orange w-100 mt-2"
+                [disabled]="registerForm.invalid || isSubmitting || !isEqualPassword || !isImageUploaded()">
+                Sign Up
+              </button>
+              
+              </div>
+            </div>
+          </form>
+          <p class="text-center mt-3">
+            Have An Account?
+            <span class="pointer color-brand-500" routerLink="/auth/login">Login</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-4 p-0">
+    <div class="d-flex justify-content-end vh-100" >
+      <img src="/assets/images/login.png" class="vh-100 w-100" alt="login"  />
+    </div>
+  </div>
+</div>

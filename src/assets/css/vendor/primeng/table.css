@@ -1,0 +1,14 @@
+.table-container tr {
+    border-bottom: 1px solid #e0e0e0;/* Adjust color as needed */
+}
+
+.no-border {
+    border: none;
+}
+
+.scrolled {
+    max-height: 85vh;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}

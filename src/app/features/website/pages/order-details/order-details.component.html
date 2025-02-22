@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <div class="row g-2">
+    <!-- <div class="col-12 col-md-2">
+        <div class="filters">
+          <div class="filter-section mb-4">
+            <h5>Price</h5>
+            <div class="d-flex gap-2">
+              <input type="number" class="form-control" placeholder="from" />
+              <input type="number" class="form-control" placeholder="to" />
+            </div>
+            <button class="btn btn-sm btn-primary mt-2">Done</button>
+          </div>
+  
+          <div class="filter-section mb-4">
+            <h5>Brand</h5>
+            <input type="text" class="form-control mb-2" placeholder="Search" />
+            <div>
+              <label class="d-block">
+                <input type="checkbox" /> Shell (32)
+              </label>
+              <label class="d-block">
+                <input type="checkbox" /> Mobil (32)
+              </label>
+            </div>
+          </div>
+  
+          <div class="filter-section">
+            <h5>Buyer</h5>
+            <input type="text" class="form-control mb-2" placeholder="Search" />
+            <div>
+              <label class="d-block">
+                <input type="checkbox" /> Shell Service Center (32)
+              </label>
+              <label class="d-block">
+                <input type="checkbox" /> Sunset Car Wash (57)
+              </label>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    <div class="col-12 col-md-3">
+      <div class="card h-100">
+        <div class="card-content p-0">
+          <div>
+            <h3>Price</h3>
+            <form class="form" [formGroup]="page.searchForm">
+              <div class="form-body">
+                <div class="row g-2 align-items-center">
+                  <div class="col-4">
+                    <ng-control [form]="page.searchForm" [type]="page.ControlType.INPUT_DATE" control="FromDate" label="from"
+                      placeholder="search.from-date"></ng-control>
+                  </div>
+                  <div class="col-4">
+                    <ng-control [form]="page.searchForm"  [type]="page.ControlType.INPUT_DATE" control="ToDate" label="to"
+                      placeholder="search.to-date"></ng-control>
+                  </div>
+                  <div class="col-4 d-flex justify-content-center align-items-center">
+                    <button class="btn c-org500">
+                      <span>Done</span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="mt-3">
+            <h3>Brands</h3>
+            <form class="form" [formGroup]="page.searchForm">
+              <div class="form-body">
+                <div class="row align-items-center">
+                  <div class="col-10">
+                    <ng-control [form]="page.searchForm" control="Brand" placeholder="search.Brand"></ng-control>
+                  </div>
+
+                  <div class="col-10" *ngFor="let brand of brandList; let i = index">
+                    <div class="col-10">
+                      <ng-control [type]="controlType.CHECKBOX" [form]="page.searchForm" [control]="'Brand'"
+                        [label]="brand.value">
+                      </ng-control>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Products Column -->
+    <div class="col-lg-9">
+     
+      <div class="row mt-5 mb-5">
+        <div class="container-fluid">
+          <div class="bg-gray200">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2>Car Oils</h2>
+              <a href="#" class="c-org600">See All</a>
+            </div>
+            <div class="row g-1">
+              <div class="col-4" *ngFor="let oil of carOils">
+                <app-car-oil [oil]="oil"></app-car-oil>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

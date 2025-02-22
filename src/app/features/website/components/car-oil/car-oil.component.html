@@ -1,0 +1,73 @@
+<div *ngIf="!isLoading">
+  <div class="product-card p-3 h-100" >
+
+    <div class="card-img-container">
+      <div class="icons-container d-flex justify-content-end w-100  px-1">
+          <div class="p-2 bg-white cr4 pointer" >
+            <img src="/assets/images/favorite_border.svg" alt="Favorite Icon" class="rect-24" *ngIf="!isProductInWishList()" (click)="addToWishList()">
+            <img src="/assets/images/favorite.svg" alt="Favorite Icon" class="rect-24" *ngIf="isProductInWishList()" (click)="removeFromWishList()">
+          </div>
+      </div>
+
+      <img [src]="enviroment.api+ '/'+ oil.path" class="card-img" [ngClass]="{'low-opacity': oil.productQuantity === 0}">
+    </div>
+
+    <div class="card-content p-0" [ngClass]="{'low-opacity': oil.productQuantity === 0}">
+      <p class="hot-deal d-flex align-items-center">
+        <img src="/assets/images/electric_bolt.svg" alt="Hot Deal Icon" class="me-2"> Hot Deal
+      </p>
+
+      <p class="font-18 mb-2">{{ oil.productName }}</p>
+
+      <div class="price d-flex justify-content-between align-items-center mb-2">
+        <p class="d-flex align-items-center mb-0">
+          <span class="current-price "><span class="regular font-14">EGP</span>{{ oil.price }}</span>
+          <!-- <span class="old-price text-muted  ms-2">{{ oil.oldPrice }}EGP</span> -->
+        </p>
+        <!-- <p class="discount mb-0">{{ oil.discount }}</p> -->
+      </div>
+
+      <!-- <div class="shipping-info d-flex mb-3">
+        <div class="color-brand-500 d-flex align-items-center font-12 me-3">
+          <img src="/assets/images/car.svg" alt="Free Shipping Icon" class="rect-12 me-1"> {{ oil.freeShipping }}
+        </div>
+        <div class="c-rd500 d-flex align-items-center font-12">
+          <img src="/assets/images/electric_car.svg" alt="Fast Shipping Icon" class="rect-12 me-1"> {{ oil.fastShipping }}
+        </div>
+      </div> -->
+
+      <button class="add-to-cart btn  w-100" *ngIf="!isProductInSellCart()" [attr.aria-label]="'Add ' + oil.productName + ' to Cart'" (click)="addToCart()">
+        <img src="/assets/images/add_shopping_cart.svg"> Add to Cart
+      </button>
+      <ng-container *ngIf="isProductInSellCart()">
+        <div class="d-flex align-items-center justify-content-between">
+          <button class=" btn btn-decrease ms-2" aria-label="Decrease quantity" *ngIf="oil.quantity > 1" (click)="decreaseQuantity()">
+            <img src="/assets/images/remove_circle_outline.svg" alt="Plus Icon" class="icon-size">
+          </button>
+          <button class=" btn btn-delete ms-2" aria-label="Decrease quantity" *ngIf="oil.quantity == 1" (click)="RemoveFromCart()">
+            <img src="/assets/images/delete-white.svg" alt="Plus Icon" class="icon-size">
+          </button>
+
+          <span class="quantity">{{oil.quantity}}</span>
+          <button class="btn btn-increase me-2" aria-label="Decrease quantity" *ngIf="oil.quantity <oil.productQuantity" (click)="increaseQuantity()">
+            <img src="/assets/images/add_circle_outline.svg" alt="Minus Icon" class="icon-size">
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoading">
+  <div class="product-card p-3 h-100">
+
+    <div class="card-img-container">
+      <div class="card-img">
+        <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '100%', 'margin-top': '0px', }"></ngx-skeleton-loader>
+      </div>
+    </div>
+    <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '8px', }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader  [theme]="{ width: '70%', 'border-radius': '4px', height: '16px', 'margin-top': '0px', }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader  [theme]="{ width: '80%', 'border-radius': '4px', height: '16px', 'margin-top': '0px', }"></ngx-skeleton-loader>
+  </div>
+</div>

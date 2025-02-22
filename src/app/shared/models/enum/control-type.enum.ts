@@ -1,0 +1,18 @@
+export enum ControlType {
+  INPUT_TEXT = 1,
+  INPUT_NUMBER = 2,
+  TEXTAREA = 3,
+  CHECKBOX = 4,
+  RADIO = 5,
+  SWITCH = 6,
+  SELECT = 7,
+  INPUT_DATE = 8,
+  AUTO_COMPLETE = 9,
+  AUTO_COMPLETE_CONTROL = 10,
+  TIME = 11,
+  PASSWORD = 12,
+  INPUT_TIME = 13,
+  INPUT_COLOR = 14,
+  SELECT_CUSTOM_COLOR = 15,
+
+}

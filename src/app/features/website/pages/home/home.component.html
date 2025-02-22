@@ -1,0 +1,131 @@
+<div class="my-5 px-5">
+  <div class="row d-flex align-items-stretch">
+    <div class="col-md-3 d-flex align-items-stretch">
+      <img src="/assets/images/Spacer.svg" class="img-fluid w-100 ads-images h-220px" alt="Image1" />
+    </div>
+
+    <div class="col-md-9 d-flex align-items-stretch">
+      <img src="/assets/images/Oilbottles.svg" class="img-fluid w-100 ads-images h-220px" alt="Image2" />
+    </div>
+  </div>
+
+  <div class="row mt-4 d-flex align-items-stretch">
+    <div class="col-md-9 d-flex align-items-stretch">
+      <img src="/assets/images/ImageContainer.svg" class="img-fluid w-100 ads-images h-440px" alt="Image3" />
+    </div>
+
+    <div class="col-md-3 d-flex align-items-stretch">
+      <img src="/assets/images/glossfinish.svg" class="img-fluid w-100 ads-images h-440px" alt="Image4" />
+    </div>
+  </div>
+</div>
+<div class="bg-gray-100 my-5">
+  <div class="px-5 py-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <p class="color-gray-900 font-24 bold">New Products</p>
+      <p class="color-brand-500 font-18 pointer">See All</p>
+    </div>
+
+    <div class="row g-2">
+      <ng-container  *ngIf="!newProductsLoading && !websiteService.userLoading">
+      <div class="col-md-3" *ngFor="let product of newProducts">
+        <app-car-oil [oil]="product"></app-car-oil>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="newProductsLoading && websiteService.userLoading">
+      <div class="col-md-3" *ngFor="let product of [1, 2, 3, 4]">
+        <app-car-oil [isLoading]="true"></app-car-oil>
+      </div>
+    </ng-container>
+    </div>
+    <div class="mt-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <p class="color-gray-900 font-24 bold">Best Seller</p>
+        <p class="color-brand-500 font-18 pointer">See All</p>
+      </div>
+      <div class="row g-2">
+        <ng-container *ngIf="!bestSellerProductsLoading && !websiteService.userLoading" >
+          <div class="col-md-3" *ngFor="let product of bestSellerProducts">
+            <app-car-oil [oil]="product"></app-car-oil>
+          </div>
+        </ng-container>
+        <ng-container  *ngIf="bestSellerProductsLoading && websiteService.userLoading">
+          <div class="col-md-3" *ngFor="let product of [1, 2, 3, 4]">
+            <app-car-oil [isLoading]="true"></app-car-oil>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mt-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <p class="color-gray-900 font-24 bold">Favorite Products</p>
+        <p class="color-brand-500 font-18 pointer">See All</p>
+      </div>
+      <div class="row g-2">
+        <ng-container *ngIf="!favoriteProductsLoading && !websiteService.userLoading" >
+          <div class="col-md-3" *ngFor="let product of favoriteProducts">
+            <app-car-oil [oil]="product"></app-car-oil>
+          </div>
+        </ng-container>
+        <ng-container  *ngIf="favoriteProductsLoading && websiteService.userLoading">
+          <div class="col-md-3" *ngFor="let product of [1, 2, 3, 4]">
+            <app-car-oil [isLoading]="true"></app-car-oil>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-gray-100 my-5">
+  <div class="px-5 py-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <p class="color-gray-900 font-24 bold">Oil Companies</p>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-3 col-md-4 col-sm-6 mb-4 g-2"
+        *ngFor="let company of companies"
+      >
+        <div class="card p-3 h-100">
+          <div class="img-container bg-org50 text-center">
+            <img
+              [src]="enviroment.api+ '/'+ company.path"
+              class="company-image mb-2"
+              alt="{{ company.name }}"
+            />
+          </div>
+          <div class="card-content d-flex flex-column">
+            <h5 class="font-20 color-brand-500 bold mb-0">
+              {{ company.name }}
+            </h5>
+            <p class="mt-2 mb-0 pointer">
+              Explore Now <img src="/assets/images/arrow.svg" alt="Arrow" />
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-gray-100 my-5">
+  <div class="px-5 py-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <p class="color-gray-900 font-24 bold">Car Oils</p>
+      <p class="color-brand-500 font-18 pointer">See All</p>
+    </div>
+    <div class="row g-2">
+      <ng-container *ngIf="!favoriteProductsLoading && !websiteService.userLoading" >
+        <div class="col-6" *ngFor="let product of favoriteProducts">
+          <app-car-oil-nd [oil]="product"></app-car-oil-nd>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="favoriteProductsLoading && websiteService.userLoading" >
+        <div class="col-6" *ngFor="let product of [1, 2, 3, 4]">
+          <app-car-oil-nd [isLoading]="true"></app-car-oil-nd>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

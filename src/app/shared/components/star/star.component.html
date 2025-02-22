@@ -1,0 +1,10 @@
+<div class="d-flex align-items-center">
+    <div class="bg-gray100 rate">
+        <p class="color-gray-900 me-1" [class]="lableClass" *ngIf="showNumber">{{rate | num:2}}</p>
+    </div>
+    <div class="star-ratings-sprite" [class]="starsClass" [style.height]="size+'px'"
+        [style.width]="(size * startsNumber)+'px'" [style.background-size]="size+'px'">
+        <span class="star-ratings-sprite-rating" [style.background-size]="size+'px'" [style.height]="size+'px'"
+            [style.width]="(rate/startsNumber*100)+'%'"></span>
+    </div>
+</div>

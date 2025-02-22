@@ -1,0 +1,43 @@
+<div class="row mx-0">
+  <div class="col-12 col-lg-8 p-0">
+    <div
+      class="d-flex flex-column align-items-center justify-content-center vh-100"
+    >
+      <div class="w-50 w-xl-75">
+        <p class="login-title bold">OTP</p>
+        <p class="color-gray-700 mb-4">Continue your journey with oil car.</p>
+        <div class="d-flex align-items-center justify-content-center mb-4">
+          <ng-otp-input
+            [config]="config"
+            (onInputChange)="onOtpChange($event)"
+            dir="ltr"
+          ></ng-otp-input>
+        </div>
+        <button
+          type="submit"
+          class="btn bg-orange w-100 btn-lg"
+          (click)="onSubmit()"
+          [disabled]="isSubmitting || otp?.length < config.length"
+        >
+          Verify OTP
+        </button>
+
+        <p *ngIf="resendTimer > 0" class="mt-4 text-muted">
+          Resend OTP in {{ resendTimer }} seconds
+        </p>
+        <p
+          *ngIf="resendTimer === 0"
+          class="mt-4 color-brand-500 pointer"
+          (click)="resendOtp()"
+        >
+          Resend OTP
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-4 p-0">
+    <div class="d-flex justify-content-end vh-100">
+      <img src="/assets/images/login.png" class="vh-100 w-100" alt="login" />
+    </div>
+  </div>
+</div>

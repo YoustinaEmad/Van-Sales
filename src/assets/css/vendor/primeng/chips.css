@@ -1,0 +1,45 @@
+.p-chips {
+    width: 100%;
+
+}
+.p-chips .p-chips-multiple-container {
+    width: 100%;
+    border: 1px solid #D5D7DA;
+    border-radius: 4px;
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 10px 12px;
+}
+.p-chips .p-chips-multiple-container:not(.p-disabled):hover {
+    border: 1px solid #D5D7DA;
+}
+
+.p-chips .p-chips-multiple-container:focus {
+    border: 1px solid #D5D7DA;
+}
+.p-chips .p-chips-multiple-container .p-chips-token {
+    color: #EB762C;
+    background: #fcecd8;
+    border-radius: 5px;
+    margin-right: auto;
+    max-width: 100%;
+}
+.p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-label {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-icon {
+    margin-left: auto;
+    margin-inline-start: 0.5rem;
+    font-family: "icomoon", sans-serif;
+    font-size: 0.7rem;
+}
+.p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-icon::before {
+    content: "\e915";
+}
+
+.p-chips .p-chips-multiple-container .p-chips-input-token {
+    padding: 0;
+}
+
+

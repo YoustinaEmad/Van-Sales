@@ -1,0 +1,6 @@
+
+/* Adjust the placeholder opacity */
+.form-control::placeholder {
+    color: #717680; /* Change to desired color with reduced opacity */
+    opacity: 0.75; /* Set the desired opacity */
+}

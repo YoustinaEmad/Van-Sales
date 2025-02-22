@@ -1,0 +1,218 @@
+<div class="d-flex justify-content-between align-items-center py-2">
+  <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+      routerLink="/sites/product"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} Product</p>
+  <div class="d-flex justify-content-end gap-2">
+    <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white"
+      (click)="onCancel()">
+      Cancel
+    </button>
+    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
+      [disabled]="page.form?.invalid || page.isSaving">
+      <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
+    </button>
+  </div>
+</div>
+<hr />
+
+
+
+
+<ng-container>
+  <!-- Tabs Section -->
+  <div class="border">
+
+    <ul class="nav nav-tabs mt-4 d-flex align-items-center">
+      <li class="nav-item me-1 " *ngFor="let tab of Tabs">
+        <a class="nav-link d-flex align-items-center px-2 py-1 pointer" [ngClass]="{
+            'bg-purple-100 color-purple-500': tab.isSelected,
+            'color-gray-100 color-gray-100': !tab.isSelected
+          }" (click)="switchTab(tab.ID)">
+          <img [src]="tab.isSelected ? tab.selectedIcon : tab.icon" alt="tab icon" class="me-2" />
+          {{tab.name}}
+        </a>
+      </li>
+      <div class="d-flex align-items-center ms-auto gap-3">
+        <div class="d-flex align-items-center">
+          <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
+          <label>Activate Product</label>
+        </div>
+        <div class="d-flex align-items-center">
+          <p-inputSwitch [(ngModel)]="isFeatured"></p-inputSwitch>
+          <label>Featured Product</label>
+        </div>
+        <div class="d-flex align-items-center">
+          <p-inputSwitch [(ngModel)]="isActivatedPoint"></p-inputSwitch>
+          <label>Activate Point</label>
+        </div>
+      </div>
+    </ul>
+    <ng-container *ngIf="page.isPageLoaded">
+      <!-- Tab Content -->
+      <div class="tab-content mt-4">
+        <!-- General Data Tab -->
+        <div *ngIf="selectedTab === TabEnum.GeneralData" class="p-4 bg-white rounded">
+          <form [formGroup]="page.form">
+            <div class="row g-4">
+              <!-- Product Name -->
+              <div class="col-12">
+                <ng-control [form]="page.form" control="name" label="Product Name"
+                  placeholder="Ex : Shell oil"></ng-control>
+              </div>
+              <!-- Category and Sub Category -->
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="categoryId"
+                  (change)="onCategoryChange($event.id)" label="Category Name" placeholder="Category Name"
+                  [items]="categories">
+                </ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="categoryId"
+                  label="subCategory Name" placeholder="subCategory Name" [items]="subCategories">
+                </ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandId" label="Brand Name"
+                  placeholder="Brand Name" [items]="brands">
+                </ng-control>
+              </div>
+              <!-- Brand -->
+              <div class="col-6">
+                <ng-control [form]="page.form" control="specificationMetrix" label="Specification Metrix"
+                  placeholder="Enter Specification Metrix"></ng-control>
+              </div>
+              <div class="col-6">
+                <ng-control [form]="page.form" control="data" label="Data" placeholder="Enter data"></ng-control>
+              </div>
+
+              <!-- Description -->
+              <div class="col-12">
+                <ng-control [form]="page.form" control="description" label="Description"
+                  placeholder="Enter a description..." [type]="page.ControlType.TEXTAREA"
+                  [inputClass]="'rb-textarea h-100'" (change)="onChange($event)" [readOnly]="false"
+                  [rows]="10"></ng-control>
+              </div>
+
+
+              <div class="row mt-4">
+
+                <div class="col-3">
+                  <ng-control [form]="page.form" control="availableDate" label="Start Date"
+                    [type]="page.ControlType.INPUT_DATE"></ng-control>
+                  <div *ngIf="page.form.get('availableDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
+                    {{ page.form.get('availableDate')?.errors?.pastDate }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="MetaTagKeywords" class="form-label d-block">Meta Tag Keywords</label>
+                  <p-chips formControlName="tags" [separator]="' '" [addOnBlur]="true"
+                    placeholder="Enter Meta Tag Keywords..."></p-chips>
+                  <small class="form-text text-muted">
+                    Press <strong> Space</strong> to add another tag.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Media Tab -->
+        <div *ngIf="selectedTab === TabEnum.Media" class="p-4 bg-white rounded">
+          <div class="container py-5">
+            <div class="row g-4">
+              <div class="col-12 col-md-3 col-lg-3" *ngFor="let image of images; let i = index">
+                <div class="border p-3 text-center h-100">
+                  <div *ngIf="image.uploaded; else uploadTemplate">
+                    <img [src]="environment.api+'/'+image.src" alt="Uploaded Image"
+                      class="img-fluid mb-2 img-thumbnail" />
+                    <!-- <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-sm btn-warning" (click)="replaceImage(i)">Replace</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteImage(i)">Delete</button>
+              </div> -->
+                  </div>
+                  <ng-template #uploadTemplate>
+                    <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
+                      <i class="fa fa-upload fa-2x mb-2 color-purple-500"></i>
+                      <p class="color-purple-500" *ngIf="!image.uploaded">Upload New Image</p>
+                      <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+                    </label>
+                    <input #file type="file" id="fileInput-{{ i }}" class="d-none"
+                      (change)="onImageUpload(file.files, i)" />
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price Tab -->
+        <div *ngIf="selectedTab === TabEnum.Price" class="p-4 bg-white rounded">
+          <div class="col-6">
+            <ng-control [form]="page.form" control="price" label="Product Price" placeholder="Enter Price"
+              (keypress)="numberOnly($event)"></ng-control>
+          </div>
+        </div>
+
+        <!-- Dimensions Tab -->
+        <div *ngIf="selectedTab === TabEnum.Dimensions" class="p-4 bg-white rounded">
+          <div class="row g-4">
+            <div class="col-6">
+              <ng-control [form]="page.form" control="height" label="Height" placeholder="Enter Height"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+            <div class="col-6">
+              <ng-control [form]="page.form" control="width" label="Width" placeholder="Enter Width"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+            <div class="col-6">
+              <ng-control [form]="page.form" control="length" label="Length" placeholder="Enter Length"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+            <div class="col-6">
+              <ng-control [form]="page.form" control="liter" label="liter" placeholder="Enter liter"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other Data Tab -->
+        <div *ngIf="selectedTab === TabEnum.Other" class="p-4  ">
+          <div class="row g-4">
+            <div class="col-4">
+              <ng-control [form]="page.form" control="minimumQuantity" label="Minimum Quantity"
+                placeholder="Enter Minimum Quantity" (keypress)="numberOnly($event)"></ng-control>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="maximumQuantity" label="Maximum Quantity"
+                placeholder="Enter Maximum Quantity" (keypress)="numberOnly($event)"></ng-control>
+              <span class="text-danger extra-small mt-1" *ngIf="page.form.errors?.maxLessThanMin">
+                {{ page.form.errors?.maxLessThanMin }}
+              </span>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="quantity" label="Quantity" placeholder="Enter Quantity"
+                (keypress)="numberOnly($event)"></ng-control>
+              <span class="text-danger extra-small mt-1" *ngIf="page.form.errors?.quantityOutOfRange">
+                {{ page.form.errors?.quantityOutOfRange }}
+              </span>
+            </div>
+
+          </div>
+          <div class="row mt-4">
+            <div class="col-4">
+              <ng-control [form]="page.form" control="model" label="Model" placeholder="Enter Model"></ng-control>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="tax" label="Tax" placeholder="Enter Tax"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="numberOfPoints" label="Number Of Points"
+                (keypress)="numberOnly($event)" placeholder="Number Of Points"></ng-control>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

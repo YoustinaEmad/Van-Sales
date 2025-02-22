@@ -1,0 +1,36 @@
+.card-img-container {
+    background-color: #EEEEEE;
+    position: relative;
+    width: 150px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.card-content .delete {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: max-content;
+}
+
+.low-opacity {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+
+.btn-increase:hover,
+.btn-decrease:hover {
+    background-color: #eb762c;
+}
+
+.btn-increase,
+.btn-decrease {
+    background-color: #eb762c;
+}

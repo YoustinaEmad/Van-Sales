@@ -1,0 +1,13 @@
+.bg-brand-500 {
+    background-color: #EB762C;
+    color: white;
+}
+
+.bg-brand-50 {
+    background-color: #FEF7EE;
+    color: #EB762C;
+}
+
+.bg-brand-500:hover, .bg-brand-50:hover {
+    filter: brightness(1);
+}

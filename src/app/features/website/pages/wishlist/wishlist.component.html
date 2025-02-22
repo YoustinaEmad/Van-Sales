@@ -1,0 +1,14 @@
+<div class="container=fluid p-5 mb-5">
+    <div class="row g-2">
+      <ng-container *ngIf="websiteService.wishListProduct.length && !websiteService.userLoading" >
+        <div class="col-md-3" *ngFor="let product of websiteService.wishListProduct">
+          <app-car-oil [oil]="product"></app-car-oil>
+        </div>
+      </ng-container>
+      <ng-container  *ngIf="!websiteService.wishListProduct.length && websiteService.userLoading">
+        <div class="col-md-3" *ngFor="let product of [1, 2, 3, 4 ,5]">
+          <app-car-oil [isLoading]="true"></app-car-oil>
+        </div>
+      </ng-container>
+      </div>
+</div>

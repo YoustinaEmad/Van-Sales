@@ -1,0 +1,186 @@
+<section [formGroup]="form">
+  <fieldset [class]="'form-group ' + formClass" [class.has-error]="isControlNotValidAndTouched()">
+    <!--------------------------------- label -------------------------------------->
+
+    <ng-container *ngIf="type!=controlType.RADIO">
+      <ng-container *ngTemplateOutlet="labelTemplate"></ng-container>
+    </ng-container>
+    <!--------------------------------- container end placeholder -------------------------------------->
+
+    <p [class]="'rb-p-xs c-g500 mb-2 mt-0' + descClass" *ngIf="desc!=''">{{desc}}</p>
+    <div [class]="inputPlaceholderClass" [class.floating-placholder]="endPlacholder!='' || startPlaceholder!=''"
+      [class.start-placholder]="startPlaceholder!=''" [class.select]="type==controlType.SELECT"
+      [class.disabled]="isDisabled()" [attr.data-endPlaceholder]="endPlacholder"
+      [attr.data-startPlaceholder]="startPlaceholder">
+      <!--------------------------------- input text -------------------------------------->
+      <input *ngIf="type==controlType.INPUT_TEXT" type="text" [class]="'form-control ' + inputClass"
+        placeholder="{{placeholder | translate}}" [formControlName]="control" (blur)="onblur()"
+        (keyup)="onKeyup($event)" (change)="onChange($event)" [readonly]="readOnly">
+
+      <input *ngIf="type==controlType.INPUT_COLOR" type="color" [class]="'form-control ' + inputClass"
+        placeholder="{{placeholder | translate}}" [formControlName]="control" (blur)="onblur()"
+        (keyup)="onKeyup($event)" (change)="onChange($event)" [readonly]="readOnly">
+      <!--------------------------------- input number -------------------------------------->
+      <input [class]="'form-control ' + inputClass" type="number" placeholder="{{placeholder | translate}}"
+        [formControlName]="control" *ngIf=" type==controlType.INPUT_NUMBER" (blur)="onblur()" (keyup)="onKeyup($event)"
+        (change)="onChange($event)">
+      <!--------------------------------- input password -------------------------------------->
+      <div class="password-wrapper-input" *ngIf=" type==controlType.PASSWORD" style="position: relative;">
+        <input [class]="'form-control ' + inputClass" [type]="passwordVisible ? 'text' : 'password'"
+          placeholder="{{placeholder | translate}}" [formControlName]="control" (blur)="onblur()"
+          (keyup)="onKeyup($event)" (change)="onChange($event)" autocomplete="new-password">
+        <i class="uil uil-eye" style="position: absolute;top:6px;right:10px;cursor: pointer;"
+          (click)="togglePasswordVisibility()"></i>
+      </div>
+
+      <!--------------------------------- input date -------------------------------------->
+      <input [class]="'form-control ' + inputClass" type="text" [formControlName]="control" bsDatepicker
+        *ngIf="type==controlType.INPUT_DATE" [bsConfig]="bsConfig" [minDate]="minDate" (keyup)="onKeyup($event)"
+        (change)="onChange($event)" readonly="true"  [class.disabled]="isDisabled()" [placement]="placement" 
+        placeholder="{{placeholder | translate}}"  [bsConfig]="bsConfig"
+        [minDate]="minDate" (keyup)="onKeyup($event)" (change)="onChange($event)" readonly="true"
+        [class.disabled]="isDisabled()" (blur)="onblur($event)">
+       
+      <!--------------------------------- input time -------------------------------------->
+      <input [class]="'form-control time' + inputClass" type="time" [formControlName]="control"
+        *ngIf="type==controlType.INPUT_TIME">
+      <!--------------------------------- input select -------------------------------------->
+      <ng-select class="form-control" [ngClass]="inputClass" (change)="onChange($event)"
+        [items]="items |propertyFilter:{'property':filterProp,'value':filterValue}" [bindLabel]="bindLabel"
+        [bindValue]="bindValue" appendTo="body" [formControlName]="control" placeholder="{{placeholder |translate}}"
+        *ngIf="type==controlType.SELECT" [clearable]="clearable" [multiple]="multiple" [hideSelected]="hideSelected">
+      </ng-select>
+
+      <!--------------------------------- input select custom options-------------------------------------->
+      <ng-container *ngIf="type==controlType.SELECT_CUSTOM_COLOR">
+        <ng-select class="form-control form-control-md" formControlName="Color"
+          placeholder="{{'search.select-color'|translate}}" [clearable]="false">
+          <ng-container *ngIf="items.length > 0">
+            <ng-option [value]="item.Color" [label]="item.Name" *ngFor="let item of items">
+              <div class="d-flex align-items-center">
+                <div class="rect-12 circle me-2" [style.background]="item.Color"></div>
+                <p class="m-0"> {{ item.Name }}</p>
+              </div>
+            </ng-option>
+          </ng-container>
+        </ng-select>
+
+
+      </ng-container>
+
+    </div>
+    <!--------------------------------- input checkbox -------------------------------------->
+    <div class="form-check pl-unset mt-1" *ngIf="type==controlType.CHECKBOX">
+      <input class="form-check-input reset-float rect-14" type="checkbox" [formControlName]="control">
+      <label class="form-check-labelpointer ms-2">{{label}}  </label>
+    </div>
+    <!--------------------------------- input radio -------------------------------------->
+    <div class="form-check" *ngIf="type==controlType.RADIO">
+      <input class="form-check-input" type="radio" [value]="value" [formControlName]="control">
+      <ng-container *ngTemplateOutlet="labelTemplate"></ng-container>
+    </div>
+    <!--------------------------------- input text-Area -------------------------------------->
+    <textarea *ngIf="type==controlType.TEXTAREA" type="text" [class]="'form-control rb-textarea ' + inputClass"
+      placeholder="{{placeholder | translate}}" [formControlName]="control" (blur)="onblur()" (keyup)="onKeyup($event)"
+      (change)="onChange($event)" [readonly]="readOnly" rows="3">
+     </textarea>
+    <!--------------------------------- input auto complete -------------------------------------->
+    <div class="ng-autocomplete" *ngIf="type == controlType.AUTO_COMPLETE">
+      <ng-autocomplete [class]="'form-control form-control-md'" [data]="items" [searchKeyword]="keyword"
+        placeholder="{{placeholder | translate}}" (selected)="onSelected($event)"
+        (inputChanged)="onInputChanged($event)" [focusFirst]="true" minQueryLength="1" historyIdentifier="items"
+        [itemTemplate]="templete" [historyHeading]="null" [historyIdentifier]="null"
+        [notFoundTemplate]="notFoundTemplete" [notFoundText]="notFoundText??'Not found'" [customFilter]="customFilter"
+        [initialValue]="initialValue">
+      </ng-autocomplete>
+      <ng-template #storeItemTemplate let-item>
+        <div class="suggest-item p-1">
+          <div class="d-flex align-items-center">
+            <img class="rect-28" [src]="item.Logo"
+              onerror="this.onerror=null; this.src='./assets/img/store_placeholder.png'">
+            <div class="ms-2">
+              <p class="rb-p-xs c-g900" [innerHtml]="item.Name"></p>
+              <p class="rb-p-xxs c-g500">{{item.Address}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <!--------------------------------- input auto complete control -------------------------------------->
+    <div class="ng-autocomplete" *ngIf="type == controlType.AUTO_COMPLETE_CONTROL">
+      <ng-autocomplete [class]="'form-control form-control-md'" [formControlName]="control" [data]="items"
+        [searchKeyword]="keyword" placeholder="{{placeholder | translate}}" (selected)="onSelected($event)"
+        (inputChanged)="onInputChanged($event)" [focusFirst]="true" minQueryLength="1" historyIdentifier="items"
+        [itemTemplate]="templete" [historyHeading]="null" [historyIdentifier]="null"
+        [notFoundTemplate]="notFoundTemplete" [notFoundText]="notFoundText??'Not found'" [customFilter]="customFilter"
+        [initialValue]="initialValue">
+      </ng-autocomplete>
+      <ng-template #storeItemTemplate let-item>
+        <div class="suggest-item p-1">
+          <div class="d-flex align-items-center">
+            <img class="rect-28" [src]="item.Logo"
+              onerror="this.onerror=null; this.src='./assets/img/store_placeholder.png'">
+            <div class="ms-2">
+              <p class="rb-p-xs c-g900" [innerHtml]="item.Name"></p>
+              <p class="rb-p-xxs c-g500">{{item.Address}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <div class="text text-danger" *ngIf="isControlNotValidAndDirty()">
+      <p class="mb-0 font-12" *ngIf="isControlHasError('required')">
+        {{'shared.validation.required'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('coordinatePattern')">
+        {{'shared.validation.coordinatePattern'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('minlength')">
+        {{'shared.validation.min-length'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('maxlength')">
+        {{'shared.validation.max-length'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('invalidNumber')">
+        {{'shared.validation.only-numbers'|translate}}</p>
+
+      <p class="mb-0 font-12" *ngIf="isControlHasError('email')">
+        {{'shared.validation.email'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('APIKey')">
+        {{'shared.validation.APIKEYLength'|translate}}</p>
+
+      <p class="mb-0 font-12" *ngIf="(isUserName()||isPassword()) && isControlHasError('pattern')">
+        {{'shared.validation.pattern-only-english'|translate}}</p>
+
+      <p class="mb-0 font-12" *ngIf="(isUserName()||isPassword()) && isControlHasError('passwordStrength')">
+        {{'shared.validation.pattern-special-characters'|translate}}</p>
+
+      <p class="mb-0 font-12" *ngIf="isMobile() && isControlHasError('pattern')">
+        {{'shared.validation.mobile-validation'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('invalidMobile')">
+        {{'shared.validation.invaild-mobile'|translate}}</p>
+
+      <p class="mb-0 font-12" *ngIf="isEmail() && isControlHasError('pattern')">
+        {{'shared.validation.email'|translate}}</p>
+      <p class="mb-0  font-12" *ngIf="isControlHasError('min')">
+        {{'shared.validation.only-positive'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isNationalID() && isControlHasError('pattern')">
+        {{'shared.validation.nationalId-validation'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isNameAraibic() && isControlHasError('pattern')">
+        {{'shared.validation.arabic-validation'|translate}}</p>
+      <p class="mb-0 font-12" *ngIf="isControlHasError('max')">
+        {{'shared.validation.max-length'|translate}}</p>
+    </div>
+  </fieldset>
+</section>
+
+<!--------------------------------- label template -------------------------------------->
+<ng-template #labelTemplate>
+  <label [class]="'d-flex align-items-center '+labelClass" [class.form-check-label]="type==controlType.RADIO"
+    for="basicInput" [class.text-danger]="isControlNotValidAndDirty()" *ngIf="label" [class.disabled]="isDisabled()">
+    <div [class]="'rect-8 circle my-auto rb-me-12 '+statusColor" *ngIf="statusColor"></div>
+    <span [class]="'text c-g500 ms-0 rb-me-12 '+labelIcon" *ngIf="labelIcon"></span>
+    <img [src]="labelImg" *ngIf="labelImg" [class]="labelImgClass" />
+    {{label |translate}}
+    <span class="text text-danger" *ngIf="validator()">*</span>
+    <span class="ms-2 mt-n1" *ngIf="annotationTitle">
+      <anotation-config [title]="annotationTitle" [trigger]="trigger"></anotation-config>
+    </span>
+  </label>
+</ng-template>

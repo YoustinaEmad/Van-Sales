@@ -1,0 +1,43 @@
+.custom-role {
+    background-color: #F9F5FF;
+    color: #6941C6;
+}
+
+.table thead th {
+    border-bottom: none !important;
+  }
+  
+ 
+  .table tbody td {
+    background-color: #f8f9fa; 
+   
+  }
+  
+
+  .table {
+    
+    border-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    text-align: left;
+    font-size: 12px;
+    color: #535862;
+  }
+  
+  .table td {
+    padding: 12px;
+    vertical-align: middle;
+ 
+  }
+  
+  .table tbody td:first-child {
+    background-color: #ffffff !important;
+  }
+  .role{
+    color: #EB762C;
+    font-size: 14px;
+  }

@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-between align-items-center py-2 ">
+    <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+            routerLink="/sites/company"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} Company</p>
+    <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
+    [disabled]="!page.isEdit ? (page.form?.invalid || page.isSaving ) : false">
+        
+        <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
+    </button>
+</div>
+<hr />
+<div class="d-flex justify-content-end align-items-start py-3 ">
+    <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
+    <label class="ms-2">
+      Activate Company
+    </label>
+  </div>
+<ng-container *ngIf="page.isPageLoaded">
+    <form [formGroup]="page.form">
+
+        <div class="row g-2 mb-3 mx-0">
+            <div class="col-4 p-0">
+                <ng-control [form]="page.form" control="name" label="Company"
+                    placeholder="Company Name"></ng-control>
+            </div>
+
+            <div class="col-8 pe-0">
+                <ng-control [form]="page.form" control="address" label="Address" placeholder="Address"></ng-control>
+            </div>
+        </div>
+
+        <div class="row row-cols-lg-3 g-2 mx-0 mb-3">
+            <div class="col">
+                <ng-control [form]="page.form" control="mobile" label="Mobile Number" (keypress)="numberOnly($event)"
+                    placeholder="Mobile Number"></ng-control>
+            </div>
+            <div class="col">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+                    (change)="onGovernorateChange($event.id)" label="Governorate" placeholder="Governorate Name"
+                    [items]="governorates">
+                </ng-control>
+            </div>
+            <div class="col">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId" label="City"
+                    placeholder="City Name" [items]="cities">
+                </ng-control>
+            </div>
+
+        </div>
+
+        <div class="row row-cols-lg-3 g-2 mx-0 mb-3">
+            <div class="col">
+                <ng-control [form]="page.form" control="taxRegistryNumber" label="Tax Registry Number"
+                    (keypress)="numberOnly($event)" placeholder="989878"></ng-control>
+            </div>
+            <div class="col">
+                <ng-control [form]="page.form" control="taxCardID" label="Tax Card ID" (keypress)="numberOnly($event)"
+                    placeholder="Card ID"></ng-control>
+            </div>
+            <div class="col">
+                <ng-control [form]="page.form" control="nid" label="NID" placeholder="Card ID"
+                    (keypress)="numberOnly($event)"></ng-control>
+            </div>
+        </div>
+
+        <div class="row row-cols-lg-3 mx-0  g-2 pb-3">
+            <div class="col">
+                <ng-control [form]="page.form" control="managerName" label="Manager Name"
+                    placeholder="Joe Dane"></ng-control>
+            </div>
+            <div class="col">
+                <ng-control [form]="page.form" control="managerMobile" label="Manager Mobile"
+                    (keypress)="numberOnly($event)" placeholder="01000000000"></ng-control>
+            </div>
+            <div class="col">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classificationId"
+                    label="classification Name" placeholder="classification Name" [items]="classifies">
+                </ng-control>
+            </div>
+        </div>
+        <div class="row row-cols-lg-3 g-2 mx-0 mb-3" >
+            <div class="col">
+                <ng-control *ngIf="!page.isEdit" [form]="page.form" control="numberOfPoints" label="Number Of Points" (keypress)="numberOnly($event)"
+                    placeholder="Number Of Points"></ng-control>
+            </div>
+            <div class="col ">
+                <ng-control *ngIf="!page.isEdit" [form]="page.form" control="amountOfMoney" label="Amount Of Money" (keypress)="numberOnly($event)"
+                    placeholder="Amount Of Money"></ng-control>
+            </div>
+        </div>
+    </form>
+</ng-container>

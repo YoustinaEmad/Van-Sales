@@ -1,0 +1,11 @@
+.col:hover img {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(90%) saturate(370%) hue-rotate(359deg) brightness(130%) contrast(100%);
+  transition: 0.3s;
+}
+
+.col:hover p {
+  color: orange;
+  transition: 0.3s;
+}
+
+

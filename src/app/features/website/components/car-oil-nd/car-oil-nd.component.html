@@ -1,0 +1,68 @@
+<div class="card p-3" *ngIf="!isLoading" >
+  <div class="card-img-container d-flex align-items-center bg-gray50">
+    <div class="icon-container">
+      <div class="p-1 bg-white cr4 pointer d-flex">
+        <img src="/assets/images/favorite_border.svg" alt="Favorite Icon" class="rect-16" *ngIf="!isProductInWishList()" (click)="addToWishList()">
+        <img src="/assets/images/favorite.svg" alt="Favorite Icon" class="rect-16" *ngIf="isProductInWishList()" (click)="removeFromWishList()">
+      </div>
+    </div>
+    <img [src]="enviroment.api+ '/'+ oil.path" class="card-img img-fluid h-100"  />
+  </div>
+
+  <div class="card-content d-flex flex-column justify-content-between ms-2">
+    <div class="hot-deal-badge">
+      <p class="hot-deal d-flex align-items-center mb-2 p-1">
+        <img
+          src="/assets/images/electric_bolt.svg"
+          alt="Hot Deal Icon"
+          class="me-2"
+        />
+        Hot Deal
+      </p>
+    </div>
+
+    <p class="mb-2">{{ oil.productName }}</p>
+
+    <div class="price d-flex justify-content-between align-items-center mb-2">
+      <p class="d-flex align-items-center mb-0">
+        <span class="current-price"
+          ><span class="regular font-14">EGP</span>{{ oil.price }}</span
+        >
+        <!-- <span class="old-price text-muted ms-2">{{ oil.oldPrice }}EGP</span> -->
+      </p>
+    </div>
+    <button
+      class="add-to-cart btn ms-auto"
+      [attr.aria-label]="'Add ' + oil.productName + ' to Cart'"
+      *ngIf="!isProductInSellCart()" [attr.aria-label]="'Add ' + oil.productName + ' to Cart'" (click)="addToCart()"
+      >
+      <img src="/assets/images/add_shopping_cart.svg" class="me-2" /> Add to
+      Cart
+    </button>
+
+    <ng-container *ngIf="isProductInSellCart()">
+      <div class="d-flex align-items-center justify-content-between w-50 ms-auto">
+        <button class=" btn btn-decrease ms-2" aria-label="Decrease quantity" *ngIf="oil.quantity > 1" (click)="decreaseQuantity()">
+          <img src="/assets/images/remove_circle_outline.svg" alt="Plus Icon" class="icon-size">
+        </button>
+        <button class=" btn btn-delete ms-2" aria-label="Decrease quantity" *ngIf="oil.quantity == 1" (click)="RemoveFromCart()">
+          <img src="/assets/images/delete-white.svg" alt="Plus Icon" class="icon-size">
+        </button>
+
+        <span class="quantity">{{oil.quantity}}</span>
+        <button class="btn btn-increase me-2" aria-label="Decrease quantity" (click)="increaseQuantity()">
+          <img src="/assets/images/add_circle_outline.svg" alt="Minus Icon" class="icon-size">
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="card p-3" *ngIf="isLoading">
+        <ngx-skeleton-loader  [theme]="{ width: '150px', 'border-radius': '4px', height: '150px', 'margin-top': '0px','margin-bottom':'0px' }"></ngx-skeleton-loader>
+        <div class="ms-2 mt-4" style="flex-grow: 1;">
+    <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '0px' }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '0px' }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '0px' }"></ngx-skeleton-loader>
+</div>
+</div>

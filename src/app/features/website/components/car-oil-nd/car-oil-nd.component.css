@@ -1,0 +1,70 @@
+
+
+.card {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.card-img-container {
+  background-color: #eeeeee;
+  position: relative;
+  width: 150px;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card-content .hot-deal {
+  background: #fffaeb;
+  color: #dc6803;
+  margin: 0 0 10px;
+}
+
+.card-content .old-price {
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+.card-content .add-to-cart {
+  background-color: #eb762c;
+  border: 1px solid #eb762c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.icon-container {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.btn-increase,
+.btn-decrease {
+  background-color: #eb762c;
+}
+.btn-increase:hover,
+.btn-decrease:hover {
+  background-color: #eb762c;
+}
+
+.btn-delete {
+  background-color: #ff0000e6;
+}
+
+.btn-delete:hover {
+  background-color: #ff0000 !important;
+}
+.low-opacity {
+  opacity: 0.5; 
+  pointer-events: none; 
+}

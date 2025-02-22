@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-between align-items-center py-2 ">
+  <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+      routerLink="/sites/jobTitle"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} Employee</p>
+
+
+  <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3 ms-auto m-2" (click)="navigateToChangePassword(id)"
+    *ngIf="page.isEdit">
+    <span class="rb-btn-text">Change Password</span>
+  </button>
+  <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
+    [disabled]="page.form?.invalid || page.isSaving">
+    <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
+  </button>
+</div>
+<hr />
+
+<ng-container *ngIf="page.isPageLoaded">
+  <form [formGroup]="page.form">
+    <div class="row row-cols-lg-3  g-2 pb-4">
+      <div class="col ">
+        <ng-control [form]="page.form" control="name" label="Employ " placeholder="Employ "></ng-control>
+      </div>
+      <div class="col">
+        <ng-control [form]="page.form" control="userName" label="UserName " placeholder="UserName "></ng-control>
+      </div>
+      <div class="col">
+        <ng-control [form]="page.form" control="jobTitle" label="Job Title" placeholder="Job Title"></ng-control>
+      </div>
+    </div>
+    <div class="row row-cols-lg-3  g-2 pb-4">
+      <div class="col">
+        <ng-control [form]="page.form" control="mobile" label="Mobile " placeholder="Mobile "
+          (keypress)="numberOnly($event)"></ng-control>
+      </div>
+      <div class="col" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" [type]="controlType.PASSWORD" control="password" label="Password "
+          placeholder="*******"></ng-control>
+      </div>
+      <div class="col" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" [type]="controlType.PASSWORD" control="confirmPassword" label="Confirm Password"
+          placeholder="*******" (blur)="confirmPassword()"></ng-control>
+        <p class="text text-danger font-12" *ngIf="!isEqualPassword">
+          Passwords do not match
+        </p>
+      </div>
+
+    </div>
+    <div class="row row-cols-lg-3  g-2 ">
+      <div class="col" *ngIf="!page.isEdit">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="roleId" label="Role" placeholder="Role"
+          [items]="RolesEnum">
+        </ng-control>
+      </div>
+
+
+
+    </div>
+
+
+  </form>
+</ng-container>

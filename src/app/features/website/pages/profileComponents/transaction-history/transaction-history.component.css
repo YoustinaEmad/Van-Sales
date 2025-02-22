@@ -1,0 +1,31 @@
+.transaction-card {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .transaction-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .badgee {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+  }
+  
+  .success {
+    background-color: #D1FADF;
+    color: #12B76A;
+  }
+  
+.warning {
+    background-color: #FFFAEB;
+    color: #F79009;
+  }
+  
+  .danger {
+    background-color: #FEF3F2;
+    color: #F04438;
+  }
+  

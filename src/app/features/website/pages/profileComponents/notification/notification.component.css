@@ -1,0 +1,25 @@
+.address-card {
+    position: relative; 
+  }
+  
+  .date-label {
+    font-size: 0.9rem; 
+    padding: 0.3rem 0.6rem;
+    border-radius: 10px; 
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+  }
+  .bg-brand-500 {
+    background-color: #EB762C;
+    color: white;
+}
+
+.bg-brand-50 {
+    background-color: #FEF7EE;
+    color: #EB762C;
+}
+
+.bg-brand-500:hover, .bg-brand-50:hover {
+    filter: brightness(1);
+}

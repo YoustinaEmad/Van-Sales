@@ -1,0 +1,160 @@
+<div class="d-flex justify-content-between align-items-center py-2 ">
+  <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+      routerLink="/salesflow/customers"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} Customer</p>
+
+  <div class="d-flex justify-content-between align-items-center py-2">
+   
+    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 ms-auto m-2"
+      (click)="navigateToChangePassword(id)" *ngIf="page.isEdit">
+      <span class="rb-btn-text">Change Password</span>
+    </button>
+    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
+    [disabled]="!page.isEdit && (page.form?.invalid || page.isSaving|| !validateImages() )">
+    <span class="rb-btn-text">{{ (page.isEdit ? 'shared.edit' : 'shared.create') | translate }}</span>
+  </button>
+  </div>
+
+
+
+ 
+</div>
+<hr />
+<ng-container *ngIf="page.isPageLoaded">
+  <form [formGroup]="page.form">
+    <div class="row g-3 mb-4">
+      <div class="col-4">
+        <ng-control [form]="page.form" control="name" label="Customer Name" placeholder="Ex: Joe"></ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [form]="page.form" control="nationalNumber" label="National ID" placeholder="Ex: 12345678912345"
+          (keypress)="numberOnly($event)"></ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [form]="page.form" control="age" label="Age" placeholder="Enter your age"
+          (keypress)="numberOnly($event)"></ng-control>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-4">
+        <ng-control [form]="page.form" control="mobile" label="Mobile" placeholder="Ex: 0123567891"
+          (keypress)="numberOnly($event)"></ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [form]="page.form" control="phone" label="Phone" placeholder="Ex: yourphone"
+          (keypress)="numberOnly($event)"></ng-control>
+      </div>
+
+      <!-- <div class="col-4">
+        <ng-control [form]="page.form" control="workInfo" label="Work Info" placeholder="Enter work info"></ng-control>
+      </div> -->
+      <div class="col-4">
+        <ng-control [form]="page.form" control="email" label="Email" placeholder="Enter Email"></ng-control>
+      </div>
+       
+
+
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-4">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="clientActivity"
+          label="Customer Activity" placeholder="Customer Activity" [items]="customerActivity">
+        </ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="clientGroupId" label="Client Group"
+          placeholder="Client Group" [items]="clientGroups">
+        </ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="gender" label="Gender"
+          placeholder="Gender" [items]="genderOptions">
+        </ng-control>
+      </div>
+
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-4">
+        <ng-control [form]="page.form" control="userName" label="User Name"
+          placeholder="Enter your userName"></ng-control>
+      </div>
+      <div class="col-4" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" control="landmark" label="Landmark" placeholder="Enter landmark"></ng-control>
+      </div>
+     
+     
+      <div class="col-4" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" control="buildingData" label="Building Data"
+          placeholder="Enter your Building Data"></ng-control>
+
+      </div>
+    </div>
+    <div *ngIf="!page.isEdit" class="row g-3 mb-4">
+      <div class="col-4">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+          (change)="onGovernorateChange($event.id)" label="Governorate " placeholder="Governorate "
+          [items]="governorates">
+        </ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId" label="City "
+          placeholder="City " [items]="cities">
+        </ng-control>
+      </div>
+      <div class="col-4">
+        <ng-control [form]="page.form" control="street" label="Street" placeholder="Enter street"></ng-control>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+
+      <div class="col-4" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" control="password" label="Password" placeholder="Enter password"
+          [type]="controlType.PASSWORD"></ng-control>
+      </div>
+      <div class="col-4" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" control="confirmPassword" label="confirm Password"
+          placeholder="confirm your Password" [type]="controlType.PASSWORD" (blur)="confirmPassword()"></ng-control>
+        <p class="text text-danger font-12" *ngIf="!isEqualPassword">Passwords do not match</p>
+      </div>
+      <div class="col-4" *ngIf="!page.isEdit">
+        <ng-control [form]="page.form" label="latitude" control="latitude" [disabled]="!isEditMode"
+          placeholder="Enter latitude">
+        </ng-control>
+      </div>
+
+    </div>
+
+    <div class="row g-3 mb-4" *ngIf="!page.isEdit">
+      <div class="col-4">
+        <ng-control [form]="page.form" label="longitude" control="longitude" [disabled]="!isEditMode"
+          placeholder="Enter longitude">
+        </ng-control>
+      </div>
+
+
+    </div>
+    <div class="row g-3 mb-4" style="display: flex; justify-content: space-between;" *ngIf="!page.isEdit">
+      <div class="col-6"  >
+        <label for="map" class="form-label">Select Location</label>
+        <div id="map" style="height: 300px; width: 65%;"></div>
+      </div>
+      <div class="col-4 col-md-4 col-lg-4 mt-5 h-100" *ngFor="let image of images; let i = index">
+
+        <div class="border p-3 text-center h-60">
+          <div *ngIf="image.uploaded; else uploadTemplate">
+            <img [src]="environment.api+'/'+image.src" alt="Uploaded Image" class="img-fluid mb-2 img-thumbnail" />
+          </div>
+          <ng-template #uploadTemplate>
+            <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
+              <i class="fa fa-upload fa-2x mb-2 color-purple-500"></i>
+              <p class="color-purple-500" *ngIf="!image.uploaded">Upload New Image</p>
+              <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+            </label>
+            <input #file type="file" id="fileInput-{{ i }}" class="d-none" (change)="onImageUpload(file.files, i)" />
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+</ng-container>

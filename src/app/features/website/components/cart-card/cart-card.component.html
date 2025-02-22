@@ -1,0 +1,50 @@
+<div class="container-fluid p-0" >
+    <div class="card p-2 d-flex flex-row align-items-center  border radius-12 ">
+        <div class="card-img-container d-flex align-items-center justify-content-center bg-light p-2 rounded">
+            <img [src]="enviroment.api+ '/'+ oil.path" alt="{{ oil.productName }}" class="card-img img-fluid rounded">
+        </div>
+
+        <div class="card-content ms-1" >
+          
+            <p class="mb-1 fw-bold">{{ oil.productName }}</p>
+            <p class="mb-0 text-muted">{{oil.quantity}}x <span class="text-dark fw-semibold">{{ oil.price }} EGP</span></p>
+            
+
+            <button class="btn bg-gray-100 mb-1  position-absolute top-0 end-0 m-2" [attr.aria-label]="'Delete ' + oil.productName" (click)="RemoveFromCart()">
+                <img src="/assets/images/delete.svg" alt="Delete" class="me-1"> Delete
+            </button>
+
+       
+              <ng-container >
+                <div class="d-flex align-items-center justify-content-between my-2">
+                  <button class=" btn btn-decrease ms-2" aria-label="Decrease quantity" (click)="decreaseQuantity()">
+                    <img src="/assets/images/remove_circle_outline.svg" alt="Plus Icon" class="icon-size">
+                  </button>
+                  <!-- <button class=" btn btn-delete ms-2" aria-label="Decrease quantity"  (click)="RemoveFromCart()">
+                    <img src="/assets/images/delete-white.svg" alt="Plus Icon" class="icon-size">
+
+                  </button> -->
+        
+                  <span class="quantity">{{oil.quantity}}</span>
+                  <button class="btn btn-increase me-2" aria-label="Decrease quantity"  (click)="increaseQuantity()">
+                    <img src="/assets/images/add_circle_outline.svg" alt="Minus Icon" class="icon-size">
+                  </button>
+                </div>
+              </ng-container>
+        </div>
+    </div>
+</div> 
+
+<!-- <div *ngIf="isLoading">
+    <div class="product-card p-3 h-100">
+  
+      <div class="card-img-container">
+        <div class="card-img">
+          <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '100%', 'margin-top': '0px', }"></ngx-skeleton-loader>
+        </div>
+      </div>
+      <ngx-skeleton-loader  [theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '8px', }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader  [theme]="{ width: '70%', 'border-radius': '4px', height: '16px', 'margin-top': '0px', }"></ngx-skeleton-loader>
+      <ngx-skeleton-loader  [theme]="{ width: '80%', 'border-radius': '4px', height: '16px', 'margin-top': '0px', }"></ngx-skeleton-loader>
+    </div>
+  </div> -->

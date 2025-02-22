@@ -1,0 +1,15 @@
+.nav-tabs .nav-link.bg-purple-100 {
+  background-color: #fcecd8; /* Adjust this to match your active tab style */
+  color: #EB762C;
+}
+
+/* Optional: Style for the icon color when hovered */
+
+.custom-large-textarea {
+  width: 100%; /* Ensure it takes the full width of the container */
+  min-height: 300px; /* Explicitly set a larger height */
+  max-height: 500px; /* Optional: Limit maximum height */
+  font-size: 1rem; /* Adjust text size */
+  padding: 10px; /* Add padding for better appearance */
+  box-sizing: border-box; /* Ensure padding doesn't overflow */
+}

@@ -1,0 +1,154 @@
+<div  class="mb-2">
+    <div class="d-flex justify-content-between align-items-center py-2 px-3">
+        <div class="d-flex align-items-center">
+            <h2 class="mb-0 color-gray-600 ts-5">Customer Group</h2>
+            <div class="color-brand-700 bg-brand-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Group
+            </div>
+        </div>
+       
+
+
+            <div class="d-flex">
+                <button class="bg-brand-100 py-2 px-4 color-brand-500 no-border cr3 mx-1"
+                (click)="deleteSelectedCustomerGroups()">Delete</button>
+                <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3"
+            (click)="navigateToCreateCustomerGroup()">Add new group</button>
+               
+            </div>
+    </div>
+    <hr />
+
+            <form [formGroup]="page.searchForm">
+                <div class="form-body">
+
+                    <div class="row g-2">
+
+                        <div class="col-5">
+
+                            <ng-control [form]="page.searchForm" control="Name" label="Customer Group Name"
+                                placeholder="Enter-CustomerGroup.name">
+
+                            </ng-control>
+
+                        </div>
+
+                        <div class="col-2 d-flex align-items-end">
+                            <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
+                                (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
+                                <i class="uil uil-search"></i>
+                                <span class="rb-btn-text d-md-inline-block">
+                                    {{'shared.search'|translate}}</span>
+                            </button>
+        
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </form>
+
+            <div class="scolled my-3 h-100">
+                <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+                <table class="table " *ngIf="!page.isSearching">
+                    <thead>
+                        <tr class="th-header">
+                            <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                                <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                                    {{colum.Title | translate}}
+                                    <div *ngIf="colum.Sortable" class="d-inline-block"
+                                        [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                        <i class="uil uil-sort sort-icon"
+                                            [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                                    </div>
+                                </th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [hidden]="!page.isSearching">
+                            <td colspan="100%">
+                                <img src="/assets/img/gif-loading.gif" class="d-block"
+                                    style="width:300px;margin: 0 auto;">
+                            </td>
+                        </tr>
+                        <tr [hidden]="page.isSearching || items.length>0">
+                            <td colspan="100%">
+                                <span>{{'shared.no-data-found'|translate}}</span>
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>
+                                    <input type="checkbox" [(ngModel)]="item.selected" />
+                                </td>
+                                <td>{{item.name}}</td>
+                                <!-- <td><span
+                                        [ngClass]="{'badge-success': item.taxExempted, 'badge-danger': !item.taxExempted}">
+                                        {{ item.taxExempted ? 'On' : 'Off' }}
+                                    </span>
+                                </td>-->
+                                <td>
+                                    <select class="form-select" [(ngModel)]="item.taxExempted"
+                                        (ngModelChange)="updateTaxExemptStatus(item)">
+                                        <option [ngValue]="true">On</option>
+                                        <option [ngValue]="false">Off</option>
+                                    </select>
+                                </td>
+
+
+
+                                <td>
+                                    <button pButton icon="pi pi-trash"
+                                        class="p-button-rounded p-button-text p-button-danger" aria-label="Delete"
+                                        (click)="showDeleteConfirmation(item)">
+                                    </button>
+                                    <button pButton icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-text p-button-info" aria-label="Edit"
+                                        (click)="editCustomerGroup(item.id)">
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+
+        
+    
+    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+    </ng-pagination>
+</div>
+
+<ng-template #confirmDeleteTemplate>
+    <div class="modal-content confirm-modal">
+        <div class="modal-body">
+            <p class="modal-confirm-content mb-2">
+                {{'shared.delete-confirmation.message'|translate}}
+                <strong *ngIf="selectedItem">{{selectedItem.Name}}</strong>
+            </p>
+
+
+            <div class="d-flex mt-4">
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
+                    (click)="remove();modalRef.hide();">Confirm</button>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #confirmDeleteTemplates>
+    <div class="modal-body text-center">
+      <p>Are you sure you want to delete the selected customer groups?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
+      <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
+    
+    </div>
+  </ng-template>

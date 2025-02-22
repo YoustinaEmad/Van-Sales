@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center py-2 ">
+    <p class="mb-2 color-gray-800 ts-3"><img src="../assets/icons/expand_more.png" class="pointer "
+        routerLink="/profile"> Order History</p>
+  </div>
+  <hr class="m-1 color-gray-300 mb-3" />
+  
+    <ng-container  class=" bg-white rounded shadow-sm">
+
+
+    <div class="d-flex justify-content-end">
+      <button type="button" class="bg-brand-50 py-2 px-4 color-brand-500 no-border cr3" (click)="Print()">Download Invoice</button>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row gy-4"> <!-- Use row for consistent layout -->
+      <!-- Large Order Summary Card -->
+      <div class="col-6"> <!-- Full-width card -->
+        <div class="card shadow-sm border" style="border-color: #E9EAEB;">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <div class="d-flex align-items-start">
+                <img src="../assets/images/material-symbols_box-outline (3).png" alt="Order Icon" class="me-2" style="width: 45px; margin-top: 10px;" />
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-bold">Order #{{ orderDetails?.orderNumber }}</p>
+                  <div class="mb-2">
+                    <span class="fw-bold fs-5">{{ getTotalQuantity() }}</span> product{{ getTotalQuantity() > 1 ? 's' : '' }}
+                  </div>
+                  <div class="mb-3">
+                    <span class="fw-bold text-dark fs-5">{{ orderDetails?.totalPrice }}</span> EGP
+                  </div>
+                </div>
+              </div>
+              <div [ngStyle]="getStatusStyle(orderDetails.status)">
+                {{ getOrderStatusName(orderDetails.status) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small Order Items Card -->
+      <div class="col-12"> <!-- Full-width card -->
+        
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let item of orderDetails?.orderItems">
+              <div class="card p-2 d-flex flex-row align-items-center border radius-12">
+                <div class="card-img-container d-flex align-items-center justify-content-center bg-light p-2 rounded">
+                  <img *ngIf="item?.path" [src]="getImageUrl(item.path)" alt="Product Image" class="card-img-top px-2" style="height: 150px; width: 150px; object-fit: contain; border-radius: 10px; cursor: pointer;">
+                  <div class="card-content ms-1">
+                    <p class="card-title">{{ item?.name }}</p>
+                    <p class="card-text">{{ item?.quantity }} Items × {{ item?.itemPrice | number:'1.1-1' }} EGP per item</p>
+                    <p class="font-weight-bold">Price: {{ item?.price | number:'1.1-1' }} EGP</p>
+                    <!-- <p class="font-weight-bold">Item Weight: {{ item?.itemWeight | number:'1.1-1' }} kg</p>
+                    <p class="font-weight-bold">Weight: {{ item?.weight | number:'1.1-1' }} kg</p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-end align-items-center mt-4">
+      <button class="bg-brand-50 py-2 px-4 color-brand-500 cr3 border border-warning bg-white" (click)="onCancel()">Cancel</button>
+      <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3 ms-3" (click)="reOrder(orderId)">Reorder</button>
+    </div>
+  </ng-container>
+
+
+<!-- Print Section -->
+<div id="print-section" class="d-none">
+  <div class="bg-light">
+    <div class="container mt-4 bg-white p-4 rounded shadow-sm">
+      <h2 class="text-center mb-4">Order Invoice</h2>
+
+      <div class="row mt-4">
+        <div class="col-6">
+          <p><strong>Customer Name:</strong> {{ orderDetails?.customerName }}</p>
+          <p><strong>Order Number:</strong> {{ orderDetails?.orderNumber }}</p>
+          <p><strong>Date Added:</strong> {{ orderDetails?.date | date: 'dd/MM/yyyy ' }}</p>
+        </div>
+        <div class="col-6 text-end">
+          <p><strong>Total Items:</strong> {{ orderDetails?.orderItems.length }}</p>
+          <p><strong>Total Net Price:</strong> {{ orderDetails?.totalNetPrice | number:'1.1-1' }} EGP</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price (EGP)</th>
+                <th>Total (EGP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of orderDetails?.orderItems">
+                <td>{{ item?.name }}</td>
+                <td>{{ item?.quantity }}</td>
+                <td>{{ item?.itemPrice | number:'1.1-1' }}</td>
+                <td>{{ item?.price | number:'1.1-1' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

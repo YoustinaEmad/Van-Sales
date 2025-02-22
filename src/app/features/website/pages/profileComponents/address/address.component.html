@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center py-2 ">
+    <p class="mb-2 color-gray-800 ts-3"><img src="../assets/icons/expand_more.png" class="pointer "
+        routerLink="/profile"> Address</p>
+  </div>
+  <hr class="m-1 color-gray-300 mb-4" />
+
+  <ng-container>
+
+    <!-- Address Rows -->
+    <div class="row g-4  " >
+      <app-table-skelton *ngIf="page.isPageLoaded" ></app-table-skelton>
+      <div class="col-md-6 "  *ngFor="let address of shippingAddresses">
+        <div  [ngClass]="{
+              'address-card': true,
+              'selected-address': selectedAddress === address
+            }" style="height: 70px;" >
+          <div class="">
+            <!-- Radio button on the left for selecting the address -->
+            <div class="d-flex align-items-center me-2 ">
+              <input type="radio" name="selectedAddress" [value]="address" class="m-1"
+              [checked]="selectedAddress?.id === address.id"    (change)="onAddressSelectionChange(address)">
+              <p class="mb-1 card-header">
+                {{ address.street }}, {{ address.cityName }}, {{ address.governorateName }}
+              </p>
+
+              <!-- Display "Default" next to the default address -->
+              <span *ngIf="address.id === defaultShippingAddressId" class="default-label ">Default</span>
+            </div>
+
+            <div class="d-flex align-items-center  ">
+            
+
+              <button class="bg-brand-500 py-1 px-3 color-gray-25 no-border cr3 edit-Add"  (click)="editAddress(address)">Edit</button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- <p *ngIf="address.error" class="address-error cr5 mt-2 mx-3">{{ address.error }}</p> -->
+      </div>
+    </div>
+
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-end mt-4">
+      <button class="bg-brand-50 py-2 px-4 color-brand-500 cr3 border border-warning bg-white me-2"
+        (click)="onCancel()">
+        Cancel
+      </button>
+      <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" routerLink="/newAddress">
+        Add new address
+      </button>
+    </div>
+  </ng-container>
+</div>
+
+
+
+

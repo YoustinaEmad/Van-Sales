@@ -1,0 +1,5 @@
+/* CSS for custom placeholder opacity */
+.form-control::placeholder {
+    color: #6c757d; /* Adjust color as needed */
+    opacity: 0.75; /* Adjust opacity (0 is fully transparent, 1 is fully opaque) */
+}

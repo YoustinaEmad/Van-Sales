@@ -1,0 +1,165 @@
+<div class="container-fluid mt-5 mb-5 ">
+  <div class="row g-3">
+    <div class="col-1">
+      <div class="scrollable-container ">
+        <div class="image-container mb-2" *ngFor="let item of limitedImages">
+          <img [src]="item.image" alt="{{ item.name }}" class="img-fluid bg-gray-100 pointer py-2 radius-5"
+            (click)="onThumbnailClick(item.image)">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <img [src]="selectedImage" alt="Big Product Image" class="bg-gray-100 radius-5 img-fluid h-100 ">
+    </div>
+
+
+    <div class="col-6">
+      <div class="bottle-details ">
+        <p class="product-title font-32 color-gray-700 m-0">Hx8 5W-40 Fully Synthetic Motor Oil</p>
+
+        <div class="pricing d-flex align-items-center p-8px">
+          <span class="color-gray-600 font-16">EGP</span>
+          <span class="color-orange-600 font-32 bold">1800</span>
+          <span class="color-gray-600 line-hi text-decoration-line-through font-16">1950 EGP</span>
+        </div>
+
+        <div class="bg-green-100 discount-badge radius-6 d-flex align-items-center">
+          <img src="/assets/images/discount.svg" alt="Discount Icon" class="rect-20">
+          <p class="color-green-600 m-0 bold font-16">15%</p>
+          <span class="font-12 color-green-600">off&nbsp;</span>
+          <span class="color-gray-900 font-12">only for you</span>
+        </div>
+      </div>
+
+      <div class="feature_section d-flex justify-content-between align-items-start  bg-gray-25 radius-8">
+        <div class="feature_item text-center">
+          <img src="/assets/images/fast.svg" alt="Fast Shipping Icon" class="rect-24">
+          <p class="font-12 color-gray-700">Fast Shipping</p>
+        </div>
+        <img src="/assets/images/verticalLine.svg" alt="Divider Icon">
+        <div class="feature_item text-center">
+          <img src="/assets/images/payment.svg" alt="Payment Methods Icon" class="rect-24">
+          <p class="font-12 color-gray-700">Payment Methods</p>
+        </div>
+        <img src="/assets/images/verticalLine.svg" alt="Divider Icon">
+        <div class="feature_item text-center">
+          <img src="/assets/images/easy.svg" alt="Easy Return Icon" class="rect-24">
+          <p class="font-12 color-gray-700">Easy Return</p>
+        </div>
+        <img src="/assets/images/verticalLine.svg" alt="Divider Icon">
+        <div class="feature_item text-center">
+          <img src="/assets/images/onTime.svg" alt="On Time Delivery Icon" class="rect-24">
+          <p class="font-12 color-gray-700">On Time Delivery</p>
+        </div>
+      </div>
+
+      <div class="product_details color-gray-500 font-16">
+        <p>Introducing our premium Hx8 5W-40 Fully Synthetic Motor Oil, designed to provide exceptional performance
+          and
+          protection for your engine. This advanced formula ensures optimal lubrication, reducing wear and tear while
+          enhancing fuel efficiency. Perfect for both high-performance vehicles and everyday drivers.</p>
+      </div>
+
+      <div class="company_details mt-3 d-flex align-items-center justify-content-between p-3 bg-gray-50">
+        <div class="company_info d-flex align-items-center">
+          <img src="/assets/images/company.svg" alt="Company Icon" class="rect-32 ">
+          <div class="ms-2">
+            <p class="color-gray-600 small m-0">Sold By</p>
+            <p class="color-orange-500 m-0">Shell Service Center</p>
+          </div>
+        </div>
+        <a href="company-link.html" class="arrow_icon">
+          <img src="/assets/images/rigth_arrow.svg" alt="Arrow Icon">
+        </a>
+      </div>
+
+      <div class="confirmation mt-3 d-flex align-items-center justify-content-between">
+        <div class="bg-gray-25 me-3">
+          <button class="btn p-3 radius-6" aria-label="Add to favorites">
+            <img src="/assets/images/favorite_border.svg" alt="Favorite Icon" class="rect-24">
+          </button>
+        </div>
+
+        <button
+          class="add-to-cart bg-brand-500 d-flex align-items-center justify-content-center w-100 radius-4 font-16">
+          <img src="/assets/images/add_shopping_cart.svg" alt="Cart Icon" class="me-2 rect-24">
+          Add to Cart
+        </button>
+
+        <div class="quantity-controls d-flex align-items-center justify-content-center bg-gray-100 ms-3 radius-8">
+          <button class="btn decrease-btn p-0" aria-label="Decrease quantity">
+            <img src="/assets/images/remove_circle_outline.svg" alt="Minus Icon" class="rect-24">
+          </button>
+          <span class="quantity mx-2">1</span>
+          <button class="btn increase-btn p-0" aria-label="Increase quantity">
+            <img src="/assets/images/add_circle_outline.svg" alt="Plus Icon" class="rect-24">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row mt-5">
+    <div class="card p-4 radius-8">
+      <div class="header pb-3 font-24">
+        Specification
+      </div>
+      <hr class="hr m-0">
+      <div class="card-body">
+        <div class="row pt-4 g-3">
+          <div class="col-sm-6 ">
+            <div class="card  radius-8 reveiw-card">
+              <div class="card-body">
+                <h5 class="card-title font-20 bold"><img src="/assets/images/name.svg" alt="" class="me-1">Mohamed
+                  Ahmed
+                </h5>
+
+                <p class="card-text font-16">Check out our top-tier Hx8 5W-40 Fully Synthetic Motor Oil! It's
+                  engineered
+                  to
+                  deliver outstanding performance and safeguard your engine. This cutting-edge formula guarantees
+                  superior lubrication, minimizing wear and tear while boosting fuel efficiency. Ideal for both
+                  high-performance cars and daily commuters.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card radius-8 reveiw-card">
+              <div class="card-body">
+                <h5 class="card-title font-20 bold"><img src="/assets/images/name.svg" alt="" class="me-1">Mohamed
+                  Ahmed
+                </h5>
+
+                <p class="card-text font-16">Check out our top-tier Hx8 5W-40 Fully Synthetic Motor Oil! It's
+                  engineered
+                  to
+                  deliver outstanding performance and safeguard your engine. This cutting-edge formula guarantees
+                  superior lubrication, minimizing wear and tear while boosting fuel efficiency. Ideal for both
+                  high-performance cars and daily commuters.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 mb-5">
+    <div class="container-fluid">
+      <div class="p-2">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+          <p class="font-24 m-0">Car Oils</p>
+          <a href="#" class="color-brand-500 font-24 text-decoration-none">See All</a>
+        </div>
+        <div class="row g-1">
+          <div class="col-3" *ngFor="let oil of carOils">
+            <app-car-oil [oil]="oil"></app-car-oil>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

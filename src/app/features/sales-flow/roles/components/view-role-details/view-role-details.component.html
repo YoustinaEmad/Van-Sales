@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h3><img src="../assets/icons/expand_more.png" class="pointer" /> Roles & Permissions</h3>
+
+  </div>
+  <hr class="color-gray-200">
+  <div>
+    <!-- <label for="roleName" class="form-label">Role Name</label>
+    <input id="roleName" type="text" class="form-control " placeholder="Enter Name" /> -->
+    <!-- <ng-control [form]="page.searchForm" control="Name" label="Role Name"
+    placeholder="Enter Name">
+</ng-control> -->
+
+
+
+     <form [formGroup]="page.searchForm">
+      <div class="form-body">
+        <div class="row g-2">
+
+          <div class="col-6">
+            <ng-control [form]="page.searchForm" control="FeatureName" label="Feature Name" placeholder="Feature Name">
+            </ng-control>
+          </div>
+
+
+
+          <div class="col-4 ms-auto d-flex align-items-end">
+            <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+              [disabled]="page.searchForm.invalid || page.isSearching">
+              <i class="uil uil-search"></i>
+              <span class="rb-btn-text d-md-inline-block">
+                {{'shared.search'|translate}}</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </form> 
+  </div>
+
+  <div *ngFor="let section of items; let i = index" class="mt-4">
+    <div class="card">
+      <div class=" d-flex justify-content-between align-items-center m-2">
+        <div class="form-check form-switch">
+          <p-inputSwitch [ngModel]="isSectionActive(section)" (onChange)="toggleSectionFeatures(section)"
+            class="form-check-input"></p-inputSwitch>
+          <label class="form-check-label px-2">{{ section.sectionName }}</label>
+        </div>
+        <button class="btn btn-link p-0 w-7" (click)="onSectionDropdownChange(section, i) ">
+          <img src="../assets/icons/expand_more.png" class="pointer" />
+        </button>
+        <!-- <select
+          class="form-select form-select-sm "
+          style="width: 400px;"
+          [(ngModel)]="sectionDropdownValues[i]" 
+          (ngModelChange)="onSectionDropdownChange(section, i)"
+        >
+           <option value="all">All</option>
+          <option value="viewOnly">View only</option> 
+        </select> -->
+      </div>
+
+      <!-- Section Features -->
+      <div class="card-body mx-3" *ngIf="section.showFeatures">
+        <div *ngFor="let feature of section.features" class="d-flex justify-content-between align-items-center mb-3">
+          <div class="form-check form-switch">
+            <p-inputSwitch [(ngModel)]="feature.isActiveToRole" (onChange)="updateSectionStatus(section,feature)"
+              class="form-check-input"></p-inputSwitch>
+            <label class="form-check-label px-2">{{ feature.featureName }}</label>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

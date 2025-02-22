@@ -1,0 +1,12 @@
+nav {
+  position: sticky;
+  top: 0px;
+}
+
+a:hover {
+  color:  #ae45e5 !important;
+}
+
+.no-underline {
+  text-decoration: none;
+}

@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand" href="#">CarOils</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form class="d-flex justify-content-center align-items-center w-100 mx-4" role="search">
+        <input type="text" class="form-control cr2 pad-8-16 search-input w-100" placeholder="Search...">
+      </form>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" >Lang</a>
+          <img src="/assets/images/Line.svg" class="m-auto" alt="separate" class="mx-2">
+        </li>
+        <li class="nav-item" *ngIf="websiteService.userInfo" [title]="websiteService.userInfo?.name">
+          <img src="/assets/images/person_outline.svg" alt="User Icon" class="nav-icon">
+          <a class="nav-link" href="/auth/login">{{websiteService.userInfo?.name?.slice(0,5) + '...'}}</a>
+          <img src="/assets/images/Line.svg" class="m-auto" alt="separate" class="mx-2">
+        </li>
+        <li class="nav-item pointer" *ngIf="!websiteService.userInfo" [routerLink]="'/auth/login'" >
+          <img src="/assets/images/person_outline.svg" alt="User Icon" class="nav-icon">
+          <a class="nav-link" href="#">Login</a>
+          <img src="/assets/images/Line.svg" class="m-auto" alt="separate" class="mx-2">
+        </li>
+        <li class="nav-item">
+          <img src="/assets/images/favorite_border.svg" alt="Wishlist Icon" class="nav-icon">
+          <a class="nav-link" routerLink="/wishlist" *ngIf="websiteService.wishListProduct.length" pBadge
+            [value]="websiteService.wishListProduct.length" severity="warning">Wishlist</a>
+          <a class="nav-link" routerLink="/wishlist" *ngIf="!websiteService.wishListProduct.length">Wishlist</a>
+          <img src="/assets/images/Line.svg" class="m-auto" alt="separate" class="mx-2">
+        </li>
+        <li class="nav-item pointer" (click)="showCartDialog($event)">
+          <img src="/assets/images/shopping_cart.svg" alt="Cart Icon" class="nav-icon d-block">
+          <a class="nav-link" href="#" pBadge [value]="websiteService.productsInCart.length" severity="warning"
+            *ngIf="websiteService.productsInCart.length" (click)="showCartDialog($event)">Cart</a>
+          <a class="nav-link" href="#" *ngIf="!websiteService.productsInCart.length">Cart</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<p-dialog header="Added to Cart" [(visible)]="cartVisible" [modal]="true" [closable]="false" [style]="{width: '550px'}"
+  [position]="'right'" [draggable]="false">
+
+  <ng-template pTemplate="header">
+    <div class="dialog-header-content d-flex align-items-center justify-content-between">
+      <img src="/assets/images/cart_popup.svg" alt="Cart" class="header-icon me-2" style="width: 24px; height: 24px;">
+      <span class="fw-bold">Added to Cart</span>
+    </div>
+    <p class="mb-0 pointer" (click)="cartVisible = false">Close</p>
+  </ng-template>
+
+  <ng-container *ngIf="websiteService.productsInCart.length > 0; else emptyCart">
+    <div class="cart-popup d-flex flex-column">
+
+      <div class="cart-item mb-2 p-0" *ngFor="let oil of websiteService.productsInCart">
+        <app-cart-card [oil]="oil"></app-cart-card>
+      </div>
+
+      <div class="cart-total d-flex justify-content-between align-items-center py-3 ">
+        <span class="fw-bold fs-6">Cart Total Amount</span>
+        <span class="fw-bold fs-5 text-dark">{{getTotalPrice()}}</span>
+      </div>
+
+      <div class="cart-footer mt-auto d-flex justify-content-between gap-2 mb-3">
+        <button pButton type="button"
+          class="bg-orange w-100 d-flex align-items-center justify-content-center border-0 radius-5"
+          (click)="checkout()">
+          <span>Checkout</span>
+          <span class="total color-gray-25 px-2 py-1 radius-4 ms-1">{{websiteService.productsInCart.length}}</span>
+        </button>
+        <button pButton type="button" label="Continue Shopping" class="w-100 color-orange continue-btn radius-5"
+          (click)="cartVisible = false">
+        </button>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <ng-template #emptyCart>
+    <div class="text-center py-5 h-100 d-flex flex-column justify-content-center align-items-center">
+      <p class="fs-5 text-muted">Your cart is empty.</p>
+    </div>
+  </ng-template>
+</p-dialog>

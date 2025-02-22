@@ -1,0 +1,131 @@
+<div class="container-fluid p-5">
+    <div class="row g-4">
+        <div class="col-lg-8 d-flex flex-column gap-4">
+            <div class="d-flex align-items-center gap-2 ">
+                <p class="font-24 color-gray-900 m-0">Cart</p>
+                <span
+                    class="total bg-brand-50 color-brand-500 radius-8 px-3 py-1">{{websiteService.productsInCart.length}}</span>
+            </div>
+            <div class="card border-0 rb-p-24 d-flex flex-column gap-3">
+                <div class="p-0" *ngFor="let oil of websiteService.productsInCart">
+                    <app-cart-card [oil]="oil"></app-cart-card>
+                </div>
+                <div
+                    class="products-total d-flex justify-content-between align-items-center bg-brand-50 p-2 text-center">
+                    <p class="color-brand-700 font-16 m-0">Products Totals</p>
+                    <p class="color-brand-700 font-16 m-0">{{getTotalPrice()}} EGP</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 d-flex flex-column gap-2">
+            <p class="font-24 color-gray-900 mb-0">Checkout</p>
+        
+            <!-- Only show the Shipping Addresses when not in editing mode -->
+            <div *ngIf="!isEditing && !isAddingNewAddress">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <p class="font-16 color-gray-900 mb-0">Shipping Addresses</p>
+                    <!-- <button *ngIf="!isEditing" (click)="addNewAddress()"
+                        class="btn btn-sm py-2 px-4 bg-brand-500 color-gray-25 no-border cr3">
+                        Add New Address
+                    </button> -->
+                </div>
+                <div *ngFor="let address of shippingAddresses" class="d-flex justify-content-between align-items-center bg-brand-50 my-2">
+                    <p class="my-2">
+                        <input class="form-check-input mx-2" type="radio" name="flexRadioDefault1"
+                            id="flexRadioDefault1{{ address.id }}" [checked]="selectedAddress?.id === address.id"
+                            (click)="onSelectShippingAddress(address)" />
+                        <strong>Address:</strong> {{ address.governorateName }} , {{ address.cityName }} , {{ address.street }} , {{address.buildingData}}
+                    </p>
+                </div>
+                
+            </div>
+        
+            <!-- Editable Form (visible when editing) -->
+            <div *ngIf="isEditing || isAddingNewAddress" class="card p-4 shadow-sm">
+                <form (ngSubmit)="saveAddress()" class="needs-validation" novalidate>
+                    <!-- Governorate -->
+                    <div class="mb-3">
+                        <label for="governorateId" class="form-label font-weight-bold">Governorate</label>
+                        <select [(ngModel)]="editableAddress.governorateId" name="governorateId" id="governorateId"
+                            class="form-select" required (change)="onGovernorateChange($event.target.value)">
+                            <option value="" disabled>Select Governorate</option>
+                            <option *ngFor="let governorate of governorates" [value]="governorate.id">
+                                {{ governorate.name }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a governorate.
+                        </div>
+                    </div>
+                    <!-- City -->
+                    <div class="mb-3">
+                        <label for="cityId" class="form-label font-weight-bold">City</label>
+                        <select [(ngModel)]="editableAddress.cityId" name="cityId" id="cityId" class="form-select" required>
+                            <option value="" disabled>Select City</option>
+                            <option *ngFor="let city of cities" [value]="city.id">
+                                {{ city.name }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a city.
+                        </div>
+                    </div>
+                    <!-- Street -->
+                    <div class="mb-3">
+                        <label for="street" class="form-label font-weight-bold">Street</label>
+                        <input type="text" [(ngModel)]="editableAddress.street" name="street" id="street"
+                            class="form-control" placeholder="Enter street name" required>
+                        <div class="invalid-feedback">
+                            Please enter a street name.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="buildingData" class="form-label font-weight-bold">Building Data</label>
+                        <input type="text" [(ngModel)]="editableAddress.buildingData" name="buildingData" id="buildingData"
+                            class="form-control" placeholder="Enter Building Data" required>
+                        <div class="invalid-feedback">
+                            Please enter a Building Data.
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end gap-3" *ngIf="isEditing || isAddingNewAddress">
+                        <button type="submit" class="btn bg-brand-500 color-gray-25 px-4"  >Save</button>
+                        <button type="button" (click)="cancelEdit()"
+                            class="bg-brand-50 py-2 px-4 color-brand-500 no-border cr3 mx-1">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        
+            <!-- Payment Details -->
+            <div class="card border-0 payment">
+                <div class="d-flex flex-column gap-4">
+                    <p class="font-16 color-gray-900 mb-0">Payment Details</p>
+                    <div class="card details d-flex flex-column g-2 text-truncate">
+                        <ng-container *ngFor="let item of websiteService.productsInCart">
+                            <div class="d-flex justify-content-between text-truncate">
+                                <p class="text-truncate">{{item.quantity}}X {{item.productName}}</p>
+                                <p>{{item.quantity * item.price}} EGP</p>
+                            </div>
+                        </ng-container>
+                        <hr class="my-3">
+                        <div class="d-flex justify-content-between">
+                            <p>Subtotal</p>
+                            <p>{{getTotalPrice()}} EGP</p>
+                        </div>
+                        <div class="d-flex justify-content-between text-truncate">
+                            <p>Tax Fees (14%)</p>
+                            <p>700 EGP</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total</p>
+                            <p>6100 EGP</p>
+                        </div>
+                    </div>
+                    <button class="btn pay-btn bg-brand-500 font-16 radius-6 pointer" (click)="Save()">Pay</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

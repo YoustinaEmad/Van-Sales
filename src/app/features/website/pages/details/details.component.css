@@ -1,0 +1,62 @@
+.scrollable-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 600px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+}
+/* .big-image{
+  padding: 63px 0px 62.269px 0px;
+
+} */
+.discount-badge {
+  border: 1px dashed #6ce9a6;
+  width: fit-content;
+  border-radius: 5px;
+  padding: 8px 16px 8px 8px;
+}
+
+.feature_section {
+  margin: 20px 0px;
+  padding: 24px 32px;
+
+}
+
+.company_details {
+  border: 1px solid !important;
+  border-image: linear-gradient(to right, #F79009, #FFF5E8) 1 !important;
+  border-radius: 5px;
+  margin: 20px 0px;
+  padding: 16px 20px;
+}
+
+.add-to-cart {
+  border: none;
+  color: white;
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+}
+
+.add-to-cart:hover {
+  background-color: darkorange;
+}
+
+.card {
+border: none;
+}
+.reveiw-card{
+  border: 1px solid  #F5F5F5;
+}
+.quantity-controls{
+padding: 16px 8px;
+
+}
+.hr{
+  border-top: 1px solid  #E9EAEB !important;
+}

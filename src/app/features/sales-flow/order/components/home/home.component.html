@@ -1,0 +1,162 @@
+<div class="mb-2">
+    <div class="d-flex justify-content-between align-items-center py-2 px-3">
+        <div class="d-flex align-items-center">
+            <h2 class="mb-0 color-gray-600 ts-5">Orders</h2>
+            <div class="color-brand-700 bg-brand-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Orders
+            </div>
+        </div>
+
+
+        <div class="d-flex">
+            <div class="position-relative">
+                <button class="bg-brand-100 py-2 px-4 color-brand-500 no-border cr3 mx-1"
+                    (click)="toggleDownloadOptions()">Download</button>
+                
+                <div *ngIf="showDownloadOptions" class="download-options">
+                    <button (click)="downloadExcel()">Excel</button>
+                    <button (click)="downloadPDF()">PDF</button>
+                </div>
+            </div>
+            <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateOrder()">Add
+                New order</button>
+
+        </div>
+    </div>
+    <hr />
+
+    <form [formGroup]="page.searchForm">
+        <div class="form-body">
+            <div class="row g-2">
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="CustomerName" label="Customer Name"
+                        placeholder="Customer Name">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="CustomerNumber" label="Customer Mobile"
+                        placeholder="Customer Mobile">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="OrderNumber" label="Order Number"
+                        placeholder="Order Number">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="OrderStatus"
+                        label="Order Status" placeholder="Order Status" [items]="orderStatuslist"></ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="TotalPrice" label="Total Price"
+                        placeholder="Total Price" (keypress)="numberOnly($event)">
+                    </ng-control>
+                </div>
+
+                <div class="col-3">
+
+                    <ng-control [form]="page.searchForm" control="From" label="From Date"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+
+
+                </div>
+                <div class="col-3">
+
+                    <ng-control [form]="page.searchForm" control="To" label="To Date"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
+
+                <div class="col-2 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                        [disabled]="page.searchForm.invalid || page.isSearching">
+                        <i class="uil uil-search"></i>
+                        <span class="rb-btn-text d-md-inline-block">
+                            {{'shared.search'|translate}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="scolled mt-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table  table-hover" *ngIf="!page.isSearching">
+            <thead>
+                <tr class="th-header">
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr [hidden]="page.isSearching || items.length>0">
+                    <td colspan="100%">
+                        <span>{{'shared.no-data-found'|translate}}</span>
+                    </td>
+                </tr>
+                <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
+                    <tr class="clickable-row ">
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{i+1}}</td>
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{item.orderNumber}}</td>
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{item.name}}</td>
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{item.mobile}}</td>
+
+                        <td>
+                            <select [(ngModel)]="item.orderStatus" class="form-control"
+                              (change)="updateOrderStatus(item, getOrderStatusName(item.orderStatus))">
+                              <option *ngFor="let status of orderStatuslist" [value]="status.id"
+                                [disabled]="isCompletedStatus(item) && status.name !== 'Completed'||status.name === 'Pending'">
+                                {{ status.name }}
+                              </option>
+                            </select>
+                          </td>
+                          
+                          
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{item.totalPrice}}</td>
+                        <!-- <td>
+                            <select
+                              [(ngModel)]="item.shippingAddressStatus"
+                              class="form-control"
+                              (change)="updateShippingAddressStatus(item, getShippingAddressStatusName(item.shippingAddressStatus))">
+                              <option *ngFor="let status of shippingAddressStatuslist" [value]="status.id" [disabled]="status.name === 'Pending'">
+                                {{ status.name }}
+                              </option>
+                            </select>
+                          </td> -->
+                          
+                        <td (click)="navigateToOrderDetails(item.orderNumber)">{{item.createdDate | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </ng-container>
+                <th></th>
+        </table>
+    </div>
+
+
+
+    <div class="pb-2">
+        <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+        </ng-pagination>
+    </div>
+</div>
+<ng-template #confirmDeleteTemplate>
+    <div class="modal-content confirm-modal">
+        <div class="modal-body">
+            <p class="modal-confirm-content mb-2">
+                {{'shared.delete-confirmation.message'|translate}}
+                <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
+            </p>
+            <div class="d-flex mt-4">
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
+                    (click)="remove();modalRef.hide();">Confirm</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

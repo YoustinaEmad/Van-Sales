@@ -1,0 +1,33 @@
+.star-ratings-sprite {
+    /* background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x ; */
+    background: url("/assets/icons/star-grey.svg") repeat-x;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    margin: 0;
+  }
+  .star-ratings-sprite-rating {
+    /* background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x ; */
+    background: url("/assets/icons/star-yellow.svg") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    display:block;
+  }
+  .star-rank .star-ratings-sprite-rating {
+    background: url("/assets/img/new-ico/star-rank.svg") repeat-x;
+  }
+  .star-rank-space .star-ratings-sprite-rating {
+    background: url("/assets/img/ico/star-gradient-space.svg") repeat-x;
+  }
+  .star-rank-space .star-ratings-sprite {
+    background: url("/assets/img/ico/star-grey-space.svg") repeat-x;
+  }
+  .c-0b {
+    color: #0b1e38 !important;
+  }
+
+.rate{
+  padding: 3px 5px;
+  background-color: #F5F5F5;
+}

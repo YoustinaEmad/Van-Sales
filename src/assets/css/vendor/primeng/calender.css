@@ -1,0 +1,12 @@
+.p-calendar{
+  width: 100% !important;
+}
+/* Apply background color to the span element inside p-calendar */
+
+
+span .p-element.p-button-icon-only {
+  background: #EB762C; /* Your desired background color */
+}
+
+
+

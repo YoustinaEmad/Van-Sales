@@ -1,0 +1,129 @@
+.container-fluid {
+  background-color: #eeeeee;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.product-card {
+  border-radius: 6px;
+  padding: 16px 12px;
+  background-color: white;
+}
+
+.card-img-container {
+  position: relative;
+  background-color: #eeeeee;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.card-img {
+  width: 100%;
+  height: 280px;
+  min-height: 280px;
+  max-height: 280px;
+}
+
+.icons-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 8px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon-size {
+  width: 20px;
+  height: 20px;
+}
+
+.quantity {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.btn {
+  font-size: 0.8rem;
+  border: none;
+}
+
+.card-content .hot-deal {
+  background: #fffaeb;
+  color: #dc6803;
+  border-radius: 4px;
+  margin: 8px 0px;
+}
+
+.card-content h3 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+
+.card-content .price {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.card-content .current-price {
+  font-size: 20px;
+  color: black;
+}
+
+.card-content .old-price {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #999;
+  font-weight: 400;
+}
+
+.card-content .discount {
+  font-size: 14px;
+  color: #039855;
+}
+
+.card-content .shipping-info {
+  margin: 10px 0;
+}
+
+.card-content .add-to-cart {
+  background-color: #eb762c;
+  border: 1px solid #eb762c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.card-content .add-to-cart:hover {
+  background-color: darkorange;
+}
+
+.btn-increase,
+.btn-decrease {
+  background-color: #eb762c;
+}
+.btn-increase:hover,
+.btn-decrease:hover {
+  background-color: #eb762c;
+}
+
+.btn-delete {
+  background-color: #ff0000e6;
+}
+
+.btn-delete:hover {
+  background-color: #ff0000 !important;
+}
+.low-opacity {
+  opacity: 0.3; 
+  pointer-events: none; 
+}

@@ -1,0 +1,29 @@
+.total{
+   padding: 8px 9px;
+  }
+ .payment{
+    padding: 24px 16px;
+ }
+ .apply-btn{
+    background-color: #f48225; 
+    color: white; 
+    border: none; 
+    padding: 8px 16px; 
+    font-size: 14px; 
+    border-radius: 4px; 
+    cursor: pointer;
+
+ }
+ .apply-btn:hover{
+    background-color: #EB762C;
+ }
+ .pay-btn{
+    color: white; 
+    padding:  12px 24px;
+    border: 1px solid  #EB762C;
+
+ }
+ .details
+ {
+    padding: 12px;
+ }

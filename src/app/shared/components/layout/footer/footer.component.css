@@ -1,0 +1,54 @@
+
+.footer {
+    padding: 2rem 0;
+    background-color: #f8f9fa; 
+}
+
+.footer .brand-name {
+    font-family: 'Serif', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333; 
+}
+
+.footer .social-links a {
+    font-size: 1.2rem;
+    color: #6c757d;
+    transition: color 0.3s;
+}
+
+.footer .social-links a:hover {
+    color: #000;
+}
+
+.footer h6 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #333; 
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer ul li a:hover {
+    color: #000; 
+}
+
+.footer p {
+    font-size: 0.85rem;
+    color: #6c757d;
+}

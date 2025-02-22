@@ -1,0 +1,26 @@
+<div class="scolled w-100 h-100">
+	<table class="table">
+		<thead>
+			<tr class="th-header">
+				<ng-container *ngFor="let column of columns; let i = index;">
+					<th [class.pointer]="column.Sortable" *ngIf="!column.IsHidden">
+						{{ column.Title | translate }}
+					</th>
+				</ng-container>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let row of [].constructor(5); let rowIndex = index;">
+				<tr>
+					<ng-container *ngFor="let col of columns; let colIndex = index;">
+						<td>
+							<ngx-skeleton-loader
+								[theme]="{ width: '100%', 'border-radius': '4px', height: '16px', 'margin-top': '0px', display: 'flex' }">
+							</ngx-skeleton-loader>
+						</td>
+					</ng-container>
+				</tr>
+			</ng-container>
+		</tbody>
+	</table>
+</div>

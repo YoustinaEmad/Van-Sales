@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-between align-items-center py-2">
+    <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+            routerLink="/sites/cities"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} City</p>
+    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"  [disabled]="page.form?.invalid || page.isSaving">
+        <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
+    </button>
+
+
+</div>
+<hr />
+<div class="d-flex justify-content-end align-items-start py-3">
+    <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
+    <label class="ms-2">Activate City</label>
+  </div>
+<ng-container *ngIf="page.isPageLoaded">
+    <form [formGroup]="page.form">
+        <div class="row row-cols-lg-3  g-2 pb-5">
+            <div class="col">
+                <ng-control [form]="page.form" control="name" label="City" placeholder="City"></ng-control>
+            </div>
+            <div class="col">
+
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+                    label="Governorate" [items]="governoratesList" placeholder="select-governorate"
+                    bindValue="id"></ng-control>
+
+            </div>
+        </div>
+    </form>
+</ng-container>

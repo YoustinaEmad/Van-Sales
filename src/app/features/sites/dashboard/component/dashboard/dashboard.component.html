@@ -1,0 +1,226 @@
+<div class="d-flex justify-content-between align-items-center mt-3 mb-4">
+    <p class="color-gray-900 ts-3 mb-0">Dashboard</p>
+    <button class='bg-purple-500 py-2 px-4 color-gray-25 no-border cr3' (click)="download()">
+        <span class="rb-btn-text d-md-inline-block">Download</span>
+    </button>
+</div>
+
+
+<div class="container ">
+    <form [formGroup]="page.searchForm">
+        <div class="form-body mb-3">
+            <div class="row g-4">
+                <div class="col-4">
+                    <ng-control [form]="page.searchForm" control="From" label="From Date"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
+                <div class="col-4">
+                    <ng-control [form]="page.searchForm" control="To" label="To Date"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
+
+                
+                    <div class="col-2 d-flex align-items-end">
+                        <button class='color-purple-700 rb-btn rb-btn-secondary rb-btn-sm w-100' (click)="search()">
+                            <i class="uil uil-search"></i>
+                            <span class="rb-btn-text d-md-inline-block">{{'shared.search'|translate}}</span>
+                        </button>
+                    </div>
+                   
+
+               
+            </div>
+        </div>
+    </form>
+    <div class="row g-4">
+        <!-- Statistics Section -->
+        <div class="col-md-2">
+            <p class=" color-gray-600 my-1">Total Sales </p>
+            <p class="color-purple-400 ">{{ siteStatistics.totalSales | number:'1.0-0' }} <span
+                    class="color-gray-500 ">EGP</span> </p>
+        </div>
+        <div class="col-md-2">
+            <p class=" color-gray-600 my-1">Total Sales this year</p>
+            <p class="color-purple-400 ">{{ siteStatistics.totalSalesThisYear | number:'1.0-0' }} <span
+                    class="color-gray-500">EGP</span></p>
+        </div>
+        <div class="col-md-2">
+            <div>
+                <p class="color-gray-600 my-1">Total Orders</p>
+                <p class="color-purple-400 ">{{ siteStatistics.totalOrders | number:'1.0-0' }} <span
+                        class="color-gray-500">Order</span></p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p class="color-gray-600 my-1">No. of Products</p>
+            <p class="color-purple-400 ">{{ siteStatistics.numberOfProducts | number:'1.0-0' }} <span
+                    class="color-gray-500">Product</span></p>
+        </div>
+        <div class="col-md-2">
+
+            <p class="color-gray-600 my-1">No. of Customers</p>
+            <p class="color-purple-400 ">{{ siteStatistics.numberOfCustomers | number:'1.0-0' }} <span
+                    class="color-gray-500">Customer</span></p>
+
+        </div>
+        <div class="col-md-2">
+
+            <p class="color-gray-600 my-1">Cu. Waiting Approval</p>
+            <p class="color-purple-400 ">{{ siteStatistics.customersWaitingApproval | number:'1.0-0' }} <span
+                    class="color-gray-500">Customer</span></p>
+
+        </div>
+    </div>
+
+    <!-- Orders Table Section -->
+    <div class="row my-4">
+        <div class="col-md-8">
+            <div class="">
+                <div class="d-flex align-items-center">
+                    <h5 class="d-inline">All Orders</h5>
+                    <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 mb-2">{{ getTotalNumberOforders() }} Orders</span>
+                    <button class="ms-auto bg-purple-100 color-purple-500 no-border px-2" (click)="navigateToAllOrders()">All Orders</button>
+                </div>
+                <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+                <table class="table" *ngIf="!page.isSearching">
+                    <thead>
+                        <tr class="th-header">
+                            <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                                <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                                    {{colum.Title | translate}}
+                                    <div *ngIf="colum.Sortable" class="d-inline-block"
+                                        [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                        <i class="uil uil-sort sort-icon"
+                                            [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                                    </div>
+                                </th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [hidden]="page.isSearching || items.length>0">
+                            <td colspan="100%">
+                                <span>{{'shared.no-data-found'|translate}}</span>
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
+                            <tr class="clickable-row ">
+                                <td >{{i+1}}</td>
+                                <td>{{item.orderNumber}}</td>
+                                <td>{{item.name}}</td>
+                                <!-- <td>{{item.mobile}}</td> -->
+
+                                <td  [ngClass]="getCountClass(item.orderStatus)">
+                                    {{getOrderStatusName(item.orderStatus)}}
+                                </td>
+                                <td>{{item.totalPrice | number:'1.0-0'}}</td>
+                                <!-- <td>{{item.createdDate |
+                                    date:'yyyy-MM-dd'}}
+                                </td> -->
+                            </tr>
+                        </ng-container>
+                        <th></th>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- Pie Chart Section -->
+        <div class="col-md-4">
+            <div class="">
+                <div class="card-body">
+                    <h5 class="card-title">Orders Status
+                        <span> {{ getTotalNumberOforders() }}</span>
+                    </h5>
+                    <div class="text-center">
+                        <p-chart class="d-flex justify-content-center mb-5" type="doughnut" [data]="data"
+                            [options]="options"></p-chart>
+                    </div>
+                </div>
+                <div class="order-status">
+                    <div *ngFor="let status of orderStatuslist" class="status-item">
+                        <div class="d-flex align-items-center">
+                            <p [ngClass]="getCircleClass(status.orderStatus)" class="circle"></p>
+                            <p class="color-gray-700">{{ getOrderStatusName(status.orderStatus) }} Orders</p>
+                            <p [ngClass]="getCountClass(status.orderStatus)" class="cr5 px-2 mx-2">{{
+                                status.numberOfOrders }}</p>
+                        </div>
+                        <p [ngClass]="getPercentageClass(status.orderStatus)">{{ status.percentage }}%</p>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="row my-4">
+        <div class="col-md-8">
+            <div class="">
+                <div class="d-flex align-items-center">
+                    <h5 class="d-inline">All Cutomers</h5>
+                    <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 mb-2">{{page.options.totalItems}} Customer</span>     
+
+                    <button class="ms-auto bg-purple-100 color-purple-500 no-border px-2" (click)="navigateToAllCustomers()">All Cutomers</button>
+                </div>
+                <app-table-skelton *ngIf="page.isSearching"></app-table-skelton>
+
+                <table class="table" *ngIf="!page.isSearching">
+                  <thead>
+                   
+                    <tr >
+                        <ng-container >
+                            <td>#</td>
+                            <td>Customer Name</td>
+                            <!-- <td>Clien tGroup Name</td> -->
+                            <td>Mobile</td>
+                            <td></td>
+                            <!-- <td>National Number</td> -->
+                            <!-- <td>Total Orders</td> -->
+                            <!-- <td><button (click)="onActionClicked(customer)">Action</button></td> -->
+                          </ng-container>
+                          
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container>
+                        <tr *ngFor="let item of customerList | paginate : page.options; let i = index;">
+                        
+                        <td>{{i + 1}}</td>
+                        <td>{{item.name}}</td>
+                        <!-- <td>
+                           <div class="flex justify-content-center">
+                            <p-inputSwitch [(ngModel)]="item.isActive" (ngModelChange)="updateActivation(item.id, item.isActive)"></p-inputSwitch>
+                          </div> 
+                        </td> -->
+                        <!-- <td>{{item.clientGroupName}}</td> -->
+                        <td>{{item.mobile}}</td>
+                        <!-- <td>{{ getVerifyStatusName(item.verifyStatus) }}</td> -->
+                        <!-- <td>{{item.nationalNumber}}</td> -->
+                        <!-- <td>{{item.totalOrders}}</td> -->
+                        <td>
+                          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info pointer p-0"
+                            aria-label="Edit" (click)="editCustomer(item.id)"></button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        
+
+
+
+
+    </div>
+
+</div>

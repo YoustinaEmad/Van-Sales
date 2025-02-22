@@ -1,0 +1,392 @@
+<div class="d-flex justify-content-between align-items-center py-2">
+  <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+      routerLink="/salesflow/order"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} Order</p>
+  <div class="d-flex justify-content-end gap-0">
+    <button type="button" class="bg-brand-50 py-2 px-4 color-brand-500 cr3 border border-warning bg-white"
+      (click)="onCancel()">Cancel</button>
+    <button type="button" class="bg-brand-50 py-2 px-4 color-brand-500 no-border cr3 mx-1"
+      (click)="onReset()">Reset</button>
+
+      <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" 
+      (click)="Save()" 
+      [disabled]="!page.isEdit ? (page.form?.invalid || page.isSaving || !validateImages() || cartProductsResult.length === 0) : false">
+<span class="rb-btn-text">{{(page.isEdit ? 'shared.edit' : 'shared.create') | translate}}</span>
+</button>
+
+
+  </div>
+</div>
+<hr />
+
+<div class="pb-2">
+  <div class="border mb-2">
+
+    <ul class="nav nav-tabs px-3 p-2 d-flex align-items-center ">
+      <li class="nav-item me-1 "  *ngFor="let tab of Tabs">
+        <a class="nav-link d-flex align-items-center px-2 py-1 pointer " [ngClass]="{
+              'bg-brand  color-brand-500': tab.isSelected,
+              'color-gray-100 color-gray-100': !tab.isSelected
+            }" (click)="switchTab(tab.ID)">
+          <img [src]="tab.isSelected ? tab.selectedIcon : tab.icon" alt="tab icon" class="me-2" />
+          {{tab.name}}
+        </a>
+      </li>
+    </ul>
+
+
+    <div class="tab-content mt-3">
+      <div *ngIf="selectedTab === TabEnum.OrderDetails">
+        <div class="p-3 pt-0 bg-white rounded">
+          <form [formGroup]="page.form">
+
+            <div class="row g-3">
+              <div class="col-6">
+                <ng-control [form]="page.form" label="Mobile" control="mobile" placeholder="Enter your mobile"
+                (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-6 d-flex align-items-center" *ngIf="!page.isEdit">
+                <button type="button" class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3"
+                  (click)="onSearch()">Search</button>
+              </div>
+            </div>
+
+            <div class="row my-2">
+              <div class="col-4">
+                <ng-control [form]="page.form" label="Customer Name" control="name"
+                  placeholder="Enter name"></ng-control>
+              </div>
+              <div class="col-4">
+                <!-- <ng-control [form]="page.form" label="WorkInfo" control="workInfo"
+                  placeholder="Enter workInfo"></ng-control> -->
+                  <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="clientActivity"
+                  label="Customer Activity" placeholder="Customer Activity" [items]="customerActivity">
+                </ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [form]="page.form" label="User Name" control="userName"
+                  placeholder="Enter your userName"></ng-control>
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col-4">
+                <ng-control [form]="page.form" label="Phone" control="phone" placeholder="Enter phone"
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="clientGroupId"
+                  label="Client Group" placeholder="Client Group" [items]="clientGroups">
+                </ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="gender" label="Gender"
+                  placeholder="Gender" [items]="genderOptions">
+                </ng-control>
+              </div>
+            </div>
+
+
+
+            <div class="row my-2">
+              <div class="col-4">
+                <ng-control [form]="page.form" control="nationalNumber" label="National Number"
+                  placeholder="Enter National Number" (keypress)="numberOnly($event)"></ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [form]="page.form" label="Email" control="email" placeholder="Enter email"></ng-control>
+              </div>
+              <div class="col-4">
+                <ng-control [form]="page.form" label="Age" control="age" placeholder="Enter age"
+                  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+            </div>
+
+            <div class="row my-2">
+              <div class="col-4" *ngIf="!isExistingCustomer && !page.isEdit">
+                <ng-control [form]="page.form" label="Password" control="password" [type]="controlType.PASSWORD"
+                  placeholder="Enter password"></ng-control>
+              </div>
+              <div class="col-4" *ngIf="!isExistingCustomer && !page.isEdit">
+                <ng-control [form]="page.form" control="confirmPassword" label="confirm Password"
+                  placeholder="confirm your Password" [type]="controlType.PASSWORD"
+                  (blur)="confirmPassword()"></ng-control>
+                <p class="text text-danger font-12" *ngIf="!isEqualPassword">Passwords do not match</p>
+              </div>
+
+            </div>
+            <div class="row my-2" *ngIf=" !page.isEdit">
+              <div class="col-4 col-md-4 col-lg-4" *ngFor="let image of images; let i = index">
+                <div class="border p-3 text-center h-60">
+                  <div *ngIf="image.uploaded; else uploadTemplate">
+                    <img [src]="image.src" alt="Uploaded Image" class="img-fluid mb-2 img-thumbnail" style="height: 100px;" />
+                    <!-- <img [src]="environment.api+'/'+image.src" alt="Uploaded Image" class="img-fluid mb-2 img-thumbnail" /> -->
+                  </div>
+                  <ng-template #uploadTemplate>
+                    <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
+                      <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
+                      <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
+                      <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+                    </label>
+                    <input #file type="file" id="fileInput-{{ i }}" class="d-none" (change)="onImageUpload(file.files, i)" />
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            
+            
+            
+          </form>
+
+        </div>
+        <div class="pb-2">
+          <div class="tab-content mt-3">
+            <div class="p-3 pt-0 bg-white rounded border mb-2">
+              <div class="row align-items-center my-3 justify-content-between">
+                <div class="col-auto">
+                  <p class="mb-0">Order Invoice</p>
+                </div>
+
+
+                <!-- <div class="col-auto" *ngIf="isDropdownVisible">
+                  <!-- <select class="form-select" [(ngModel)]="selectedProduct" (change)="addProductToList()">
+                    <option value="" disabled selected>Select Product</option>
+                    <option *ngFor="let product of products" [value]="product.id">
+                      {{ product.name }}
+                    </option>
+                  </select> -->
+
+
+                <!-- <div class="dropdown-container">
+                    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search Product" />
+                  
+                    <select class="form-select" [(ngModel)]="selectedProduct" (change)="addProductToList()">
+                      <option value="" disabled selected>Select Product</option>
+                      <option *ngFor="let product of filteredProducts()" [value]="product.id">
+                        {{ product.name }}
+                      </option>
+                    </select>
+                  </div> -->
+
+
+                <!--<div class="dropdown-container">
+                    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search Product" (input)="filterProducts()" [ngClass]="{ 'show-dropdown': filteredProducts.length > 0 }" />
+                  
+                    <ul *ngIf="filteredProducts.length > 0" class="dropdown-list">
+                      <li *ngFor="let product of filteredProducts" (click)="selectProduct(product)">
+                        {{ product.name }}
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  
+                  
+                </div> -->
+
+
+
+                <div class="dropdown-container" *ngIf="isDropdownVisible">
+                  <!-- Search Input with Autocomplete -->
+                  <input type="text" class="form-control dropdown-input" [(ngModel)]="searchText"
+                    placeholder="Search Product" (input)="filterProducts()"
+                    [ngClass]="{ 'show-dropdown': filteredProducts.length > 0 }" />
+
+                  <!-- Dropdown List (only shows when there are filtered products) -->
+                  <ul *ngIf="filteredProducts.length > 0" class="dropdown-list">
+                    <li *ngFor="let product of filteredProducts" (click)="addProductToList(product)">
+                      <span class="dropdown-item-text">{{ product.name }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-auto">
+                  <button class="bg-brand-500 py-2 px-2 color-gray-25 no-border cr3" (click)="toggleDropdown()">
+                    <span class="rb-btn-text">Add new Item</span>
+                  </button>
+                </div>
+              </div>
+
+
+
+
+
+              <!-- Table displaying order details -->
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th class="text-center">Total Amount</th>
+                    <th class="text-center"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items; let i = index">
+                    <td>{{ item.productName }}</td>
+                    <td class="text-center">
+                      <input type="number" class="form-control text-center" [(ngModel)]="item.quantity" min="1"
+                        (change)="updateTotal(item)" style="width: 70px;" />
+                    </td>
+                    <td>{{ item.itemPrice }}$</td>
+                    <td class="text-center" *ngIf="!page.isEdit">{{ item.total | number:'1.2-2' }}$</td>
+
+                    <td class="text-center" *ngIf="page.isEdit">{{ item.price | number:'1.2-2' }}$</td>
+                    <td class="text-center">
+                      <button pButton icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                        (click)="removeProduct(i)">
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedTab === TabEnum.OrderAdress">
+      <div class="p-3 pt-0 bg-white rounded">
+        <form [formGroup]="page.form">
+
+          <div class="d-flex justify-content-end p-2">
+            <div *ngIf="!page.isEdit">
+              <button [disabled]="isAddMode || isEditMode"
+                class="bg-brand-50 py-2 px-4 color-brand-500 no-border cr3 mx-1" (click)="onEdit()"
+                *ngIf="!isEditMode">Edit</button>
+              <button [disabled]="!areShippingAddressFieldsValid() || !isAddButtonDisabled"
+                class="bg-brand-50 py-2 px-4 color-brand-500 no-border cr3 mx-1" (click)="onSaveIfValid()"
+                *ngIf="isEditMode">Save</button>
+            </div>
+            <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" (click)="onAddNew()"
+              [disabled]="isAddButtonDisabled">Add New</button>
+          </div>
+
+          <div class="row g-3">
+            <div class="row g-3">
+              <div class="col-6">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+                  [disabled]="!isEditMode" (change)="onGovernorateChange($event.id)" label="Governorate Name"
+                  placeholder="Governorate Name" [items]="governorates">
+                </ng-control>
+              </div>
+              <div class="col-6">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId"
+                  [disabled]="!isEditMode" label="City Name" placeholder="City Name" [items]="cities">
+                </ng-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <ng-control [form]="page.form" label="Street" control="street" [disabled]="!isEditMode "
+                  placeholder="Enter street">
+                </ng-control>
+              </div>
+              <div class="col-6">
+                <ng-control [form]="page.form" label="Landmark" control="landmark" [disabled]="!isEditMode"
+                  placeholder="Enter landmark">
+                </ng-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="row g-1 mb-4">
+              <div class="col-6">
+                <ng-control [form]="page.form" label="longitude" control="longitude" [disabled]="!isEditMode"
+                  placeholder="Enter longitude">
+                </ng-control>
+              </div>
+              <div class="col-6">
+                <ng-control [form]="page.form" label="latitude" control="latitude" [disabled]="!isEditMode"
+                  placeholder="Enter latitude">
+                </ng-control>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2 h-50">
+            <div class="col-6" >
+            <label for="map" class="form-label">Set Location on Map</label>
+            <div id="map" style="height: 400px; width: 100%;" ></div>
+            </div>
+            <div class="col-6">
+              <ng-control [form]="page.form" label="BuildingData" control="buildingData" [disabled]="!isEditMode "
+                placeholder="Enter BuildingData">
+              </ng-control>
+            </div>
+         
+       </div>
+        
+        </form>
+
+        <div class="mt-4">
+
+
+          <h5>Shipping Addresses</h5>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Governorate</th>
+                <th>City</th>
+                <th>Street</th>
+                <th>Landmark</th>
+                <th>BuildingData</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let address of shippingAddresses" (click)="onSelectShippingAddress(address)"
+                [ngClass]="{'selected-row': address === selectedAddress}" class="table-row-clickable"
+                title="Click to select this address">
+                <td>{{ address.governorateName }}</td>
+                <td>{{ address.cityName }}</td>
+                <td>{{ address.street }}</td>
+                <td>{{ address.landmark }}</td>
+
+                <td>{{ address.buildingData}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div *ngIf="selectedTab === TabEnum.StatusAndComments">
+      <div class="p-3 pt-0 bg-white rounded">
+        <div class="row " *ngIf="!page.isEdit">
+          <!-- <label class="form-check-label me-3">Notify Customer</label>
+          <div class="flex justify-content-center">
+            <p-inputSwitch [(ngModel)]="checkedActivation"></p-inputSwitch>
+          </div> -->
+        </div>
+
+        <form [formGroup]="page.form">
+          <div class="row">
+            <div class="col-9 py-3">
+              <ng-control [form]="page.form" control="comment" label="Comment" placeholder="Enter a comment..."
+                [controlType]="page.ControlType.TEXTAREA" [inputClass]="'rb-textarea h-100'" [readOnly]="false"
+                [rows]="10"></ng-control>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+
+
+  </div>
+ 
+</div>

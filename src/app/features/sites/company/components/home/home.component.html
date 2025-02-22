@@ -1,0 +1,138 @@
+<div class="mb-2">
+    <div class="d-flex justify-content-between align-items-center py-2 px-3">
+        <div class="d-flex align-items-center">
+            <p class="mb-0 color-gray-600 ts-5">Companies</p>
+            <div class="color-brand-700 bg-brand-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Companies
+            </div>
+        </div>
+
+
+        <div class="d-flex">
+           
+            <button class="bg-brand-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateCompany()">Create
+                Company</button>
+           
+        </div>
+       
+    </div>
+   
+    <hr />
+
+    
+    <form [formGroup]="page.searchForm">
+        <div class="form-body">
+
+            <div class="row g-2 ">
+
+                <div class="col-4">
+                    <ng-control [form]="page.searchForm" control="CompanyName" label="shared.name"
+                        placeholder="Enter-company-name"></ng-control>
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="GovernorateID"
+                        (change)="onGovernorateChange($event.id)" label="Governorate"
+                        placeholder="search.select-governorate" [items]="governorates">
+                    </ng-control>
+                </div>
+
+
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="CityID" label="City"
+                        placeholder="select-city" [items]="cities">
+                    </ng-control>
+                </div>
+
+
+                <div class="col-2 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
+                        (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
+                        <i class="uil uil-search"></i>
+                        <span class="rb-btn-text d-md-inline-block">
+                            {{'shared.search'|translate}}</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="scolled my-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table " *ngIf="!page.isSearching">
+            <thead>
+                <tr class="th-header">
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr [hidden]="page.isSearching || items.length>0">
+                    <td colspan="100%">
+                        <span>{{'shared.no-data-found'|translate}}</span>
+                    </td>
+                </tr>
+                <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
+                    <tr>
+                        <td>{{i+1}}</td>
+                       
+                        <td>{{item.name}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.cityName}}</td>
+                        <td>{{item.governorateName}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>{{item.taxRegistryNumber}}</td>
+                        <td>{{item.taxCardID}}</td>
+                        <td>{{item.nid}}</td>
+                        <td>{{item.managerName}}</td>
+                        <td>{{item.managerMobile}}</td>
+                        <td>{{item.classificationName}}</td>
+                        <td>
+                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
+                                aria-label="Delete" (click)="showDeleteConfirmation(item)">
+                            </button>
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                                aria-label="Edit" (click)="editCompany(item.id)">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+        </table>
+    </div>
+
+
+
+
+    <!-- table -->
+    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+    </ng-pagination>
+</div>
+
+
+
+<ng-template #confirmDeleteTemplate>
+    <div class="modal-content confirm-modal">
+        <div class="modal-body">
+            <p class="modal-confirm-content mb-2">
+                {{'shared.delete-confirmation.message'|translate}}
+                <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
+            </p>
+            <div class="d-flex mt-4">
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
+                    (click)="remove();modalRef.hide();">Confirm</button>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

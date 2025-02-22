@@ -1,0 +1,130 @@
+<div class="container py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-2 text-gray-800 fs-4">
+        <img src="../assets/icons/expand_more.png" class="pointer" routerLink="/sites/signUpRequest">
+        Client Details
+      </p>
+    </div>
+    <hr class="m-1 text-gray-300 mb-3" />
+    <!-- Details Section -->
+    <ng-container *ngIf="item">
+      <div class="card shadow-sm border" style="border-color: #E9EAEB;">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-4">
+              <small class="text-muted d-block">Name</small>
+              <span>{{ item.name }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">UserName</small>
+              <span>{{ item.userName }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">National Number</small>
+              <span>{{ item.nationalNumber }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <small class="text-muted d-block">Work info</small>
+              <span>{{ item.workInf }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Mobile</small>
+              <span>{{ item.mobile }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Age</small>
+              <span>{{ item.age }}</span>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-4">
+              <small class="text-muted d-block">Street</small>
+              <span>{{ item.street }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Email</small>
+              <span>{{ item.email }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Gender</small>
+              <span>{{ genderName }}</span>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-4">
+              <small class="text-muted d-block">City</small>
+              <span>{{ item.cityName }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Governorate</small>
+              <span>{{ item.governorateName }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Client Activity</small>
+              <span>{{ clientActivityName }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+           
+            <div class="col-4">
+              <small class="text-muted d-block">Building data</small>
+              <span>{{ item.buildingData }}</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Landmark</small>
+              <span>{{ item.landmark }}</span>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+          <div class="col-6">
+            <label for="map" class="form-label">Shipping Address Location</label>
+            <div id="map" style="height: 300px; width: 65%;"></div>
+          </div>
+        </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-center " *ngIf="item.status==1">
+          <button class="m-2 px-4 bg-brand-25  color-brand-500 no-border cr3 border border-warning bg-white"
+            (click)="navigateBack()">Back</button>
+          <button (click)="approveRequest(item,item.status)" class=" no-border bg-green-500 cr3 color-gray-25 px-2 "><img
+              class="pe-2" src="../assets/images/check.png">Accept</button>
+          <button (click)="showRejectConfirmation(item)" class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2 "><img
+              class="pe-2" src="../assets/images/close.png">Reject</button>
+        </div>
+        <div class="d-flex justify-content-end align-items-center " *ngIf="item.status!=1">
+          <button class=" px-4 bg-brand-25  color-brand-500 no-border cr3 border border-warning bg-white"
+            (click)="navigateBack()">Back</button>
+          <button class="m-2 no-border bg-green-500 cr3 color-gray-25 px-2 " *ngIf="item.status==2"><img class="pe-2"
+              src="../assets/images/check.png">Accept</button>
+          <button class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2 " *ngIf="item.status==3"><img class="pe-2"
+              src="../assets/images/close.png">Reject</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  
+  
+  <ng-template #confirmRejectTemplate>
+    <div class="modal-body modal-content text-center">
+      <p>Reject Reason</p>
+      <textarea 
+        [(ngModel)]="selectedItem.rejectReason" 
+        class="form-control" 
+        rows="3" 
+        placeholder="Enter rejection reason">
+      </textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
+      <button 
+        class="btn btn-without-icon bg-e5 ms-2" 
+        (click)="rejectRequest(); modalRef.hide()">
+        Send Feedback
+      </button>
+    </div>
+  </ng-template>

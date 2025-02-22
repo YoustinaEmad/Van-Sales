@@ -1,0 +1,41 @@
+.p-button-text{
+    height: 24px;
+    cursor: pointer;
+  }
+  .out-of-stock {
+    background-color: #f0f0f0 !important; /* Light gray */
+    color: #888 !important; /* Dark gray text */
+  }
+  
+  .out-of-stock td:not(:last-child) {
+    background-color: #f0f0f0 !important; /* Light gray */
+    color: #888 !important; /* Dark gray text */
+    opacity: 0.5;
+  }
+
+  .download-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1000;
+    margin-left: 7px;
+  }
+  
+  .download-options button {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .download-options button:hover {
+    background: #f1f1f1;
+  }
+  

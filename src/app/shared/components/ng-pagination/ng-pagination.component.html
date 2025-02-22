@@ -1,0 +1,27 @@
+<div class="panel-footer" [hidden]="page.isSearching">
+  <div class="row mx-0">
+  <div class="col col-sm-12 d-flex align-items-center justify-content-between" *ngIf="page.options.totalPages >= 1">
+    <button class="me-1 pagination-button-back" (click)="getNextPrevData(page.options.currentPage - 1)"
+      [disabled]="page.options.currentPage <= 1">
+      <i class="uil uil-arrow-left"></i> {{ 'shared.previous' | translate }}
+    </button>
+  
+    <div class="d-flex justify-content-center">
+      <pagination-controls 
+        (pageChange)="getNextPrevData($event)" 
+        id="Pagination" 
+        maxSize="10" 
+        directionLinks="false"
+        autohide="true">
+      </pagination-controls>
+    </div>
+  
+    <button class="ms-1 pagination-button-forward" (click)="getNextPrevData(page.options.currentPage + 1)"
+      [disabled]="page.options.currentPage >= page.options.totalPages">
+      {{ 'shared.next' | translate }} <i class="uil uil-arrow-right"></i>
+    </button>
+  </div>
+  
+  </div>
+</div>
+

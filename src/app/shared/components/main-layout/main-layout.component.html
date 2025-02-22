@@ -1,0 +1,28 @@
+<div class="main-panel">
+    <div class="navbar border-bottom  py-2 d-flex justify-content-between align-items-center bg-gray-50">
+        <!-- Left section: Logo and Search Bar -->
+        <div class="container">
+            <div class="d-flex align-items-center w-100 ">
+                <h1 class=" m-0 color-gray-900">Logo</h1>
+                <input type="text" class="form-control cr2 pad-8-16 search-input mx-4 flex-grow-1"
+                    placeholder="Search...">
+
+                <!-- Right section: User Profile -->
+                <div class="d-flex align-items-center" routerLink="/sites/employeeProfile" class="pointer">
+                    <img src="./assets/images/avatar.svg" alt="User Image" class="rounded-circle" width="40"
+                        height="40">
+                    <div class="ms-2">
+                        <span class="ts color-gray-800 text-nowrap" >Yasmin Ahmed</span><br>
+                        <small class="ts text-muted" >Admin</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main-page">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

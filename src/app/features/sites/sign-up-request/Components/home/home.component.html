@@ -1,0 +1,172 @@
+<h2 class=" color-gray-600 ts-5 my-3">Sign Up Requests</h2>
+<ng-container>
+  <!-- Tabs Section -->
+  <div class="no-border">
+    <ul class="nav nav-tabs mt-4 d-flex align-items-center">
+      <li class="nav-item me-1" *ngFor="let tab of Tabs">
+        <a class="nav-link d-flex align-items-center px-2 py-1 pointer" [ngClass]="{
+            'bg-brand-100 color-brand-500': tab.isSelected,
+            'color-gray-100': !tab.isSelected
+          }" (click)="switchTab(tab.ID)">
+          <img [src]="tab.isSelected ? tab.selectedIcon : tab.icon" alt="tab icon" class="me-2" />
+          {{ tab.name }}
+        </a>
+      </li>
+    </ul>
+    <ng-container>
+      <div class="tab-content ">
+        <!-- New Requests Tab -->
+        <div *ngIf="selectedTab === TabEnum.NewRequests" class="p-4 bg-white rounded">
+          <div class="mb-2">
+            <div class="d-flex justify-content-between align-items-center py-2 ">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0 color-gray-600 ts-3"> Requests</h5>
+                <div class="color-brand-700 bg-brand-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Request
+                </div>
+              </div>
+            </div>
+            <div class="scrolled mt-3 h-100">
+              <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+              <table class="table">
+                <thead>
+                  <tr class="th-header">
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                      <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                        {{colum.Title | translate}}
+                        <div *ngIf="colum.Sortable" class="d-inline-block"
+                          [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                          <i class="uil uil-sort sort-icon"
+                            [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                        </div>
+                      </th>
+                    </ng-container>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Data Rows -->
+                  <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                    <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ item.mobile }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.nationalNumber }}</td>
+                      <td>
+                        <button  (click)="viewRequest(item.id)"
+                        class="m-2 no-border bg-gray-200 cr3 color-gray-900 px-2"><img class="pe-2"
+                          src="../assets/images/View.svg">View</button>
+                        <button (click)="approveRequest(item,item.verifyStatus)"
+                          class=" no-border bg-green-500 cr3 color-gray-25 px-2"><img class="pe-2"
+                            src="../assets/images/check.png">Accept</button>
+                        <button (click)="showRejectConfirmation(item)"
+                          class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2" aria-label="Reject"><img class="pe-2"
+                            src="../assets/images/close.png">Reject</button>
+                          
+                      </td>
+
+
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+            </ng-pagination>
+          </div>
+        </div>
+        <!-- Old Requests Tab -->
+        <div *ngIf="selectedTab === TabEnum.OldRequest" class="p-4 bg-white rounded">
+          <div class="mb-2">
+            <div class="d-flex justify-content-between align-items-center  ">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0 color-gray-600 ts-3"> Requests</h5>
+                <div class="color-brand-700 bg-brand-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Request
+                </div>
+              </div>
+            </div>
+            <div class="scrolled mt-3 h-100">
+              <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+              <table class="table">
+                <thead>
+                  <tr class="th-header">
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                      <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                        {{colum.Title | translate}}
+                        <div *ngIf="colum.Sortable" class="d-inline-block"
+                          [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                          <i class="uil uil-sort sort-icon"
+                            [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                        </div>
+                      </th>
+                    </ng-container>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Data Rows -->
+                  <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                    <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ item.mobile }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.nationalNumber }}</td>
+                        <td>
+                            <button (click)="viewRequest(item.id)"
+                            class="m-2 no-border bg-gray-200 cr3 color-gray-900 px-2">
+                      <img class="pe-2" src="../assets/images/View.svg">View
+                    </button>
+                          <!-- Approve Button -->
+                          <button
+                                  class="no-border bg-green-500 cr3 color-gray-25 px-2"
+                                  [disabled]="item.verifyStatus === 3">
+                            <img class="pe-2" src="../assets/images/check.png">Accept
+                          </button>
+                          
+                          <!-- Reject Button (disabled if the status is 'Approved') -->
+                          <button 
+                                  class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
+                                  [disabled]="item.verifyStatus === 4">
+                            <img class="pe-2" src="../assets/images/close.png">Reject
+                          </button>
+                        </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+            </ng-pagination>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+
+<ng-template #confirmRejectTemplate  >
+  <div class="modal-body modal-content text-center">
+    <p>Reject Reason</p>
+    <textarea 
+      [(ngModel)]="selectedItem.rejectReason" 
+      class="form-control" 
+      rows="3" 
+      placeholder="Enter rejection reason">
+    </textarea>
+  </div>
+  <div class="modal-footer">
+    <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
+    <button 
+      class="btn btn-without-icon bg-e5 ms-2" 
+      (click)="rejectRequest(); modalRef.hide()">
+      Send Feedback
+    </button>
+  </div>
+</ng-template>
+
+
+

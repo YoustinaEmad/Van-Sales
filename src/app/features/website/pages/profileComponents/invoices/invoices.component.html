@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center py-2">
+    <p class="mb-2 color-gray-800 ts-3">
+      <img src="../assets/icons/expand_more.png" class="pointer" routerLink="/profile" /> Invoices
+    </p>
+  </div>
+  <hr class="m-1 color-gray-300 mb-3" />
+
+  <div class="row">
+    <ng-container>
+      <!-- Loop through invoices -->
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let invoice of invoices">
+        <div class="card shadow-sm border" style="border-color: #E9EAEB;">
+          <div class="card-body">
+            <p class="mb-2">Invoice #{{ invoice.orderNumber }}</p>
+            <div class="d-flex justify-content-between text-muted small">
+              <span>{{ invoice.createdDate | date: 'dd-MM-yyyy' }}</span>
+            </div>
+            <div class="d-flex justify-content-between text-muted small mt-2">
+              <div class="d-flex align-items-center">
+                <img src="../assets/images/discount.png" alt="icon" class="me-1" />
+                <span>{{ invoice.totalNetPrice }} L.E</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <img src="../assets/images/material-symbols_box-outline.png" alt="icon" class="me-1" />
+                <span>#{{ invoice.orderNumber }}</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <img src="../assets/images/local_mall.png" alt="icon" class="me-1" />
+                <span>{{ invoice.totalQuantity }} product</span>
+              </div>
+            </div>
+            <button
+              [routerLink]="['/orderHistoryDetails', invoice.orderNumber]"
+              class="btn bg-brand-500 text-white w-100 mt-3"
+            >
+              View Invoice
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+  
+  <!-- Print Section -->
+  <div id="print-section" class="d-none">
+    <div class="bg-light">
+      <div class="container mt-4 bg-white p-4 rounded shadow-sm">
+        <h2 class="text-center mb-4">Order Invoice</h2>
+  
+        <div class="row mt-4">
+          <div class="col-6">
+            <p><strong>Order Number:</strong> {{ invoices[0]?.orderNumber }}</p>
+            <p><strong>Date Added:</strong> {{ invoices[0]?.date | date: 'dd/MM/yyyy' }}</p>
+          </div>
+          <div class="col-6 text-end">
+            <p><strong>Total Items:</strong> {{ invoices[0]?.totalQuantity }}</p>
+            <p><strong>Total Net Price:</strong> {{ invoices[0]?.totalNetPrice | number:'1.1-1' }} EGP</p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
