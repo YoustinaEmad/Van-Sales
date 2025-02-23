@@ -16,6 +16,8 @@ export class ForgetpasswordComponent implements OnInit {
   controlType = ControlType;
   isEqualPassword: boolean = true;
   userId: string = '';
+  isSubmitting = false;
+
   constructor(
     private authService: AuthserviceService,
     private _sharedService: SharedService,
@@ -46,7 +48,9 @@ export class ForgetpasswordComponent implements OnInit {
     }
   }
   onSubmit(): void {
-    if (!this.forgetPasswordForm.valid) return;
+    if (!this.forgetPasswordForm.valid || this.isSubmitting) return;
+    this.isSubmitting = true; // Disable the button immediately
+
     const PasswordData: ForgetpasswordViewModel = {
       ...this.forgetPasswordForm.value, // Include password and confirmPassword
       userId: this.userId, // Add userId
@@ -62,8 +66,11 @@ export class ForgetpasswordComponent implements OnInit {
       },
       error: (error) => {
         this._sharedService.showToastr(error);
-       
+        this.isSubmitting = false; // Re-enable button after failure
+
       },
     });
   }
+
+  
 }

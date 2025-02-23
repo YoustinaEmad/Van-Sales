@@ -177,8 +177,8 @@ confirmPassword(): void {
   }
 
 onSubmit(): void {
-  if(!this.registerForm.valid) return;
-  this.isSubmitting = true;
+  if(!this.registerForm.valid ||this.isSubmitting ) return;
+  this.isSubmitting = true; // Disable the button immediately
 
   const registerData: RegisterViewModel = this.registerForm.value;
   registerData.paths = this.getUploadedImages();
@@ -186,12 +186,15 @@ onSubmit(): void {
     next: (response) => {
       this.isSubmitting = false;
       this._sharedService.showToastr(response);
+      this.isSubmitting=false;
 
       if (response.data != null) {
         localStorage.setItem('rToken', response.data.otPtoken);
         this._router.navigate(['/auth/otp'], {
           queryParams: { source: 'register' },
         });
+        this.isSubmitting = false; // Re-enable button after successful login
+
       }
 
     },
@@ -201,6 +204,7 @@ onSubmit(): void {
     },
   });
 }
+
 
 numberOnly(event: any) {
   return this._sharedService.numberOnly(event);

@@ -14,6 +14,7 @@ import { PhoneViewModel } from '../../interfaces/authviewmodel';
 export class PhoneForgetPasswordComponent implements OnInit{
   phoneForgetPasswordForm: FormGroup;
   controlType = ControlType;
+  isSubmitting=false;
   constructor(
     private authService: AuthserviceService,
     private _sharedService: SharedService,
@@ -29,7 +30,9 @@ export class PhoneForgetPasswordComponent implements OnInit{
     });
   }
   onSubmit(): void {
-    if (!this.phoneForgetPasswordForm.valid) return;
+    if (!this.phoneForgetPasswordForm.valid || this.isSubmitting) return;
+    this.isSubmitting = true; // Disable the button immediately
+
     const Phone: PhoneViewModel = this.phoneForgetPasswordForm.value;
     this.authService.setPhone(Phone).subscribe({
       next: (response) => {
@@ -38,13 +41,17 @@ export class PhoneForgetPasswordComponent implements OnInit{
         this._router.navigate(['/auth/otp'], {
           queryParams: { source: 'forgetpassword'},
         });
+        this.isSubmitting = false; // Re-enable button after successful login
+
       },
       error: (error) => {
         this._sharedService.showToastr(error);
-       
+        this.isSubmitting = false; // Re-enable button after successful login
+
       },
     });
   }
+ 
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
   }

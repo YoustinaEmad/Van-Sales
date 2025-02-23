@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   controlType = ControlType;
+  isSubmitting = false;
   constructor(
     private authService: AuthserviceService,
     private _sharedService: SharedService,
@@ -29,23 +30,31 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
+ 
+
+
   onSubmit(): void {
-    if (!this.loginForm.valid) return;
+    if (!this.loginForm.valid ||this.isSubmitting) return;
+    this.isSubmitting=true;
     const loginData: LoginViewModel = this.loginForm.value;
     this.authService.setLogin(loginData).subscribe({
       next: (response) => {
         this._sharedService.showToastr(response);
+        this.isSubmitting=false;
         localStorage.setItem('rToken', response.data.otPtoken);
         this._router.navigate(['/auth/otp'], {
           queryParams: { source: 'login'},
         });
+        this.isSubmitting=false
       },
       error: (error) => {
         this._sharedService.showToastr(error);
-       
+        this.isSubmitting=false
       },
     });
   }
+
+  
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
   }
