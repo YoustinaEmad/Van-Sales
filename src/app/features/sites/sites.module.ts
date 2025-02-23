@@ -13,8 +13,6 @@ const routes: Routes = [{
     { path: "governorates", loadChildren: () => import('./governorates/governorates.module').then(m => m.GovernoratesModule) },
     { path: "cities", loadChildren: () => import('./city/city.module').then(m => m.CityModule) },
     { path: "company", loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
-    { path: "brand", loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule) },
-    { path: "discount", loadChildren: () => import('./discount/discount.module').then(m => m.DiscountModule) },
     { path: "product", loadChildren: () => import('./Product/product.module').then(m => m.ProductModule) },
     { path: "category", loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
     { path: "dashboard", loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
@@ -24,7 +22,6 @@ const routes: Routes = [{
     {path: "email" , loadChildren: () => import('../sales-flow/email/email.module').then(m => m.EmailModule)},
     {path: "role" , loadChildren: () => import('../sales-flow/roles/roles.module').then(m => m.RolesModule)},
     {path: "signUpRequest" , loadChildren: () => import('../sites/sign-up-request/sign-up-request.module').then(m => m.SignUpRequestModule)},
-    {path: "ads" , loadChildren: () => import('../sites/ads/ads.module').then(m => m.AdsModule)},
     { path: "jobTitle", loadChildren: () => import('./job-title/job-title.module').then(m => m.JobTitleModule) },
     { path: "employeeProfile", loadChildren: () => import('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule) },
   ]

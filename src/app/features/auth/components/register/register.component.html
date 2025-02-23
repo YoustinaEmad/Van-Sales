@@ -5,7 +5,7 @@
         <div class="w-100 px-5">
 
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <h1 class="login-title bold pt-3">Sign up</h1>
+            <h1 class="login-title color-purple-700 bold pt-3">Sign up</h1>
             <p class="color-gray-700 mb-4">Continue your journey with oil car.</p>
             <div class="row mb-2">
               <div class="col-md-4">
@@ -110,8 +110,8 @@
                   </div>
                   <ng-template #uploadTemplate>
                     <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
-                      <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
-                      <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
+                      <i class="fa fa-upload fa-2x mb-2 color-purple-500"></i>
+                      <p class="color-purple-500" *ngIf="!image.uploaded">Upload New Image</p>
                       <p class="text-danger" *ngIf="image.error">Error Uploading</p>
                     </label>
                     <input #file type="file" id="fileInput-{{ i }}" class="d-none"
@@ -125,7 +125,7 @@
 
             <div class="row">
               <div class="col-12">
-                <button class="btn bg-orange w-100 mt-2"
+                <button class="btn bg-purple-700 w-100 mt-2"
                 [disabled]="registerForm.invalid || isSubmitting || !isEqualPassword || !isImageUploaded()">
                 Sign Up
               </button>
@@ -135,7 +135,7 @@
           </form>
           <p class="text-center mt-3">
             Have An Account?
-            <span class="pointer color-brand-500" routerLink="/auth/login">Login</span>
+            <span class="pointer color-purple-500" routerLink="/auth/login">Login</span>
           </p>
         </div>
       </div>
