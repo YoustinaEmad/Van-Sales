@@ -120,14 +120,14 @@
                           <!-- Approve Button -->
                           <button
                                   class="no-border bg-green-500 cr3 color-gray-25 px-2"
-                                  [disabled]="item.verifyStatus === 3">
+                                  [disabled]="item.verifyStatus === 4">
                             <img class="pe-2" src="../assets/images/check.png">Accept
                           </button>
                           
                           <!-- Reject Button (disabled if the status is 'Approved') -->
                           <button 
                                   class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
-                                  [disabled]="item.verifyStatus === 4">
+                                  [disabled]="item.verifyStatus === 3">
                             <img class="pe-2" src="../assets/images/close.png">Reject
                           </button>
                         </td>
