@@ -24,6 +24,8 @@ const routes: Routes = [{
     {path: "signUpRequest" , loadChildren: () => import('../sites/sign-up-request/sign-up-request.module').then(m => m.SignUpRequestModule)},
     { path: "jobTitle", loadChildren: () => import('./job-title/job-title.module').then(m => m.JobTitleModule) },
     { path: "employeeProfile", loadChildren: () => import('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule) },
+    { path: "warehouse", loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule) },
+
   ]
 }
 

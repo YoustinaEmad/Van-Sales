@@ -1,0 +1,84 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
+import { warehouseCreateViewModel } from '../../interfaces/warehouse-view-model';
+import { SharedService } from 'src/app/shared/service/shared.service';
+import { WarehouseService } from '../../services/warehouse.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.css']
+})
+export class CreateComponent implements OnInit, OnDestroy {
+  page: CRUDCreatePage = new CRUDCreatePage();
+  item: warehouseCreateViewModel = new warehouseCreateViewModel();
+  id:string;
+  isActivated:boolean=false;
+  constructor(
+    private _sharedService: SharedService,
+    private _warehouseService: WarehouseService,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router
+  ) {}
+  ngOnInit(): void {
+    this.page.isPageLoaded = false;
+    this._activatedRoute.paramMap.subscribe((params) => {
+      if (params.has('id')) {
+        this.id = params.get('id');
+        this.page.isEdit = true;
+      }
+    });
+    if (this.page.isEdit) {
+      this.getEditableItem();
+    } else {
+      this.createForm();
+    }
+  }
+  //Region:If Edit page
+  getEditableItem() {
+    this._warehouseService.getById(this.id).subscribe((res) => {
+      if (res.isSuccess) {
+        this.item = res.data;
+        this.isActivated = this.item.isActive;
+        this.item.id=this.id;
+        this.createForm();
+      }
+    });
+  }
+  
+  createForm() {
+    this.page.form = this._sharedService.formBuilder.group({
+      name: [this.item.name,[Validators.required,Validators.minLength(2), Validators.maxLength(200)]],
+      governorateCode: [this.item.governorateCode,[Validators.required,Validators.minLength(2), Validators.maxLength(200)]]
+
+    });
+    this.page.isPageLoaded = true;
+  }
+
+  Save() {
+    if (this.page.isSaving || this.page.form.invalid) return;
+    this.page.isSaving = true;
+    Object.assign(this.item, this.page.form.value);
+    this.item.isActive = this.isActivated;
+    this._warehouseService.postOrUpdate(this.item).subscribe({
+      next: (res) => {
+        this.page.isSaving = false;
+        this.page.responseViewModel = res;
+        this._sharedService.showToastr(res);
+        if (res.isSuccess) {
+          this._router.navigate(['/sites/warehouse']);
+        }
+      },
+      error: () => {
+        this.page.isSaving = false;
+      },
+    });
+  }
+
+  ngOnDestroy(): void {}
+  numberOnly(event: any) {
+    return this._sharedService.numberOnly(event);
+  }
+}
