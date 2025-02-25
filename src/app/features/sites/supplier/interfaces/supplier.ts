@@ -11,6 +11,7 @@ export interface supplierViewModel {
     name: string;
     governorateCode:string;
     isActive:boolean;
+    cities?: any[];
   }
   export class supplierSearchViewModel {
     Name: string;

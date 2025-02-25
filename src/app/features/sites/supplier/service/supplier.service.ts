@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/service/api.service';
-import { supplierActivateViewModel, supplierSearchViewModel, supplierViewModel } from '../interfaces/supplier';
+import { supplierActivateViewModel, supplierCreateViewModel, supplierSearchViewModel, supplierViewModel } from '../interfaces/supplier';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 
@@ -18,29 +18,37 @@ export class SupplierService {
       params = params.set("Name", searchViewModel.Name);
       }
 
-      return this._apiService.get(`/V4/FailedDeliveryReason/getall?orderBy=${orderBy}&isAscending=${isAscending}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+      return this._apiService.get(`/GetAllGovernorateWithAllCitiesEndPoint/GetList?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
         }
-        getById(ID: string) {
-          return this._apiService.get(`/V4/FailedDeliveryReason/GetByID?ID=${ID}`,);
-        }
-        remove(ID: string) {
-          return this._apiService.remove(`/V4/FailedDeliveryReason/Delete?ID=${ID}`);
-        }
-        
-        
-        postOrUpdate(body: supplierViewModel) {
-          if (body.id) return this._apiService.update(`/V4/FailedDeliveryReason/edit`, body)
-          else return this._apiService.post(`/V4/FailedDeliveryReason/Create`, body)
-        }
-      
-      
-      
-        updateActivated(body:supplierActivateViewModel ) {
+       getById(ID: string) {
+             return this._apiService.get(`/GetGovernorateByIDEndPoint/GetGovernorateByID?ID=${ID}`);
+           }
+           remove(body:supplierViewModel ) {
+             return this._apiService.remove(`/DeleteGovernorateEndPoint/DeleteGovernorate`,body);
+           }
          
-          return this._apiService.update(`/ActiveGovernorateEndpoint/Active`,body);
-        }
-        updateDeactivated(body:supplierActivateViewModel) {
-          return this._apiService.update(`/DeactiveGovernorateEndpoint/Deactive`,body);
-        }
+           postOrUpdate(body:supplierCreateViewModel ) {
+             if (body.id) return this._apiService.update(`/UpdateGovernorateEndPoint/UpdateGovernorate`, body)
+             else return this._apiService.post(`/CreateGovernorateEndPoint/AddGovernorate`, body)
+           }
+         
+           updateActivated(body:supplierActivateViewModel ) {
+            
+             return this._apiService.update(`/ActiveGovernorateEndpoint/Active`,body);
+           }
+           updateDeactivated(body:supplierActivateViewModel) {
+             return this._apiService.update(`/DeactiveGovernorateEndpoint/Deactive`,body);
+           }
+           bulkDelete(ids: string[]) {
+             return this._apiService.remove(`/BulkDeleteGovernorateEndPoint/BulkDeleteGovernorate`, { ids });
+           }
+           bulkActivate(ids: string[]) {
+             return this._apiService.update(`/BulkActivateGovernorateEndPoint/BulkActivateGovernorate`, { ids });
+           }
+         
+           // Bulk deactivate governorates
+           bulkDeactivate(ids: string[]) {
+             return this._apiService.update(`/BulkDeactivateGovernorateEndPoint/BulkDeactivateGovernorate`, { ids });
+           }
       
 }

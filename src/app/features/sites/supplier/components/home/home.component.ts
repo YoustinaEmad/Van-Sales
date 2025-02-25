@@ -1,12 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { GovernorateService } from 'src/app/features/sites/governorates/service/government.service';
-import { supplierActivateViewModel, supplierSearchViewModel, supplierViewModel } from '../../interfaces/supplier';
+import { supplierActivateViewModel, supplierCreateViewModel, supplierSearchViewModel, supplierViewModel } from '../../interfaces/supplier';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
-
+import { SupplierService } from '../../service/supplier.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,11 +18,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override pageRoute = '/sites/supplier';
   override searchViewModel: supplierSearchViewModel = new supplierSearchViewModel();
   modalRef: BsModalRef;
+  isEditing:boolean=false;
+  isAddingNewAddress:boolean=false
   override items: supplierViewModel[] = [];
   selectedItem: supplierViewModel;
   activation: supplierActivateViewModel = { id: '' };
   constructor(public override _sharedService: SharedService,
-    private _pageService: GovernorateService, private _router: Router, private activatedRoute: ActivatedRoute
+    private _pageService: SupplierService, private _router: Router, private activatedRoute: ActivatedRoute,  private modalService: BsModalService
 
   ) {
     super(_sharedService);
@@ -30,7 +33,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
   }
+  editableSupplier: supplierCreateViewModel = { id: '', name: '', governorateCode: '', isActive: true };
+  
 
+ 
+  @ViewChild('supplierModalTemplate', { static: false }) supplierModalTemplate: TemplateRef<any>;
 
   initializePage() {
     this.page.columns = [
@@ -210,5 +217,54 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.selected = isChecked;
     });
   }
+
+
+
+
+  saveSupplier() {
+    if (!this.editableSupplier.name || !this.editableSupplier.governorateCode) {
+      return;
+    }
+  
+    // Ensure 'cities' is always an array
+    const supplier: supplierViewModel = {
+      ...this.editableSupplier,
+      cities: this.editableSupplier.cities ?? [], // Ensures a valid array
+    };
+  
+    this._pageService.postOrUpdate(supplier).subscribe(response => {
+      this._sharedService.showToastr(response);
+      if (response.isSuccess) {
+        setTimeout(() => {
+          if (this.modalRef) {
+            this.modalRef.hide();
+          }
+        });
+        this.search();
+      }
+    });
+  }
+  
+
+  openSupplierModal(editMode: boolean, supplier?: supplierViewModel) {
+    this.isEditing = editMode;
+  
+    if (editMode && supplier) {
+      this.editableSupplier = { 
+        id: supplier.id, 
+        name: supplier.name, 
+        governorateCode: supplier.governorateCode, 
+        isActive: supplier.isActive 
+      };
+    } else {
+      this.editableSupplier = { id: '', name: '', governorateCode: '', isActive: true };
+    }
+  
+    // Open modal
+    this.modalRef = this.modalService.show(this.supplierModalTemplate, { class: 'modal-md' });
+  }
+  
+
+
 
 }
