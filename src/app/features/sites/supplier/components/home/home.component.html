@@ -14,7 +14,7 @@
                 (click)="activateSuppliers()">Activate</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
                 (click)="disActiveSuppliers()">Disactivate</button>
-                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="openSupplierModal(false)">Create Supplier</button>
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateSupplier()">Create Supplier</button>
 
         </div>
     </div>
@@ -23,11 +23,14 @@
     <form [formGroup]="page.searchForm">
         <div class="form-body">
             <div class="row g-2">
-                <div class="col-3">
+                <div class="col-5">
                     <ng-control [form]="page.searchForm" control="Name" label="shared.name" placeholder="shared.name">
                     </ng-control>
                 </div>
-
+                <div class="col-5">
+                    <ng-control [form]="page.searchForm" control="Code" label="shared.Code" placeholder="shared.Code">
+                    </ng-control>
+                </div>
                 <div class="col-2 d-flex align-items-end">
                     <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
                         (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
@@ -81,18 +84,16 @@
                         </td>
                         <td>{{i+1}}</td>
                         <td>{{item.name}}</td>
-                        <td *ngIf="item.cities?.length">
-                            <div class="d-flex align-items-center">
-                                <p class="bg-purple-50 color-purple-700 cr7 px-2 py-1" [class.me-2]="!last"
-                                    *ngFor="let city of item.cities |slice:0 :4 ;let last =last ">
-                                    {{city.name}}
-                                </p>
-                                <p class="ms-2 p-1 cr6 bg-gray-100 color-gray-700" *ngIf="item.cities?.length > 4"
-                                    [title]=""> +{{item.cities.length-4}}</p>
-                            </div>
-                        </td>
-                        <td *ngIf="!item.cities?.length">-</td>
-                        <td>{{item.governorateCode}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.collaborationAdministrator}}</td>
+                        <td>{{item.creditLimit}}</td>
+                        <td>{{item.classificationId}}</td>
+                        <td>{{item.governorateId}}</td>
+                        <td>{{item.cityId}}</td>
+                        <td>{{item.street}}</td>
+                        <td>{{item.landmark}}</td>
+                        <td>{{item.buildingData}}</td>
+                        <td>{{item.path}}</td>
                         <td>
                             <div class="flex justify-content-center">
                                 <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving"
@@ -106,7 +107,7 @@
                             </button>
                             <button pButton icon="pi pi-pencil"
                                 class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
-                                (click)="openSupplierModal(true, item)">
+                                (click)="editSupplier(item.id)">
                             </button>
 
                            

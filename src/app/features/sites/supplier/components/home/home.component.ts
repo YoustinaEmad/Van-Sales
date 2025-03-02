@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
-import { GovernorateService } from 'src/app/features/sites/governorates/service/government.service';
 import { supplierActivateViewModel, supplierCreateViewModel, supplierSearchViewModel, supplierViewModel } from '../../interfaces/supplier';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { SupplierService } from '../../service/supplier.service';
@@ -33,19 +32,27 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
   }
-  editableSupplier: supplierCreateViewModel = { id: '', name: '', governorateCode: '', isActive: true };
+  // editableSupplier: supplierCreateViewModel = { id: '', name: '', governorateCode: '', isActive: true };
   
 
  
-  @ViewChild('supplierModalTemplate', { static: false }) supplierModalTemplate: TemplateRef<any>;
+  // @ViewChild('supplierModalTemplate', { static: false }) supplierModalTemplate: TemplateRef<any>;
 
   initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
-      { Name: "Name", Title: "Suppliers", Selectable: false, Sortable: true },
-      { Name: "Cities", Title: "Cities", Selectable: false, Sortable: true },
-      { Name: "governorateCode", Title: "Governorate Code", Selectable: false, Sortable: true },
+      { Name: "name", Title: "Name", Selectable: false, Sortable: true },
+      { Name: "code", Title: "Code", Selectable: false, Sortable: true },
+      { Name: "collaborationAdministrator", Title: "Collaboration Administrator", Selectable: false, Sortable: true },
+      { Name: "creditLimit", Title: "Credit Limit", Selectable: false, Sortable: true },
+      { Name: "classificationId", Title: "Classification", Selectable: false, Sortable: true },
+      { Name: "governorateId", Title: "Governorate", Selectable: false, Sortable: true },
+      { Name: "cityId", Title: "City", Selectable: false, Sortable: true },
+      { Name: "street", Title: "Street", Selectable: false, Sortable: true },
+      { Name: "landmark", Title: "Landmark", Selectable: false, Sortable: true },
+      { Name: "buildingData", Title: "BuildingData", Selectable: false, Sortable: true },
+       { Name: "path", Title: "Path", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
 
@@ -58,7 +65,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-  navigateToCreateGovernorate() {
+  navigateToCreateSupplier() {
     this._router.navigate(['/sites/supplier/create']);
   }
 
@@ -84,7 +91,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-  //Region:Remove Governorate
+
   @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
   showDeleteConfirmation(selectedItem: supplierViewModel) {
     this.selectedItem = selectedItem;
@@ -106,8 +113,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  editGovernorate(id: string) {
-    // Navigate to the create page with the governorate ID
+  editSupplier(id: string) {
     this._router.navigate(['/sites/supplier/edit', id]);
   }
 
@@ -221,48 +227,47 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  saveSupplier() {
-    if (!this.editableSupplier.name || !this.editableSupplier.governorateCode) {
-      return;
-    }
+  // saveSupplier() {
+  //   if (!this.editableSupplier.name || !this.editableSupplier.governorateCode) {
+  //     return;
+  //   }
   
-    // Ensure 'cities' is always an array
-    const supplier: supplierViewModel = {
-      ...this.editableSupplier,
-      cities: this.editableSupplier.cities ?? [], // Ensures a valid array
-    };
+  //   const supplier: supplierViewModel = {
+  //     ...this.editableSupplier,
+  //     cities: this.editableSupplier.cities ?? [], 
+  //   };
   
-    this._pageService.postOrUpdate(supplier).subscribe(response => {
-      this._sharedService.showToastr(response);
-      if (response.isSuccess) {
-        setTimeout(() => {
-          if (this.modalRef) {
-            this.modalRef.hide();
-          }
-        });
-        this.search();
-      }
-    });
-  }
+  //   this._pageService.postOrUpdate(supplier).subscribe(response => {
+  //     this._sharedService.showToastr(response);
+  //     if (response.isSuccess) {
+  //       setTimeout(() => {
+  //         if (this.modalRef) {
+  //           this.modalRef.hide();
+  //         }
+  //       });
+  //       this.search();
+  //     }
+  //   });
+  // }
   
 
-  openSupplierModal(editMode: boolean, supplier?: supplierViewModel) {
-    this.isEditing = editMode;
+  // openSupplierModal(editMode: boolean, supplier?: supplierViewModel) {
+  //   this.isEditing = editMode;
   
-    if (editMode && supplier) {
-      this.editableSupplier = { 
-        id: supplier.id, 
-        name: supplier.name, 
-        governorateCode: supplier.governorateCode, 
-        isActive: supplier.isActive 
-      };
-    } else {
-      this.editableSupplier = { id: '', name: '', governorateCode: '', isActive: true };
-    }
+  //   if (editMode && supplier) {
+  //     this.editableSupplier = { 
+  //       id: supplier.id, 
+  //       name: supplier.name, 
+  //       governorateCode: supplier.governorateCode, 
+  //       isActive: supplier.isActive 
+  //     };
+  //   } else {
+  //     this.editableSupplier = { id: '', name: '', governorateCode: '', isActive: true };
+  //   }
   
-    // Open modal
-    this.modalRef = this.modalService.show(this.supplierModalTemplate, { class: 'modal-md' });
-  }
+  //   // Open modal
+  //   this.modalRef = this.modalService.show(this.supplierModalTemplate, { class: 'modal-md' });
+  // }
   
 
 

@@ -1,20 +1,41 @@
 export interface supplierViewModel {
-    id: string; 
-    name: string; 
-    cities: string[]; 
-    isActive:boolean;
-    governorateCode:string;
-    selected?: boolean; 
+  id:string;
+  code:string;
+   name:string;
+   collaborationAdministrator:string;
+   creditLimit:number;
+  classificationId:string;
+  governorateId:string;
+  cityId:string;
+  street:string;
+  landmark:string;
+  latitude:number;
+  longitude:number;
+  buildingData:string;
+  path:string;
+  isActive:boolean;
+  selected?:string;
 }
   export class supplierCreateViewModel {
-    id: string;
-    name: string;
-    governorateCode:string;
-    isActive:boolean;
-    cities?: any[];
+    id:string;
+    code:string;
+     name:string;
+     collaborationAdministrator:string;
+     creditLimit:number;
+    classificationId:string;
+    governorateId:string;
+    cityId:string;
+    street:string;
+    landmark:string;
+    latitude:number;
+    longitude:number;
+    buildingData:string;
+    path:string;
+
   }
   export class supplierSearchViewModel {
     Name: string;
+    Code:string;
   }
   export class supplierActivateViewModel {
     id:string;

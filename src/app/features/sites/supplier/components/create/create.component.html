@@ -15,12 +15,73 @@
   <ng-container *ngIf="page.isPageLoaded">
     <form [formGroup]="page.form">
       <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col">
+        <div class="col-3">
           <ng-control [form]="page.form" control="name" label="Governate " placeholder="Governate "></ng-control>
         </div>
-        <div class="col">
-          <ng-control [form]="page.form" control="governorateCode" label="Governate Code" placeholder="Governate Code" (keypress)="numberOnly($event)"></ng-control>
+        <div class="col-3">
+          <ng-control [form]="page.form" control="code" label=" Code" placeholder=" Code"></ng-control>
+        </div>
+        <div class="col-3">
+          <ng-control [form]="page.form" control="collaborationAdministrator" label=" collaboration Administrator" placeholder=" collaboration Administrator"></ng-control>
         </div>
       </div>
+
+
+
+
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-3">
+          <ng-control [form]="page.form" control="creditLimit" label="credit Limit " placeholder="credit Limit "></ng-control>
+        </div>
+        <div class="col-3">
+          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classificationId"
+          label="Classification" [items]="classificationList" placeholder="select-Classification"
+          bindValue="id"></ng-control>
+        </div>
+        <div class="col-3">
+          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
+          label="Governorate" [items]="governoratesList" placeholder="select-governorate"
+          bindValue="id"></ng-control>
+        </div>
+      </div>
+
+
+
+
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-3">
+          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId"
+          label="City" [items]="cityList" placeholder="select-city"
+          bindValue="id"></ng-control>
+        </div>
+        <div class="col-3">
+          <ng-control [form]="page.form" control="street" label="street" placeholder="street"></ng-control>
+        </div>
+       
+        <div class="col-3">
+          <ng-control [form]="page.form" control="landmark" label="landmark" placeholder="landmark"></ng-control>
+        </div>
+      </div>
+
+
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-3">
+          <ng-control [form]="page.form" control="buildingData" label="buildingData" placeholder="buildingData"></ng-control>
+        </div>
+        <div class="col-3">
+          <ng-control [form]="page.form" control="latitude" label="latitude" placeholder="latitude"></ng-control>
+        </div>
+       
+        <div class="col-3">
+          <ng-control [form]="page.form" control="longitude" label="longitude" placeholder="longitude"></ng-control>
+        </div>
+      </div>
+
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-3">
+          <ng-control [form]="page.form" control="buildingData" label="buildingData" placeholder="buildingData"></ng-control>
+        </div>
+      </div>
+
     </form>
   </ng-container>
