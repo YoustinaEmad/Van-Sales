@@ -11,6 +11,7 @@ export class governorateCreateViewModel {
   name: string;
   governorateCode:string;
   isActive:boolean;
+  cities?: any[];
 }
 export class governorateSearchViewModel {
   Name: string;

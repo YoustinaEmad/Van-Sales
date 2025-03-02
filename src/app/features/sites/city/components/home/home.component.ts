@@ -1,10 +1,10 @@
 
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
-import { cityActivateViewModel, citySearchViewModel, cityViewModel, governorateSelectedItem } from '../../interfaces/city';
+import { cityActivateViewModel, cityCreateViewModel, citySearchViewModel, cityViewModel, governorateSelectedItem } from '../../interfaces/city';
 import { CityService } from '../../service/city.service';
 import { forkJoin } from 'rxjs';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
@@ -19,6 +19,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override pageRoute = '/sites/cities';
   override searchViewModel: citySearchViewModel = new citySearchViewModel();
   modalRef: BsModalRef;
+  isEditing:boolean=false;
   override items: cityViewModel[] = [];
   selectedItem: cityViewModel;
   governorates: governorateSelectedItem[] = [];
@@ -26,7 +27,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   activation: cityActivateViewModel = { id: ''};
 
   constructor(public override _sharedService: SharedService,
-    private _pageService: CityService, private _router: Router, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef
+    private _pageService: CityService, private _router: Router, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef,  private modalService: BsModalService 
 
   ) {
     super(_sharedService);
@@ -35,6 +36,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
   }
+  editableCity: cityCreateViewModel = { id: '', name: '', governorateId: '', isActive: true };
+
+
+  @ViewChild('CityModalTemplate', { static: false }) CityModalTemplate: TemplateRef<any>;
 
   initializePage() {
     this.page.columns = [
@@ -218,5 +223,75 @@ disActiveCities() {
     });
   }
 }
+
+
+
+
+saveCity() {
+  if (!this.editableCity.name || !this.editableCity.governorateId) return;
+
+ 
+
+  const city: cityCreateViewModel = { 
+    ...this.editableCity
+  };
+
+  if (this.isEditing) {
+
+    this._pageService.postOrUpdate(city).subscribe(response => {
+
+      this._sharedService.showToastr(response);
+      if (response.isSuccess) {
+        this.modalRef?.hide();
+        this.search();
+      }
+    });
+  } else {
+    
+
+    this._pageService.postOrUpdate(city).subscribe(response => {
+
+      this._sharedService.showToastr(response);
+      if (response.isSuccess) {
+        this.modalRef?.hide();
+        this.search(); 
+      }
+    });
+  }
+}
+
+
+
+
+
+openCityModal(editMode: boolean, city?: cityViewModel) {
+  this.isEditing = editMode;
+  if (editMode && city) {
+    this._pageService.getById(city.id).subscribe(response => {
+      if (response.isSuccess) {
+        this.editableCity = { 
+          id: response.data.id ?? city.id, // Ensure ID is assigned
+          name: response.data.name,
+          governorateId: response.data.governorateId,
+          isActive: response.data.isActive
+        };
+       
+        this.cdr.detectChanges();
+        this.modalRef = this.modalService.show(this.CityModalTemplate, { class: 'modal-md' });
+      } else {
+        this._sharedService.showToastr(response);
+      }
+    });
+  } else {
+    this.editableCity = { id: '', name: '', governorateId: '', isActive: true };
+ 
+    this.cdr.detectChanges();
+    this.modalRef = this.modalService.show(this.CityModalTemplate, { class: 'modal-md' });
+  }
+}
+
+
+
+
 
 }

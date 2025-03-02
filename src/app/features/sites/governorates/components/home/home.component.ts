@@ -1,10 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { GovernorateService } from 'src/app/features/sites/governorates/service/government.service';
-import { governorateActivateViewModel, governorateSearchViewModel, governorateViewModel } from '../../interfaces/governorate';
+import { governorateActivateViewModel, governorateCreateViewModel, governorateSearchViewModel, governorateViewModel } from '../../interfaces/governorate';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 
 @Component({
@@ -17,11 +17,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override pageRoute = '/sites/governorates';
   override searchViewModel: governorateSearchViewModel = new governorateSearchViewModel();
   modalRef: BsModalRef;
+  isEditing:boolean=false;
   override items: governorateViewModel[] = [];
   selectedItem: governorateViewModel;
   activation: governorateActivateViewModel = { id: '' };
   constructor(public override _sharedService: SharedService,
-    private _pageService: GovernorateService, private _router: Router, private activatedRoute: ActivatedRoute
+    private _pageService: GovernorateService, private _router: Router, private activatedRoute: ActivatedRoute ,  private modalService: BsModalService 
 
   ) {
     super(_sharedService);
@@ -30,6 +31,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
   }
+
+ editableGovernorate: governorateCreateViewModel = { id: '', name: '', governorateCode: '', isActive: true };
+
+ @ViewChild('GovernorateModalTemplate', { static: false }) GovernorateModalTemplate: TemplateRef<any>;
 
 
   initializePage() {
@@ -210,5 +215,50 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.selected = isChecked;
     });
   }
+
+
+
+  saveGovernorate() {
+    if (!this.editableGovernorate.name || !this.editableGovernorate.governorateCode) {
+      return;
+    }
+
+    const governorate: governorateCreateViewModel = { 
+      ...this.editableGovernorate
+    };
+
+    this._pageService.postOrUpdate(governorate).subscribe(response => {
+      this._sharedService.showToastr(response);
+      if (response.isSuccess) {
+        this.modalRef?.hide();
+        this.search();
+      }
+    });
+}
+
+
+
+openGovernorateModal(editMode: boolean, governorate?: governorateViewModel) {
+  this.isEditing = editMode;
+
+  if (editMode && governorate) {
+    this.editableGovernorate = { 
+      id: governorate.id, 
+      name: governorate.name, 
+      governorateCode: governorate.governorateCode, 
+      isActive: governorate.isActive 
+    };
+  } else {
+    this.editableGovernorate = { id: '', name: '', governorateCode: '', isActive: true };
+  }
+
+ 
+  if (this.GovernorateModalTemplate) {
+    this.modalRef = this.modalService.show(this.GovernorateModalTemplate, { class: 'modal-md' });
+    
+  } 
+}
+
+
 
 }

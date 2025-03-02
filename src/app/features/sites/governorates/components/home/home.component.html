@@ -14,9 +14,12 @@
                 (click)="activateGovernorates()">Activate</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
                 (click)="disActiveGovernorates()">Disactivate</button>
-            <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 "
-                (click)="navigateToCreateGovernorate()">Create Governorate</button>
-
+            <!-- <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 "
+                (click)="navigateToCreateGovernorate()">Create Governorate</button> -->
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="openGovernorateModal(false)">
+                    Create Governorate
+                </button>
+                
         </div>
     </div>
 
@@ -105,10 +108,14 @@
                                 class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
                                 (click)="showDeleteConfirmation(item)">
                             </button>
-                            <button pButton icon="pi pi-pencil"
+                            <!-- <button pButton icon="pi pi-pencil"
                                 class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
                                 (click)="editGovernorate(item.id)">
-                            </button>
+                            </button> -->
+                            <button pButton icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
+                            (click)="openGovernorateModal(true, item)">
+                        </button>
                         </td>
                     </tr>
                 </ng-container>
@@ -147,3 +154,29 @@
     </div>
   </ng-template>
   
+
+
+  <ng-template #GovernorateModalTemplate>
+    <div class="modal-content" style="width: 500px;">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ isEditing ? 'Edit Governorate' : 'Create Governorate' }}</h5>
+            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="saveGovernorate()">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Governorate Name</label>
+                    <input type="text" [(ngModel)]="editableGovernorate.name" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="governorateCode" class="form-label">Governorate Code</label>
+                    <input type="text" [(ngModel)]="editableGovernorate.governorateCode" name="governorateCode" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ? 'Save Changes' : 'Create' }}</button>
+                    <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white " (click)="modalRef.hide()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

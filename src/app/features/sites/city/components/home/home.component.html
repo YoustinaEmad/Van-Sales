@@ -15,8 +15,13 @@
                 (click)="activateCities()">Activate</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
                 (click)="disActiveCities()">Disactivate</button>
-            <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateCity()">Create
-                City</button>
+            <!-- <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateCity()">Create
+                City</button> -->
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="openCityModal(false)">Create
+                    City</button>
+    
+
+                
         </div>
     </div>
 
@@ -71,7 +76,9 @@
                             <div *ngIf="colum.Sortable" class="d-inline-block"
                                 [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
                                 <i class="uil uil-sort sort-icon"
-                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                                [ngClass]="isColumnAscending(colum.Name) ? 'sort-icon-ase' : 'sort-icon-des'">
+                             </i>
+                             
                             </div>
                         </th>
                     </ng-container>
@@ -104,9 +111,14 @@
                             <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
                                 aria-label="Delete" (click)="showDeleteConfirmation(item)">
                             </button>
-                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                            <!-- <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
                                 aria-label="Edit" (click)="editCity(item.id)">
-                            </button>
+                            </button> -->
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                            aria-label="Edit" (click)="openCityModal(true, item)">
+                        </button>
+
+                            
                         </td>
                 </ng-container>
             </tbody>
@@ -147,3 +159,39 @@
         </div>
       </ng-template>
 </div>
+
+
+
+
+<ng-template #CityModalTemplate>
+    <div class="modal-content" style="width: 500px;">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ isEditing ? 'Edit City' : 'Create City' }}</h5>
+
+            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="saveCity()">
+                <div class="mb-3">
+                    <label for="name" class="form-label">City Name</label>
+                    <input type="text" [(ngModel)]="editableCity.name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="governorate" class="form-label">Governorate</label>
+                    <select [(ngModel)]="editableCity.governorateId" name="governorate" class="form-control" required>
+                        <option value="" disabled>Select Governorate</option>
+                        <option *ngIf="governorates.length === 0" disabled>Loading...</option>
+                        <option *ngFor="let gov of governorates" [value]="gov.id">{{ gov.name }}</option>
+                    </select>
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ? 'Save Changes' : 'Create' }}</button>
+                    <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white " (click)="modalRef.hide()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

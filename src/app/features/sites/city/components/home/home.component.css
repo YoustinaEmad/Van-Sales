@@ -10,3 +10,7 @@
     border-radius: 0.25rem; 
     padding: 0.1rem;
 }
+.border-color{
+  border: 1px solid  #972ccc;
+
+}
