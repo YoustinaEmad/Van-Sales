@@ -6,6 +6,7 @@ import { warehouseActivateViewModel, warehouseSearchViewModel, WarehouseViewMode
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { WarehouseService } from '../../services/warehouse.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { governorateViewModel } from '../../../governorates/interfaces/governorate';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
   selectedItem: WarehouseViewModel;
   activation: warehouseActivateViewModel = { id: '' };
   isDialogOpen = false; // Control dialog visibility
+  WarehouseType = [
+    { id: 1, name: "MainBranch" },
+    { id: 2, name: "SubBranch" }
+  ];
+
+  governorates: governorateViewModel[] = [];
+  cities: any[] = []; // Store cities here
 
   openCreateDialog(): void {
     this.isDialogOpen = true;
@@ -37,20 +45,30 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
   ngOnInit(): void {
     this.initializePage();
+    this.loadGovernorates();
+    this.loadCities();
   }
 
 
   initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-
-      { Name: "Name", Title: "Governorates", Selectable: false, Sortable: true },
-      { Name: "Cities", Title: "Cities", Selectable: false, Sortable: true },
-      { Name: "governorateCode", Title: "Governorate Code", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "WareHouse", Selectable: false, Sortable: true },
+      { Name: "code", Title: "Code", Selectable: false, Sortable: true },
+      { Name: "data", Title: "Data", Selectable: false, Sortable: true },
+      { Name: "warehouseType", Title: "WarehouseType", Selectable: false, Sortable: true },
+      { Name: "governorateName", Title: "Governorate", Selectable: false, Sortable: true },
+      { Name: "cityName", Title: "CityName", Selectable: false, Sortable: true },
+      { Name: "street", Title: "Street", Selectable: false, Sortable: true },
+      { Name: "landmark", Title: "Landmark", Selectable: false, Sortable: true },
+      { Name: "buildingData", Title: "BuildingData", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
 
     ];
+
+
+
     // this.subscribeToParentEvent()
     this.createSearchForm();
     this.activatedRoute.queryParams.subscribe(params => {
@@ -62,11 +80,45 @@ export class HomeComponent extends CrudIndexBaseUtils {
   navigateToCreateWarehouse() {
     this._router.navigate(['/sites/warehouse/create']);
   }
-
+  getWarehouseTypeName(id: number): string {
+    const warehouseType = this.WarehouseType.find(type => type.id === id);
+    return warehouseType ? warehouseType.name : 'Unknown'; // Default to 'Unknown' if the id doesn't match any warehouse type
+  }
+  onGovernorateChange(governorateId: string) {
+    this.loadCities(governorateId); // Load cities for the selected governorate
+  }
+  loadGovernorates() {
+    this._pageService.getGovernorates().subscribe((res) => {
+      if (res.isSuccess) {
+        this.governorates = res.data; // Ensure this is populated with data
+      } else {
+        console.log('Failed to load governorates:', res);
+      }
+    });
+  }
+  
+  loadCities(governorateId?: string) {
+    this.cities = [];
+    this._pageService.getCities(governorateId).subscribe(res => {
+      if (res.isSuccess) {
+        this.cities = res.data; // Ensure this is populated with data
+      } else {
+        console.log('Failed to load cities:', res);
+      }
+    });
+  }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       Name: [this.searchViewModel.Name],
+      Code: [this.searchViewModel.Code],
+      Data: [this.searchViewModel.Data],
+      WarehouseType: [this.searchViewModel.WarehouseType],
+      GovernorateId: [this.searchViewModel.GovernorateId],
+      CityId: [this.searchViewModel.CityId],
+      Street: [this.searchViewModel.Street],
+      Landmark: [this.searchViewModel.Landmark]
     });
+
     this.page.isPageLoaded = true;
   }
 
@@ -163,7 +215,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     };
   }
 
-  activateWarehousees() {
+   activateWarehousees() {
     const selectedIds = this.items
       .filter(item => item.selected)
       .map(item => item.id);
@@ -204,7 +256,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     return this.items.every(item => item.selected);
   }
 
-  // Toggle the selection of all items
+  //Toggle the selection of all items
   toggleSelectAll(event: any): void {
     const isChecked = event.target.checked;
     this.items.forEach(item => {
@@ -212,5 +264,5 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-  
+
 }

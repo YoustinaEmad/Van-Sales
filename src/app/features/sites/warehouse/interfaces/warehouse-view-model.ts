@@ -2,19 +2,49 @@
 export interface WarehouseViewModel {
   id: string; 
   name: string; 
-  cities: string[]; 
+  code: string; 
+  data:string;
+  warehouseType:number;
+  governorateId:string;
+  governorateName:string;
+  cityId:string;
+  cityName:string;
+  street:string;
+  landmark:string;
+  latitude:string;
+  longitude:string;
+  buildingData:string;
   isActive:boolean;
-  governorateCode:string;
-  selected?: boolean; 
+  selected:boolean;
 }
+
 export class warehouseCreateViewModel {
   id: string;
   name: string;
-  governorateCode:string;
-  isActive:boolean;
+  code: string; 
+  data:string;
+  warehouseType:number;
+  governorateId:string;
+  cityId:string;
+  street:string;
+  landmark:string;
+  latitude:string;
+  longitude:string;
+  buildingData:string;
+
 }
+
 export class warehouseSearchViewModel {
-  Name: string;
+  Name?: string;
+  Code?:string;
+  Data?:string;
+  WarehouseType?:number;
+  GovernorateId?:string;
+  GovernorateName?:string;
+  CityId?:string;
+  CityName?:string;
+  Street?:string;
+  Landmark?:string;
 }
 export class warehouseActivateViewModel {
   id:string;
