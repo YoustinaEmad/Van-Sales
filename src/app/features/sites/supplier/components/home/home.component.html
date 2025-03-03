@@ -28,7 +28,7 @@
                     </ng-control>
                 </div>
                 <div class="col-5">
-                    <ng-control [form]="page.searchForm" control="Code" label="shared.Code" placeholder="shared.Code">
+                    <ng-control [form]="page.searchForm" control="Code" label="Code" placeholder="Code">
                     </ng-control>
                 </div>
                 <div class="col-2 d-flex align-items-end">
@@ -134,7 +134,7 @@
 </ng-template> 
 <ng-template #confirmDeleteTemplates>
     <div class="modal-body text-center">
-      <p>Are you sure you want to delete the selected Products?</p>
+      <p>Are you sure you want to delete the selected Suppliers?</p>
     </div>
     <div class="modal-footer">
         <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
@@ -145,7 +145,7 @@
   
 
 
-  <ng-template #supplierModalTemplate>
+  <!-- <ng-template #supplierModalTemplate>
     <div class="modal-content" style="width: 500px;">
         <div class="modal-header">
             <h5 class="modal-title">{{ isEditing ? 'Edit Supplier' : 'Create Supplier' }}</h5>
@@ -168,4 +168,4 @@
             </form>
         </div>
     </div>
-</ng-template>
+</ng-template> -->

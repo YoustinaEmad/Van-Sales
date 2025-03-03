@@ -10,6 +10,7 @@ import { governorateViewModel } from '../../../governorates/interfaces/governora
 import { forkJoin } from 'rxjs';
 import { cityViewModel } from '../../../city/interfaces/city';
 import * as L from 'leaflet';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create',
@@ -20,8 +21,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   page: CRUDCreatePage = new CRUDCreatePage();
   governoratesList: governorateViewModel[] = [];
   cityList:cityViewModel[]=[];
-  images = [{ uploaded: false, src: null }];
+  image = { uploaded: false, src: null };
   classificationList :any[]=[];
+  environment=environment
   areImagesValid: boolean = true;
   item: supplierCreateViewModel = new supplierCreateViewModel();
   id:string;
@@ -75,18 +77,21 @@ export class CreateComponent implements OnInit, OnDestroy {
       longitude: lng.toFixed(6),
     });
   }
-  validateImages(): boolean {
-    return this.images.some(image => image.uploaded);
+  // validateImages(): boolean {
+  //   return this.images.some(image => image.uploaded);
     
     
-  }
+  // }
   //Region:If Edit page
   getEditableItem() {
     this._supplierService.getById(this.id).subscribe((res) => {
       if (res.isSuccess) {
+        console.log(res)
         this.item = res.data;
-        //this.isActivated = this.item.isActive;
         this.item.id=this.id;
+        if (res.data.path) {
+          this.image = { uploaded: true, src: res.data.path };
+        }
         this.createForm();
       }
     });
@@ -94,26 +99,27 @@ export class CreateComponent implements OnInit, OnDestroy {
   
   createForm() {
     this.page.form = this._sharedService.formBuilder.group({
-      name: [this.item.name,[Validators.required,Validators.minLength(2), Validators.maxLength(200)]],
-      code: [this.item.code,[Validators.required]],
-      collaborationAdministrator: [this.item.collaborationAdministrator,[Validators.required]], 
+      name: [this.item.name,[Validators.required,Validators.minLength(2), Validators.maxLength(100)]],
+      code: [this.item.code,[Validators.required,Validators.maxLength(50)]],
+      collaborationAdministrator: [this.item.collaborationAdministrator,[Validators.required,Validators.maxLength(100)]], 
       mobile: [this.item.mobile,[Validators.required , Validators.pattern(/^(010|011|012|015)\d{8}$/)]],
-      address: [this.item.address,[Validators.required]],
-      path: [this.item.path,[Validators.required]],
+      address: [this.item.address,[Validators.required,Validators.maxLength(200)]],
     });
     this.page.isPageLoaded = true;
   }
 
   Save() {
     if (this.page.isSaving || this.page.form.invalid) return;
-    this.areImagesValid = this.validateImages();
-    this.page.isSaving = true;
     Object.assign(this.item, this.page.form.value);
-    this.item.path = this.getUploadedImages()[0] || null;
+  
+    this.item.path = this.getUploadedImage() || "";
+  
+    this.page.isSaving = true;
+  
+    const requestBody = this.item; 
 
-
-   // this.item.isActive = this.isActivated;
-    this._supplierService.postOrUpdate(this.item).subscribe({
+  
+    this._supplierService.postOrUpdate(requestBody).subscribe({
       next: (res) => {
         this.page.isSaving = false;
         this.page.responseViewModel = res;
@@ -127,7 +133,8 @@ export class CreateComponent implements OnInit, OnDestroy {
       },
     });
   }
-
+  
+  
   ngOnDestroy(): void {}
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
@@ -153,37 +160,50 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
 
+  validateImages(): boolean {
+    return this.image.uploaded;
+    
+    
+  }
 
-
-  onImageUpload(files, index: number): void {
-    if (files.length === 0) {
+  onImageUpload(files: FileList): void {
+    if (!files || files.length === 0) {
       return;
     }
-
-    const file = <File>files[0];
+  
+    const file = files[0];
     const formData = new FormData();
-    formData.append('Files', file, file.name);  // Use 'Files' as the field name if required by backend
-
-    // Call the service to upload the image, passing the FormData directly
+    formData.append('Files', file, file.name); 
+  
     this._supplierService.uploadImage(formData).subscribe({
       next: (res) => {
-        if (res.isSuccess) {
-          //this.images[index] = { uploaded: true, src: res.data.path[index] };
-          this.images[index] = { uploaded: true, src: res.data.path[index] };
-
+        if (res.isSuccess && res.data) {
+          console.log('Upload Response:', res);
+  
+          
+          this.image = { uploaded: true, src: Array.isArray(res.data.path) ? res.data.path[0] : res.data.path };
+  
           this._sharedService.showToastr(res);
         }
       },
       error: (err) => {
-        this._sharedService.showToastr(err);
+        console.error('Upload Error:', err);
       },
     });
   }
+  
+  
 
-
-  getUploadedImages() {
-    return this.images.filter(image => image.uploaded).map(image => image.src);
+  getUploadedImage(): string {
+    return this.image.uploaded ? this.image.src : this.item.path || "";
   }
+  
+  
+
+  removeImage(): void {
+    this.image = { uploaded: false, src: null };
+  }
+  
 
   // ngAfterViewInit(): void {
   //   // Ensure that the map container is present before calling initMap

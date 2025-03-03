@@ -47,7 +47,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "code", Title: "Code", Selectable: false, Sortable: true },
       { Name: "mobile", Title: "Mobile", Selectable: false, Sortable: true },
       { Name: "address", Title: "Address", Selectable: false, Sortable: true },
-       { Name: "path", Title: "Path", Selectable: false, Sortable: true },
+       { Name: "path", Title: "Image", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
 
@@ -67,6 +67,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       Name: [this.searchViewModel.Name],
+      Code:[this.searchViewModel.Code],
     });
     this.page.isPageLoaded = true;
   }
@@ -85,7 +86,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       this.fireEventToParent()
     });
   }
-
+  
 
   @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
   showDeleteConfirmation(selectedItem: supplierViewModel) {
@@ -108,30 +109,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  editSupplier(id: string) {
-    this._router.navigate(['/sites/supplier/edit', id]);
-  }
 
-  getImageUrl(imagePath: string): string {
-    return `${environment.api}/` + imagePath;
-  }
-  updateActivation(id: string, isActive: boolean) {
-    this.activation.id = id;
-    const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
 
-    updateObservable.subscribe({
-      next: (response) => {
-        this._sharedService.showToastr(response);
-        if (response.isSuccess) {
-          this.initializePage();
-      
-        } 
-      },
-      error: (error) => {
-        this._sharedService.showToastr(error);
-      },
-    });
-  }
+
+
+
   @ViewChild('confirmDeleteTemplates', { static: false }) confirmDeleteTemplates: any;
   showDeleteConfirmations(selectedItem: supplierViewModel) {
     this.selectedItem = selectedItem;
@@ -169,6 +151,46 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
+  editSupplier(id: string) {
+    this._router.navigate(['/sites/supplier/edit', id]);
+  }
+
+  getImageUrl(imagePath: string): string {
+    return `${environment.api}/` + imagePath;
+  }
+ 
+  updateActivation(supplier: supplierViewModel, isActive: boolean) {
+    if (!supplier || !supplier.id) {
+      return;
+    }
+  
+    const payload = { id: supplier.id };
+  
+    const updateObservable = isActive
+      ? this._pageService.updateActivated(payload)
+      : this._pageService.updateDeactivated(payload);
+  
+    updateObservable.subscribe({
+      next: (res) => {
+        console.log(res)
+        if (res.isSuccess) {
+          this._sharedService.showToastr(res);
+          if (res.isSuccess) {
+            this.initializePage();
+          } else {
+
+            this._sharedService.showToastr(res);
+          }
+        }
+      },
+      error: (error) => {
+        this._sharedService.showToastr(error);
+      },
+    });
+  }
+  
+  
+  
   activateSuppliers() {
     const selectedIds = this.items
       .filter(item => item.selected)

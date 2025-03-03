@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { CreateComponent } from './components/create/create.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { TableModule } from 'primeng/table';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,12 +24,14 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-     ButtonModule,
-        FormsModule,
-        SharedModule,
-        DropdownModule,
-        InputSwitchModule,
-        RouterModule.forChild(routes)
+       DropdownModule,
+       TableModule,
+       SharedModule,
+       ButtonModule,
+       FormsModule,
+       RouterModule.forChild(routes),
+       ReactiveFormsModule,
+       InputSwitchModule
   ]
 })
 export class SupplierModule { }

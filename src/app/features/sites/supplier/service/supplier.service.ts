@@ -24,33 +24,34 @@ export class SupplierService {
     return this._apiService.get(`/FilterSupplierEndPoint/GetAllSuppliers?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
   getById(ID: string) {
-    return this._apiService.get(`/GetGovernorateByIDEndPoint/GetGovernorateByID?ID=${ID}`);
+  
+    return this._apiService.get(`/GetSupplierByIdEndPoint/GetSupplierbyID?ID=${ID}`);
   }
   remove(body: supplierViewModel) {
     return this._apiService.remove(`/DeleteSupplierEndPoint/Delete`, body);
   }
 
   postOrUpdate(body: supplierCreateViewModel) {
-    if (body.id) return this._apiService.update(`/UpdateGovernorateEndPoint/UpdateGovernorate`, body)
+    console.log(body)
+    if (body.id) return this._apiService.update(`/EditSupplierEndPoint/EditSupplier`, body)
     else return this._apiService.post(`/CreateSupplierEndPoint/Post`, body)
   }
 
   updateActivated(body: supplierActivateViewModel) {
-
     return this._apiService.update(`/ActivateSupplierEndPoint/ActivateSupplier`, body);
   }
   updateDeactivated(body: supplierActivateViewModel) {
     return this._apiService.update(`/DeactivateSupplierEndPoint/DeactivateSupplier`, body);
   }
   bulkDelete(ids: string[]) {
-    return this._apiService.remove(`/BulkDeleteGovernorateEndPoint/BulkDeleteGovernorate`, { ids });
+    return this._apiService.remove(`/BulkDeleteSupplierEndPoint/BulkDeleteSupplier`, { ids });
   }
   bulkActivate(ids: string[]) {
-    return this._apiService.update(`/BulkActivateGovernorateEndPoint/BulkActivateGovernorate`, { ids });
+    return this._apiService.update(`/BulkActivateSupplierEndPoint/BulkActivateSuppliers`, { ids });
   }
 
   bulkDeactivate(ids: string[]) {
-    return this._apiService.update(`/BulkDeactivateGovernorateEndPoint/BulkDeactivateGovernorate`, { ids });
+    return this._apiService.update(`/BulkDeactivateSupplierEndPoint/BulkDeactivateSuppliers`, { ids });
   }
   getGovernorates() {
     return this._apiService.get('/GetDropdownListGovernorateEndPoint/GetDropdownList');
@@ -71,7 +72,9 @@ export class SupplierService {
   getClassifications() {
     return this._apiService.get('/SelectListClassificationEndpoint/SelectListClassification');
   }
-  uploadImage(formData: FormData) {
+	uploadImage(formData: FormData) {
     return this._apiService.postMedia('/UploadMediaEndPoint/UploadMedia', formData, true);
-  }
+
+
+	}
 }
