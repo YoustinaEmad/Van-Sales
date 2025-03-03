@@ -7,6 +7,7 @@ import { supplierActivateViewModel, supplierCreateViewModel, supplierSearchViewM
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { SupplierService } from '../../service/supplier.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -44,14 +45,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
       { Name: "name", Title: "Name", Selectable: false, Sortable: true },
       { Name: "code", Title: "Code", Selectable: false, Sortable: true },
-      { Name: "collaborationAdministrator", Title: "Collaboration Administrator", Selectable: false, Sortable: true },
-      { Name: "creditLimit", Title: "Credit Limit", Selectable: false, Sortable: true },
-      { Name: "classificationId", Title: "Classification", Selectable: false, Sortable: true },
-      { Name: "governorateId", Title: "Governorate", Selectable: false, Sortable: true },
-      { Name: "cityId", Title: "City", Selectable: false, Sortable: true },
-      { Name: "street", Title: "Street", Selectable: false, Sortable: true },
-      { Name: "landmark", Title: "Landmark", Selectable: false, Sortable: true },
-      { Name: "buildingData", Title: "BuildingData", Selectable: false, Sortable: true },
+      { Name: "mobile", Title: "Mobile", Selectable: false, Sortable: true },
+      { Name: "address", Title: "Address", Selectable: false, Sortable: true },
        { Name: "path", Title: "Path", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
@@ -117,23 +112,22 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this._router.navigate(['/sites/supplier/edit', id]);
   }
 
-
-  updateActivation(item: supplierViewModel, isActive: boolean) {
-    this.page.isSaving = true
-    this.activation.id = item.id;
+  getImageUrl(imagePath: string): string {
+    return `${environment.api}/` + imagePath;
+  }
+  updateActivation(id: string, isActive: boolean) {
+    this.activation.id = id;
     const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
 
     updateObservable.subscribe({
       next: (response) => {
-        this.page.isSaving = false
         this._sharedService.showToastr(response);
         if (response.isSuccess) {
-          item.isActive = !item.isActive
-          this.search();
-        }
+          this.initializePage();
+      
+        } 
       },
       error: (error) => {
-        this.page.isSaving = true
         this._sharedService.showToastr(error);
       },
     });

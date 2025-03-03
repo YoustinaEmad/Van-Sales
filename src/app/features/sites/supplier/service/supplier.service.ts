@@ -27,7 +27,7 @@ export class SupplierService {
     return this._apiService.get(`/GetGovernorateByIDEndPoint/GetGovernorateByID?ID=${ID}`);
   }
   remove(body: supplierViewModel) {
-    return this._apiService.remove(`/DeleteGovernorateEndPoint/DeleteGovernorate`, body);
+    return this._apiService.remove(`/DeleteSupplierEndPoint/Delete`, body);
   }
 
   postOrUpdate(body: supplierCreateViewModel) {
@@ -37,10 +37,10 @@ export class SupplierService {
 
   updateActivated(body: supplierActivateViewModel) {
 
-    return this._apiService.update(`/ActiveGovernorateEndpoint/Active`, body);
+    return this._apiService.update(`/ActivateSupplierEndPoint/ActivateSupplier`, body);
   }
   updateDeactivated(body: supplierActivateViewModel) {
-    return this._apiService.update(`/DeactiveGovernorateEndpoint/Deactive`, body);
+    return this._apiService.update(`/DeactivateSupplierEndPoint/DeactivateSupplier`, body);
   }
   bulkDelete(ids: string[]) {
     return this._apiService.remove(`/BulkDeleteGovernorateEndPoint/BulkDeleteGovernorate`, { ids });
@@ -49,17 +49,29 @@ export class SupplierService {
     return this._apiService.update(`/BulkActivateGovernorateEndPoint/BulkActivateGovernorate`, { ids });
   }
 
-  // Bulk deactivate governorates
   bulkDeactivate(ids: string[]) {
     return this._apiService.update(`/BulkDeactivateGovernorateEndPoint/BulkDeactivateGovernorate`, { ids });
   }
   getGovernorates() {
     return this._apiService.get('/GetDropdownListGovernorateEndPoint/GetDropdownList');
   }
-  getCities() {
-    return this._apiService.get('/SelectCityListEndPoint/SelectCityList');
+  getCities(governorateId?: string) {
+    let url: string;
+  
+    if (governorateId) {
+
+      url = `/SelectCityListEndPoint/SelectCityList?governorateId=${governorateId}`;
+    } else {
+     
+      url = `/SelectCityListEndPoint/SelectCityList`;
+    }
+  
+    return this._apiService.get(url); 
   }
   getClassifications() {
     return this._apiService.get('/SelectListClassificationEndpoint/SelectListClassification');
+  }
+  uploadImage(formData: FormData) {
+    return this._apiService.postMedia('/UploadMediaEndPoint/UploadMedia', formData, true);
   }
 }

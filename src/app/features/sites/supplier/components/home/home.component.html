@@ -85,15 +85,9 @@
                         <td>{{i+1}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.code}}</td>
-                        <td>{{item.collaborationAdministrator}}</td>
-                        <td>{{item.creditLimit}}</td>
-                        <td>{{item.classificationId}}</td>
-                        <td>{{item.governorateId}}</td>
-                        <td>{{item.cityId}}</td>
-                        <td>{{item.street}}</td>
-                        <td>{{item.landmark}}</td>
-                        <td>{{item.buildingData}}</td>
-                        <td>{{item.path}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>{{item.address}}</td>
+                        <td> <img [src]="getImageUrl(item.path)" alt="Cust Image" class="img-thumbnail" style="width: 100px; height: 50px;"></td>
                         <td>
                             <div class="flex justify-content-center">
                                 <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving"

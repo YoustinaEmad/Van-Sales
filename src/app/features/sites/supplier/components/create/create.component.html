@@ -7,16 +7,16 @@
   </div>
   <hr />
   <div class="d-flex justify-content-end align-items-start py-3 ">
-    <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
+    <!-- <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
     <label class="ms-2">
       Activate Supplier
-    </label>
+    </label> -->
   </div>
   <ng-container *ngIf="page.isPageLoaded">
     <form [formGroup]="page.form">
       <div class="row row-cols-lg-3  g-2 pb-5">
         <div class="col-3">
-          <ng-control [form]="page.form" control="name" label="Governate " placeholder="Governate "></ng-control>
+          <ng-control [form]="page.form" control="name" label="Goveronate " placeholder="Goveronate "></ng-control>
         </div>
         <div class="col-3">
           <ng-control [form]="page.form" control="code" label=" Code" placeholder=" Code"></ng-control>
@@ -27,61 +27,31 @@
       </div>
 
 
-
-
-      <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col-3">
-          <ng-control [form]="page.form" control="creditLimit" label="credit Limit " placeholder="credit Limit "></ng-control>
+      <div class="row   g-2 pb-5" >
+        <div class="col-6"  >
+          <ng-control [form]="page.form" control="address" label="address" placeholder="address"></ng-control>
         </div>
-        <div class="col-3">
-          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classificationId"
-          label="Classification" [items]="classificationList" placeholder="select-Classification"
-          bindValue="id"></ng-control>
+        <div class="col-6"  >
+          <ng-control [form]="page.form" control="mobile" label="mobile" placeholder="mobile"  (keypress)="numberOnly($event)"></ng-control>
         </div>
-        <div class="col-3">
-          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
-          label="Governorate" [items]="governoratesList" placeholder="select-governorate"
-          bindValue="id"></ng-control>
+      
+      </div>
+      <div class="col-3 col-md-3 col-lg-3 mt-5 h-100" *ngFor="let image of images; let i = index">
+  
+        <div class="border p-3 text-center h-60">
+          <div *ngIf="image.uploaded; else uploadTemplate">
+            <img [src]="environment.api+'/'+image.src" alt="Uploaded Image" class="img-fluid mb-2 img-thumbnail" />
+          </div>
+          <ng-template #uploadTemplate>
+            <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
+              <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
+              <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
+              <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+            </label>
+            <input #file type="file" id="fileInput-{{ i }}" class="d-none" (change)="onImageUpload(file.files, i)" />
+
+          </ng-template>
         </div>
       </div>
-
-
-
-
-      <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col-3">
-          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="cityId"
-          label="City" [items]="cityList" placeholder="select-city"
-          bindValue="id"></ng-control>
-        </div>
-        <div class="col-3">
-          <ng-control [form]="page.form" control="street" label="street" placeholder="street"></ng-control>
-        </div>
-       
-        <div class="col-3">
-          <ng-control [form]="page.form" control="landmark" label="landmark" placeholder="landmark"></ng-control>
-        </div>
-      </div>
-
-
-      <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col-3">
-          <ng-control [form]="page.form" control="buildingData" label="buildingData" placeholder="buildingData"></ng-control>
-        </div>
-        <div class="col-3">
-          <ng-control [form]="page.form" control="latitude" label="latitude" placeholder="latitude"></ng-control>
-        </div>
-       
-        <div class="col-3">
-          <ng-control [form]="page.form" control="longitude" label="longitude" placeholder="longitude"></ng-control>
-        </div>
-      </div>
-
-      <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col-3">
-          <ng-control [form]="page.form" control="buildingData" label="buildingData" placeholder="buildingData"></ng-control>
-        </div>
-      </div>
-
     </form>
   </ng-container>
