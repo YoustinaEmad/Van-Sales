@@ -41,10 +41,11 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this._sharedService.showToastr(response);
         this.isSubmitting=false;
-        localStorage.setItem('rToken', response.data.otPtoken);
-        this._router.navigate(['/auth/otp'], {
-          queryParams: { source: 'login'},
-        });
+
+        if(response.isSuccess){
+        localStorage.setItem('eToken', response.data.token);
+        this._router.navigate(['/sites/warehouse']);}
+        
         this.isSubmitting=false
       },
       error: (error) => {
