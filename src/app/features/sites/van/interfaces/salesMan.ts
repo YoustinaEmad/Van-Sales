@@ -26,7 +26,7 @@ export interface salesManViewModel {
     birthDate :Date;
     appointmentDate :Date;
     classification :number;
-    imagePath:string;
+    path:string;
     warehousesIDs:string[];
     userName:string;
     password:string;

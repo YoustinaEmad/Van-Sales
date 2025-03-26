@@ -5,7 +5,8 @@ import { salesMan } from '../../service/salesMan.service';
 import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
 import { salesManCreateViewModel } from '../../interfaces/salesMan';
 import { Validators, FormGroup } from '@angular/forms';
-
+import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -20,6 +21,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   areImagesValid: boolean = true;
   warehousesList: any[] = [];
   selectedWarehouseIds: string[] = [];
+  isEqualPassword: boolean = true;
+  controlType = ControlType;
+  environment=environment
   classifies = [
     { id: 1, name: 'Retail' },
     { id: 2, name: 'VIP Clients' },
@@ -30,9 +34,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     private _sharedService: SharedService,
     private _salesManService: salesMan,
     private _activatedRoute: ActivatedRoute,
-    private _router: Router ,
+    private _router: Router,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.page.isPageLoaded = false;
@@ -66,21 +70,22 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.page.form = this._sharedService.formBuilder.group({
-      name: [this.item.name, [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      nationalNumber: [this.item.nationalNumber, [Validators.required,Validators.pattern(/^\d{14}$/)]],
+      name: [this.item.name, [Validators.required, Validators.maxLength(100)]],
+      nationalNumber: [this.item.nationalNumber, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       mobile: [this.item.mobile, [Validators.required, Validators.pattern(/^(010|011|012|015)\d{8}$/)]],
       jobCode: [this.item.jobCode, [Validators.required]],
       email: [this.item.email, [Validators.required, Validators.email]],
       address: [this.item.address, [Validators.required]],
-      birthDate: [this.item.birthDate],
-      appointmentDate: [this.item.appointmentDate],
+      birthDate: [this.item.birthDate || new Date(), ],
+
+      appointmentDate: [this.item.appointmentDate || new Date(),],
       classification: [this.item.classification, [Validators.required]],
       warehousesIDs: [this.item.warehousesIDs],
-      userName: [this.item.userName, [Validators.required]],
+      userName: [this.item.userName, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       password: [this.item.password, [Validators.required]],
       confirmPassword: [this.item.confirmPassword, [Validators.required]],
       isActive: [this.item.isActive],
-      
+
     }, { validators: this.passwordMatchValidator });
 
     this.page.isPageLoaded = true;
@@ -93,7 +98,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   Save() {
     if (this.page.isSaving || this.page.form.invalid) return;
-    this.item.imagePath = this.getUploadedImage() || "";
+    this.item.path = this.getUploadedImage() || "";
 
     this.page.isSaving = true;
     Object.assign(this.item, this.page.form.value);
@@ -114,7 +119,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
@@ -156,7 +161,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   
 
   getUploadedImage(): string {
-    return this.image.uploaded ? this.image.src : this.item.imagePath || "";
+    return this.image.uploaded ? this.image.src : this.item.path || "";
   }
   
   
@@ -164,6 +169,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   removeImage(): void {
     this.image = { uploaded: false, src: null };
   }
+  
 
 
   getWarehouses() {
@@ -174,18 +180,23 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
- 
+
+
   onWarehouseSelection(warehouseId: string, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    
+
     if (isChecked) {
       this.selectedWarehouseIds.push(warehouseId); // Add ID if checked
     } else {
       this.selectedWarehouseIds = this.selectedWarehouseIds.filter(id => id !== warehouseId); // Remove if unchecked
     }
-  
-    console.log('Selected Warehouses:', this.selectedWarehouseIds); // Debugging
-  }
 
+
+  }
+  confirmPassword(): void {
+    const password = this.page.form.get('password')?.value;
+    const confirmPassword = this.page.form.get('confirmPassword')?.value;
+
+    this.isEqualPassword = password === confirmPassword;
+  }
 }
