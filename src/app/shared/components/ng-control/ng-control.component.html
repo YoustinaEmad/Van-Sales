@@ -40,6 +40,12 @@
         placeholder="{{placeholder | translate}}"  [bsConfig]="bsConfig"
         [minDate]="minDate" (keyup)="onKeyup($event)" (change)="onChange($event)" readonly="true"
         [class.disabled]="isDisabled()" (blur)="onblur($event)">
+
+       <!--------------------------------- input date only -------------------------------------->
+
+       <input *ngIf="type == controlType.INPUT_DATE_ONLY" type="date" [class]="'form-control ' + inputClass"
+       [formControlName]="control" (blur)="onblur($event)" [min]="minDate" [max]="maxDate"
+       [class.disabled]="isDisabled()">
        
       <!--------------------------------- input time -------------------------------------->
       <input [class]="'form-control time' + inputClass" type="time" [formControlName]="control"
