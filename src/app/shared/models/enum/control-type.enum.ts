@@ -14,5 +14,5 @@ export enum ControlType {
   INPUT_TIME = 13,
   INPUT_COLOR = 14,
   SELECT_CUSTOM_COLOR = 15,
-
+  INPUT_DATE_ONLY=16
 }
