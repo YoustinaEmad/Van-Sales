@@ -15,11 +15,102 @@
   <ng-container *ngIf="page.isPageLoaded">
     <form [formGroup]="page.form">
       <div class="row row-cols-lg-3  g-2 pb-5">
-        <div class="col">
-          <ng-control [form]="page.form" control="name" label="Governate " placeholder="Governate "></ng-control>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="name" label="Sales Man " placeholder="Sales Man "></ng-control>
         </div>
-        <div class="col">
-          <ng-control [form]="page.form" control="governorateCode" label="Governate Code" placeholder="Governate Code" (keypress)="numberOnly($event)"></ng-control>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="nationalNumber" label="National Number" placeholder="National Number" (keypress)="numberOnly($event)"></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="mobile" label="Mobile" placeholder="Mobile" (keypress)="numberOnly($event)"></ng-control>
+        </div>
+      </div>
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-4">
+          <ng-control [form]="page.form" control="jobCode" label="Job Code " placeholder="Job Code "></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="email" label="Email" placeholder="Email" ></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="address" label="Address" placeholder="Address"></ng-control>
+        </div>
+      </div>
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-4">
+          <ng-control [form]="page.form" control="birthDate" label="Birth Date"
+          [type]="page.ControlType.INPUT_DATE"
+         ></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="appointmentDate" label="Appointment Date"
+          [type]="page.ControlType.INPUT_DATE"
+         ></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classification"
+          label="classification Name" placeholder="classification Name" [items]="classifies">
+      </ng-control>
+        </div>
+      </div>
+      <div class="row row-cols-lg-3  g-2 pb-5">
+        <div class="col-4">
+          <ng-control [form]="page.form" control="userName" label="User Name " placeholder="User Name "></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="password" label="password" placeholder="password" ></ng-control>
+        </div>
+        <div class="col-4">
+          <ng-control [form]="page.form" control="confirmPassword" label="confirmPassword" placeholder="confirmPassword"></ng-control>
+        </div>
+      </div>
+     
+      <!-- <div class="col-12">
+        <label class="form-label">Select Warehouses:</label>
+        <div *ngIf="warehousesList.length > 0; else noWarehouses">
+          <div *ngFor="let warehouse of warehousesList" class="d-flex align-items-center mb-2">
+            <p>Debug: {{ warehouse | json }}</p> 
+            <input
+              type="checkbox"
+              [value]="warehouse.id"
+              (change)="onWarehouseSelectionChange($event, warehouse.id)"
+              [checked]="item.warehousesIDs.includes(warehouse.id)"
+              class="me-2"
+            />
+            <label class="mb-0">{{ warehouse.name }}</label>
+          </div>
+        </div>
+        <ng-template #noWarehouses>
+          <p class="text-danger">No warehouses available</p>
+        </ng-template>
+      </div> -->
+      
+      
+      <div *ngFor="let warehouse of warehousesList">
+        <input type="checkbox" [value]="warehouse.id" (change)="onWarehouseSelection(warehouse.id, $event)" />
+        <label>{{ warehouse.name }}</label>
+      </div>
+      
+      
+      
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-12 col-md-3 col-lg-3">
+            <div class="border p-3 text-center h-100">
+              <div *ngIf="image.uploaded; else uploadTemplate">
+                <img [src]="environment.api + '/' + image.src" alt="Uploaded Image" class="img-fluid mb-2 img-thumbnail" />
+                <!-- <button class="btn btn-danger btn-sm mt-2" (click)="removeImage()">Remove</button> -->
+              </div>
+              <ng-template #uploadTemplate>
+                <label for="fileInput" class="text-primary cursor-pointer">
+                  <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
+                  <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
+                  <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+                </label>
+                <input #file type="file" id="fileInput" class="d-none" (change)="onImageUpload(file.files)" />
+              </ng-template>
+            </div>
+          </div>
         </div>
       </div>
     </form>

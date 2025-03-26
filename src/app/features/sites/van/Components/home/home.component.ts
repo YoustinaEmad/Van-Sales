@@ -7,6 +7,7 @@ import { GovernorateService } from 'src/app/features/sites/governorates/service/
 import { salesManActivateViewModel, salesManSearchViewModel, salesManViewModel } from '../../interfaces/salesMan';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { salesMan } from '../../service/salesMan.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ) {
     super(_sharedService);
   }
+  classifies = [
+    { id: 1, name: 'Retail' },
+    { id: 2, name: 'VIP Clients' },
+    { id: 3, name: 'Telesales' },
+  ];
 
   ngOnInit(): void {
     this.initializePage();
@@ -38,8 +44,15 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
       { Name: "Name", Title: "Vans", Selectable: false, Sortable: true },
-      { Name: "Cities", Title: "Cities", Selectable: false, Sortable: true },
-      { Name: "governorateCode", Title: "Governorate Code", Selectable: false, Sortable: true },
+      { Name: "NationalNumber ", Title: "National Number ", Selectable: false, Sortable: true },
+      { Name: "Mobile ", Title: "Mobile ", Selectable: false, Sortable: true },
+      { Name: "JobCode  ", Title: "Job Code  ", Selectable: false, Sortable: true },
+      { Name: "Email  ", Title: "Email  ", Selectable: false, Sortable: true },
+      { Name: "Address  ", Title: "Address  ", Selectable: false, Sortable: true },
+      { Name: "BirthDate  ", Title: "Birth Date  ", Selectable: false, Sortable: true },
+      { Name: "AppointmentDate   ", Title: "Appointment Date   ", Selectable: false, Sortable: true },
+      { Name: "Classification   ", Title: "Classification   ", Selectable: false, Sortable: true },
+      { Name: "Image  ", Title: "Image  ", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
 
@@ -52,13 +65,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-  navigateToCreateGovernorate() {
+  navigateToCreateSalesMan() {
     this._router.navigate(['/sites/salesMan/create']);
   }
 
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       Name: [this.searchViewModel.Name],
+      NationalNumber: [this.searchViewModel.NationalNumber],
+      Mobile: [this.searchViewModel.Mobile],
+      Classification:[this.searchViewModel.Classification],
+      WareHouseId:[this.searchViewModel.WareHouseId]
     });
     this.page.isPageLoaded = true;
   }
@@ -100,32 +117,31 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  editGovernorate(id: string) {
-    // Navigate to the create page with the governorate ID
+  editSalesMan(id: string) {
     this._router.navigate(['/sites/salesMan/edit', id]);
   }
 
 
-  updateActivation(item: salesManViewModel, isActive: boolean) {
-    this.page.isSaving = true
-    this.activation.id = item.id;
-    const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
+  // updateActivation(item: salesManViewModel, isActive: boolean) {
+  //   this.page.isSaving = true
+  //   this.activation.id = item.id;
+  //   const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
 
-    updateObservable.subscribe({
-      next: (response) => {
-        this.page.isSaving = false
-        this._sharedService.showToastr(response);
-        if (response.isSuccess) {
-          item.isActive = !item.isActive
-          this.search();
-        }
-      },
-      error: (error) => {
-        this.page.isSaving = true
-        this._sharedService.showToastr(error);
-      },
-    });
-  }
+  //   updateObservable.subscribe({
+  //     next: (response) => {
+  //       this.page.isSaving = false
+  //       this._sharedService.showToastr(response);
+  //       if (response.isSuccess) {
+  //         item.isActive = !item.isActive
+  //         this.search();
+  //       }
+  //     },
+  //     error: (error) => {
+  //       this.page.isSaving = true
+  //       this._sharedService.showToastr(error);
+  //     },
+  //   });
+  // }
   @ViewChild('confirmDeleteTemplates', { static: false }) confirmDeleteTemplates: any;
   showDeleteConfirmations(selectedItem: salesManViewModel) {
     this.selectedItem = selectedItem;
@@ -163,43 +179,43 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-  activateVans() {
-    const selectedIds = this.items
-      .filter(item => item.selected)
-      .map(item => item.id);
+  // activateVans() {
+  //   const selectedIds = this.items
+  //     .filter(item => item.selected)
+  //     .map(item => item.id);
 
-    if (selectedIds.length > 0) {
-      this._pageService.bulkActivate(selectedIds).subscribe(response => {
-        this._sharedService.showToastr(response);
-        if (response.isSuccess) {
-          this.items.forEach(item => {
-            if (selectedIds.includes(item.id)) {
-              item.isActive = true;
-            }
-          });
-        }
-      });
-    }
-  }
+  //   if (selectedIds.length > 0) {
+  //     this._pageService.bulkActivate(selectedIds).subscribe(response => {
+  //       this._sharedService.showToastr(response);
+  //       if (response.isSuccess) {
+  //         this.items.forEach(item => {
+  //           if (selectedIds.includes(item.id)) {
+  //             item.isActive = true;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
 
-  disActiveVans() {
-    const selectedIds = this.items
-      .filter(item => item.selected)
-      .map(item => item.id);
+  // disActiveVans() {
+  //   const selectedIds = this.items
+  //     .filter(item => item.selected)
+  //     .map(item => item.id);
 
-    if (selectedIds.length > 0) {
-      this._pageService.bulkDeactivate(selectedIds).subscribe(response => {
-        this._sharedService.showToastr(response);
-        if (response.isSuccess) {
-          this.items.forEach(item => {
-            if (selectedIds.includes(item.id)) {
-              item.isActive = false;
-            }
-          });
-        }
-      });
-    }
-  }
+  //   if (selectedIds.length > 0) {
+  //     this._pageService.bulkDeactivate(selectedIds).subscribe(response => {
+  //       this._sharedService.showToastr(response);
+  //       if (response.isSuccess) {
+  //         this.items.forEach(item => {
+  //           if (selectedIds.includes(item.id)) {
+  //             item.isActive = false;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
   isAllSelected(): boolean {
     return this.items.every(item => item.selected);
   }
@@ -211,5 +227,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.selected = isChecked;
     });
   }
-
+  
+  getImageUrl(imagePath: string): string {
+    return `${environment.api}/` + imagePath;
+   }
+   getClassificationName(classificationId: number): string {
+    const classification = this.classifies.find(c => c.id === classificationId);
+    return classification ? classification.name : 'Unknown';
+  }
 }
