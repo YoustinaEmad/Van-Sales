@@ -60,18 +60,18 @@
       <div class="col-4">
         <ng-control [form]="page.form" control="userName" label="User Name " placeholder="User Name "></ng-control>
       </div>
-      <div class="col-4">
+      <div class="col-4"  *ngIf="!page.isEdit">
         <ng-control [form]="page.form" control="password" label="Password" placeholder="Enter password"
           [type]="controlType.PASSWORD"></ng-control>
       </div>
-      <div class="col-4">
+      <div class="col-4"  *ngIf="!page.isEdit">
         <ng-control [form]="page.form" control="confirmPassword" label="confirm Password"
           placeholder="confirm your Password" [type]="controlType.PASSWORD" (blur)="confirmPassword()"></ng-control>
         <p class="text text-danger font-12" *ngIf="!isEqualPassword">Passwords do not match</p>
       </div>
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex"  *ngIf="!page.isEdit">
       <div class="d-flex flex-column w-50 checkboxes">
         <div *ngFor="let warehouse of warehousesList">
           <input type="checkbox" [value]="warehouse.id" (change)="onWarehouseSelection(warehouse.id, $event)" />

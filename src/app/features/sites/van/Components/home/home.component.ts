@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
-import { GovernorateService } from 'src/app/features/sites/governorates/service/government.service';
 import { salesManActivateViewModel, salesManSearchViewModel, salesManViewModel } from '../../interfaces/salesMan';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { salesMan } from '../../service/salesMan.service';
@@ -16,14 +15,15 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent extends CrudIndexBaseUtils {
   override page: CRUDIndexPage = new CRUDIndexPage();
-  override pageRoute = '/sites/governorates';
+  override pageRoute = '/sites/salesMan';
   override searchViewModel: salesManSearchViewModel = new salesManSearchViewModel();
   modalRef: BsModalRef;
   override items: salesManViewModel[] = [];
   selectedItem: salesManViewModel;
+  id:string;
   activation: salesManActivateViewModel = { id: '' };
   constructor(public override _sharedService: SharedService,
-    private _pageService: salesMan, private _router: Router, private activatedRoute: ActivatedRoute
+    private _pageService: salesMan, private _router: Router, private activatedRoute: ActivatedRoute 
 
   ) {
     super(_sharedService);
@@ -35,6 +35,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ];
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id');
+      console.log("Received ID:", id); 
+     
+  });
     this.initializePage();
   }
 
@@ -43,7 +48,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
-      { Name: "Name", Title: "Vans", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "Sales Man", Selectable: false, Sortable: true },
       { Name: "NationalNumber ", Title: "National Number ", Selectable: false, Sortable: true },
       { Name: "Mobile ", Title: "Mobile ", Selectable: false, Sortable: true },
       { Name: "JobCode  ", Title: "Job Code  ", Selectable: false, Sortable: true },
@@ -95,7 +100,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-  //Region:Remove Governorate
   @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
   showDeleteConfirmation(selectedItem: salesManViewModel) {
     this.selectedItem = selectedItem;
@@ -118,30 +122,31 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
   editSalesMan(id: string) {
+    console.log('Navigating to edit with ID:', id); 
     this._router.navigate(['/sites/salesMan/edit', id]);
+}
+
+
+  updateActivation(item: salesManViewModel, isActive: boolean) {
+    this.page.isSaving = true
+    this.activation.id = item.id;
+    const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
+
+    updateObservable.subscribe({
+      next: (response) => {
+        this.page.isSaving = false
+        this._sharedService.showToastr(response);
+        if (response.isSuccess) {
+          item.isActive = !item.isActive
+          this.search();
+        }
+      },
+      error: (error) => {
+        this.page.isSaving = true
+        this._sharedService.showToastr(error);
+      },
+    });
   }
-
-
-  // updateActivation(item: salesManViewModel, isActive: boolean) {
-  //   this.page.isSaving = true
-  //   this.activation.id = item.id;
-  //   const updateObservable = isActive ? this._pageService.updateActivated(this.activation) : this._pageService.updateDeactivated(this.activation);
-
-  //   updateObservable.subscribe({
-  //     next: (response) => {
-  //       this.page.isSaving = false
-  //       this._sharedService.showToastr(response);
-  //       if (response.isSuccess) {
-  //         item.isActive = !item.isActive
-  //         this.search();
-  //       }
-  //     },
-  //     error: (error) => {
-  //       this.page.isSaving = true
-  //       this._sharedService.showToastr(error);
-  //     },
-  //   });
-  // }
   @ViewChild('confirmDeleteTemplates', { static: false }) confirmDeleteTemplates: any;
   showDeleteConfirmations(selectedItem: salesManViewModel) {
     this.selectedItem = selectedItem;
@@ -179,43 +184,43 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-  // activateVans() {
-  //   const selectedIds = this.items
-  //     .filter(item => item.selected)
-  //     .map(item => item.id);
+  activateVans() {
+    const selectedIds = this.items
+      .filter(item => item.selected)
+      .map(item => item.id);
 
-  //   if (selectedIds.length > 0) {
-  //     this._pageService.bulkActivate(selectedIds).subscribe(response => {
-  //       this._sharedService.showToastr(response);
-  //       if (response.isSuccess) {
-  //         this.items.forEach(item => {
-  //           if (selectedIds.includes(item.id)) {
-  //             item.isActive = true;
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+    if (selectedIds.length > 0) {
+      this._pageService.bulkActivate(selectedIds).subscribe(response => {
+        this._sharedService.showToastr(response);
+        if (response.isSuccess) {
+          this.items.forEach(item => {
+            if (selectedIds.includes(item.id)) {
+              item.isActive = true;
+            }
+          });
+        }
+      });
+    }
+  }
 
-  // disActiveVans() {
-  //   const selectedIds = this.items
-  //     .filter(item => item.selected)
-  //     .map(item => item.id);
+  disActiveVans() {
+    const selectedIds = this.items
+      .filter(item => item.selected)
+      .map(item => item.id);
 
-  //   if (selectedIds.length > 0) {
-  //     this._pageService.bulkDeactivate(selectedIds).subscribe(response => {
-  //       this._sharedService.showToastr(response);
-  //       if (response.isSuccess) {
-  //         this.items.forEach(item => {
-  //           if (selectedIds.includes(item.id)) {
-  //             item.isActive = false;
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+    if (selectedIds.length > 0) {
+      this._pageService.bulkDeactivate(selectedIds).subscribe(response => {
+        this._sharedService.showToastr(response);
+        if (response.isSuccess) {
+          this.items.forEach(item => {
+            if (selectedIds.includes(item.id)) {
+              item.isActive = false;
+            }
+          });
+        }
+      });
+    }
+  }
   isAllSelected(): boolean {
     return this.items.every(item => item.selected);
   }

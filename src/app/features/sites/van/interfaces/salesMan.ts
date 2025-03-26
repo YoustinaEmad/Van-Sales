@@ -34,6 +34,7 @@ export interface salesManViewModel {
     isActive:boolean;
   }
   export class salesManSearchViewModel {
+    id:string
     Name: string;
     NationalNumber:string;
     Mobile:string;

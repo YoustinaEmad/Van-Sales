@@ -55,6 +55,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   getEditableItem() {
     this._salesManService.getById(this.id).subscribe((res) => {
+      console.log('Editable Item:', res);
       if (res.isSuccess) {
         this.item = res.data;
         this.isActivated = this.item.isActive ?? false;
@@ -82,8 +83,8 @@ export class CreateComponent implements OnInit, OnDestroy {
       classification: [this.item.classification, [Validators.required]],
       warehousesIDs: [this.item.warehousesIDs],
       userName: [this.item.userName, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      password: [this.item.password, [Validators.required]],
-      confirmPassword: [this.item.confirmPassword, [Validators.required]],
+      password: [this.item.password, this.page.isEdit ? [] : [Validators.required]],
+      confirmPassword: [this.item.confirmPassword, this.page.isEdit ? [] : [Validators.required]],
       isActive: [this.item.isActive],
 
     }, { validators: this.passwordMatchValidator });
@@ -176,7 +177,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     this._salesManService.getWarehouses().subscribe((res) => {
       if (res.isSuccess && Array.isArray(res.data)) {
         this.warehousesList = res.data;
-        this.cdRef.detectChanges(); // Force UI update
+        this.cdRef.detectChanges(); 
       }
     });
   }
@@ -186,9 +187,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     const isChecked = (event.target as HTMLInputElement).checked;
 
     if (isChecked) {
-      this.selectedWarehouseIds.push(warehouseId); // Add ID if checked
+      this.selectedWarehouseIds.push(warehouseId); 
     } else {
-      this.selectedWarehouseIds = this.selectedWarehouseIds.filter(id => id !== warehouseId); // Remove if unchecked
+      this.selectedWarehouseIds = this.selectedWarehouseIds.filter(id => id !== warehouseId);
     }
 
 

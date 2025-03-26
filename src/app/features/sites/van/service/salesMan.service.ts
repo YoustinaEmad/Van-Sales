@@ -42,27 +42,26 @@ export class salesMan {
     }
   
     postOrUpdate(body:salesManCreateViewModel ) {
-      if (body.id) return this._apiService.update(`/UpdateGovernorateEndPoint/UpdateGovernorate`, body)
+      if (body.id) return this._apiService.update(`/UpdateSalesManEndPoint/UpdateSalesMan`, body)
       else return this._apiService.post(`/CreateSalesManEndPoint/CreateSalesMan`, body)
     }
   
     updateActivated(body:salesManActivateViewModel ) {
      
-      return this._apiService.update(`/ActiveGovernorateEndpoint/Active`,body);
+      return this._apiService.update(`/ActivateUserEndPoint/ActivateUser`,body);
     }
     updateDeactivated(body:salesManActivateViewModel) {
-      return this._apiService.update(`/DeactiveGovernorateEndpoint/Deactive`,body);
+      return this._apiService.update(`/DeactivateUserEndPoint/DeactivateUser`,body);
     }
     bulkDelete(ids: string[]) {
-      return this._apiService.remove(`/BulkDeleteGovernorateEndPoint/BulkDeleteGovernorate`, { ids });
+      return this._apiService.remove(`/BulkDeleteSalesManEndPoint/BulkDeleteSalesMen`, { ids });
     }
     bulkActivate(ids: string[]) {
-      return this._apiService.update(`/BulkActivateGovernorateEndPoint/BulkActivateGovernorate`, { ids });
+      return this._apiService.update(`/BulkActivateUserEndPoint/BulkActivateUser`, { ids });
     }
   
-    // Bulk deactivate governorates
     bulkDeactivate(ids: string[]) {
-      return this._apiService.update(`/BulkDeactivateGovernorateEndPoint/BulkDeactivateGovernorate`, { ids });
+      return this._apiService.update(`/BulkDeActivateUserEndPoint/BulkDeActivateUser`, { ids });
     }
     uploadImage(formData: FormData) {
       return this._apiService.postMedia('/UploadMediaEndPoint/UploadMedia', formData, true);
