@@ -35,7 +35,7 @@ export class salesMan {
       return this._apiService.get(`/GetAllSalesmenEndPoint/GetAllSalesmen?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
     }
     getById(ID: string) {
-      return this._apiService.get(`/GetGovernorateByIDEndPoint/GetGovernorateByID?ID=${ID}`);
+      return this._apiService.get(`/GetSalesManByIDEndPoint/GetSalesManByID?ID=${ID}`);
     }
     remove(body:salesManViewModel ) {
       return this._apiService.remove(`/DeleteGovernorateEndPoint/DeleteGovernorate`,body);
