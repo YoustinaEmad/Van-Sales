@@ -20,8 +20,8 @@ export class ProductService {
       pageSize = environment.pageSize;
 
     let params = new HttpParams();
-    if (searchViewModel.ProductName) {
-      params = params.set("ProductName", searchViewModel.ProductName);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
     }
     if (searchViewModel.Code) {
       params = params.set("Code", searchViewModel.Code);
@@ -44,8 +44,8 @@ export class ProductService {
   getToDownloadPDF(searchViewModel: productSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number ) {
     
     let params = new HttpParams();
-    if (searchViewModel.ProductName) {
-      params = params.set("ProductName", searchViewModel.ProductName);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
     }
     if (searchViewModel.Code) {
       params = params.set("Code", searchViewModel.Code);
@@ -96,8 +96,8 @@ export class ProductService {
   getProductsExcel(searchViewModel: productSearchViewModel) {
     
     let params = new HttpParams();
-    if (searchViewModel.ProductName) {
-      params = params.set("ProductName", searchViewModel.ProductName);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
     }
     if (searchViewModel.Code) {
       params = params.set("Code", searchViewModel.Code);

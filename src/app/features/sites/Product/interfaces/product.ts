@@ -50,7 +50,7 @@ export class productCreateViewModel {
   isActivePoint:boolean;
 }
 export class productSearchViewModel {
-  ProductName:string;
+  Name:string;
   Code:string;
   CategoryId: string;
   ProductStatus:string;

@@ -91,7 +91,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
-      ProductName: [this.searchViewModel.ProductName],
+      Name: [this.searchViewModel.Name],
       Code: [this.searchViewModel.Code],
       CategoryId: [this.searchViewModel.CategoryId],
       ProductStatus: [this.searchViewModel.ProductStatus],
