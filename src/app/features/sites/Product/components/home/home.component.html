@@ -82,20 +82,25 @@
   <div class="scrolled mt-3 h-100">
     <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
     <table class="table" *ngIf="!page.isSearching">
-      <thead>
-        <tr class="th-header ">
-          <ng-container *ngFor="let colum of page.columns ;let i=index;">
-            <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
-              {{colum.Title | translate}}
-              <div *ngIf="colum.Sortable" class="d-inline-block"
-                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
-                <i class="uil uil-sort sort-icon"
-                  [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
-              </div>
-            </th>
-          </ng-container>
-        </tr>
-      </thead>
+        <thead>
+            
+            <tr class="th-header">
+                <th>
+                    <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()" />
+                  </th>
+                  
+                <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                    <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                        {{colum.Title | translate}}
+                        <div *ngIf="colum.Sortable" class="d-inline-block"
+                            [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                            <i class="uil uil-sort sort-icon"
+                                [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
       <tbody>
         <!-- No Data Found -->
         <tr [hidden]="page.isSearching || items.length > 0">

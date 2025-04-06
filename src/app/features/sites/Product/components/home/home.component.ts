@@ -65,7 +65,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   initializePage() {
     this.page.columns = [
-      { Name: "Check", Title: "#", Selectable: true, Sortable: false },
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
       { Name: "name", Title: "Product Name", Selectable: false, Sortable: true },
       { Name: "code", Title: "Product Code", Selectable: false, Sortable: true },
@@ -437,5 +436,13 @@ getGradeName(gradeId: number): string {
   //     }
   //   });
   // }
-  
+  toggleSelectAll(event: any): void {
+    const isChecked = event.target.checked;
+    this.items.forEach(item => {
+      item.selected = isChecked;
+    });
+  }
+  isAllSelected(): boolean {
+    return this.items.every(item => item.selected);
+  }
 }
