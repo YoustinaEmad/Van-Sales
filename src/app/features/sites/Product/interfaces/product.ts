@@ -55,6 +55,7 @@ export class productSearchViewModel {
   CategoryId: string;
   ProductStatus:string;
   Grade:string;
+  Unit:string;
   IsActive:boolean;
 }
 

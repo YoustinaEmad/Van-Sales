@@ -56,12 +56,16 @@
 
       
         
-          <div class="col-2">
+          <div class="col-1">
             <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Grade"
               label="Grade" placeholder="Grade" [items]="Grades"></ng-control>
           </div>
         
-
+          <div class="col-1">
+            <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Unit"
+              label="Unit" placeholder="Unit" [items]="Units"></ng-control>
+          </div>
+        
         <!-- Search Button -->
         <div class="col-2 d-flex align-items-end">
           <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="onSearchClicked()"

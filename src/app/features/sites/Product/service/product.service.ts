@@ -35,6 +35,9 @@ export class ProductService {
     if (searchViewModel.Grade) {
       params = params.set("Grade", searchViewModel.Grade);
     }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
+    }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
     }
@@ -58,6 +61,9 @@ export class ProductService {
     }
     if (searchViewModel.Grade) {
       params = params.set("Grade", searchViewModel.Grade);
+    }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
@@ -110,6 +116,9 @@ export class ProductService {
     }
     if (searchViewModel.Grade) {
       params = params.set("Grade", searchViewModel.Grade);
+    }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);

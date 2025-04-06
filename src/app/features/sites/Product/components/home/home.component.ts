@@ -96,6 +96,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       CategoryId: [this.searchViewModel.CategoryId],
       ProductStatus: [this.searchViewModel.ProductStatus],
       Grade: [this.searchViewModel.Grade],
+      Unit: [this.searchViewModel.Unit],
       IsActive: [this.searchViewModel.IsActive],
     });
 
