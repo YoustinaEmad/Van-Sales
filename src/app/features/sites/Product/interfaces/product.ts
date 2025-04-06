@@ -14,28 +14,24 @@ export interface productViewModel {
 export class productCreateViewModel {
   id: string;
   name: string;
-  description:string;
-  categoryId:string;
-  tags:string[];
-  price:number;
-  tax:number;
-  model:string;
-  brandId:string;
-  minimumQuantity:number;
-  maximumQuantity:number;
-  length:number;
-  width:number;
-  height:number;
-  liter:number
-  availableDate:string;
-  paths?:string[];
-  specificationMetrix:string;
-  data:string;
-  featuredProduct:boolean;
-  quantity:number;
-  numberOfPoints:number;
-  isActive:boolean ;
-  isActivePoint:boolean;
+  code:string;
+  smallerUnitsOfMeasurements:number;
+  wholesalePrice:number;
+  retailPrice:number;
+  vIPClientsPrice:number;
+  numOfUnitPerCartoon:number;
+  safetyStocks:number;
+  packSize:number;
+  netWeightPerLitre:number;
+  weightPerKG:number;
+  expiryDate:Date;
+  unit:number;
+  grade:number;
+  productStatus:number;
+  categoryID:string;
+  productGroupID:string
+  ProductAPI:string;
+
 }
 export class productSearchViewModel {
   ProductName:string;

@@ -14,9 +14,6 @@
 </div>
 <hr />
 
-
-
-
 <ng-container>
   <!-- Tabs Section -->
   <div class="border">
@@ -32,20 +29,22 @@
         </a>
       </li>
       <div class="d-flex align-items-center ms-auto gap-3">
-        <div class="d-flex align-items-center">
+        <!-- <div class="d-flex align-items-center">
           <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
           <label>Activate Product</label>
-        </div>
-        <div class="d-flex align-items-center">
+        </div> -->
+        <!-- <div class="d-flex align-items-center">
           <p-inputSwitch [(ngModel)]="isFeatured"></p-inputSwitch>
           <label>Featured Product</label>
-        </div>
-        <div class="d-flex align-items-center">
+        </div> -->
+        <!-- <div class="d-flex align-items-center">
           <p-inputSwitch [(ngModel)]="isActivatedPoint"></p-inputSwitch>
           <label>Activate Point</label>
-        </div>
+        </div> -->
       </div>
     </ul>
+
+
     <ng-container *ngIf="page.isPageLoaded">
       <!-- Tab Content -->
       <div class="tab-content mt-4">
@@ -58,159 +57,119 @@
                 <ng-control [form]="page.form" control="name" label="Product Name"
                   placeholder="Ex : Shell oil"></ng-control>
               </div>
-              <!-- Category and Sub Category -->
+              <!-- Category  -->
               <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="categoryId"
-                  (change)="onCategoryChange($event.id)" label="Category Name" placeholder="Category Name"
-                  [items]="categories">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="categoryID"
+                  label="Category Name" placeholder="Category Name" [items]="categories">
                 </ng-control>
               </div>
               <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="categoryId"
-                  label="subCategory Name" placeholder="subCategory Name" [items]="subCategories">
+                <ng-control [form]="page.form" control="ProductAPI"
+                  label="Product API" placeholder="Product API" >
                 </ng-control>
               </div>
               <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandId" label="Brand Name"
-                  placeholder="Brand Name" [items]="brands">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productGroupID"
+                  label="product Group" placeholder="product Group " [items]="productGroup">
                 </ng-control>
-              </div>
-              <!-- Brand -->
-              <div class="col-6">
-                <ng-control [form]="page.form" control="specificationMetrix" label="Specification Metrix"
-                  placeholder="Enter Specification Metrix"></ng-control>
               </div>
               <div class="col-6">
-                <ng-control [form]="page.form" control="data" label="Data" placeholder="Enter data"></ng-control>
+                <ng-control [form]="page.form" control="code" label="Code" placeholder="Enter The code"></ng-control>
               </div>
-
-              <!-- Description -->
-              <div class="col-12">
-                <ng-control [form]="page.form" control="description" label="Description"
-                  placeholder="Enter a description..." [type]="page.ControlType.TEXTAREA"
-                  [inputClass]="'rb-textarea h-100'" (change)="onChange($event)" [readOnly]="false"
-                  [rows]="10"></ng-control>
-              </div>
-
-
-              <div class="row mt-4">
-
-                <div class="col-3">
-                  <ng-control [form]="page.form" control="availableDate" label="Start Date"
-                    [type]="page.ControlType.INPUT_DATE"></ng-control>
-                  <div *ngIf="page.form.get('availableDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
-                    {{ page.form.get('availableDate')?.errors?.pastDate }}
+              <div class="col-6">
+                <ng-control [form]="page.form" [type]="page.ControlType.INPUT_DATE_ONLY" control="expiryDate" label="Expiry Date"
+                  placeholder="Expiry Date"></ng-control>
+                  <div *ngIf="page.form.get('expiryDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
+                    {{ page.form.get('expiryDate')?.errors?.pastDate }}
                   </div>
-                </div>
-                <div class="col-6">
+
+              </div>
+
+              <div class="col-4">
+                <ng-control [form]="page.form" control="smallerUnitsOfMeasurements"
+                  label="Smaller units of measurement"
+                  placeholder="Enter a Smaller units of measurement..." (keypress)="numberOnly($event)"></ng-control>
+              </div>
+
+              <div class="col-4">
+                <ng-control [form]="page.form" control="numOfUnitPerCartoon" label="Number Of Unit/Cartoon"
+                  placeholder="Enter a Number Of Unit/Cartoon..." (keypress)="numberOnly($event)"></ng-control>
+              </div>
+
+              <div class="col-4">
+                <ng-control [form]="page.form" control="safetyStocks" label="Safety Stocks"
+                  placeholder="Enter a safetyStocks..."  (keypress)="numberOnly($event)"></ng-control>
+              </div>
+
+              <!-- <div class="col-6">
                   <label for="MetaTagKeywords" class="form-label d-block">Meta Tag Keywords</label>
                   <p-chips formControlName="tags" [separator]="' '" [addOnBlur]="true"
                     placeholder="Enter Meta Tag Keywords..."></p-chips>
                   <small class="form-text text-muted">
                     Press <strong> Space</strong> to add another tag.
                   </small>
-                </div>
-              </div>
+                </div> -->
             </div>
           </form>
         </div>
 
-        <!-- Media Tab -->
-        <div *ngIf="selectedTab === TabEnum.Media" class="p-4 bg-white rounded">
-          <div class="container py-5">
-            <div class="row g-4">
-              <div class="col-12 col-md-3 col-lg-3" *ngFor="let image of images; let i = index">
-                <div class="border p-3 text-center h-100">
-                  <div *ngIf="image.uploaded; else uploadTemplate">
-                    <img [src]="environment.api+'/'+image.src" alt="Uploaded Image"
-                      class="img-fluid mb-2 img-thumbnail" />
-                    <!-- <div class="d-flex justify-content-center gap-2">
-                <button class="btn btn-sm btn-warning" (click)="replaceImage(i)">Replace</button>
-                <button class="btn btn-sm btn-danger" (click)="deleteImage(i)">Delete</button>
-              </div> -->
-                  </div>
-                  <ng-template #uploadTemplate>
-                    <label for="fileInput-{{ i }}" class="text-primary cursor-pointer">
-                      <i class="fa fa-upload fa-2x mb-2 color-purple-500"></i>
-                      <p class="color-purple-500" *ngIf="!image.uploaded">Upload New Image</p>
-                      <p class="text-danger" *ngIf="image.error">Error Uploading</p>
-                    </label>
-                    <input #file type="file" id="fileInput-{{ i }}" class="d-none"
-                      (change)="onImageUpload(file.files, i)" />
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         <!-- Price Tab -->
         <div *ngIf="selectedTab === TabEnum.Price" class="p-4 bg-white rounded">
-          <div class="col-6">
-            <ng-control [form]="page.form" control="price" label="Product Price" placeholder="Enter Price"
-              (keypress)="numberOnly($event)"></ng-control>
+          <div class="row ">
+            <div class="col-6">
+              <ng-control [form]="page.form" control="retailPrice" label="Retail Price" placeholder="Enter Retail Price"
+                (keypress)="numberOnly($event)"></ng-control>
+            </div>
+
+            <div class="col-6">
+              <ng-control [form]="page.form" control="wholesalePrice" label="Wholesale Price"
+                placeholder="Enter Wholesale Price" (keypress)="numberOnly($event)"></ng-control>
+            </div>
+
+            <div class="col-6 mt-4">
+              <ng-control [form]="page.form" control="vIPClientsPrice" label="VIP Clients Price"
+                placeholder="Enter VIP Clients Price...." (keypress)="numberOnly($event)"></ng-control>
+            </div>
           </div>
         </div>
 
-        <!-- Dimensions Tab -->
-        <div *ngIf="selectedTab === TabEnum.Dimensions" class="p-4 bg-white rounded">
-          <div class="row g-4">
-            <div class="col-6">
-              <ng-control [form]="page.form" control="height" label="Height" placeholder="Enter Height"
-                (keypress)="numberOnly($event)"></ng-control>
-            </div>
-            <div class="col-6">
-              <ng-control [form]="page.form" control="width" label="Width" placeholder="Enter Width"
-                (keypress)="numberOnly($event)"></ng-control>
-            </div>
-            <div class="col-6">
-              <ng-control [form]="page.form" control="length" label="Length" placeholder="Enter Length"
-                (keypress)="numberOnly($event)"></ng-control>
-            </div>
-            <div class="col-6">
-              <ng-control [form]="page.form" control="liter" label="liter" placeholder="Enter liter"
-                (keypress)="numberOnly($event)"></ng-control>
-            </div>
-          </div>
-        </div>
 
         <!-- Other Data Tab -->
         <div *ngIf="selectedTab === TabEnum.Other" class="p-4  ">
           <div class="row g-4">
             <div class="col-4">
-              <ng-control [form]="page.form" control="minimumQuantity" label="Minimum Quantity"
-                placeholder="Enter Minimum Quantity" (keypress)="numberOnly($event)"></ng-control>
-            </div>
-            <div class="col-4">
-              <ng-control [form]="page.form" control="maximumQuantity" label="Maximum Quantity"
-                placeholder="Enter Maximum Quantity" (keypress)="numberOnly($event)"></ng-control>
-              <span class="text-danger extra-small mt-1" *ngIf="page.form.errors?.maxLessThanMin">
-                {{ page.form.errors?.maxLessThanMin }}
-              </span>
-            </div>
-            <div class="col-4">
-              <ng-control [form]="page.form" control="quantity" label="Quantity" placeholder="Enter Quantity"
+              <ng-control [form]="page.form" control="packSize" label="Pack Size" placeholder="Enter Pack Size"
                 (keypress)="numberOnly($event)"></ng-control>
-              <span class="text-danger extra-small mt-1" *ngIf="page.form.errors?.quantityOutOfRange">
-                {{ page.form.errors?.quantityOutOfRange }}
-              </span>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="netWeightPerLitre" label="Weight Per liter "
+                placeholder="Enter Weight Per liter"  (keypress)="numberOnly($event)"></ng-control>
+
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="weightPerKG" label="Net Weight Per KG" placeholder="EnterNet Weight Per KG....."
+                (keypress)="numberOnly($event)"  (keypress)="numberOnly($event)"></ng-control>
+              
             </div>
 
           </div>
           <div class="row mt-4">
             <div class="col-4">
-              <ng-control [form]="page.form" control="model" label="Model" placeholder="Enter Model"></ng-control>
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="Unit" placeholder="Enter Unit" [items]="ProductUnitList" ></ng-control>
             </div>
             <div class="col-4">
-              <ng-control [form]="page.form" control="tax" label="Tax" placeholder="Enter Tax"
-                (keypress)="numberOnly($event)"></ng-control>
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade" label="grade" placeholder="Enter grade" [items]="Grade"
+               ></ng-control>
             </div>
-            <div class="col-4">
-              <ng-control [form]="page.form" control="numberOfPoints" label="Number Of Points"
-                (keypress)="numberOnly($event)" placeholder="Number Of Points"></ng-control>
-            </div>
+           
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productStatus" label="Choose Status" placeholder="Product Status" [items]="ProductStatus"
+                   ></ng-control>
+              </div>
           </div>
-          
+
         </div>
       </div>
     </ng-container>

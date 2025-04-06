@@ -144,27 +144,27 @@ export class HomeComponent extends CrudIndexBaseUtils {
   onCategoryChange(CategoryId: string) {
     this.selectedCategoryId = CategoryId;
     this.page.searchForm.patchValue({ CategoryId: CategoryId });
-    this.loadSubCategories(CategoryId);
+    //this.loadSubCategories(CategoryId);
 
   }
 
-  loadSubCategories(categoryId: string) {
-    this.subCategories = [];
-    if (!categoryId) return;
+  // loadSubCategories(categoryId: string) {
+  //   this.subCategories = [];
+  //   if (!categoryId) return;
 
-    this._productService.getSubCategories(categoryId).subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.subCategories = res.data;
-        } else {
-          this.subCategories = [];
-        }
-      },
-      error: (err) => {
-        this.subCategories = [];
-      }
-    });
-  }
+  //   this._productService.getSubCategories(categoryId).subscribe({
+  //     next: (res) => {
+  //       if (res.isSuccess) {
+  //         this.subCategories = res.data;
+  //       } else {
+  //         this.subCategories = [];
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.subCategories = [];
+  //     }
+  //   });
+  // }
 
   @ViewChild('confirmDeleteTemplates', { static: false }) confirmDeleteTemplates: any;
   showDeleteConfirmations(selectedItem: productViewModel) {
