@@ -23,16 +23,22 @@ export class ProductService {
     if (searchViewModel.ProductName) {
       params = params.set("ProductName", searchViewModel.ProductName);
     }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
+    }
     if (searchViewModel.CategoryId) {
       params = params.set("CategoryId", searchViewModel.CategoryId);
     }
-    if (searchViewModel.SubcategoryId) {
-      params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
+    if (searchViewModel.ProductStatus) {
+      params = params.set("ProductStatus", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
     }
-    return this._apiService.get(`/SearchProductEndPoint/SearchProduct?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+    return this._apiService.get(`/GetAllProductsEndPoint/GetAllProducts?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
 
   getToDownloadPDF(searchViewModel: productSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number ) {
@@ -41,11 +47,17 @@ export class ProductService {
     if (searchViewModel.ProductName) {
       params = params.set("ProductName", searchViewModel.ProductName);
     }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
+    }
     if (searchViewModel.CategoryId) {
       params = params.set("CategoryId", searchViewModel.CategoryId);
     }
-    if (searchViewModel.SubcategoryId) {
-      params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
+    if (searchViewModel.ProductStatus) {
+      params = params.set("ProductStatus", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
@@ -66,7 +78,7 @@ export class ProductService {
   }
 
   getCategories() {
-    return this._apiService.get('/SelectCategoryListEndpoint/GetCategories');
+    return this._apiService.get('/CategorySelectListEndpoint/SelectCategoryList');
   }
 
   getSubCategories(categoryeId?: string) {
@@ -87,11 +99,17 @@ export class ProductService {
     if (searchViewModel.ProductName) {
       params = params.set("ProductName", searchViewModel.ProductName);
     }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
+    }
     if (searchViewModel.CategoryId) {
       params = params.set("CategoryId", searchViewModel.CategoryId);
     }
-    if (searchViewModel.SubcategoryId) {
-      params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
+    if (searchViewModel.ProductStatus) {
+      params = params.set("SubcategoryId", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);

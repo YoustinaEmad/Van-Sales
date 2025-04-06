@@ -33,10 +33,18 @@ export class HomeComponent extends CrudIndexBaseUtils {
   activation: productActivateViewModel = { id: ''};
   activationPoint: pointActivateViewModel = { id: ''};
   statuses = [
-    { id: true, name: 'on' },
-    { id: false, name: 'off' }
+    { id: 1, name: 'Available ' },
+    { id: 2, name: 'Unavailable ' }
   ];
-
+  Grades = [
+    { id: 1, name: 'HighGrade ' },
+    { id: 2, name: 'LowGrade ' },
+  ];
+  Units = [
+    { id: 1, name: 'Cartoon  ' }, 
+    { id: 2, name: 'Drum   ' }, 
+    { id: 3, name: 'Pail   ' }, 
+  ]
   restockQuantity: number = 1;
   selectedProduct: productViewModel;
 
@@ -59,14 +67,16 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
       { Name: "Check", Title: "#", Selectable: true, Sortable: false },
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "productName", Title: "Product Name", Selectable: false, Sortable: true },
-      { Name: "categoryName", Title: "category Name", Selectable: false, Sortable: true },
-      { Name: "subcategoryName", Title: "Sub Category", Selectable: false, Sortable: true },
-      { Name: "price", Title: "Price (EGP)", Selectable: false, Sortable: true },
-      { Name: "quantity", Title: "Quantity", Selectable: false, Sortable: true },
-      { Name: "imagePath", Title: "Image ", Selectable: false, Sortable: true },
-      { Name: "isActive", Title: "Activation ", Selectable: false, Sortable: true },
-      { Name: "isActivePoint", Title: "Activation point ", Selectable: false, Sortable: true },
+      { Name: "name", Title: "Product Name", Selectable: false, Sortable: true },
+      { Name: "code", Title: "Product Code", Selectable: false, Sortable: true },
+      { Name: "packSize", Title: "Pack Size", Selectable: false, Sortable: true },
+      { Name: "smallerUnitsOfMeasurements", Title: "Smaller Units Of Measurements", Selectable: false, Sortable: true },
+      { Name: "unit", Title: "Product Unit", Selectable: false, Sortable: true },
+      { Name: "categoryName", Title: "Category Name ", Selectable: false, Sortable: true },
+      { Name: "productGroupName", Title: "Product Group Name ", Selectable: false, Sortable: true },
+      { Name: "grade", Title: "Grade ", Selectable: false, Sortable: true },
+      { Name: "productStatus", Title: "Product Status ", Selectable: false, Sortable: true },
+      { Name: "isActive", Title: "Is Active", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
     ];
 
@@ -82,8 +92,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       ProductName: [this.searchViewModel.ProductName],
+      Code: [this.searchViewModel.Code],
       CategoryId: [this.searchViewModel.CategoryId],
-      SubcategoryId: [this.searchViewModel.SubcategoryId],
+      ProductStatus: [this.searchViewModel.ProductStatus],
+      Grade: [this.searchViewModel.Grade],
       IsActive: [this.searchViewModel.IsActive],
     });
 
@@ -264,11 +276,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
     // Table Data
     const data = this.items.map((item, index) => [
       index + 1,
-      item.productName,
+      item.name,
       item.categoryName,
-      item.subcategoryName,
-      item.price,
-      item.quantity
+      item.unit,
+      item.packSize
     ]);
   
     // Generate Table
@@ -302,7 +313,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       next: (response) => {
         this._sharedService.showToastr(response);
         if (response.isSuccess) {
-          this.selectedProduct.quantity += body.quantity; // Update UI
+         // this.selectedProduct.quantity += body.quantity; 
           this.modalRef.hide();
           this.search(); 
         }
@@ -322,7 +333,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.page.isSaving = false
           this._sharedService.showToastr(response);
           if (response.isSuccess) {
-            item.isActive = !item.isActive
+             item.isActive = !item.isActive
             this.search();
           } 
         },
@@ -343,7 +354,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.page.isSaving = false
           this._sharedService.showToastr(response);
           if (response.isSuccess) {
-            item.isActivePoint = !item.isActivePoint
+            // item.isActivePoint = !item.isActivePoint
             this.search();
           } 
         },
@@ -393,6 +404,22 @@ export class HomeComponent extends CrudIndexBaseUtils {
         });
       }
     }
+
+
+
+getUnitName(unitId: number): string {
+  const unit = this.Units.find(u => u.id === unitId);
+  return unit ? unit.name.trim() : '';
+}
+
+getStatusName(statusId: number): string {
+  const status = this.statuses.find(s => s.id === statusId);
+  return status ? status.name.trim() : '';
+}
+
+getGradeName(gradeId: number): string {
+  const grade = this.Grades.find(g => g.id === gradeId);
+  return grade ? grade.name.trim() : '';
 }
 
 
@@ -410,3 +437,4 @@ export class HomeComponent extends CrudIndexBaseUtils {
   //   });
   // }
   
+}
