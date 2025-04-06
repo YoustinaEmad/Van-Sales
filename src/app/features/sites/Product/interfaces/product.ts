@@ -1,15 +1,27 @@
 export interface productViewModel {
   id: string; 
-  productName: string; 
+  name: string; 
+  code:string;
+  smallerUnitsOfMeasurements:number;
+  wholesalePrice:number;
+  retailPrice:number;
+  vIPClientsPrice:number
+  numOfUnitPerCartoon:number;
+  safetyStocks:number;
+  packSize:number;
+  netWeightPerLitre:number;
+  weightPerKG:number
+  expiryDate:Date;
+  unit:number;
+  grade:number
+  productStatus:number;
+  categoryID:string;
   categoryName:string;
-  categoryId :string;
-  subcategoryName :string;
-  price:number;
-  quantity:number;
-  imagePath:string;
+  productGroupID:string;
+  productGroupName:string;
+  productAPI:string;
   isActive:boolean;
-  selected?: boolean; 
- isActivePoint:boolean;
+  selected:boolean;
 }
 export class productCreateViewModel {
   id: string;
@@ -34,9 +46,12 @@ export class productCreateViewModel {
 
 }
 export class productSearchViewModel {
-  ProductName:string;
+  Name:string;
+  Code:string;
   CategoryId: string;
-  SubcategoryId:string;
+  ProductStatus:string;
+  Grade:string;
+  Unit:string;
   IsActive:boolean;
 }
 

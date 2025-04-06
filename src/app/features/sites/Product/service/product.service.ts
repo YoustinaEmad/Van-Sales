@@ -20,38 +20,57 @@ export class ProductService {
       pageSize = environment.pageSize;
 
     let params = new HttpParams();
-    if (searchViewModel.ProductName) {
-      params = params.set("ProductName", searchViewModel.ProductName);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
+    }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
     }
     if (searchViewModel.CategoryId) {
       params = params.set("CategoryId", searchViewModel.CategoryId);
     }
-    if (searchViewModel.SubcategoryId) {
-      params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
+    if (searchViewModel.ProductStatus) {
+      params = params.set("ProductStatus", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
+    }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
+    }
+    if (searchViewModel.IsActive) {
+      params = params.set("IsActive", searchViewModel.IsActive);
+    }
+    return this._apiService.get(`/GetAllProductsEndPoint/GetAllProducts?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+  }
+
+
+  getToDownloadPDF(searchViewModel: productSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number ) {
+    
+    let params = new HttpParams();
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
+    }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
+    }
+    if (searchViewModel.CategoryId) {
+      params = params.set("CategoryId", searchViewModel.CategoryId);
+    }
+    if (searchViewModel.ProductStatus) {
+      params = params.set("ProductStatus", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
+    }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
     }
     return this._apiService.get(`/SearchProductEndPoint/SearchProduct?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
-
-  // getToDownloadPDF(searchViewModel: productSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number) {
-
-  //   let params = new HttpParams();
-  //   if (searchViewModel.ProductName) {
-  //     params = params.set("ProductName", searchViewModel.ProductName);
-  //   }
-  //   if (searchViewModel.CategoryId) {
-  //     params = params.set("CategoryId", searchViewModel.CategoryId);
-  //   }
-  //   if (searchViewModel.SubcategoryId) {
-  //     params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
-  //   }
-  //   if (searchViewModel.IsActive) {
-  //     params = params.set("IsActive", searchViewModel.IsActive);
-  //   }
-  //   return this._apiService.get(`/SearchProductEndPoint/SearchProduct?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
-  // }
   getById(ID: string) {
     return this._apiService.get(`/GetProductByIDEndpoint/GetProductByID?ID=${ID}`,);
   }
@@ -83,14 +102,23 @@ export class ProductService {
   getProductsExcel(searchViewModel: productSearchViewModel) {
 
     let params = new HttpParams();
-    if (searchViewModel.ProductName) {
-      params = params.set("ProductName", searchViewModel.ProductName);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
+    }
+    if (searchViewModel.Code) {
+      params = params.set("Code", searchViewModel.Code);
     }
     if (searchViewModel.CategoryId) {
       params = params.set("CategoryId", searchViewModel.CategoryId);
     }
-    if (searchViewModel.SubcategoryId) {
-      params = params.set("SubcategoryId", searchViewModel.SubcategoryId);
+    if (searchViewModel.ProductStatus) {
+      params = params.set("SubcategoryId", searchViewModel.ProductStatus);
+    }
+    if (searchViewModel.Grade) {
+      params = params.set("Grade", searchViewModel.Grade);
+    }
+    if (searchViewModel.Unit) {
+      params = params.set("Unit", searchViewModel.Unit);
     }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
