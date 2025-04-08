@@ -16,14 +16,11 @@ export class CategoryService {
       pageSize = environment.pageSize;
 
     let params = new HttpParams();
-    if (searchViewModel.CategoryId) {
-      params = params.set("CategoryId", searchViewModel.CategoryId);
-    }
-    if (searchViewModel.SubCategoryId) {
-      params = params.set("SubCategoryId", searchViewModel.SubCategoryId);
+    if (searchViewModel.Name) {
+      params = params.set("Name", searchViewModel.Name);
     }
 
-    return this._apiService.get(`/GetCategoryIndexEndpoint/Get?orderBy=${orderBy}&isAscending=${isAscending}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+    return this._apiService.get(`/GetAllCategoriesEndpoint/Get?orderBy=${orderBy}&isAscending=${isAscending}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
 
   getById(ID: string) {
@@ -36,7 +33,7 @@ export class CategoryService {
 
   postOrUpdate(body: categoryCreateViewModel) {
     if (body.id) return this._apiService.update(`/EditCategoryEndPoint/Put`, body)
-    else return this._apiService.post(`/CreateCategoryEndPoint/AddCategory`, body)
+    else return this._apiService.post(`/CreateCategoryEndpoint/Post`, body)
   }
 
 

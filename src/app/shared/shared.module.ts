@@ -100,7 +100,7 @@ export class SharedModule {
     private translate: TranslateService,
     private localizationService: LocalizationService
   ) {
-    this.translate.use(localizationService.getLanguage());
-    localizationService.setLanguage(localizationService.getLanguage());
+    this.translate.use("en");
+    localizationService.setLanguage("en");
   }
 }
