@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SharedService } from 'src/app/shared/service/shared.service';
-import { categoryActivateViewModel, categorySearchViewModel, categorySelectedItem, categoryViewModel, subCategorySelectedItem } from '../../interfaces/category-view-model';
+import { categoryActivateViewModel, categorySearchViewModel, categorySelectedItem, categoryViewModel } from '../../interfaces/category-view-model';
 import { CategoryService } from '../../service/category.service';
 import { forkJoin } from 'rxjs';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
@@ -41,11 +41,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
     
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "Name", Title: "Category", Selectable: false, Sortable: true },
-      { Name: "ProductCount", Title: "Product Count", Selectable: false, Sortable: true },
-      { Name: "SubcategoryCount", Title: "Sub Category Count", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "Name", Selectable: false, Sortable: true },
       { Name: "IsActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "ImagePath", Title: "Img", Selectable: false, Sortable: true },
       { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
     ]
     forkJoin([this._pageService.getCategories()]).subscribe((res) => {
@@ -65,8 +62,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
-      CategoryId: [this.searchViewModel.CategoryId],  
-      SubCategoryId: [this.searchViewModel.SubCategoryId],
+      Name: [this.searchViewModel.Name],  
     });
     this.page.isPageLoaded = true;
   }

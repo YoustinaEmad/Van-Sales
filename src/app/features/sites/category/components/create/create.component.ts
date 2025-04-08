@@ -23,7 +23,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   id: string;
   isActivated: boolean = false;
   images = [{ uploaded: false, src: null }];
-  environment=environment;
+  environment = environment;
   isSubCategory: boolean = false;
   categories: categorySelectedItem[] = [];
   selectedTab: TabEnum = TabEnum.GeneralData;
@@ -81,14 +81,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.isSuccess) {
           this.item = res.data;
-          this.isActivated = this.item.isActive;
+          //this.isActivated = this.item.isActive;
           this.item.id = this.id;
-          if (this.item.parentCategoryId) {
-            this.isSubCategory = true;
-            this.onCreateSubCategory();
-          } else {
-            this.createForm();
-          }
+
+          this.createForm();
+
           this.page.isPageLoaded = true;
         }
       },
@@ -101,14 +98,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   createForm() {
     this.page.form = this._sharedService.formBuilder.group({
       name: [this.item.name, Validators.required],
-      description: [this.item.description, Validators.required],
-      tags: [this.item.tags, Validators.required],
-      seo: [this.item.seo, Validators.required],
-      paths: [this.item.paths],
-      parentCategoryId: [
-        this.isSubCategory ? this.item.parentCategoryId : null,
-        this.isSubCategory ? Validators.required : null,
-      ],
+
     });
     this.page.isPageLoaded = true;
   }
@@ -117,14 +107,11 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (this.page.isSaving || this.page.form.invalid) return;
     this.page.isSaving = true;
     Object.assign(this.item, this.page.form.value);
-    this.item.isActive = this.isActivated;
-    this.item.paths = this.getUploadedImages();  // Use the method to get all the uploaded image paths
 
     //this.item.paths = this.getUploadedImages();
     // this.item.paths = this.images
     //    .filter((image) => image.uploaded)
     //    .map((image) => image.src);
-    this.item.paths = this.images.filter((image) => image.uploaded).map((image) => image.src);
     if (this.isSubCategory) {
       this.item.name = this.item.name;
     }
@@ -180,19 +167,19 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (files.length === 0) {
       return;
     }
-  
+
     const file = <File>files[0];
     const formData = new FormData();
     formData.append('Files', file, file.name);  // Use 'Files' as the field name if required by backend
     console.log(formData);
-  
+
     // Call the service to upload the image, passing the FormData directly
     this._categoryService.uploadImage(formData).subscribe({
       next: (res) => {
         if (res.isSuccess) {
           console.log(res);
           //this.images[index] = { uploaded: true, src: res.data.path[index] };
-          this.images[index] = { uploaded: true, src: res.data.path[index]};
+          this.images[index] = { uploaded: true, src: res.data.path[index] };
 
           this._sharedService.showToastr(res);
         }
@@ -202,10 +189,10 @@ export class CreateComponent implements OnInit, OnDestroy {
       },
     });
   }
-  
-  
-  
- 
+
+
+
+
 
   getUploadedImages() {
     return this.images.filter(image => image.uploaded).map(image => image.src);
