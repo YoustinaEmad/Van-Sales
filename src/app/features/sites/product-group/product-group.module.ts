@@ -12,19 +12,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableModule } from 'primeng/table';
 import { HomeComponent } from '../product-group/Components/home/home.component';
-import { CreateComponent } from '../product-group/Components/create/create.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'create', component: CreateComponent },
-  { path: 'edit/:id', component: CreateComponent },
+  
 
 ];
 
 @NgModule({
  declarations: [
      HomeComponent,
-     CreateComponent
+     
    ],
    imports: [
      CommonModule,
