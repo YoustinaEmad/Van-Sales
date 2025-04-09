@@ -210,5 +210,36 @@
     "expired": "Expired",
     "jump-forward": "Jump Forward",
     "jump-back": "Jump Back"
+  },
+  "sites":{
+    "Governorate": {
+      "governorate": "المحافظه",
+      "governorates": "المحافظات",
+      "name": "اسم المحافظه",
+      "cities": "المدن",
+      "governorateCode": "كود المحافظه",
+      "isActive": "تفعيل المحافظة",
+      "action": "الاجراءات",
+      "code": "الكود",
+      "create": "اضافة محافظه",
+      "delete": "حذف ",
+      "active": "تفعيل",
+      "disActive": "الغاء التفعيل",
+      "cancel":"الغاء",
+      "confirm":"تأكيد",
+      "areyousureyouwanttodeletetheselectedGovernorates?":"هل أنت متأكد أنك تريد حذف المنتجات المحددة؟"
+    },"City": {
+      "cities": "المدن",
+      "city": "المدينة",
+      "name": "المدينة",
+      "governorate": "المحافظه",
+      "activation": "تفعيل المدينة",
+      "action": "الاجراءات",
+      "create": "اضافة مدينة",
+      "delete": "حذف ",
+      "active": "تفعيل",
+      "disActive": "الغاء تفعيل"
+    }
+
   }
 }

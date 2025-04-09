@@ -41,12 +41,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
-      { Name: "Name", Title: "Governorates", Selectable: false, Sortable: true },
-      { Name: "Cities", Title: "Cities", Selectable: false, Sortable: true },
-      { Name: "governorateCode", Title: "Governorate Code", Selectable: false, Sortable: true },
-      { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
-
+      { Name: "Name", Title: "sites.Governorate.name", Selectable: false, Sortable: true },
+      { Name: "Cities", Title: "sites.Governorate.cities", Selectable: false, Sortable: true },
+      { Name: "governorateCode", Title: "sites.Governorate.governorateCode", Selectable: false, Sortable: true },
+      { Name: "isActive", Title: "sites.Governorate.isActive", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.Governorate.action", Selectable: false, Sortable: true },
     ];
     // this.subscribeToParentEvent()
     this.createSearchForm();

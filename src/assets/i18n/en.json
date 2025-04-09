@@ -220,5 +220,34 @@
     "expired": "Expired",
     "jumb-forward": "Jump Forward",
     "jumb-back": "Jump Back"
+  },
+  "Governorate": {
+    "governorate": "Governorate",
+    "governorates": "Governorates",
+    "name": "Name",
+    "cities": "Cities",
+    "governorateCode": "Governorate Code",
+    "isActive": "Is Active",
+    "action": "Action",
+    "code": "Code",
+    "create": "Create Governorate",
+    "delete": "Delete ",
+    "active": "Active",
+    "disActive": "DisActive",
+    "cancel": "الغاء",
+    "confirm": "تأكيد",
+    "areyousureyouwanttodeletetheselectedGovernorates":"Are You Sure You Want To Delete The Selected Governorates ?"
+  },
+  "City": {
+    "cities": "Cites",
+    "city": "City",
+    "name": " Name",
+    "governorate": "Governorate",
+    "activation": "Activation",
+    "action": "Action",
+    "create": "Create",
+    "delete": "Delete ",
+    "active": "Active",
+    "disActive": "DisActive"
   }
 }
