@@ -221,45 +221,59 @@
     "jumb-forward": "Jump Forward",
     "jumb-back": "Jump Back"
   },
-  "sites":{
-  "Governorate": {
-    "governorate": "Governorate",
-    "governorates": "Governorates",
-    "name": "Name",
-    "cities": "Cities",
-    "governorateCode": "Governorate Code",
-    "isActive": "Is Active",
-    "action": "Action",
-    "code": "Code",
-    "create": "Create Governorate",
-    "delete": "Delete ",
-    "active": "Active",
-    "disActive": "DisActive",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "areyousureyouwanttodeletetheselectedGovernorates?":"Are You Sure You Want To Delete The Selected Governorates ?",
-    "editGovernorate":"Edit Governorate",
-    "saveChanges":"Save Changes"
-
-
+  "sites": {
+    "Governorate": {
+      "governorate": "Governorate",
+      "governorates": "Governorates",
+      "name": "Name",
+      "cities": "Cities",
+      "governorateCode": "Governorate Code",
+      "isActive": "Is Active",
+      "action": "Action",
+      "code": "Code",
+      "create": "Create Governorate",
+      "delete": "Delete ",
+      "active": "Active",
+      "disActive": "DisActive",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "areyousureyouwanttodeletetheselectedGovernorates?": "Are You Sure You Want To Delete The Selected Governorates ?",
+      "editGovernorate": "Edit Governorate",
+      "saveChanges": "Save Changes"
+    },
+    "City": {
+      "cities": "Cites",
+      "city": "City",
+      "name": " Name",
+      "governorate": "Governorate",
+      "activation": "Activation",
+      "action": "Action",
+      "create": "Create",
+      "delete": "Delete ",
+      "active": "Active",
+      "disActive": "DisActive",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "areyousureyouwanttodeletetheselectedCities?": "Are You Sure You Want To Delete The Selected Cities?",
+      "editCity": "Edit City",
+      "saveChanges": "Save Changes",
+      "selectGovernorate": "Selected Governorate"
+    }
   },
-  "City": {
-    "cities": "Cites",
-    "city": "City",
-    "name": " Name",
-    "governorate": "Governorate",
-    "activation": "Activation",
-    "action": "Action",
-    "create": "Create",
-    "delete": "Delete ",
-    "active": "Active",
-    "disActive": "DisActive",
-    "cancel":"Cancel",
-      "confirm":"Confirm",
-      "areyousureyouwanttodeletetheselectedCities?":"Are You Sure You Want To Delete The Selected Cities?",
-      "editCity":"Edit City",
-      "saveChanges":"Save Changes",
-      "selectGovernorate":"Selected Governorate"
+  "auth": {
+    "login": {
+      "login": "Login",
+      "continue your journey with oil car.": "Continue your journey with oil car.",
+      "password": "Password",
+      "mobile": "Mobile",
+      "forget-password?": "Forget Password?"
+    },
+    "forget-password": {
+      "enterYourPhoneNumber": "Enter Your Phone Number",
+      "phoneNumber": "Phone Number",
+      "submit": "Submit",
+      "login": "Login",
+      "goToLogin": "Go To Login"
+    }
   }
-}
 }
