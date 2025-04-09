@@ -258,6 +258,30 @@
       "editCity": "Edit City",
       "saveChanges": "Save Changes",
       "selectGovernorate": "Selected Governorate"
+    },
+    "layout": {
+      "home": "Dashboard",
+      "address": "Address",
+      "governorates": "Governorates",
+      "cities": "Cities",
+      "items": "Items",
+      "category": "Category",
+      "product": "Products",
+      "brand": "Brands",
+      "discount": "Discounts",
+      "customers": "Customers",
+      "order": "Orders",
+      "customerGroup": "Customer Groups",
+      "signUpRequest": "Sign Up Requests",
+      "email": "Email",
+      "advertisment": "Advertisment",
+      "settings": "Settings",
+      "role": "Role",
+      "employees": "Employees",
+      "warehouse":"Warehouse",
+      "suppliers": "Suppliers",
+      "salesMan": "SalesMan",
+      "productGroup": "Product Group"
     }
   },
   "auth": {

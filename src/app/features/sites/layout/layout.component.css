@@ -10,3 +10,11 @@ a:hover {
 .no-underline {
   text-decoration: none;
 }
+.navbar-link {
+  display: inline-block;
+  max-width: 150px; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}

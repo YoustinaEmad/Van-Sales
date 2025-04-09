@@ -247,7 +247,31 @@
       "editCity":"تعديل المدينة",
       "saveChanges":"حفظ التغيرات",
       "selectGovernorate":"اختار المحافظة"
-    }
+    },
+    "layout": {
+    "home": "لوحة التحكم",
+    "address": "العنوان",
+    "governorates": "المحافظات",
+    "cities": "المدن",
+    "items": "الاصناف",
+    "category": "الفئات",
+    "product": "المنتجات",
+    "brand": "الماركات",
+    "discount": "الخصومات",
+    "customers": "العملاء",
+    "order": "الطلبات",
+    "customerGroup": "مجموعات العملاء",
+    "signUpRequest": "طلبات التسجيل",
+    "email": "البريد الالكترونى",
+    "advertisment": "الاعلانات",
+    "settings": "الاعدادات",
+    "role": "الوظائف",
+    "employees": "الموظفين",
+    "warehouse":"المخزن",
+    "suppliers": "الموردون",
+    "salesMan": "مندوب المبيعات",
+    "productGroup": "مجموعة المنتجات"
+  }
   },
   "auth":{
     "login":{
