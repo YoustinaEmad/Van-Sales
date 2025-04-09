@@ -53,17 +53,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
   initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "Name", Title: "WareHouse", Selectable: false, Sortable: true },
-      { Name: "code", Title: "Code", Selectable: false, Sortable: true },
-      { Name: "data", Title: "Data", Selectable: false, Sortable: true },
-      { Name: "warehouseType", Title: "WarehouseType", Selectable: false, Sortable: true },
-      { Name: "governorateName", Title: "Governorate", Selectable: false, Sortable: true },
-      { Name: "cityName", Title: "CityName", Selectable: false, Sortable: true },
-      { Name: "street", Title: "Street", Selectable: false, Sortable: true },
-      { Name: "landmark", Title: "Landmark", Selectable: false, Sortable: true },
-      { Name: "buildingData", Title: "BuildingData", Selectable: false, Sortable: true },
-      { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "sites.Warehouse.warehouse", Selectable: false, Sortable: true },
+      { Name: "code", Title: "sites.Warehouse.code", Selectable: false, Sortable: true },
+      { Name: "data", Title: "sites.Warehouse.data", Selectable: false, Sortable: true },
+      { Name: "warehouseType", Title: "sites.Warehouse.warehouseType", Selectable: false, Sortable: true },
+      { Name: "governorateName", Title: "sites.Warehouse.governorate", Selectable: false, Sortable: true },
+      { Name: "cityName", Title: "sites.Warehouse.city", Selectable: false, Sortable: true },
+      { Name: "street", Title: "sites.Warehouse.street", Selectable: false, Sortable: true },
+      { Name: "landmark", Title: "sites.Warehouse.landmark", Selectable: false, Sortable: true },
+      { Name: "buildingData", Title: "sites.Warehouse.buildingData", Selectable: false, Sortable: true },
+      { Name: "isActive", Title: "sites.Warehouse.activation", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.Warehouse.action", Selectable: false, Sortable: true },
 
     ];
 

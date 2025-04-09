@@ -1,21 +1,21 @@
 <div class="mb-2">
     <div class="d-flex justify-content-between align-items-center py-2 px-3">
         <div class="d-flex align-items-center">
-            <h2 class="mb-0 color-gray-600 ts-5">Warehouse</h2>
-            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Warehouse
+            <h2 class="mb-0 color-gray-600 ts-5">{{"sites.Warehouse.warehouses" |translate}}</h2>
+            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} {{"sites.Warehouse.warehouse" |translate}}
             </div>
         </div>
 
         <!-- Flex container for buttons to be side by side -->
         <div class="d-flex">
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="deleteSelectedWarehousees()">Delete</button>
+              (click)="deleteSelectedWarehousees()">{{"sites.Warehouse.delete" |translate}}</button>
           <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="activateWarehousees()">Activate</button>
+              (click)="activateWarehousees()">{{"sites.Warehouse.active" |translate}}</button>
           <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="disActiveWarehouses()">Disactivate</button>
+              (click)="disActiveWarehouses()">{{"sites.Warehouse.disActive" |translate}}</button>
             <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 "
-                (click)="navigateToCreateWarehouse()">Create Warehouse</button>
+                (click)="navigateToCreateWarehouse()">{{"sites.Warehouse.create" |translate}}</button>
 
         </div>
     </div>
@@ -25,25 +25,25 @@
         <div class="form-body">
             <div class="row g-2">
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="Name" label="shared.name" placeholder="shared.name">
+                    <ng-control [form]="page.searchForm" control="Name" label="sites.Warehouse.warehouse" placeholder="sites.Warehouse.warehouse">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="Code" label="Code" placeholder="Enter the Code......">
+                    <ng-control [form]="page.searchForm" control="Code" label="sites.Warehouse.code" placeholder="sites.Warehouse.code">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
                     <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="GovernorateId"
-                        (change)="onGovernorateChange($event.id)" label="Governorate" placeholder="Governorate Name"
+                        (change)="onGovernorateChange($event.id)" label="sites.Warehouse.governorate" placeholder="sites.Warehouse.selectGovernorate"
                         [items]="governorates">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
-                    <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="CityId" label="City"
-                        placeholder="City Name" [items]="cities">
+                    <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="CityId" label="sites.Warehouse.city"
+                        placeholder="sites.Warehouse.selectCity" [items]="cities">
                     </ng-control>
                 </div>
 
@@ -146,21 +146,21 @@
                 <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
             </p>
             <div class="d-flex mt-4">
-                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.Warehouse.cancel" |translate}}</button>
                 <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-                    (click)="remove();modalRef.hide();">Confirm</button>
+                    (click)="remove();modalRef.hide();">{{"sites.Warehouse.confirm" |translate}}</button>
             </div>
         </div>
     </div>
 </ng-template>
 <ng-template #confirmDeleteTemplates>
     <div class="modal-body text-center">
-        <p>Are you sure you want to delete the selected Warehouses</p>
+        <p>{{"sites.Warehouse.areyousureyouwanttodeletetheselectedWarehouses?" |translate}}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.Warehouse.cancel" |translate}}</button>
         <button class="btn btn-without-icon bg-e5 ms-2"
-            (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
+            (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.Warehouse.confirm" |translate}}</button>
 
     </div>
 </ng-template>
