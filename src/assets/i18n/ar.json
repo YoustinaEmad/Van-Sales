@@ -38,7 +38,7 @@
     "yes": "نعم",
     "no": "لا",
     "save": "حفظ",
-    "create": "إنشاء خط سير",
+    "create": "إنشاء",
     "of": "من",
     "assign": "تعيين",
     "select-all": "اختيار الكل",
@@ -289,6 +289,31 @@
       "editCategory":"تعديل الفئة",
       "saveChanges":"حفظ التغيرات",
       "areyousureyouwanttodeletetheselectedCategories?":"هل أنت متأكد أنك تريد حذف الفئات المحددة؟"
+    },
+    "Warehouse":{
+      "warehouse":"المخزن",
+      "warehouses":"المخازن",
+      "code":"الكود",
+      "data":"البيانات",
+      "warehouseType":"نوع المخزن",
+      "governorate":"المحافظة",
+      "city":"المدينة",
+      "street":"الشارع",
+      "landmark":"علامة مميزة",
+      "buildingData":"بيانات البناء",
+      "activation":"تفعيل المخزن",
+      "action":"الاجراءات",
+      "create":"اضافة مخزن",
+      "delete":"حذف ",
+      "active":"تفعيل",
+      "disActive":"الغاء التفعيل",
+      "selectGovernorate":"اختار المحافظة",
+      "selectCity":"اختار المدينة",
+      "confirm":"تاكيد",
+      "cancel":"الغاء",
+      "areyousureyouwanttodeletetheselectedWarehouses?":"هل أنت متأكد أنك تريد حذف المخازن المحددة ؟",
+      "selectLocation":"حدد الموقع"
+
     }
   },
   "auth":{
