@@ -66,17 +66,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
   initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "name", Title: "Product Name", Selectable: false, Sortable: true },
-      { Name: "code", Title: "Product Code", Selectable: false, Sortable: true },
-      { Name: "packSize", Title: "Pack Size", Selectable: false, Sortable: true },
-      { Name: "smallerUnitsOfMeasurements", Title: "Smaller Units Of Measurements", Selectable: false, Sortable: true },
-      { Name: "unit", Title: "Product Unit", Selectable: false, Sortable: true },
-      { Name: "categoryName", Title: "Category Name ", Selectable: false, Sortable: true },
-      { Name: "productGroupName", Title: "Product Group Name ", Selectable: false, Sortable: true },
-      { Name: "grade", Title: "Grade ", Selectable: false, Sortable: true },
-      { Name: "productStatus", Title: "Product Status ", Selectable: false, Sortable: true },
-      { Name: "isActive", Title: "Is Active", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "name", Title: "sites.product.name", Selectable: false, Sortable: true },
+      { Name: "code", Title: "sites.product.code", Selectable: false, Sortable: true },
+      { Name: "packSize", Title: "sites.product.packSize", Selectable: false, Sortable: true },
+      { Name: "smallerUnitsOfMeasurements", Title: "sites.product.smallerUnitsOfMeasurements", Selectable: false, Sortable: true },
+      { Name: "unit", Title: "sites.product.unit", Selectable: false, Sortable: true },
+      { Name: "categoryName", Title: "sites.product.categoryName", Selectable: false, Sortable: true },
+      { Name: "productGroupName", Title: "sites.product.productGroupName", Selectable: false, Sortable: true },
+      { Name: "grade", Title: "sites.product.grade", Selectable: false, Sortable: true },
+      { Name: "productStatus", Title: "sites.product.productStatus", Selectable: false, Sortable: true },
+      { Name: "isActive", Title: "sites.product.isActive", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.product.action", Selectable: false, Sortable: true },
     ];
 
     forkJoin([this._productService.getCategories()]).subscribe((res) => {

@@ -20,6 +20,7 @@ import { forkJoin } from 'rxjs';
 import { TabEnum } from '../../interfaces/enum/tab-enum';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 export function validateMaxMin(): ValidatorFn {
   return (group: AbstractControl): ValidationErrors | null => {
@@ -100,32 +101,32 @@ export class CreateComponent implements OnInit, OnDestroy {
     
   ]
 
-  Tabs = [
-    {
-      ID: 1,
-      name: 'General Data',
-      icon: '/assets/icons/vector.svg',
-      selectedIcon: '/assets/icons/vector.svg',
-      isSelected: true,
-    },
+  // Tabs = [
+  //   {
+  //     ID: 1,
+  //     name: 'General Data',
+  //     icon: '/assets/icons/vector.svg',
+  //     selectedIcon: '/assets/icons/vector.svg',
+  //     isSelected: true,
+  //   },
 
-    {
-      ID: 2,
-      name: 'Price',
-      icon: '/assets/icons/price.svg',
-      selectedIcon: '/assets/icons/price.svg',
-      isSelected: false,
-    },
+  //   {
+  //     ID: 2,
+  //     name: 'Price',
+  //     icon: '/assets/icons/price.svg',
+  //     selectedIcon: '/assets/icons/price.svg',
+  //     isSelected: false,
+  //   },
 
-    {
-      ID: 3,
-      name: 'Other Data',
-      icon: '/assets/icons/daimantion.svg',
-      selectedIcon: '/assets/icons/daimantion.svg',
-      isSelected: false,
-    },
-  ];
-
+  //   {
+  //     ID: 3,
+  //     name: 'Other Data',
+  //     icon: '/assets/icons/daimantion.svg',
+  //     selectedIcon: '/assets/icons/daimantion.svg',
+  //     isSelected: false,
+  //   },
+  // ];
+Tabs:any[]=[];
   // Variable to hold the uploaded image
   selectedImage: string | null = null;
 
@@ -133,12 +134,42 @@ export class CreateComponent implements OnInit, OnDestroy {
     private _sharedService: SharedService,
     private _productService: ProductService,
     private _activatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private translate: TranslateService
   ) { }
 
 
   ngOnInit(): void {
     this.page.isPageLoaded = false;
+    this.translate.get([
+      'sites.product.generalData',
+      'sites.product.price',
+      'sites.product.otherData'
+    ]).subscribe(translations => {
+      this.Tabs = [
+        {
+          ID: 1,
+          name: translations['sites.product.generalData'],
+          icon: '/assets/icons/vector.svg',
+          selectedIcon: '/assets/icons/vector.svg',
+          isSelected: true,
+        },
+        {
+          ID: 2,
+          name: translations['sites.product.price'],
+          icon: '/assets/icons/price.svg',
+          selectedIcon: '/assets/icons/price.svg',
+          isSelected: false,
+        },
+        {
+          ID: 3,
+          name: translations['sites.product.otherData'],
+          icon: '/assets/icons/daimantion.svg',
+          selectedIcon: '/assets/icons/daimantion.svg',
+          isSelected: false,
+        }
+      ];
+    });
     this._activatedRoute.paramMap.subscribe((params) => {
       if (params.has('id')) {
         this.id = params.get('id');
@@ -194,7 +225,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     selectedDate.setHours(0, 0, 0, 0);
 
     if (selectedDate <= today) {
-      return { pastDate: 'Please select  a future date.' };
+      return { pastDate: 'sites.product.futureDate' };
     }
 
     return null;

@@ -1,8 +1,8 @@
 <div class="mb-2">
   <div class="d-flex justify-content-between align-items-center py-2 px-3">
     <div class="d-flex align-items-center">
-      <h2 class="mb-0 color-gray-600 ts-5">Products</h2>
-      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Product
+      <h2 class="mb-0 color-gray-600 ts-5">{{"sites.product.products"|translate}}</h2>
+      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} {{"sites.product.product"|translate}}
       </div>
     </div>
 
@@ -10,7 +10,7 @@
     <div class="d-flex">
       <div class="position-relative">
         <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-          (click)="toggleDownloadOptions()">Download</button>
+          (click)="toggleDownloadOptions()">{{"sites.product.download"|translate}}</button>
 
         <div *ngIf="showDownloadOptions" class="download-options ">
           <button (click)="downloadExcel()">Excel</button>
@@ -19,13 +19,13 @@
       </div>
 
       <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="deleteSelectedProducts()">Delete</button>
+        (click)="deleteSelectedProducts()">{{"sites.product.delete"|translate}}</button>
         <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="activateProducts()">Activate</button>
+        (click)="activateProducts()">{{"sites.product.active"|translate}}</button>
         <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="disActiveProducts()">Disactivate</button>
-      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateProduct()">Create
-        Product</button>
+        (click)="disActiveProducts()">{{"sites.product.disActive"|translate}}</button>
+      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateProduct()">
+        {{"sites.product.create"|translate}}</button>
 
     </div>
   </div>
@@ -34,36 +34,36 @@
     <div class="form-body">
       <div class="row g-2 ">
         <div class="col-2">
-          <ng-control [form]="page.searchForm" control="Name" label="Product.Name"
-            placeholder="enter-ProductName"></ng-control>
+          <ng-control [form]="page.searchForm" control="Name" label="sites.product.name"
+            placeholder="sites.product.name"></ng-control>
         </div>
         <div class="col-2">
-          <ng-control [form]="page.searchForm" control="Code" label="Product.code"
-            placeholder="enter-ProductCode"></ng-control>
+          <ng-control [form]="page.searchForm" control="Code" label="sites.product.code"
+            placeholder="sites.product.code"></ng-control>
         </div>
         
         <!-- Category Dropdown -->
         <div class="col-2">
           <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="CategoryId" (change)="onCategoryChange($event.id
-          )" label=" Category Name" placeholder=" Select Category" [items]="categories"></ng-control>
+          )" label="sites.product.categoryName" placeholder="sites.product.categoryName" [items]="categories"></ng-control>
         </div>
 
         <!-- productStatus Dropdown -->
         <div class="col-2">
           <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ProductStatus"
-            label=" Product Status" placeholder="Product Status" [items]="statuses"></ng-control>
+            label="sites.product.productStatus" placeholder="sites.product.productStatus" [items]="statuses"></ng-control>
         </div>
 
       
         
           <div class="col-1">
             <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Grade"
-              label="Grade" placeholder="Grade" [items]="Grades"></ng-control>
+              label="sites.product.grade" placeholder="sites.product.grade" [items]="Grades"></ng-control>
           </div>
         
           <div class="col-1">
             <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Unit"
-              label="Unit" placeholder="Unit" [items]="Units"></ng-control>
+              label="sites.product.unit" placeholder="sites.product.unit" [items]="Units"></ng-control>
           </div>
         
         <!-- Search Button -->
@@ -169,20 +169,20 @@
         <strong *ngIf="selectedItem">{{ selectedItem.name }}</strong>
       </p>
       <div class="d-flex mt-4">
-        <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
+        <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.product.cancel"|translate}}</button>
         <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-          (click)="remove(); modalRef.hide();">Confirm</button>
+          (click)="remove(); modalRef.hide();">{{"sites.product.confirm"|translate}}</button>
       </div>
     </div>
   </div>
 </ng-template>
 <ng-template #confirmDeleteTemplates>
   <div class="modal-body text-center">
-    <p>Are you sure you want to delete the selected Products?</p>
+    <p>{{"sites.product.deleteSelectedProducts"|translate}}</p>
   </div>
   <div class="modal-footer">
-    <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
-    <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
+    <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.product.cancel"|translate}}</button>
+    <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.product.yes"|translate}}</button>
 
   </div>
 </ng-template>
