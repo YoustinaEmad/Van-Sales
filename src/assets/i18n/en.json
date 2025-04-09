@@ -375,7 +375,28 @@
       "editProductGroup": "Edit ProductGroup",
       "saveChanges": "Save Changes",
       "areyousureyouwanttodeletetheselectedProductGroups?":"Are You Sure You Want To Delete The Selected ProductGroups ?"
-
+    },
+    "supplier":{
+      "supplier":"Supplier",
+      "suppliers":"Suppliers",
+      "name":"Name",
+      "code":"Code",
+      "mobile":"Mobile",
+      "address":"Address",
+      "path":"Image",
+      "isActive":"IsActive",
+      "action":"Action",
+      "create":"Create",
+      "delete":"Delete",
+      "active":"Active",
+      "disActive":"DisActive",
+      "confirm":"Confirm",
+      "cancel":"Cancel",
+      "yes":"Yes",
+      "deleteSelectedSuppliers":"Are you sure you want to delete the selected Suppliers?",
+      "collaborationAdministrator":"Collaboration Administrator",
+      "UploadNewImage":"Upload New Image",
+      "ErrorUploading":"Error Uploading"
     }
     
   },
