@@ -1,8 +1,8 @@
 <div class=" mb-2 ">
     <div class="d-flex justify-content-between align-items-center py-2 px-3">
         <div class="d-flex align-items-center">
-            <h2 class="mb-0 color-gray-600 ts-5">Cities</h2>
-            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Cities
+            <h2 class="mb-0 color-gray-600 ts-5">{{"sites.City.cities"|translate}}</h2>
+            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} {{"sites.City.cities"|translate}}
             </div>
         </div>
 
@@ -10,15 +10,15 @@
         <div class="d-flex">
 
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="deleteSelectedCities()">Delete</button>
+                (click)="deleteSelectedCities()">{{"sites.City.delete"|translate}}</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="activateCities()">Activate</button>
+                (click)="activateCities()">{{"sites.City.active"|translate}}</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="disActiveCities()">Disactivate</button>
+                (click)="disActiveCities()">{{"sites.City.disActive"|translate}}</button>
             <!-- <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateCity()">Create
                 City</button> -->
-                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="openCityModal(false)">Create
-                    City</button>
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="openCityModal(false)">{{"sites.City.create"|translate}}
+                    </button>
     
 
                 
@@ -30,13 +30,13 @@
         <div class="form-body">
             <div class="row g-2">
                 <div class="col-5">
-                    <ng-control [form]="page.searchForm" control="CityName" label="City" placeholder="City">
+                    <ng-control [form]="page.searchForm" control="CityName" label="sites.City.name" placeholder="sites.City.name">
                     </ng-control>
                 </div>
                 <div class="col-5">
 
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="GovernorateId"
-                        label="Governorate" placeholder="Governorate" [items]="governorates"></ng-control>
+                        label="sites.City.governorate" placeholder="sites.City.governorate" [items]="governorates"></ng-control>
                 </div>
                 <!-- Search Button -->
                 <div class="col-2 d-flex align-items-end">
@@ -140,9 +140,9 @@
 
 
                 <div class="d-flex mt-4">
-                    <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                    <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.City.cancel"|translate}}</button>
                     <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-                        (click)="remove();modalRef.hide();">Confirm</button>
+                        (click)="remove();modalRef.hide();">{{"sites.City.confirm"|translate}}</button>
 
                 </div>
             </div>
@@ -150,11 +150,11 @@
     </ng-template>
     <ng-template #confirmDeleteTemplates>
         <div class="modal-body text-center">
-          <p>Are you sure you want to delete the selected Products?</p>
+          <p>{{"sites.City.areyousureyouwanttodeletetheselectedCities?"|translate}}</p>
         </div>
         <div class="modal-footer">
-            <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
-          <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
+            <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.City.cancel"|translate}}</button>
+          <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.City.confirm"|translate}}</button>
         
         </div>
       </ng-template>
@@ -166,21 +166,21 @@
 <ng-template #CityModalTemplate>
     <div class="modal-content" style="width: 500px;">
         <div class="modal-header">
-            <h5 class="modal-title">{{ isEditing ? 'Edit City' : 'Create City' }}</h5>
+            {{ isEditing ? ('sites.City.editCity' | translate) : ('sites.City.create' | translate) }}
 
             <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
         </div>
         <div class="modal-body">
             <form (ngSubmit)="saveCity()">
                 <div class="mb-3">
-                    <label for="name" class="form-label">City Name</label>
+                    <label for="name" class="form-label">{{"sites.City.name"|translate}}</label>
                     <input type="text" [(ngModel)]="editableCity.name" name="name" class="form-control" required>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="governorate" class="form-label">Governorate</label>
+                    <label for="governorate" class="form-label">{{"sites.City.governorate"|translate}}</label>
                     <select [(ngModel)]="editableCity.governorateId" name="governorate" class="form-control" required>
-                        <option value="" disabled>Select Governorate</option>
+                        <option value="" disabled>{{"sites.City.selectGovernorate"|translate}}</option>
                         <option *ngIf="governorates.length === 0" disabled>Loading...</option>
                         <option *ngFor="let gov of governorates" [value]="gov.id">{{ gov.name }}</option>
                     </select>
@@ -188,8 +188,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ? 'Save Changes' : 'Create' }}</button>
-                    <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white " (click)="modalRef.hide()">Cancel</button>
+                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ?('sites.City.saveChanges' | translate) : 'sites.City.create'|translate }}</button>
+                    <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white " (click)="modalRef.hide()">{{"sites.City.cancel"|translate}}</button>
                 </div>
             </form>
         </div>

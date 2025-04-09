@@ -227,7 +227,9 @@
       "disActive": "الغاء التفعيل",
       "cancel":"الغاء",
       "confirm":"تأكيد",
-      "areyousureyouwanttodeletetheselectedGovernorates?":"هل أنت متأكد أنك تريد حذف المنتجات المحددة؟"
+      "areyousureyouwanttodeletetheselectedGovernorates?":"هل أنت متأكد أنك تريد حذف المحافظات المحددة؟",
+      "editGovernorate":"تعديل المحافظة",
+      "saveChanges":"حفظ التغيرات"
     },"City": {
       "cities": "المدن",
       "city": "المدينة",
@@ -238,7 +240,13 @@
       "create": "اضافة مدينة",
       "delete": "حذف ",
       "active": "تفعيل",
-      "disActive": "الغاء تفعيل"
+      "disActive": "الغاء تفعيل",
+      "cancel":"الغاء",
+      "confirm":"تأكيد",
+      "areyousureyouwanttodeletetheselectedCities?":"هل أنت متأكد أنك تريد حذف المدن المحددة؟",
+      "editCity":"تعديل المدينة",
+      "saveChanges":"حفظ التغيرات",
+      "selectGovernorate":"اختار المحافظة"
     }
 
   }

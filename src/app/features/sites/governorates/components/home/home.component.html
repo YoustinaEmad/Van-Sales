@@ -159,8 +159,10 @@
   <ng-template #GovernorateModalTemplate>
     <div class="modal-content" style="width: 500px;">
         <div class="modal-header">
-            <h5 class="modal-title">{{ isEditing ? 'Edit Governorate' : 'sites.Governorate.create'|translate }}</h5>
-            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+            <h5 class="modal-title">
+                {{ isEditing ? ('sites.Governorate.editGovernorate' | translate) : ('sites.Governorate.create' | translate) }}
+              </h5>
+                          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
         </div>
         <div class="modal-body">
             <form (ngSubmit)="saveGovernorate()">
@@ -173,7 +175,7 @@
                     <input type="text" [(ngModel)]="editableGovernorate.governorateCode" name="governorateCode" class="form-control" required>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ? 'Save Changes' : 'sites.Governorate.create'|translate }}</button>
+                    <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">{{ isEditing ?('sites.Governorate.saveChanges' | translate) : 'sites.Governorate.create'|translate }}</button>
                     <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white " (click)="modalRef.hide()">{{"sites.Governorate.cancel"|translate}}</button>
                 </div>
             </form>
