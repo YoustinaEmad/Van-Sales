@@ -230,7 +230,8 @@
       "areyousureyouwanttodeletetheselectedGovernorates?":"هل أنت متأكد أنك تريد حذف المحافظات المحددة؟",
       "editGovernorate":"تعديل المحافظة",
       "saveChanges":"حفظ التغيرات"
-    },"City": {
+    },
+    "City": {
       "cities": "المدن",
       "city": "المدينة",
       "name": "المدينة",
@@ -271,7 +272,24 @@
     "suppliers": "الموردون",
     "salesMan": "مندوب المبيعات",
     "productGroup": "مجموعة المنتجات"
-  }
+  },
+  "Category": {
+      "category": "فئة",
+      "categories": "الفئات",
+      "name": "اسم الفئة",
+      "isActive": "تفعيل الفئة",
+      "action": "الاجراءات",
+      "create": "اضافة فئة",
+      "delete": "حذف ",
+      "active": "تفعيل",
+      "activate": "تفعيل الفئة",
+      "disActive": "الغاء التفعيل",
+      "cancel": "الغاء",
+      "confirm":"تأكيد",
+      "editCategory":"تعديل الفئة",
+      "saveChanges":"حفظ التغيرات",
+      "areyousureyouwanttodeletetheselectedCategories?":"هل أنت متأكد أنك تريد حذف الفئات المحددة؟"
+    }
   },
   "auth":{
     "login":{

@@ -282,7 +282,25 @@
       "suppliers": "Suppliers",
       "salesMan": "SalesMan",
       "productGroup": "Product Group"
+    },
+    "Category": {
+      "category": "Category",
+      "categories": "categories",
+      "name": "Category Name",
+      "isActive": "IsActive",
+      "action": "Action",
+      "create": "Create",
+      "delete": "Delete ",
+      "active": "Active",
+      "activate": "Activate",
+      "disActive": "DisActive",
+      "cancel": "Cancel",
+      "confirm":"Confirm",
+      "editCategory":"Edit Category",
+      "saveChanges":"Save Changes",
+      "areyousureyouwanttodeletetheselectedCategories?":"Are You Sure You Want To Delete The Selected Categories?"
     }
+    
   },
   "auth": {
     "login": {
