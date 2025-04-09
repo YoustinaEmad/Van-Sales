@@ -48,18 +48,18 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
-      { Name: "Name", Title: "Sales Man", Selectable: false, Sortable: true },
-      { Name: "NationalNumber ", Title: "National Number ", Selectable: false, Sortable: true },
-      { Name: "Mobile ", Title: "Mobile ", Selectable: false, Sortable: true },
-      { Name: "JobCode  ", Title: "Job Code  ", Selectable: false, Sortable: true },
-      { Name: "Email  ", Title: "Email  ", Selectable: false, Sortable: true },
-      { Name: "Address  ", Title: "Address  ", Selectable: false, Sortable: true },
-      { Name: "BirthDate  ", Title: "Birth Date  ", Selectable: false, Sortable: true },
-      { Name: "AppointmentDate   ", Title: "Appointment Date   ", Selectable: false, Sortable: true },
-      { Name: "Classification   ", Title: "Classification   ", Selectable: false, Sortable: true },
-      { Name: "Image  ", Title: "Image  ", Selectable: false, Sortable: true },
-      { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "sites.salesMan.salesMan", Selectable: false, Sortable: true },
+      { Name: "NationalNumber ", Title: "sites.salesMan.nationalNumber", Selectable: false, Sortable: true },
+      { Name: "Mobile ", Title: "sites.salesMan.mobile", Selectable: false, Sortable: true },
+      { Name: "JobCode  ", Title: "sites.salesMan.jobCode", Selectable: false, Sortable: true },
+      { Name: "Email  ", Title: "sites.salesMan.email", Selectable: false, Sortable: true },
+      { Name: "Address  ", Title: "sites.salesMan.address", Selectable: false, Sortable: true },
+      { Name: "BirthDate  ", Title: "sites.salesMan.birthDate", Selectable: false, Sortable: true },
+      { Name: "AppointmentDate   ", Title: "sites.salesMan.appointmentDate", Selectable: false, Sortable: true },
+      { Name: "Classification   ", Title: "sites.salesMan.classification", Selectable: false, Sortable: true },
+      { Name: "Image  ", Title: "sites.salesMan.image", Selectable: false, Sortable: true },
+      { Name: "isActive", Title: "sites.salesMan.isActive", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.salesMan.action", Selectable: false, Sortable: true },
 
     ];
     // this.subscribeToParentEvent()

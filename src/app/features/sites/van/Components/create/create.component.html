@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center py-2 ">
   <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
-      routerLink="/sites/salesMan"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} SalesMan</p>
+      routerLink="/sites/salesMan"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} {{"sites.salesMan.salesMan"|translate}}</p>
   <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
     [disabled]="page.form?.invalid || page.isSaving">
     <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
@@ -10,64 +10,64 @@
 <div class="d-flex justify-content-end align-items-start py-3 ">
   <p-inputSwitch [(ngModel)]="isActivated"></p-inputSwitch>
   <label class="ms-2">
-    Activate SalesMan
+    {{"sites.salesMan.activate"|translate}}
   </label>
 </div>
 <ng-container *ngIf="page.isPageLoaded">
   <form [formGroup]="page.form">
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col-4">
-        <ng-control [form]="page.form" control="name" label="Sales Man " placeholder="Sales Man "></ng-control>
+        <ng-control [form]="page.form" control="name" label="sites.salesMan.name" placeholder="sites.salesMan.name"></ng-control>
       </div>
       <div class="col-4">
-        <ng-control [form]="page.form" control="nationalNumber" label="National Number" placeholder="National Number"
+        <ng-control [form]="page.form" control="nationalNumber" label="sites.salesMan.nationalNumber" placeholder="sites.salesMan.nationalNumber"
           (keypress)="numberOnly($event)"></ng-control>
       </div>
       <div class="col-4">
-        <ng-control [form]="page.form" control="mobile" label="Mobile" placeholder="Mobile"
+        <ng-control [form]="page.form" control="mobile" label="sites.salesMan.mobile" placeholder="sites.salesMan.mobile"
           (keypress)="numberOnly($event)"></ng-control>
       </div>
     </div>
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col-4">
-        <ng-control [form]="page.form" control="jobCode" label="Job Code " placeholder="Job Code "></ng-control>
+        <ng-control [form]="page.form" control="jobCode" label="sites.salesMan.jobCode" placeholder="sites.salesMan.jobCode"></ng-control>
       </div>
       <div class="col-4">
-        <ng-control [form]="page.form" control="email" label="Email" placeholder="Email"></ng-control>
+        <ng-control [form]="page.form" control="email" label="sites.salesMan.email" placeholder="sites.salesMan.email"></ng-control>
       </div>
       <div class="col-4">
-        <ng-control [form]="page.form" control="address" label="Address" placeholder="Address"></ng-control>
+        <ng-control [form]="page.form" control="address" label="sites.salesMan.address" placeholder="sites.salesMan.address"></ng-control>
       </div>
     </div>
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col-4">
-        <ng-control [form]="page.form" control="birthDate" label="Birth Date"
+        <ng-control [form]="page.form" control="birthDate" label="sites.salesMan.birthDate"
           [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
 
 
       </div>
       <div class="col-4">
-        <ng-control [form]="page.form" control="appointmentDate" label="Appointment Date"
+        <ng-control [form]="page.form" control="appointmentDate" label="sites.salesMan.appointmentDate"
           [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
       </div>
       <div class="col-4">
         <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classification"
-          label="classification Name" placeholder="classification Name" [items]="classifies">
+          label="sites.salesMan.classification" placeholder="sites.salesMan.classification" [items]="classifies">
         </ng-control>
       </div>
     </div>
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col-4">
-        <ng-control [form]="page.form" control="userName" label="User Name " placeholder="User Name "></ng-control>
+        <ng-control [form]="page.form" control="userName" label="sites.salesMan.username" placeholder="sites.salesMan.username"></ng-control>
       </div>
       <div class="col-4"  *ngIf="!page.isEdit">
-        <ng-control [form]="page.form" control="password" label="Password" placeholder="Enter password"
+        <ng-control [form]="page.form" control="password" label="sites.salesMan.password" placeholder="sites.salesMan.password"
           [type]="controlType.PASSWORD"></ng-control>
       </div>
       <div class="col-4"  *ngIf="!page.isEdit">
-        <ng-control [form]="page.form" control="confirmPassword" label="confirm Password"
-          placeholder="confirm your Password" [type]="controlType.PASSWORD" (blur)="confirmPassword()"></ng-control>
-        <p class="text text-danger font-12" *ngIf="!isEqualPassword">Passwords do not match</p>
+        <ng-control [form]="page.form" control="confirmPassword" label="sites.salesMan.confirmPassword"
+          placeholder="sites.salesMan.confirmPassword" [type]="controlType.PASSWORD" (blur)="confirmPassword()"></ng-control>
+        <p class="text text-danger font-12" *ngIf="!isEqualPassword"> {{"sites.salesMan.Passwords do not match"|translate}}</p>
       </div>
     </div>
 
@@ -91,8 +91,8 @@
               <ng-template #uploadTemplate>
                 <label for="fileInput" class="text-primary cursor-pointer">
                   <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
-                  <p class="color-brand-500" *ngIf="!image.uploaded">Upload New Image</p>
-                  <p class="text-danger" *ngIf="image.error">Error Uploading</p>
+                  <p class="color-brand-500" *ngIf="!image.uploaded">{{"sites.salesMan.UploadNewImage"|translate}}</p>
+                  <p class="text-danger" *ngIf="image.error">{{"sites.salesMan.ErrorUploading"|translate}}</p>
                 </label>
                 <input #file type="file" id="fileInput" class="d-none" (change)="onImageUpload(file.files)" />
               </ng-template>

@@ -1,21 +1,21 @@
 <div class="mb-2">
     <div class="d-flex justify-content-between align-items-center py-2 px-3">
         <div class="d-flex align-items-center">
-            <h2 class="mb-0 color-gray-600 ts-5">SalesMan</h2>
-            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} SalesMan
+            <h2 class="mb-0 color-gray-600 ts-5">{{"sites.salesMan.salesMen"|translate}}</h2>
+            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} {{"sites.salesMan.salesMan"|translate}}
             </div>
         </div>
 
         <!-- Flex container for buttons to be side by side -->
         <div class="d-flex">
+            <!-- <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="deleteSelectedVans()">{{"sites.salesMan.delete"|translate}}</button> -->
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="deleteSelectedVans()">Delete</button>
+                (click)="activateVans()">{{"sites.salesMan.active"|translate}}</button>
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="activateVans()">Activate</button>
-            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="disActiveVans()">Disactivate</button>
+                (click)="disActiveVans()">{{"sites.salesMan.disActive"|translate}}</button>
             <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 "
-                (click)="navigateToCreateSalesMan()">Create salesMan</button>
+                (click)="navigateToCreateSalesMan()">{{"sites.salesMan.create"|translate}}</button>
 
         </div>
     </div>
@@ -25,15 +25,15 @@
         <div class="form-body">
             <div class="row g-2">
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="Name" label="Name" placeholder="Name">
+                    <ng-control [form]="page.searchForm" control="Name" label="sites.salesMan.name" placeholder="sites.salesMan.name">
                     </ng-control>
                 </div>
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="NationalNumber" label="NationalNumber" placeholder="NationalNumber">
+                    <ng-control [form]="page.searchForm" control="NationalNumber" label="sites.salesMan.nationalNumber" placeholder="sites.salesMan.nationalNumber">
                     </ng-control>
                 </div>
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="Mobile" label="Mobile" placeholder="Mobile">
+                    <ng-control [form]="page.searchForm" control="Mobile" label="sites.salesMan.mobile" placeholder="sites.salesMan.mobile">
                     </ng-control>
                 </div>
                 <div class="col-2 d-flex align-items-end">
@@ -136,20 +136,20 @@
                 <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
             </p>
             <div class="d-flex mt-4">
-                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.salesMan.cancel"|translate}}</button>
                 <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-                    (click)="remove();modalRef.hide();">Confirm</button>
+                    (click)="remove();modalRef.hide();">{{"sites.salesMan.confirm"|translate}}</button>
             </div>
         </div>
     </div>
 </ng-template> 
 <ng-template #confirmDeleteTemplates>
     <div class="modal-body text-center">
-      <p>Are you sure you want to delete the selected Products?</p>
+      <p>{{"sites.salesMan.deleteSelectedSalesMen"|translate}}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
-      <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.salesMan.cancel"|translate}}</button>
+      <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.salesMan.yes"|translate}}</button>
     
     </div>
   </ng-template>
