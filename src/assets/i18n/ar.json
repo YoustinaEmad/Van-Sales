@@ -351,6 +351,20 @@
       "weightPerKG": "الوزن لكل كجم",
       "futureDate": "الرجاء تحديد تاريخ مستقبلي."
     },
+    "ProductGroup":{
+      "productGroup": "مجموعة المنتجات",
+      "activation": "تفعيل",
+      "action": "الاجراءات",
+      "delete": "حذف ",
+      "active": "تفعيل",
+      "disActive": "الغاء التفعيل",
+      "create":"اضافة مجموعة منتجات",
+      "cancel":"الغاء",
+      "confirm":"تأكيد",
+      "editProductGroup": "تعديل مجموعة المنتجات",
+      "saveChanges": "حفظ التغيرات",
+      "areyousureyouwanttodeletetheselectedProductGroups?": "هل أنت متأكد أنك تريد حذف مجموعة المنتجات المحددة ؟"
+    },
     "supplier":{
       "supplier":"مورد",
       "suppliers":"الموردون",
@@ -405,20 +419,20 @@
       "ErrorUploading":"خطأ في رفع الصورة"
     }
   },
-  "auth": {
-    "login": {
-      "login": "تسجيل الدخول",
-      "continue your journey with oil car.": "واصل رحلتك مع زيوت السيارات ",
-      "password": "كلمة المرور",
-      "mobile": "رقم الموبايل",
-      "forget-password?": "هل نسيت كلمة المرور ؟"
-    },
-    "forget-password": {
-      "enterYourPhoneNumber": "ادخل رقم الموبايل",
-      "phoneNumber": "رقم الموبايل",
-      "submit": "ارسال",
-      "login": "تسجيل الدخول",
-      "goToLogin": "اذهب لتسجيل الدخول"
+    "auth": {
+      "login": {
+        "login": "تسجيل الدخول",
+        "continue your journey with oil car.": "واصل رحلتك مع زيوت السيارات ",
+        "password": "كلمة المرور",
+        "mobile": "رقم الموبايل",
+        "forget-password?": "هل نسيت كلمة المرور ؟"
+      },
+      "forget-password": {
+        "enterYourPhoneNumber": "ادخل رقم الموبايل",
+        "phoneNumber": "رقم الموبايل",
+        "submit": "ارسال",
+        "login": "تسجيل الدخول",
+        "goToLogin": "اذهب لتسجيل الدخول"
+      }
     }
   }
-}

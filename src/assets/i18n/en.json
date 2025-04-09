@@ -362,6 +362,20 @@
       "weightPerKG":"weight Per KG",
       "futureDate":"Please select a future date."
     },
+    "ProductGroup":{
+      "productGroup": "ProductGroup",
+      "activation": "Activation",
+      "action": "Action",
+      "delete": "Delete ",
+      "active": "Active",
+      "disActive": "DisActive",
+      "create":"Create",
+      "cancel":"Cancel",
+      "confirm":"Confirm",
+      "editProductGroup": "Edit ProductGroup",
+      "saveChanges": "Save Changes",
+      "areyousureyouwanttodeletetheselectedProductGroups?":"Are You Sure You Want To Delete The Selected ProductGroups ?"
+    },
     "supplier":{
       "supplier":"Supplier",
       "suppliers":"Suppliers",
