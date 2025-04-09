@@ -361,6 +361,28 @@
       "netWeightPerLitre":"Net Weight Per Litre",
       "weightPerKG":"weight Per KG",
       "futureDate":"Please select a future date."
+    },
+    "supplier":{
+      "supplier":"Supplier",
+      "suppliers":"Suppliers",
+      "name":"Name",
+      "code":"Code",
+      "mobile":"Mobile",
+      "address":"Address",
+      "path":"Image",
+      "isActive":"IsActive",
+      "action":"Action",
+      "create":"Create",
+      "delete":"Delete",
+      "active":"Active",
+      "disActive":"DisActive",
+      "confirm":"Confirm",
+      "cancel":"Cancel",
+      "yes":"Yes",
+      "deleteSelectedSuppliers":"Are you sure you want to delete the selected Suppliers?",
+      "collaborationAdministrator":"Collaboration Administrator",
+      "UploadNewImage":"Upload New Image",
+      "ErrorUploading":"Error Uploading"
     }
     
   },

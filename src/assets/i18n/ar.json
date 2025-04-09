@@ -350,6 +350,28 @@
       "netWeightPerLitre": "الوزن الصافي لكل لتر",
       "weightPerKG": "الوزن لكل كجم",
       "futureDate": "الرجاء تحديد تاريخ مستقبلي."
+    },
+    "supplier":{
+      "supplier":"مورد",
+      "suppliers":"الموردون",
+      "name":"اسم المورد",
+      "code":"الكود",
+      "mobile":"رقم الموبايل",
+      "address":"العنوان",
+      "path":"الصورة",
+      "isActive":"تفعيل المورد",
+      "action":"الاجراءات",
+      "create":"اضافة مورد",
+      "delete":"حذف ",
+      "active":"تفعيل",
+      "disActive":"الغاء التفعيل",
+      "confirm":"تأكيد",
+      "cancel":"الغاء",
+      "yes":"نعم",
+      "deleteSelectedSuppliers":"هل أنت متأكد أنك تريد حذف الموردين المحددين؟",
+      "collaborationAdministrator":"مدير التعاون",
+      "UploadNewImage":"رفع صورة جديدة",
+      "ErrorUploading":"خطأ في رفع الصورة"
     }
   },
   "auth": {
