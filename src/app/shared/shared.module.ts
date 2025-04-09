@@ -103,7 +103,7 @@ export class SharedModule {
   ) 
   
   {
-    const lang="en";
+    const lang="ar";
 
     this.translate.use(lang);
     localizationService.setLanguage(lang);
@@ -113,7 +113,7 @@ export class SharedModule {
 
   private setDirection(lang: string): void {
     const html = this.document.documentElement;
-    if (lang === 'en') {
+    if (lang === 'ar') {
       html.setAttribute('dir', 'rtl');
       html.setAttribute('lang', 'ar');
     } else {
