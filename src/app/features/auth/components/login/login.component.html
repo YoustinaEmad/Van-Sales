@@ -2,20 +2,20 @@
   <div class="col-12 col-lg-8 p-0">
     <div class="d-flex flex-column align-items-center justify-content-center vh-100">
       <div class="w-50 w-xl-75 ">
-          <h1 class="login-title bold color-purple-500">Login</h1>
-      <p class="color-gray-700 mb-4">Continue your journey with oil car.</p>
+          <h1 class="login-title bold color-purple-500">{{"auth.login.login"|translate}}</h1>
+      <p class="color-gray-700 mb-4">{{"auth.login.continue your journey with oil car."|translate}}</p>
       <form [formGroup]="loginForm">
         <!-- Phone Number Input -->
-          <ng-control [form]="loginForm"  [inputClass]="'mb-3'" control="mobile" label="Phone Number" placeholder="01-xxx-xxx-xxx" (keypress)="numberOnly($event)"></ng-control>
+          <ng-control [form]="loginForm"  [inputClass]="'mb-3'" control="mobile" label="auth.login.mobile" placeholder="01-xxx-xxx-xxx" (keypress)="numberOnly($event)"></ng-control>
         <!-- Password Input -->
-          <ng-control [form]="loginForm" [inputClass]="'mb-2'" control="password" label="Password" placeholder="********"
+          <ng-control [form]="loginForm" [inputClass]="'mb-2'" control="password" label="auth.login.password" placeholder="********"
             [type]="controlType.PASSWORD"></ng-control>
         <!-- Forgot Password -->
         <p class=" mb-4">
-          <span class="pointer color-purple-500" routerLink="/auth/phoneforgetpassword">Forgot Password?</span>
+          <span class="pointer color-purple-500" routerLink="/auth/phoneforgetpassword">{{"auth.login.forget-password?"|translate}}</span>
         </p>
             <!-- Login Button -->
-      <button (click)="onSubmit()" class=" btn bg-purple-700 w-100 mt-4" [disabled]="loginForm.invalid ||isSubmitting">Login</button>
+      <button (click)="onSubmit()" class=" btn bg-purple-700 w-100 mt-4" [disabled]="loginForm.invalid ||isSubmitting">{{"auth.login.login"|translate}}</button>
       <!-- Signup Link -->
       </form>
   

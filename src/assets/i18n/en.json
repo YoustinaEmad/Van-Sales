@@ -250,4 +250,20 @@
     "active": "Active",
     "disActive": "DisActive"
   }
+,"auth":{
+    "login":{
+      "login": "Login",
+      "continue your journey with oil car.":"Continue your journey with oil car.",
+      "password": "Password",
+      "mobile": "Mobile",
+      "forget-password?": "Forget Password?"
+    },
+    "forget-password":{
+      "enterYourPhoneNumber": "Enter Your Phone Number",
+      "phoneNumber": "Phone Number",
+      "submit": "Submit",
+      "login": "Login",
+      "goToLogin": "Go To Login"
+    }
+  }
 }
