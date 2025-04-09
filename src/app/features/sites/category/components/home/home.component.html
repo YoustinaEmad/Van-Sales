@@ -1,24 +1,24 @@
 <div class=" mb-2 ">
   <div class="d-flex justify-content-between align-items-center py-2 px-3">
     <div class="d-flex align-items-center">
-      <h2 class="mb-0 color-gray-600 ts-5">Category</h2>
-      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Categories
+      <h2 class="mb-0 color-gray-600 ts-5">{{"sites.Category.categories"|translate}}</h2>
+      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}}
+        {{"sites.Category.categories"|translate}}
       </div>
     </div>
-   
 
 
-      <div class="d-flex">
-        <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="deleteSelectedCategories()">Delete</button>
-        <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="activateCategories()">Activate</button>
-        <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-        (click)="disActiveCategories()">Disactivate</button>
-        <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border CR3" (click)="openCategoryModal(false)">Create
-          Category</button>
-    
-       
+
+    <div class="d-flex">
+      <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+        (click)="deleteSelectedCategories()">{{"sites.Category.delete"|translate}}</button>
+      <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+        (click)="activateCategories()">{{"sites.Category.active"|translate}}</button>
+      <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+        (click)="disActiveCategories()">{{"sites.Category.disActive"|translate}}</button>
+      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1"
+        (click)="openCategoryModal(false)">{{"sites.Category.create"|translate}}
+      </button>
     </div>
   </div>
   <hr />
@@ -26,10 +26,10 @@
     <div class="form-body">
       <div class="row g-2 ">
         <div class="col-3">
-          <ng-control [form]="page.searchForm" control="Name" label="Name"
-            placeholder="Name"></ng-control>
+          <ng-control [form]="page.searchForm" control="Name" label="sites.Category.name"
+            placeholder="sites.Category.name"></ng-control>
         </div>
-        
+
         <div class="col-3 d-flex align-items-end">
           <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="onSearchClicked()"
             [disabled]="page.searchForm.invalid || page.isSearching">
@@ -70,11 +70,11 @@
         </tr>
         <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
           <tr>
-          
+
             <td>
               <input type="checkbox" [(ngModel)]="item.selected" />
-          </td>
-          <td>{{i+1}}</td>
+            </td>
+            <td>{{i+1}}</td>
             <td>{{item.name}}</td>
             <td>
               <div class="flex justify-content-center">
@@ -82,14 +82,13 @@
                   (ngModelChange)="updateActivation(item,item.isActive)"></p-inputSwitch>
               </div>
             </td>
-            
+
             <td>
               <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-0 pointer"
                 aria-label="Delete" (click)="showDeleteConfirmation(item)">
               </button>
-              <button pButton icon="pi pi-pencil"
-              class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
-              (click)="openCategoryModal(true, item)"></button>
+              <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info  pointer p-0"
+                aria-label="Edit" (click)="openCategoryModal(true, item)"></button>
             </td>
           </tr>
         </ng-container>
@@ -110,9 +109,10 @@
         <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
       </p>
       <div class="d-flex mt-4">
-        <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+        <button type="button" class="btn cancel-btn me-auto"
+          (click)="modalRef.hide() ">{{"sites.Category.cancel"|translate}}</button>
         <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-          (click)="remove();modalRef.hide();">Confirm</button>
+          (click)="remove();modalRef.hide();">{{"sites.Category.confirm"|translate}}</button>
       </div>
     </div>
   </div>
@@ -120,12 +120,13 @@
 
 <ng-template #confirmDeleteTemplates>
   <div class="modal-body text-center">
-    <p>Are you sure you want to delete the selected Categories?</p>
+    <p>{{"sites.Category.areyousureyouwanttodeletetheselectedCategories?"|translate}}</p>
   </div>
   <div class="modal-footer">
-      <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">Cancel</button>
-    <button class="btn btn-without-icon bg-e5 ms-2" (click)="modalRef.content.onConfirm(); modalRef.hide()">Yes</button>
-  
+    <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.Category.cancel"|translate}}</button>
+    <button class="btn btn-without-icon bg-e5 ms-2"
+      (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.Category.confirm"|translate}}</button>
+
   </div>
 </ng-template>
 
@@ -133,22 +134,23 @@
 <ng-template #categoryModalTemplate>
   <div class="modal-content" style="width: 500px;">
     <div class="modal-header">
-      <h5 class="modal-title">{{ isEditing ? 'Edit Category' : 'Create Category' }}</h5>
+      <h5 class="modal-title"> {{ isEditing ? ('sites.Category.editCategory' | translate) : ('sites.Category.create' | translate) }}
+      </h5>
       <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
     </div>
     <div class="modal-body">
       <form (ngSubmit)="save()">
         <div class="mb-3">
-          <label for="name" class="form-label">Category Name</label>
+          <label for="name" class="form-label">{{'sites.Category.name' | translate}}</label>
           <input type="text" [(ngModel)]="editableCategory.name" name="name" class="form-control" required>
         </div>
 
         <div class="modal-footer">
           <button type="submit" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3">
-            {{ isEditing ? 'Save Changes' : 'Create' }}
+            {{ isEditing ? ('sites.Category.saveChanges' | translate) : ('sites.Category.create' | translate) }}
           </button>
           <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white"
-            (click)="modalRef.hide()">Cancel</button>
+            (click)="modalRef.hide()">{{"sites.Category.cancel"|translate}}</button>
         </div>
       </form>
     </div>

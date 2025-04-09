@@ -306,11 +306,12 @@
       "retailPrice":"سعر التجزئة",
       "wholesalePrice":"سعر الجملة",
       "vIPClientsPrice":"سعر عملاء vIP",
-      "netWeightPerLitre":"الوزن الصافي لكل لتر",
+    "netWeightPerLitre":"الوزن الصافي لكل لتر",
       "weightPerKG":"الوزن لكل كجم",
-      "futureDate":"الرجاء تحديد تاريخ مستقبلي"
-    }
-  },
+      "futureDate":"الرجاء تحديد تاريخ مستقبلي."
+    
+  }
+},
   "auth": {
     "login": {
       "login": "تسجيل الدخول",

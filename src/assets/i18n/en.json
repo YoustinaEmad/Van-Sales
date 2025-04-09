@@ -283,6 +283,7 @@
       "salesMan": "SalesMan",
       "productGroup": "Product Group"
     },
+
     "product": {
       "product": "Product",
       "products": "Products",
@@ -319,6 +320,23 @@
       "netWeightPerLitre":"Net Weight Per Litre",
       "weightPerKG":"weight Per KG",
       "futureDate":"Please select a future date."
+    },
+    "Category": {
+      "category": "Category",
+      "categories": "categories",
+      "name": "Category Name",
+      "isActive": "IsActive",
+      "action": "Action",
+      "create": "Create",
+      "delete": "Delete ",
+      "active": "Active",
+      "activate": "Activate",
+      "disActive": "DisActive",
+      "cancel": "Cancel",
+      "confirm":"Confirm",
+      "editCategory":"Edit Category",
+      "saveChanges":"Save Changes",
+      "areyousureyouwanttodeletetheselectedCategories?":"Are You Sure You Want To Delete The Selected Categories?"
     }
     
   },

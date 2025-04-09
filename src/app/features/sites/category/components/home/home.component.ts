@@ -44,9 +44,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
 
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "Name", Title: "Name", Selectable: false, Sortable: true },
-      { Name: "IsActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "sites.Category.name", Selectable: false, Sortable: true },
+      { Name: "IsActive", Title: "sites.Category.isActive", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.Category.action", Selectable: false, Sortable: true },
     ]
     forkJoin([this._pageService.getCategories()]).subscribe((res) => {
       this.categories = res[0].data;
