@@ -281,7 +281,8 @@
       "warehouse":"Warehouse",
       "suppliers": "Suppliers",
       "salesMan": "SalesMan",
-      "productGroup": "Product Group"
+      "productGroup": "Product Group",
+      "transfers":"transfers"
     },
     "Category": {
       "category": "Category",

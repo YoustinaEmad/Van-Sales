@@ -271,7 +271,8 @@
       "warehouse": "المخزن",
       "suppliers": "الموردون",
       "salesMan": "مندوب المبيعات",
-      "productGroup": "مجموعة المنتجات"
+      "productGroup": "مجموعة المنتجات",
+      "transfers":"التحويلات"
     },
     "Category": {
       "category": "فئة",
