@@ -272,7 +272,8 @@
       "suppliers": "الموردون",
       "salesMan": "مندوب المبيعات",
       "productGroup": "مجموعة المنتجات",
-      "transfers":"التحويلات"
+      "transfers":"التحويلات",
+      "requests":"الطلبات"
     },
     "Category": {
       "category": "فئة",

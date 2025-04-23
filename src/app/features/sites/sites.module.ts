@@ -31,6 +31,7 @@ const routes: Routes = [{
     { path: "salesMan", loadChildren: () => import('./van/salesMan.module').then(m => m.salesMan) },
     { path: "productGroup", loadChildren: () => import('./product-group/product-group.module').then(m => m.ProductGroupModule) },
     { path: "transfers", loadChildren: () => import('./transfers/transfers.module').then(m => m.TransfersModule) },
+    { path: "request", loadChildren: () => import('./request/request.module').then(m => m.RequestModule) },
   ]
 }
 

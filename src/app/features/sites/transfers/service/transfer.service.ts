@@ -16,6 +16,7 @@ export class TransferService {
     const dd = date.getDate().toString().padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`;
   }
+  
   get(searchViewModel: transferSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number = 0) {
     if (pageSize == 0)
       pageSize = environment.pageSize;

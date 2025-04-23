@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { SharedService } from 'src/app/shared/service/shared.service';
-import { transferSearchViewModel, transferViewModel } from '../../interface/transfer';
+import { requestSearchViewModel, requestViewModel } from '../../interface/request';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransferService } from '../../service/transfer.service';
+import { RequestService } from '../../service/request.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 @Component({
@@ -14,30 +14,25 @@ import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 })
 export class HomeComponent extends CrudIndexBaseUtils {
 
-  constructor(public override _sharedService: SharedService,  private _router: Router, private activatedRoute: ActivatedRoute, private _pageService: TransferService,) {
+  constructor(public override _sharedService: SharedService,  private _router: Router, private activatedRoute: ActivatedRoute, private _pageService: RequestService,) {
     super(_sharedService);
   }
   override page: CRUDIndexPage = new CRUDIndexPage();
-  override pageRoute = '/sites/transfers';
+  override pageRoute = '/sites/request';
    modalRef: BsModalRef;
-  override searchViewModel: transferSearchViewModel = new transferSearchViewModel();
+  override searchViewModel: requestSearchViewModel = new requestSearchViewModel();
   cartVisible = false;
   WarehouseList: any[] = [];
   selectedStatusId : string='';
-  today: string = new Date().toISOString().split('T')[0];
-
-  //override controlType = ControlType;
-  override items: transferViewModel[] = [];
-  WarehouseToWarehouseStatuslist = [
+  override controlType = ControlType;
+  override items: requestViewModel[] = [];
+  RequestStatuslist = [
     { id: 1, name: 'Pending' },
-    { id: 2, name: 'InProcess' },
-    { id: 3, name: 'Delivered' },
-    { id: 4, name: 'SalesManReject ' },
-    { id: 5, name: 'WarehouseReject' }
+    { id: 2, name: 'Approve' },
+    { id: 3, name: 'Reject' },
   ];
   ngOnInit(): void {
     this.initializePage();
-    this.loadWarehouses();
   }
 
 
@@ -45,11 +40,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
     
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "transactionNumber", Title: "Transaction Number", Selectable: false, Sortable: true },
-      { Name: "fromWarehouseName", Title: "From Warehouse Name", Selectable: false, Sortable: true },
-      { Name: "toWarehouseName", Title: "To Warehouse Name", Selectable: false, Sortable: true },
-      { Name: "warehouseToWarehouseStatus", Title: "Warehouse Status", Selectable: false, Sortable: true },
-       { Name: "productsQuantity", Title: "Products Quantity", Selectable: false, Sortable: true },
+      { Name: "requestNumber", Title: "Request Number", Selectable: false, Sortable: true },
+      { Name: "requestStatusName", Title: "Request Status", Selectable: false, Sortable: true },
+      { Name: "salesManName", Title: "Sales Man Name", Selectable: false, Sortable: true },
+      { Name: "warehouseName", Title: "Warehouse Name", Selectable: false, Sortable: true },
+       { Name: "quantity", Title: "Quantity", Selectable: false, Sortable: true },
+       { Name: "createDate", Title: "Create Date", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.supplier.action", Selectable: false, Sortable: true },
 
     ];
@@ -61,12 +57,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
  override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
-      Data: [this.searchViewModel.Data],
-      FromWarehouseId:[this.searchViewModel.FromWarehouseId],
-      ToWarehouseId:[this.searchViewModel.ToWarehouseId],
-      WarehouseToWarehouseStatus:[this.searchViewModel.WarehouseToWarehouseStatus],
-      From:[this.searchViewModel.From],
-      To:[this.searchViewModel.To],
+      RequestNumber: [this.searchViewModel.RequestNumber],
+      RequestStatus:[this.searchViewModel.RequestStatus],
+      SalesManName:[this.searchViewModel.SalesManName],
+      SalesManPhone:[this.searchViewModel.SalesManPhone],
+      WarehouseId:[this.searchViewModel.WarehouseId],
+      CreateDate:[this.searchViewModel.CreateDate],
     });
     this.page.isPageLoaded = true;
   }
@@ -81,28 +77,22 @@ export class HomeComponent extends CrudIndexBaseUtils {
         console.log(response.data)
         this.page.isAllSelected = false;
         this.confingPagination(response)
-        this.items = response.data.items as transferViewModel[];
+        this.items = response.data.items as requestViewModel[];
       }
       this.fireEventToParent()
     });
   }
   
-  getWarehouseStatusName(statusId: number) {
-    const status = this.WarehouseToWarehouseStatuslist.find(s => s.id === statusId);
+  getRequestStatusName(statusId: number) {
+    const status = this.RequestStatuslist.find(s => s.id === statusId);
     return status ? status.name : 'Unknown';
   }
 
-  onStatusChange(statusId: string) {
-    this.selectedStatusId = statusId;
-    this.page.searchForm.patchValue({ statusId: statusId });
+  onStatusChange(RequestStatus: string) {
+    this.selectedStatusId = RequestStatus;
+    this.page.searchForm.patchValue({ RequestStatus: RequestStatus });
   }
-  loadWarehouses() {
-    this._pageService.getWarehouses().subscribe((res: any) => {
-      if (res && res.isSuccess) {
-        this.WarehouseList = res.data || [];
-      }
-    });
-  }
+
   
   toggleSelectAll(event: any): void {
     const isChecked = event.target.checked;
@@ -114,10 +104,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
     return this.items?.length > 0 && this.items.every(item => item.selected);
   }
   
-  onFromWarehouseChange(id: number) {
-    this.page.searchForm.patchValue({ FromWarehouseId: id });
-    this.search();
-  }
 
   showCartDialog(event: Event) {
     event.preventDefault();
