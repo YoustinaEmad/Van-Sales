@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/service/api.service';
-import { transferSearchViewModel } from '../interface/transfer';
+import { transferCreateViewModel, transferSearchViewModel } from '../interface/transfer';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { formatDate } from '@angular/common';
@@ -51,5 +51,17 @@ export class TransferService {
 
   getWarehouses() {
     return this._apiService.get('/WarehouseSelectListEndpoint/SelectWarehouseList');
+  }
+
+  postOrUpdate(body: transferCreateViewModel) {
+    if (body.id) return this._apiService.update(`/EditCategoryEndPoint/Put`, body)
+    else return this._apiService.post(`/StartWarehouseToWarehouseTransactionEndpoint/StartWarehouseToWarehouseTransaction`, body)
+  }
+
+  getSalesMen() {
+    return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
+  }
+  getProducts() {
+    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
   }
 }
