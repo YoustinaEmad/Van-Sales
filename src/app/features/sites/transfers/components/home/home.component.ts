@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { SharedService } from 'src/app/shared/service/shared.service';
@@ -30,6 +30,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   isDropdownVisible = false;
   products: any[] = [];
   selectedProduct = '';
+    selectedItem: transferViewModel;
   cartProductsResult: GetAllProductAtCart[] = [];
   filteredProducts = this.products;
   override searchViewModel: transferSearchViewModel = new transferSearchViewModel();
@@ -153,6 +154,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
         this.products = res.data;
       }
     });
+  }
+ @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
+  showDeleteConfirmation(selectedItem: transferViewModel) {
+    this.selectedItem = selectedItem;
+    this.modalRef = this._sharedService.modalService.show(this.confirmDeleteTemplate, { class: 'modal-sm' });
   }
 
   toggleSelectAll(event: any): void {

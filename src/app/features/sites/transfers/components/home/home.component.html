@@ -192,13 +192,13 @@
                         <td>{{ item.transactionNumber }}</td>
                         <td>{{ item.fromWarehouseName }}</td>
                         <td>{{ item.toWarehouseName }}</td>
-                        <td>{{ item.warehouseToWarehouseStatus }} </td>
+                        <td>{{ getWarehouseStatusName(item.warehouseToWarehouseStatus) }}</td>
                         <td>{{item.productsQuantity}}
                         <td>
-                            <!-- <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
+                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
                                 aria-label="Delete" (click)="showDeleteConfirmation(item)">
-                            </button> -->
-                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                            </button>
+                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
                                 aria-label="Edit" (click)="editProduct(item.id)">
                             </button>
                             <!-- <button class="bg-purple-100 py-2 px-2 color-purple-500 no-border cr3"
@@ -224,14 +224,13 @@
     <div class="modal-content confirm-modal">
         <div class="modal-body">
             <p class="modal-confirm-content mb-2">
-                {{ 'shared.delete-confirmation.message' | translate }}
-                <strong *ngIf="selectedItem">{{ selectedItem.name }}</strong>
+                {{'shared.delete-confirmation.message'|translate}}
+                <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
             </p>
             <div class="d-flex mt-4">
-                <button type="button" class="btn cancel-btn me-auto"
-                    (click)="modalRef.hide()">{{"sites.product.cancel"|translate}}</button>
+                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.supplier.cancel"|translate}}</button>
                 <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-                    (click)="remove(); modalRef.hide();">{{"sites.product.confirm"|translate}}</button>
+                    (click)="remove();modalRef.hide();">{{"sites.supplier.confirm"|translate}}</button>
             </div>
         </div>
     </div>
