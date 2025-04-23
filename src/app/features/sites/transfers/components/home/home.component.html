@@ -37,12 +37,14 @@
                     </ng-control>
                 </div>
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="From" label="From Date"
+                    <ng-control [form]="page.searchForm" control="From" label="From"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
+                        <!-- <input type="date" formControlName="From" /> -->
                 </div>
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="To" label="To Date"
-                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                    <ng-control [form]="page.searchForm" control="To" label="To"
+                    [type]="page.ControlType.INPUT_DATE"></ng-control>
+                        <!-- <input type="date" formControlName="To" /> -->
                 </div>
                 <div class="col-3">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
@@ -64,12 +66,12 @@
                     </ng-control>
                 </div>
                 <div class="col-3 d-flex align-items-end">
-                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
-                        (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
-                        <i class="uil uil-search"></i>
-                        <span class="rb-btn-text d-md-inline-block">
-                            {{'shared.search'|translate}}</span>
-                    </button>
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                    [disabled]="page.searchForm.invalid || page.isSearching">
+                    <i class="uil uil-search"></i>
+                    <span class="rb-btn-text d-md-inline-block">
+                        {{'shared.search'|translate}}</span>
+                </button>
 
                 </div>
 

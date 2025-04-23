@@ -22,9 +22,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
    modalRef: BsModalRef;
   override searchViewModel: requestSearchViewModel = new requestSearchViewModel();
   cartVisible = false;
+  
   WarehouseList: any[] = [];
   selectedStatusId : string='';
-  override controlType = ControlType;
+ // override controlType = ControlType;
   override items: requestViewModel[] = [];
   RequestStatuslist = [
     { id: 1, name: 'Pending' },
@@ -62,7 +63,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       SalesManName:[this.searchViewModel.SalesManName],
       SalesManPhone:[this.searchViewModel.SalesManPhone],
       WarehouseId:[this.searchViewModel.WarehouseId],
-      CreateDate:[this.searchViewModel.CreateDate],
+      FromDate:[this.searchViewModel.FromDate],
+      ToDate:[this.searchViewModel.ToDate]
     });
     this.page.isPageLoaded = true;
   }
@@ -71,16 +73,27 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.isSearching = true;
     this.items = [];
     Object.assign(this.searchViewModel, this.page.searchForm.value);
-    this._pageService.get(this.searchViewModel, this.page.orderBy, this.page.isAscending, this.page.options.currentPage, this.page.options.itemsPerPage).subscribe(response => {
-      this.page.isSearching = false;
-      if (response.isSuccess) {
-        console.log(response.data)
-        this.page.isAllSelected = false;
-        this.confingPagination(response)
-        this.items = response.data.items as requestViewModel[];
-      }
-      this.fireEventToParent()
-    });
+  
+    this._pageService
+      .get(
+        this.searchViewModel,
+        this.page.orderBy,
+        this.page.isAscending,
+        this.page.options.currentPage,
+        this.page.options.itemsPerPage
+      )
+      .subscribe((response) => {
+        this.page.isSearching = false;
+        //         this.idOfShippingAddress=response.data.items.shippingAddressId;
+        // console.log(response.data.items)
+        if (response.isSuccess) {
+          this.page.isAllSelected = false;
+          this.confingPagination(response);
+          this.items = response.data.items as requestViewModel[];
+         
+        }
+        this.fireEventToParent();
+      });
   }
   
   getRequestStatusName(statusId: number) {

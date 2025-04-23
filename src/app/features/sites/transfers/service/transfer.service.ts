@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/shared/service/api.service';
 import { transferSearchViewModel } from '../interface/transfer';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,15 @@ import { HttpParams } from '@angular/common/http';
 export class TransferService {
 
   constructor(private _apiService: ApiService) { }
+ 
+  
   private formatDate(date: Date): string {
     const yyyy = date.getFullYear();
     const mm = (date.getMonth() + 1).toString().padStart(2, '0');
     const dd = date.getDate().toString().padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`;
   }
+  
   
   get(searchViewModel: transferSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number = 0) {
     if (pageSize == 0)
@@ -33,12 +37,13 @@ export class TransferService {
     if (searchViewModel.WarehouseToWarehouseStatus) {
       params = params.set("WarehouseToWarehouseStatus", searchViewModel.WarehouseToWarehouseStatus);
     }
-    if (searchViewModel.To) {
-      params = params.set("To", this.formatDate(searchViewModel.To));
-    }
     if (searchViewModel.From) {
       params = params.set("From", this.formatDate(searchViewModel.From));
     }
+    if (searchViewModel.To) {
+      params = params.set("To", this.formatDate(searchViewModel.To));
+    }
+    
     return this._apiService.get(`/GetAllWarehouseToWarehouseTransactionsEndpoint/GetWarehouseToWarehouseTransactions
 ?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }

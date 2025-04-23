@@ -54,17 +54,21 @@
 
                 <div class="col-2">
 
-                    <ng-control [form]="page.searchForm" control="CreateDate" label="Create Date"
+                    <ng-control [form]="page.searchForm" control="FromDate" label="FromDate"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
                 </div>
+                <div class="col-2">
 
+                    <ng-control [form]="page.searchForm" control="ToDate" label="ToDate"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
                 <div class="col-2 d-flex align-items-end">
-                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
-                        (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
-                        <i class="uil uil-search"></i>
-                        <span class="rb-btn-text d-md-inline-block">
-                            {{'shared.search'|translate}}</span>
-                    </button>
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                    [disabled]="page.searchForm.invalid || page.isSearching">
+                    <i class="uil uil-search"></i>
+                    <span class="rb-btn-text d-md-inline-block">
+                        {{'shared.search'|translate}}</span>
+                </button>
 
                 </div>
 

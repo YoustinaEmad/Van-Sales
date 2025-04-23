@@ -14,7 +14,8 @@ export class requestSearchViewModel {
     SalesManName:string;
     SalesManPhone:string;
     WarehouseId:string;
-    CreateDate:Date;
+    FromDate:Date;
+    ToDate:Date;
   }
   export class requestCreateViewNodel {
     id:string;

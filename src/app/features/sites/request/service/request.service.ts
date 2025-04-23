@@ -35,8 +35,11 @@ export class RequestService {
     if (searchViewModel.WarehouseId) {
       params = params.set("WarehouseId", searchViewModel.WarehouseId);
     }
-    if (searchViewModel.CreateDate) {
-      params = params.set("CreateDate", this.formatDate(searchViewModel.CreateDate));
+    if (searchViewModel.FromDate) {
+      params = params.set("FromDate", this.formatDate(searchViewModel.FromDate));
+    }
+    if (searchViewModel.ToDate) {
+      params = params.set("ToDate", this.formatDate(searchViewModel.ToDate));
     }
     return this._apiService.get(`/GetAllSalesManRequestsEndPoint/GetAllSalesManRequests?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
