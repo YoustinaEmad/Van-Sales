@@ -1,16 +1,69 @@
-<div class="row bg-gray-200 p-3 cr3">
-    <div class="col-6 ">
+<div class="row  p-3 cr3">
+   
+    <div class="col-6 bg-gray-200 p-3 cr3">
         <h4 class="text-lg font-semibold text-gray-900">Transfer Orders</h4>
         <p class="text-sm text-gray-600 max-w-xl">
             This tool helps you efficiently manage sales representatives. You can categorize and update the information
             easily to ensure an organized user experience.
         </p>
     </div>
-    <div class="col-6 d-flex justify-content-end align-items-center">
+    <div class="col-6 d-flex justify-content-end align-items-center bg-gray-200 p-3 cr3">
         <button class="bg-purple-500 py-2 px-4 text-white border-0 rounded" (click)="showCartDialog($event)">
             Add Transfer Operation
         </button>
     </div>
+
+
+    <form [formGroup]="page.searchForm">
+        <div class="form-body p-3">
+            <div class="row g-2">
+                <div class="col-3">
+                    <ng-control [form]="page.searchForm" control="Data" label="Data" placeholder="Data">
+                    </ng-control>
+                </div>
+                <div class="col-3">
+                    <ng-control [form]="page.searchForm" control="From" label="From"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                        <!-- <input type="date" formControlName="From" /> -->
+                </div>
+                <div class="col-3">
+                    <ng-control [form]="page.searchForm" control="To" label="To"
+                    [type]="page.ControlType.INPUT_DATE"></ng-control>
+                        <!-- <input type="date" formControlName="To" /> -->
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
+                        control="WarehouseToWarehouseStatus" (change)="onStatusChange($event.id
+          )" label="warehouse To Warehouse Status" placeholder="warehouse To Warehouse Status"
+                        [items]="WarehouseToWarehouseStatuslist"></ng-control>
+                </div>
+    
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromWarehouseId"
+                        label="From Warehouse" placeholder="Select From Warehouse" [items]="WarehouseList"
+                        (change)="onFromWarehouseChange($event.id)">
+                    </ng-control>
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToWarehouseId"
+                        label="To Warehouse" placeholder="Select To Warehouse" [items]="WarehouseList"
+                        (change)="onToWarehouseChange($event.id)">
+                    </ng-control>
+                </div>
+                <div class="col-3 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                    [disabled]="page.searchForm.invalid || page.isSearching">
+                    <i class="uil uil-search"></i>
+                    <span class="rb-btn-text d-md-inline-block">
+                        {{'shared.search'|translate}}</span>
+                </button>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    </form>
 </div>
 
 <!-- Sidebar -->
@@ -101,56 +154,7 @@
 <div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
 <div>
 
-    <form [formGroup]="page.searchForm">
-        <div class="form-body p-3">
-            <div class="row g-2">
-                <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="Data" label="Data" placeholder="Data">
-                    </ng-control>
-                </div>
-                <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="From" label="From"
-                        [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="From" /> -->
-                </div>
-                <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="To" label="To"
-                    [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="To" /> -->
-                </div>
-                <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
-                        control="WarehouseToWarehouseStatus" (change)="onStatusChange($event.id
-          )" label="warehouse To Warehouse Status" placeholder="warehouse To Warehouse Status"
-                        [items]="WarehouseToWarehouseStatuslist"></ng-control>
-                </div>
-
-                <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromWarehouseId"
-                        label="From Warehouse" placeholder="Select From Warehouse" [items]="WarehouseList"
-                        (change)="onFromWarehouseChange($event.id)">
-                    </ng-control>
-                </div>
-                <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToWarehouseId"
-                        label="To Warehouse" placeholder="Select To Warehouse" [items]="WarehouseList"
-                        (change)="onToWarehouseChange($event.id)">
-                    </ng-control>
-                </div>
-                <div class="col-3 d-flex align-items-end">
-                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
-                    [disabled]="page.searchForm.invalid || page.isSearching">
-                    <i class="uil uil-search"></i>
-                    <span class="rb-btn-text d-md-inline-block">
-                        {{'shared.search'|translate}}</span>
-                </button>
-
-                </div>
-
-            </div>
-
-        </div>
-    </form>
+   
     <div class="scrolled mt-3 h-100">
         <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
         <table class="table" *ngIf="!page.isSearching">
