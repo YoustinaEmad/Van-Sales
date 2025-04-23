@@ -237,14 +237,21 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.cartVisible = false;
   }
 
-
   saveTransfer(): void {
-    if (this.pageCreate.isSaving || this.pageCreate.form.invalid) return;
+    if (this.pageCreate.isSaving) return;
   
-    // Clear previous details
+    if (this.cartItems.length === 0) {
+      //this._sharedService.showToastr(res);
+      return;
+    }
+  
+    if (this.pageCreate.form.invalid) {
+      //this._sharedService.showToastr({ isSuccess: false, message: 'Please fill in all required fields.' });
+      return;
+    }
+  
     const detailsFormArray = this._sharedService.formBuilder.array([]);
   
-    // Populate with current cart items
     this.cartItems.forEach(item => {
       detailsFormArray.push(
         this._sharedService.formBuilder.group({
@@ -254,16 +261,14 @@ export class HomeComponent extends CrudIndexBaseUtils {
       );
     });
   
-    // Patch it into the form
     this.pageCreate.form.setControl('transactionDetailsDTOs', detailsFormArray);
   
-    // Now save
     this.pageCreate.isSaving = true;
     Object.assign(this.item, this.pageCreate.form.value);
   
     this._pageService.postOrUpdate(this.item).subscribe({
       next: (res) => {
-        this.page.isSaving = false;
+        this.pageCreate.isSaving = false;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
           this._router.navigate(['/sites/transfers']);
@@ -272,10 +277,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
         }
       },
       error: () => {
-        this.page.isSaving = false;
-      },
+        this.pageCreate.isSaving = false;
+      }
     });
   }
+  
   
 
 
