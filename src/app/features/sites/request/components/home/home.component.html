@@ -1,0 +1,173 @@
+<div class="row bg-gray-200 p-3 cr3">
+    <div class="col-6 ">
+        <h4 class="text-lg font-semibold text-gray-900">Requests</h4>
+        <p class="text-sm text-gray-600 max-w-xl">
+            This tool helps you manage orders efficiently as they can be categorized and information can be easily
+            updated to ensure an organized user experience.
+        </p>
+    </div>
+    <div class="col-6 d-flex justify-content-end align-items-center">
+        <button class="bg-purple-500 py-2 px-4 text-white border-0 rounded" (click)="showCartDialog($event)">
+            Add Request
+        </button>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" [class.open]="cartVisible">
+    <div class="sidebar-header d-flex justify-content-between align-items-center">
+        <h4>Add Transfer</h4>
+        <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+    </div>
+    <div class="sidebar-body">
+
+        <p>Here you can enter transfer details...</p>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
+<div>
+
+    <form [formGroup]="page.searchForm">
+        <div class="form-body p-3">
+            <div class="row g-2">
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="RequestNumber" label="Request Number"
+                        placeholder="Request Number">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="SalesManPhone" label="Sales Man Phone"
+                        placeholder="Sales Man Phone">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [form]="page.searchForm" control="SalesManName" label="Sales Man Name"
+                        placeholder="Sales Man Name">
+                    </ng-control>
+                </div>
+                <div class="col-2">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="RequestStatus" (change)="onStatusChange($event.id
+          )" label="Request Status" placeholder="Request Status" [items]="RequestStatuslist"></ng-control>
+                </div>
+
+                <div class="col-2">
+
+                    <ng-control [form]="page.searchForm" control="FromDate" label="FromDate"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
+                <div class="col-2">
+
+                    <ng-control [form]="page.searchForm" control="ToDate" label="ToDate"
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                </div>
+                <div class="col-2 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                    [disabled]="page.searchForm.invalid || page.isSearching">
+                    <i class="uil uil-search"></i>
+                    <span class="rb-btn-text d-md-inline-block">
+                        {{'shared.search'|translate}}</span>
+                </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+    <div class="scrolled mt-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table" *ngIf="!page.isSearching">
+            <thead>
+
+                <tr class="th-header">
+
+
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- No Data Found -->
+                <tr [hidden]="page.isSearching || items.length > 0">
+                    <td colspan="100%">
+                        <span>{{ 'shared.no-data-found' | translate }}</span>
+                    </td>
+                </tr>
+
+                <!-- Data Rows -->
+                <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }">
+
+
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.requestNumber }}</td>
+                        <td>{{ item.requestStatusName }}</td>
+                        <td>{{ item.salesManName }}</td>
+                        <td>{{ item.warehouseName }} </td>
+                        <td>{{item.quantity}}
+                        <td>{{ item.createDate | date: 'dd/MM/yyyy' }}</td>
+
+                        <td>
+                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
+                                aria-label="Delete" (click)="showDeleteConfirmation(item)">
+                            </button>
+                            <!-- <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                                aria-label="Edit" (click)="editProduct(item.id)">
+                            </button> -->
+                            <!-- <button class="bg-purple-100 py-2 px-2 color-purple-500 no-border cr3"
+                    (click)="openRestockModal(item, restockModal)" *ngIf="item.quantity === 0">
+                    ReStock
+                  </button> -->
+
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+    </ng-pagination>
+</div>
+
+
+<!-- Delete Confirmation Modal -->
+<ng-template #confirmDeleteTemplate>
+    <div class="modal-content confirm-modal">
+        <div class="modal-body">
+            <p class="modal-confirm-content mb-2">
+                {{ 'shared.delete-confirmation.message' | translate }}
+                <strong *ngIf="selectedItem">{{ selectedItem.name }}</strong>
+            </p>
+            <div class="d-flex mt-4">
+                <button type="button" class="btn cancel-btn me-auto"
+                    (click)="modalRef.hide()">{{"sites.product.cancel"|translate}}</button>
+                <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
+                    (click)="remove(); modalRef.hide();">{{"sites.product.confirm"|translate}}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #confirmDeleteTemplates>
+    <div class="modal-body text-center">
+        <p>{{"sites.product.deleteSelectedProducts"|translate}}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.product.cancel"|translate}}</button>
+        <button class="btn btn-without-icon bg-e5 ms-2"
+            (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.product.yes"|translate}}</button>
+
+    </div>
+</ng-template>

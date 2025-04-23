@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TransferService } from '../../service/transfer.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
+
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
 @Component({
@@ -14,6 +15,7 @@ import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent extends CrudIndexBaseUtils {
 
   constructor(public override _sharedService: SharedService, private _router: Router, private activatedRoute: ActivatedRoute, private _pageService: TransferService,) {
@@ -33,9 +35,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
   override searchViewModel: transferSearchViewModel = new transferSearchViewModel();
   cartVisible = false;
   WarehouseList: any[] = [];
+  selectedStatusId : string='';
   searchText: string = '';
   SalesMen: any[] = [];
-  selectedStatusId: string = '';
   override controlType = ControlType;
   override items: transferViewModel[] = [];
   productForm: FormGroup;
@@ -74,6 +76,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     this.page.searchForm = this._sharedService.formBuilder.group({
       Data: [this.searchViewModel.Data],
+
       FromWarehouseId: [this.searchViewModel.FromWarehouseId],
       ToWarehouseId: [this.searchViewModel.ToWarehouseId],
       WarehouseToWarehouseStatus: [this.searchViewModel.WarehouseToWarehouseStatus],
@@ -96,22 +99,29 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
   override search() {
-    this.page.isSearching = true;
-    this.items = [];
-    Object.assign(this.searchViewModel, this.page.searchForm.value);
-    this._pageService.get(this.searchViewModel, this.page.orderBy, this.page.isAscending, this.page.options.currentPage, this.page.options.itemsPerPage).subscribe(response => {
-      this.page.isSearching = false;
-      if (response.isSuccess) {
-        console.log(response.data)
-        this.page.isAllSelected = false;
-        this.confingPagination(response)
-        this.items = response.data.items as transferViewModel[];
-      }
-      this.fireEventToParent()
-    });
-  }
-
-
+     this.page.isSearching = true;
+     this.items = [];
+     Object.assign(this.searchViewModel, this.page.searchForm.value);
+   
+     this._pageService
+       .get(
+         this.searchViewModel,
+         this.page.orderBy,
+         this.page.isAscending,
+         this.page.options.currentPage,
+         this.page.options.itemsPerPage
+       )
+       .subscribe((response) => {
+         this.page.isSearching = false;
+         if (response.isSuccess) {
+           this.page.isAllSelected = false;
+           this.confingPagination(response);
+           this.items = response.data.items as transferViewModel[];
+          
+         }
+         this.fireEventToParent();
+       });
+   }
   getWarehouseStatusName(statusId: number) {
     const status = this.WarehouseToWarehouseStatuslist.find(s => s.id === statusId);
     return status ? status.name : 'Unknown';
