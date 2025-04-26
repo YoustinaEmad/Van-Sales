@@ -87,9 +87,13 @@
 
         </div>
       
-        <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct" label="sites.request.product"
-                placeholder="sites.request.product" [items]="products" (change)="onProductSelected($event)">
+        <div class="row p-2" style="font-size: 12px;">
+            <p class="form-label ">
+                {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+            </p>
+
+            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+                placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
             </ng-control>
         </div>
 
@@ -133,6 +137,7 @@
             'background-color': 'transparent'
           }" class="rounded" (click)="closeCartDialog()">{{"sites.request.cancel"| translate}}</button>
         <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+        [disabled]="pageCreate.form?.invalid || page.isSaving ||cartItems.length===0"
             (click)="saveRequest()">{{"sites.request.save"| translate}}</button>
     </div>
 </div>
