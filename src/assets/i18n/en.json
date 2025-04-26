@@ -451,6 +451,26 @@
       "warehouse":"Warehouse",
       "save":"Save",
       "cancel":"Cancel"
+    },
+    "transfer": {
+      "transferOrders": "Transfer Orders",
+      "defination": "This tool helps you efficiently manage sales representatives. You can categorize and update the information easily to ensure an organized user experience.",
+      "addTransferOperation": "Add Transfer Operation",
+      "data": "Data",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "warehouseToWarehouseStatus": "Warehouse To Warehouse Status",
+      "fromWarehouse": "From Warehouse",
+      "toWarehouse": "To Warehouse",
+      "transferProcess": "Transfer Process",
+      "salesMan": "Sales Man",
+      "product": "Product",
+      "quantity": "Quantity",
+      "save": "Save",
+      "cancel": "Cancel",
+      "action": "Action",
+      "transactionNumber":"Transaction Number",
+      "warehouseStatus":"Warehouse Status"
     }
     
   },

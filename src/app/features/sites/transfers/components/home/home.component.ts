@@ -62,12 +62,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
 
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "transactionNumber", Title: "Transaction Number", Selectable: false, Sortable: true },
-      { Name: "fromWarehouseName", Title: "From Warehouse Name", Selectable: false, Sortable: true },
-      { Name: "toWarehouseName", Title: "To Warehouse Name", Selectable: false, Sortable: true },
-      { Name: "warehouseToWarehouseStatus", Title: "Warehouse Status", Selectable: false, Sortable: true },
-      { Name: "productsQuantity", Title: "Products Quantity", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "sites.supplier.action", Selectable: false, Sortable: true },
+      { Name: "transactionNumber", Title: "sites.transfer.transactionNumber", Selectable: false, Sortable: true },
+      { Name: "fromWarehouseName", Title: "sites.transfer.fromWarehouse", Selectable: false, Sortable: true },
+      { Name: "toWarehouseName", Title: "sites.transfer.toWarehouse", Selectable: false, Sortable: true },
+      { Name: "warehouseToWarehouseStatus", Title: "sites.transfer.warehouseStatus", Selectable: false, Sortable: true },
+      { Name: "productsQuantity", Title: "sites.transfer.quantity", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true },
 
     ];
     this.createSearchForm();
