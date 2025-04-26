@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TransferService } from '../../service/transfer.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
@@ -30,13 +31,15 @@ export class HomeComponent extends CrudIndexBaseUtils {
   isDropdownVisible = false;
   products: any[] = [];
   selectedProduct = '';
-    selectedItem: transferViewModel;
+  cartErrorMessage: string = '';
+
+  selectedItem: transferViewModel;
   cartProductsResult: GetAllProductAtCart[] = [];
   filteredProducts = this.products;
   override searchViewModel: transferSearchViewModel = new transferSearchViewModel();
   cartVisible = false;
   WarehouseList: any[] = [];
-  selectedStatusId : string='';
+  selectedStatusId: string = '';
   searchText: string = '';
   SalesMen: any[] = [];
   override controlType = ControlType;
@@ -74,10 +77,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
   override createSearchForm() {
-
     this.page.searchForm = this._sharedService.formBuilder.group({
       Data: [this.searchViewModel.Data],
-
       FromWarehouseId: [this.searchViewModel.FromWarehouseId],
       ToWarehouseId: [this.searchViewModel.ToWarehouseId],
       WarehouseToWarehouseStatus: [this.searchViewModel.WarehouseToWarehouseStatus],
@@ -98,31 +99,30 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   }
 
-
   override search() {
-     this.page.isSearching = true;
-     this.items = [];
-     Object.assign(this.searchViewModel, this.page.searchForm.value);
-   
-     this._pageService
-       .get(
-         this.searchViewModel,
-         this.page.orderBy,
-         this.page.isAscending,
-         this.page.options.currentPage,
-         this.page.options.itemsPerPage
-       )
-       .subscribe((response) => {
-         this.page.isSearching = false;
-         if (response.isSuccess) {
-           this.page.isAllSelected = false;
-           this.confingPagination(response);
-           this.items = response.data.items as transferViewModel[];
-          
-         }
-         this.fireEventToParent();
-       });
-   }
+    this.page.isSearching = true;
+    this.items = [];
+    Object.assign(this.searchViewModel, this.page.searchForm.value);
+
+    this._pageService
+      .get(
+        this.searchViewModel,
+        this.page.orderBy,
+        this.page.isAscending,
+        this.page.options.currentPage,
+        this.page.options.itemsPerPage
+      )
+      .subscribe((response) => {
+        this.page.isSearching = false;
+        if (response.isSuccess) {
+          this.page.isAllSelected = false;
+          this.confingPagination(response);
+          this.items = response.data.items as transferViewModel[];
+
+        }
+        this.fireEventToParent();
+      });
+  }
   getWarehouseStatusName(statusId: number) {
     const status = this.WarehouseToWarehouseStatuslist.find(s => s.id === statusId);
     return status ? status.name : 'Unknown';
@@ -133,6 +133,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.searchForm.patchValue({ WarehouseToWarehouseStatus: statusId });
     this.search(); // optionally trigger search on change
   }
+
   loadWarehouses() {
     this._pageService.getWarehouses().subscribe((res: any) => {
       if (res && res.isSuccess) {
@@ -140,6 +141,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
+
   loadSalesMen() {
     this._pageService.getSalesMen().subscribe((res: any) => {
       if (res && res.isSuccess) {
@@ -155,7 +157,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
- @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
+
+  @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
   showDeleteConfirmation(selectedItem: transferViewModel) {
     this.selectedItem = selectedItem;
     this.modalRef = this._sharedService.modalService.show(this.confirmDeleteTemplate, { class: 'modal-sm' });
@@ -167,6 +170,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.selected = isChecked;
     });
   }
+
   isAllSelected(): boolean {
     return this.items?.length > 0 && this.items.every(item => item.selected);
   }
@@ -175,13 +179,14 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.searchForm.patchValue({ FromWarehouseId: id });
     this.search();
   }
+
   onToWarehouseChange(id: number) {
     this.page.searchForm.patchValue({ ToWarehouseId: id });
     this.search();
   }
+
   toggleDropdown() {
     this.isDropdownVisible = !this.isDropdownVisible;
-
   }
 
   showCartDialog(event: Event) {
@@ -213,10 +218,24 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.item.transactionDetailsVM?.map(detail => this.createDetailFormGroup(detail)) || []
         )
       },
+      { validators: [this.differentWarehousesValidator()] }
     );
 
-    this.page.isPageLoaded = true;
+    this.pageCreate.isPageLoaded = true;
   }
+
+
+  differentWarehousesValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const from = group.get('fromWarehouseId')?.value;
+      const to = group.get('toWarehouseId')?.value;
+
+      return from && to && from === to
+        ? { sameWarehouse: true }
+        : null;
+    };
+  }
+
   removeProduct(index: number): void {
 
     this.cartItems.splice(index, 1);
@@ -242,7 +261,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
     return this.pageCreate.form.get('transactionDetailsVM') as FormArray;
   }
 
-
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
   }
@@ -255,19 +273,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   saveTransfer(): void {
     if (this.pageCreate.isSaving) return;
-  
-    if (this.cartItems.length === 0) {
-      //this._sharedService.showToastr(res);
-      return;
-    }
-  
     if (this.pageCreate.form.invalid) {
-      //this._sharedService.showToastr({ isSuccess: false, message: 'Please fill in all required fields.' });
       return;
     }
-  
+
     const detailsFormArray = this._sharedService.formBuilder.array([]);
-  
+
     this.cartItems.forEach(item => {
       detailsFormArray.push(
         this._sharedService.formBuilder.group({
@@ -276,12 +287,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
         })
       );
     });
-  
+
     this.pageCreate.form.setControl('transactionDetailsDTOs', detailsFormArray);
-  
+
     this.pageCreate.isSaving = true;
     Object.assign(this.item, this.pageCreate.form.value);
-  
+
     this._pageService.postOrUpdate(this.item).subscribe({
       next: (res) => {
         this.pageCreate.isSaving = false;
@@ -292,13 +303,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.search();
         }
       },
-      error: () => {
+      error: (err) => {
+        this._sharedService.showToastr(err);
         this.pageCreate.isSaving = false;
       }
     });
   }
-  
-  
-
 
 }
