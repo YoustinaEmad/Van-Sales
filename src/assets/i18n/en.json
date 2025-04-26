@@ -430,6 +430,27 @@
       "Passwords do not match":"Passwords do not match",
        "UploadNewImage":"Upload New Image",
       "ErrorUploading":"Error Uploading"
+    },
+    "request":{
+      "requests":"Requests",
+      "request":"'Request",
+      "defination":"This tool helps you manage orders efficiently as they can be categorized and information can be easilyupdated to ensure an organized user experience",
+      "addRequest":"Add Request",
+      "requestNumber":"Request Number",
+      "salesManPhone" :"Sales Man Phone" ,
+      "salesManName":"Sales Man Name",
+      "requestStatus":"Request Status",
+      "fromDate":"From Date",
+      "toDate":"To Date",
+      "action":"Action",
+      "warehouseName":"Warehouse Name",
+      "quantity":"Quantity",
+      "createDate":"Create Date",
+      "requestProcess":"Request Process",
+      "product":"product",
+      "warehouse":"Warehouse",
+      "save":"Save",
+      "cancel":"Cancel"
     }
     
   },

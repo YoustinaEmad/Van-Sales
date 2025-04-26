@@ -419,6 +419,27 @@
       "Passwords do not match":"كلمات المرور غير متاطبقة",
        "UploadNewImage":"رفع صورة جديدة",
       "ErrorUploading":"خطأ في رفع الصورة"
+    },
+    "request":{
+      "requests":"الطلبات",
+      "request":"'طلب",
+      "defination":"تساعدك هذه الأداة على إدارة طلباتك بكفاءة، حيث يمكن تصنيفها وتحديث المعلومات بسهولة لضمان تجربة مستخدم منظمة.",
+      "addRequest":"اضافة طلب",
+      "requestNumber":"رقم الطلب ",
+      "salesManPhone" :"موبايل المندوب" ,
+      "salesManName":"اسم المندوب",
+      "requestStatus":"حالة الطلب ",
+      "fromDate":"من تاريخ",
+      "toDate":"الي تاريخ",
+      "action":"الاجراءات",
+      "warehouseName":"اسم المخزن",
+      "quantity":"الكمية",
+      "createDate":"تاريخ الانشاء",
+      "requestProcess":"عملية الطلب",
+      "product":"المنتج",
+      "warehouse":"المخزن",
+      "save":"حفظ",
+      "cancel":"الغاء"
     }
   },
     "auth": {

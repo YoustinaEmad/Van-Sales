@@ -14,12 +14,29 @@ export class requestSearchViewModel {
     SalesManName:string;
     SalesManPhone:string;
     WarehouseId:string;
-    FromDate:Date;
-    ToDate:Date;
+    From?:Date;
+    To?: Date ;
+
   }
   export class requestCreateViewNodel {
     id:string;
     salesManID:string;
     warehouseId:string;
-   // RequestDetails:SalesmanRequestDetailDTO;
+    RequestDetails:SalesmanRequestDetailsVM[];
   }
+
+  export class SalesmanRequestDetailsVM {
+    quantity:number;
+    productId:string;
+  }
+
+  export interface selectedProductViewModel {
+    id: string;
+    name: string;
+}
+
+export interface GetAllProductAtCart {
+    productId: string;
+    quantity: number;
+
+}

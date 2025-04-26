@@ -24,15 +24,15 @@
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="From" label="From"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="From" /> -->
+                      
                 </div>
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="To" label="To"
                     [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="To" /> -->
+                       
                 </div>
                 <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" 
                         control="WarehouseToWarehouseStatus" (change)="onStatusChange($event.id
           )" label="warehouse To Warehouse Status" placeholder="warehouse To Warehouse Status"
                         [items]="WarehouseToWarehouseStatuslist"></ng-control>

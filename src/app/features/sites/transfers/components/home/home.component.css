@@ -35,4 +35,10 @@
     padding: 1rem;
     border-top: 1px solid #dee2e6;
   }
+  .ggg
+  {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+}
   

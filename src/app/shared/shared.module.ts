@@ -103,7 +103,7 @@ export class SharedModule {
   ) 
   
   {
-    const lang="en";
+    const lang="ar";
 
     this.translate.use(lang);
     localizationService.setLanguage(lang);
