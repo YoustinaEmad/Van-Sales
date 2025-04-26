@@ -1,5 +1,5 @@
 <div class="row  p-3 cr3">
-   
+
     <div class="col-6 bg-gray-200 p-3 cr3">
         <h4 class="text-lg font-semibold text-gray-900">Transfer Orders</h4>
         <p class="text-sm text-gray-600 max-w-xl">
@@ -24,12 +24,12 @@
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="From" label="From"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="From" /> -->
+                    <!-- <input type="date" formControlName="From" /> -->
                 </div>
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="To" label="To"
-                    [type]="page.ControlType.INPUT_DATE"></ng-control>
-                        <!-- <input type="date" formControlName="To" /> -->
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+                    <!-- <input type="date" formControlName="To" /> -->
                 </div>
                 <div class="col-3">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
@@ -37,7 +37,7 @@
           )" label="warehouse To Warehouse Status" placeholder="warehouse To Warehouse Status"
                         [items]="WarehouseToWarehouseStatuslist"></ng-control>
                 </div>
-    
+
                 <div class="col-3">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromWarehouseId"
                         label="From Warehouse" placeholder="Select From Warehouse" [items]="WarehouseList"
@@ -52,16 +52,16 @@
                 </div>
                 <div class="col-3 d-flex align-items-end">
                     <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
-                    [disabled]="page.searchForm.invalid || page.isSearching">
-                    <i class="uil uil-search"></i>
-                    <span class="rb-btn-text d-md-inline-block">
-                        {{'shared.search'|translate}}</span>
-                </button>
-    
+                        [disabled]="page.searchForm.invalid || page.isSearching">
+                        <i class="uil uil-search"></i>
+                        <span class="rb-btn-text d-md-inline-block">
+                            {{'shared.search'|translate}}</span>
+                    </button>
+
                 </div>
-    
+
             </div>
-    
+
         </div>
     </form>
 </div>
@@ -95,13 +95,34 @@
             <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toWarehouseId"
                 label="To Warehouse" placeholder="Select To Warehouse" [items]="WarehouseList">
             </ng-control>
+            <span *ngIf="pageCreate.form?.errors?.sameWarehouse && pageCreate.form?.touched" class="text-danger mx-2">
+                From and To warehouses cannot be the same.
+            </span>
         </div>
 
+        <div class="row p-2" style="font-size: 12px;">
+            <p class="form-label ">
+                Product <span class="text-danger">*</span>
+            </p>
+
+            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+                placeholder="Select Product" [items]="products" (change)="onProductSelected($event)">
+            </ng-control>
+        </div>
+
+
+<!-- 
         <div class="row p-2">
             <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct" label="Product"
                 placeholder="Select Product" [items]="products" (change)="onProductSelected($event)">
             </ng-control>
+
         </div>
+ -->
+
+
+
+
 
         <table class="table table-bordered mt-4">
             <thead>
@@ -143,6 +164,7 @@
             'background-color': 'transparent'
           }" class="rounded" (click)="closeCartDialog()">Cancel</button>
         <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+            [disabled]="pageCreate.form?.invalid || page.isSaving ||cartItems.length===0"
             (click)="saveTransfer()">Save</button>
     </div>
 
@@ -154,7 +176,7 @@
 <div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
 <div>
 
-   
+
     <div class="scrolled mt-3 h-100">
         <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
         <table class="table" *ngIf="!page.isSearching">
@@ -195,11 +217,13 @@
                         <td>{{ getWarehouseStatusName(item.warehouseToWarehouseStatus) }}</td>
                         <td>{{item.productsQuantity}}
                         <td>
-                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"
-                                aria-label="Delete" (click)="showDeleteConfirmation(item)">
+                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-trash"
+                                class="p-button-rounded p-button-text p-button-danger" aria-label="Delete"
+                                (click)="showDeleteConfirmation(item)">
                             </button>
-                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
-                                aria-label="Edit" (click)="editProduct(item.id)">
+                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil"
+                                class="p-button-rounded p-button-text p-button-info" aria-label="Edit"
+                                (click)="editProduct(item.id)">
                             </button>
                             <!-- <button class="bg-purple-100 py-2 px-2 color-purple-500 no-border cr3"
                     (click)="openRestockModal(item, restockModal)" *ngIf="item.quantity === 0">
@@ -228,7 +252,8 @@
                 <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
             </p>
             <div class="d-flex mt-4">
-                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.supplier.cancel"|translate}}</button>
+                <button type="button" class="btn cancel-btn me-auto"
+                    (click)="modalRef.hide() ">{{"sites.supplier.cancel"|translate}}</button>
                 <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
                     (click)="remove();modalRef.hide();">{{"sites.supplier.confirm"|translate}}</button>
             </div>
