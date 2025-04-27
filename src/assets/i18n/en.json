@@ -503,7 +503,9 @@
       "confirm":"Confirm",
       "areyousureyouwanttodeletetheselectedCustomerGroups":"Are you sure you want to delete the selected CustomerGroups?",
       "editCustomerGroup":"Edit Customer Group",
-      "saveChanges":"Save Changes"
+      "saveChanges":"Save Changes",
+      "name":" Name",
+      "action":"Action"
     }
   }
 }

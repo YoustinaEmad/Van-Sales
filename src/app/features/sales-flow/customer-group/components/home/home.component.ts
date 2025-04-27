@@ -44,9 +44,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
 
-      { Name: "Name", Title: "Name", Selectable: false, Sortable: true },
+      { Name: "Name", Title: "salesflow.customerGroup.name", Selectable: false, Sortable: true },
       // { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "salesflow.customerGroup.action", Selectable: false, Sortable: true },
     ];
     //this.subscribeToParentEvent();
     this.createSearchForm();

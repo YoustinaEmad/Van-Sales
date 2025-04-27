@@ -491,7 +491,9 @@
       "confirm":"تاكيد",
       "areyousureyouwanttodeletetheselectedCustomerGroups":"هل أنت متأكد من أنك تريد حذف مجموعات العملاء المحددة؟",
       "editCustomerGroup":"تعديل مجموعة العملاء",
-      "saveChanges":"حفظ التغيرات"
+      "saveChanges":"حفظ التغيرات",
+      "name":"الاسم",
+      "action":"الاجراءات"
     }
   }
 }
