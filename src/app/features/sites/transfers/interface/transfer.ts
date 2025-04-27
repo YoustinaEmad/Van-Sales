@@ -4,6 +4,7 @@ export interface transferViewModel {
     toWarehouseName: string;
     warehouseToWarehouseStatus: number;
     productsQuantity: number;
+    salesManName:string;
     selected: boolean;
 }
 export class transferSearchViewModel {
@@ -25,6 +26,8 @@ export class transferCreateViewModel {
 export class WarehouseToWarehouseTransactionDetailsVM {
     productID: string;
     quantity: number;
+    productName?:string
+
 
 }
 export interface selectedProductViewModel {

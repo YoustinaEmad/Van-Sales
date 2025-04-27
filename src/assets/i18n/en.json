@@ -282,8 +282,8 @@
       "suppliers": "Suppliers",
       "salesMan": "SalesMan",
       "productGroup": "Product Group",
-      "transfers":"transfers",
-      "requests":"requests"
+      "transfers":"Transfers",
+      "requests":"Requests"
     },
     "Category": {
       "category": "Category",

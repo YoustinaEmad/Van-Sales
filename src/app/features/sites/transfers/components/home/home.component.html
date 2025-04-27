@@ -18,7 +18,7 @@
         <div class="form-body p-3">
             <div class="row g-2">
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="Data" label="Data" placeholder="Data">
+                    <ng-control [form]="page.searchForm" control="Data" label="SalesMan OR Transaction_Number" placeholder="SalesMan OR Transaction_Number">
                     </ng-control>
                 </div>
                 <div class="col-3">
@@ -67,7 +67,6 @@
 </div>
 
 <!-- Sidebar -->
-<!-- Sidebar -->
 <div class="sidebar" [class.open]="cartVisible">
     <div class="sidebar-header d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
         <h4>Add Transfer</h4>
@@ -111,50 +110,49 @@
         </div>
 
 
-<!-- 
-        <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct" label="Product"
-                placeholder="Select Product" [items]="products" (change)="onProductSelected($event)">
-            </ng-control>
 
-        </div>
- -->
-
-
-
-
-
-        <table class="table table-bordered mt-4">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th class="text-center">Actions</th>
+        <div class="scrolled mt-4" style="max-height: 300px; overflow-y: auto;">
+            <table class="table" *ngIf="cartItems.length > 0">
+              <thead>
+                <tr class="th-header">
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th class="text-center">Actions</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of cartItems; let i = index">
+              </thead>
+          
+              <tbody>
+                <ng-container *ngFor="let item of cartItems; let i = index">
+                  <tr>
                     <td>{{ item.productName }}</td>
-
                     <td class="d-flex align-items-center gap-2">
-                        <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
-                            (click)="decreaseQuantity(i)">
-                        </button>
-                        {{ item.quantity }}
-                        <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
-                            (click)="increaseQuantity(i)">
-                        </button>
+                      <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
+                        (click)="decreaseQuantity(i)">
+                      </button>
+                      {{ item.quantity }}
+                      <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
+                        (click)="increaseQuantity(i)">
+                      </button>
                     </td>
-
                     <td class="text-center">
-                        <button pButton icon="pi pi-trash"
-                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
-                            (click)="removeProduct(i)">
-                        </button>
+                      <button pButton icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                        (click)="removeProduct(i)">
+                      </button>
                     </td>
-                </tr>
-            </tbody>
-        </table>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          
+            <!-- No Data Found -->
+            <div *ngIf="cartItems.length === 0" class="text-center py-4">
+              <span>{{ 'shared.no-data-found' | translate }}</span>
+            </div>
+          </div>
+          
+          
+          
 
     </div>
     <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
@@ -212,18 +210,16 @@
 
                         <td>{{ i + 1 }}</td>
                         <td>{{ item.transactionNumber }}</td>
+                        <td>{{ item.salesManName }}</td>
                         <td>{{ item.fromWarehouseName }}</td>
                         <td>{{ item.toWarehouseName }}</td>
                         <td>{{ getWarehouseStatusName(item.warehouseToWarehouseStatus) }}</td>
                         <td>{{item.productsQuantity}}
                         <td>
-                            <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-trash"
-                                class="p-button-rounded p-button-text p-button-danger" aria-label="Delete"
-                                (click)="showDeleteConfirmation(item)">
-                            </button>
+                            
                             <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil"
                                 class="p-button-rounded p-button-text p-button-info" aria-label="Edit"
-                                (click)="editProduct(item.id)">
+                                (click)="editTransaction(item.id)">
                             </button>
                             <!-- <button class="bg-purple-100 py-2 px-2 color-purple-500 no-border cr3"
                     (click)="openRestockModal(item, restockModal)" *ngIf="item.quantity === 0">

@@ -32,7 +32,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
   products: any[] = [];
   selectedProduct = '';
   cartErrorMessage: string = '';
-
   selectedItem: transferViewModel;
   cartProductsResult: GetAllProductAtCart[] = [];
   filteredProducts = this.products;
@@ -42,6 +41,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   selectedStatusId: string = '';
   searchText: string = '';
   SalesMen: any[] = [];
+  id: string;
   override controlType = ControlType;
   override items: transferViewModel[] = [];
   productForm: FormGroup;
@@ -63,6 +63,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
       { Name: "transactionNumber", Title: "Transaction Number", Selectable: false, Sortable: true },
+      { Name: "salesManName", Title: "SalesMan", Selectable: false, Sortable: true },
       { Name: "fromWarehouseName", Title: "From Warehouse Name", Selectable: false, Sortable: true },
       { Name: "toWarehouseName", Title: "To Warehouse Name", Selectable: false, Sortable: true },
       { Name: "warehouseToWarehouseStatus", Title: "Warehouse Status", Selectable: false, Sortable: true },
@@ -70,7 +71,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "Action", Title: "sites.supplier.action", Selectable: false, Sortable: true },
 
     ];
+
+
+
+
     this.createSearchForm();
+    
+
     this.activatedRoute.queryParams.subscribe(params => {
       this._sharedService.getFilterationFromURL(params, this.page.searchForm)
       this.search();
@@ -191,14 +198,23 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   showCartDialog(event: Event) {
     event.preventDefault();
+
     this.loadWarehouses();
     this.loadSalesMen();
     this.loadProducts();
-    this.createForm();
-    this.cartVisible = true;
+
     this.cartItems = [];
+
+
+    this.createForm();
+
+
     this.pageCreate.form.reset();
+
+    this.cartVisible = true;
   }
+
+
 
   closeCartDialog() {
     this.cartVisible = false;
@@ -251,12 +267,38 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   }
 
+  getEditableItem() {
+    this._pageService.getById(this.id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.item = res.data;
+          this.item.id = this.id;
+          this.cartItems = res.data.transactionDetailsDTOs.map(detail => ({
+            productId: detail.productID,
+            productName: detail.productName,
+            quantity: detail.quantity
+          }));
+
+          this.createForm();
+          this.pageCreate.isPageLoaded = true;
+        }
+      },
+      error: (err) => {
+        this.pageCreate.isPageLoaded = true;
+      },
+    });
+  }
+
+
+
+
   createDetailFormGroup(detail: WarehouseToWarehouseTransactionDetailsVM): FormGroup {
     return this._sharedService.formBuilder.group({
       productID: [detail.productID, Validators.required],
       quantity: [detail.quantity, [Validators.required, Validators.min(1)]]
     });
   }
+
   get transactionDetailsArray(): FormArray {
     return this.pageCreate.form.get('transactionDetailsVM') as FormArray;
   }
@@ -267,34 +309,32 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   ngOnDestroy(): void { }
 
-  onCancel(): void {
-    this.cartVisible = false;
-  }
-
   saveTransfer(): void {
     if (this.pageCreate.isSaving) return;
     if (this.pageCreate.form.invalid) {
       return;
     }
 
-    const detailsFormArray = this._sharedService.formBuilder.array([]);
+    // Prepare FormArray for transactionDetailsDTOs
+    const detailsFormArray = this._sharedService.formBuilder.array(
+      this.cartItems.map(item => this._sharedService.formBuilder.group({
+        productID: [item.productId, Validators.required],
+        quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+        productName: [item.productName] // 👉 add this if needed
+      }))
+    );
 
-    this.cartItems.forEach(item => {
-      detailsFormArray.push(
-        this._sharedService.formBuilder.group({
-          productID: [item.productId, Validators.required],
-          quantity: [item.quantity, [Validators.required, Validators.min(1)]]
-        })
-      );
-    });
 
+    // ✅ Set the cart items into the form
     this.pageCreate.form.setControl('transactionDetailsDTOs', detailsFormArray);
 
-    this.pageCreate.isSaving = true;
+    // Now assign the form value to your model
     Object.assign(this.item, this.pageCreate.form.value);
 
+    this.pageCreate.isSaving = true;
     this._pageService.postOrUpdate(this.item).subscribe({
       next: (res) => {
+        //this.item.transactionDetailsVM = this.cartItems;
         this.pageCreate.isSaving = false;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
@@ -309,5 +349,18 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
+
+
+  editTransaction(id: string) {
+    this.pageCreate.isEdit = true;  // Tell the system we are in edit mode
+    this.id = id;
+    this.cartVisible = true;         // Open the modal/sidebar
+    this.loadWarehouses();           // Load warehouses (if needed)
+    this.loadSalesMen();             // Load salesmen (if needed)
+    this.loadProducts();             // Load products (if needed)
+    this.getEditableItem();          // Fetch the transfer data and fill the form
+
+  }
+
 
 }

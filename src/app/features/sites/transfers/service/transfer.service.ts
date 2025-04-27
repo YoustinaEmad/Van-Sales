@@ -54,7 +54,7 @@ export class TransferService {
   }
 
   postOrUpdate(body: transferCreateViewModel) {
-    if (body.id) return this._apiService.update(`/EditCategoryEndPoint/Put`, body)
+    if (body.id) return this._apiService.update(`/EditWarehouseToWarehouseTransactionEndpoint/EditWarehouseToWarehouseTransaction`, body)
     else return this._apiService.post(`/StartWarehouseToWarehouseTransactionEndpoint/StartWarehouseToWarehouseTransaction`, body)
   }
 
@@ -63,5 +63,8 @@ export class TransferService {
   }
   getProducts() {
     return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+  }
+  getById(ID: string) {
+    return this._apiService.get(`/GetWarehouseToWarehouseTransactionByIdEndPoint/GetWarehouseToWarehouseTransactionById?ID=${ID}`,);
   }
 }
