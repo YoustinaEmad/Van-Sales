@@ -460,7 +460,8 @@
       "cancel": "الغاء",
       "action": "الاجراءات",
       "transactionNumber":"رقم التحويل",
-      "warehouseStatus":"حالة المخزن"
+      "warehouseStatus":"حالة المخزن",
+      "SalesMan OR Transaction_Number":" رقم التحويل او مندوب المبيعات "
     }
   },
   "auth": {

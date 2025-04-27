@@ -471,7 +471,8 @@
       "cancel": "Cancel",
       "action": "Action",
       "transactionNumber":"Transaction Number",
-      "warehouseStatus":"Warehouse Status"
+      "warehouseStatus":"Warehouse Status",
+      "SalesMan OR Transaction_Number":"SalesMan OR Transaction_Number"
     }
     
   },
