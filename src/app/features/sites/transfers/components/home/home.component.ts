@@ -70,6 +70,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "productsQuantity", Title: "Products Quantity", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.supplier.action", Selectable: false, Sortable: true },
 
+
     ];
 
 

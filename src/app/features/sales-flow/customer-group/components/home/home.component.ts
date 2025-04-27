@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { SharedService } from 'src/app/shared/service/shared.service';
@@ -23,12 +23,15 @@ export class HomeComponent extends CrudIndexBaseUtils {
   modalRef: BsModalRef;
   override items: customerGroupViewModel[] = [];
   selectedItem: customerGroupViewModel;
-
+  editableCustomerGroup: customerGroupViewModel = { id: '', name: '' };
+  isEditing:boolean=false;
+ @ViewChild('CustomerGroupModalTemplate', { static: false }) CustomerGroupModalTemplate: TemplateRef<any>;
   constructor(
     public override _sharedService: SharedService,
     private _pageService: CustomerGroupService,
     private _router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+     private modalService: BsModalService 
   ) {
     super(_sharedService);
   }
@@ -39,11 +42,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   initializePage() {
     this.page.columns = [
-      { Name: 'No', Title: '#', Selectable: true, Sortable: false },
-      { Name: 'Check', Title: '#', Selectable: true, Sortable: false },
-      { Name: 'Name', Title: 'Customer Group', Selectable: false, Sortable: true },
-      { Name: 'Tax Exempt', Title: 'Tax Exempt', Selectable: false, Sortable: true },
-      { Name: 'Action', Title: 'Action', Selectable: false, Sortable: true },
+      { Name: "No", Title: "#", Selectable: true, Sortable: false },
+
+      { Name: "Name", Title: "salesflow.customerGroup.name", Selectable: false, Sortable: true },
+      // { Name: "isActive", Title: "Activation", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "salesflow.customerGroup.action", Selectable: false, Sortable: true },
     ];
     //this.subscribeToParentEvent();
     this.createSearchForm();
@@ -164,5 +167,102 @@ export class HomeComponent extends CrudIndexBaseUtils {
       },
     };
     }
+   
   
+    saveCustomerGroup() {
+      if (!this.editableCustomerGroup.name) {
+        return;
+      }
+    
+      if (this.isEditing) {
+        // Editing existing customer group
+        this._pageService.postOrUpdate(this.editableCustomerGroup).subscribe(response => {
+          this._sharedService.showToastr(response);
+          if (response.isSuccess) {
+            this.modalRef.hide();
+            this.search();
+          }
+        });
+      } else {
+        // Creating new customer group
+        this._pageService.postOrUpdate(this.editableCustomerGroup).subscribe(response => {
+          this._sharedService.showToastr(response);
+          if (response.isSuccess) {
+            this.modalRef.hide();
+            this.search();
+          }
+        });
+      }
+    }
+    
+    // activateCustomerGroups() {
+    //   const selectedIds = this.items
+    //     .filter(item => item.selected)
+    //     .map(item => item.id);
+  
+    //   if (selectedIds.length > 0) {
+    //     this._pageService.bulkActivate(selectedIds).subscribe(response => {
+    //       this._sharedService.showToastr(response);
+    //       if (response.isSuccess) {
+    //         this.items.forEach(item => {
+    //           if (selectedIds.includes(item.id)) {
+    //             item.isActive = true;
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+    // }
+  
+    // disActiveCustomerGroups() {
+    //   const selectedIds = this.items
+    //     .filter(item => item.selected)
+    //     .map(item => item.id);
+  
+    //   if (selectedIds.length > 0) {
+    //     this._pageService.bulkDeactivate(selectedIds).subscribe(response => {
+    //       this._sharedService.showToastr(response);
+    //       if (response.isSuccess) {
+    //         this.items.forEach(item => {
+    //           if (selectedIds.includes(item.id)) {
+    //             item.isActive = false;
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+    // }
+
+
+
+    openCustomerGroupModal(editMode: boolean, CustomerGroup?: customerGroupViewModel) {
+      this.isEditing = editMode;
+    
+      if (editMode && CustomerGroup) {
+        this.editableCustomerGroup = { 
+          id: CustomerGroup.id, 
+          name: CustomerGroup.name,  
+         // isActive: CustomerGroup.isActive 
+        };
+      } else {
+        this.editableCustomerGroup = { id: '', name: ''};
+      }
+    
+     
+      if (this.CustomerGroupModalTemplate) {
+        this.modalRef = this.modalService.show(this.CustomerGroupModalTemplate, { class: 'modal-md' });
+        
+      } 
+    }
+    isAllSelected(): boolean {
+      return this.items.every(item => item.selected);
+    }
+  
+    // Toggle the selection of all items
+    toggleSelectAll(event: any): void {
+      const isChecked = event.target.checked;
+      this.items.forEach(item => {
+        item.selected = isChecked;
+      });
+    }
 }

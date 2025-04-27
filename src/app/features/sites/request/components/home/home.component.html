@@ -1,66 +1,50 @@
-<div class="row bg-gray-200 p-3 cr3">
-    <div class="col-6 ">
-        <h4 class="text-lg font-semibold text-gray-900">Requests</h4>
-        <p class="text-sm text-gray-600 max-w-xl">
-            This tool helps you manage orders efficiently as they can be categorized and information can be easily
-            updated to ensure an organized user experience.
+<div class="row  p-3 cr3">
+    <div class="col-6 bg-gray-200  cr3 p-3">
+        <h4 class="text-lg font-semibold text-gray-900">{{"sites.request.requests"| translate}}</h4>
+        <p class="text-sm text-gray-600 max-w-xl ">
+            {{"sites.request.defination"| translate}}
         </p>
     </div>
-    <div class="col-6 d-flex justify-content-end align-items-center">
+    <div class="col-6 d-flex justify-content-end align-items-center bg-gray-200  cr3 p-3">
         <button class="bg-purple-500 py-2 px-4 text-white border-0 rounded" (click)="showCartDialog($event)">
-            Add Request
+            {{"sites.request.addRequest"| translate}}
         </button>
     </div>
-</div>
 
-<!-- Sidebar -->
-<div class="sidebar" [class.open]="cartVisible">
-    <div class="sidebar-header d-flex justify-content-between align-items-center">
-        <h4>Add Transfer</h4>
-        <button class="btn-close" (click)="closeCartDialog()">&times;</button>
-    </div>
-    <div class="sidebar-body">
-
-        <p>Here you can enter transfer details...</p>
-    </div>
-</div>
-
-<!-- Overlay -->
-<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
-<div>
 
     <form [formGroup]="page.searchForm">
         <div class="form-body p-3">
             <div class="row g-2">
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="RequestNumber" label="Request Number"
-                        placeholder="Request Number">
+                    <ng-control [form]="page.searchForm" control="RequestNumber" label="sites.request.requestNumber"
+                        placeholder="sites.request.requestNumber">
                     </ng-control>
                 </div>
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="SalesManPhone" label="Sales Man Phone"
-                        placeholder="Sales Man Phone">
+                    <ng-control [form]="page.searchForm" control="SalesManPhone" label="sites.request.salesManPhone"
+                        placeholder="sites.request.salesManPhone">
                     </ng-control>
                 </div>
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="SalesManName" label="Sales Man Name"
-                        placeholder="Sales Man Name">
+                    <ng-control [form]="page.searchForm" control="SalesManName" label="sites.request.salesManName"
+                        placeholder="sites.request.salesManName">
                     </ng-control>
                 </div>
                 <div class="col-2">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="RequestStatus" (change)="onStatusChange($event.id
-          )" label="Request Status" placeholder="Request Status" [items]="RequestStatuslist"></ng-control>
+          )" label="sites.request.requestStatus" placeholder="sites.request.requestStatus" [items]="RequestStatuslist"></ng-control>
                 </div>
 
                 <div class="col-2">
 
-                    <ng-control [form]="page.searchForm" control="FromDate" label="FromDate"
+                    <ng-control [form]="page.searchForm" control="From" label="sites.request.fromDate"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
                 </div>
                 <div class="col-2">
 
-                    <ng-control [form]="page.searchForm" control="ToDate" label="ToDate"
+                    <ng-control [form]="page.searchForm" control="To" label="sites.request.toDate"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
+
                 </div>
                 <div class="col-2 d-flex align-items-end">
                     <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
@@ -76,6 +60,93 @@
 
         </div>
     </form>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" [class.open]="cartVisible">
+    <div class="sidebar-header d-flex justify-content-between align-items-center">
+        <h4> {{"sites.request.addRequest"| translate}}</h4>
+        <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+    </div>
+    <div class="sidebar-body p-3">
+        <div class="transfer-process d-flex align-items-center mb-3">
+            <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
+                style="width: 30px; height: 30px;" />
+            <p class="mb-0 fw-bold">{{"sites.request.requestProcess"| translate}}</p>
+        </div>
+        <div class="row p-2">
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID" label="sites.request.salesManName"
+                placeholder="sites.request.salesManName" [items]="SalesMen">
+            </ng-control>
+        </div>
+        <div class="row p-2">
+            <ng-control [type]="pageCreate.ControlType.SELECT" [form]="pageCreate.form" control="warehouseId"
+                label="sites.request.warehouse" placeholder="sites.request.warehouse" [items]="WarehouseList">
+            </ng-control>
+
+
+        </div>
+      
+        <div class="row p-2" style="font-size: 12px;">
+            <p class="form-label ">
+                {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+            </p>
+
+            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+                placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
+            </ng-control>
+        </div>
+
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>{{"sites.request.product"| translate}}</th>
+                    <th>{{"sites.request.quantity"| translate}}</th>
+                    <th class="text-center">{{"sites.request.action"| translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of cartItems; let i = index">
+                    <td>{{ item.productName }}</td>
+
+                    <td class="d-flex align-items-center gap-2">
+                        <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="decreaseQuantity(i)">
+                        </button>
+                        {{ item.quantity }}
+                        <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="increaseQuantity(i)">
+                        </button>
+                    </td>
+
+                    <td class="text-center">
+                        <button pButton icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                            (click)="removeProduct(i)">
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+        <button pButton type="button" [ngStyle]="{
+            'border': '1px solid purple',
+            'color': 'purple',
+            'background-color': 'transparent'
+          }" class="rounded" (click)="closeCartDialog()">{{"sites.request.cancel"| translate}}</button>
+        <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+        [disabled]="pageCreate.form?.invalid || page.isSaving ||cartItems.length===0"
+            (click)="saveRequest()">{{"sites.request.save"| translate}}</button>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
+<div>
+
+   
 
     <div class="scrolled mt-3 h-100">
         <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>

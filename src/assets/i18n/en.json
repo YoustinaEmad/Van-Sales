@@ -283,7 +283,8 @@
       "salesMan": "SalesMan",
       "productGroup": "Product Group",
       "transfers":"Transfers",
-      "requests":"Requests"
+      "requests":"Requests",
+      "customergroup":"Customer Group"
     },
     "Category": {
       "category": "Category",
@@ -430,6 +431,47 @@
       "Passwords do not match":"Passwords do not match",
        "UploadNewImage":"Upload New Image",
       "ErrorUploading":"Error Uploading"
+    },
+    "request":{
+      "requests":"Requests",
+      "request":"'Request",
+      "defination":"This tool helps you manage orders efficiently as they can be categorized and information can be easilyupdated to ensure an organized user experience",
+      "addRequest":"Add Request",
+      "requestNumber":"Request Number",
+      "salesManPhone" :"Sales Man Phone" ,
+      "salesManName":"Sales Man Name",
+      "requestStatus":"Request Status",
+      "fromDate":"From Date",
+      "toDate":"To Date",
+      "action":"Action",
+      "warehouseName":"Warehouse Name",
+      "quantity":"Quantity",
+      "createDate":"Create Date",
+      "requestProcess":"Request Process",
+      "product":"product",
+      "warehouse":"Warehouse",
+      "save":"Save",
+      "cancel":"Cancel"
+    },
+    "transfer": {
+      "transferOrders": "Transfer Orders",
+      "defination": "This tool helps you efficiently manage sales representatives. You can categorize and update the information easily to ensure an organized user experience.",
+      "addTransferOperation": "Add Transfer Operation",
+      "data": "Data",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "warehouseToWarehouseStatus": "Warehouse To Warehouse Status",
+      "fromWarehouse": "From Warehouse",
+      "toWarehouse": "To Warehouse",
+      "transferProcess": "Transfer Process",
+      "salesMan": "Sales Man",
+      "product": "Product",
+      "quantity": "Quantity",
+      "save": "Save",
+      "cancel": "Cancel",
+      "action": "Action",
+      "transactionNumber":"Transaction Number",
+      "warehouseStatus":"Warehouse Status"
     }
     
   },
@@ -447,6 +489,23 @@
       "submit": "Submit",
       "login": "Login",
       "goToLogin": "Go To Login"
+    }
+  },
+  "salesflow":{
+    "customerGroup":{
+      "customerGroup":"Customer Group",
+      "customerGroups":"Customer Groups",
+      "delete":"Delete ",
+      "create":"Create Customer Group",
+      "active":"Active",
+      "disActive":"DisActive",
+      "cancel":"Cancel",
+      "confirm":"Confirm",
+      "areyousureyouwanttodeletetheselectedCustomerGroups":"Are you sure you want to delete the selected CustomerGroups?",
+      "editCustomerGroup":"Edit Customer Group",
+      "saveChanges":"Save Changes",
+      "name":" Name",
+      "action":"Action"
     }
   }
 }

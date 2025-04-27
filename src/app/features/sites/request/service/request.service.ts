@@ -35,12 +35,15 @@ export class RequestService {
     if (searchViewModel.WarehouseId) {
       params = params.set("WarehouseId", searchViewModel.WarehouseId);
     }
-    if (searchViewModel.FromDate) {
-      params = params.set("FromDate", this.formatDate(searchViewModel.FromDate));
+    if (searchViewModel.From) {
+      params = params.set("From", this.formatDate(searchViewModel.From));
     }
-    if (searchViewModel.ToDate) {
-      params = params.set("ToDate", this.formatDate(searchViewModel.ToDate));
+    if (searchViewModel.To) {
+      
+      params = params.set("To", this.formatDate(searchViewModel.To));
     }
+    
+    console.log(params);
     return this._apiService.get(`/GetAllSalesManRequestsEndPoint/GetAllSalesManRequests?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
 
@@ -59,5 +62,13 @@ export class RequestService {
     else return this._apiService.post(`/AddSalesmanRequestEndpoint/AddSalesmanRequest
 `, body)
   }
-
+  getWarehouses() {
+    return this._apiService.get('/WarehouseSelectListEndpoint/SelectWarehouseList');
+  }
+  getSalesMen() {
+    return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
+  }
+  getProducts() {
+    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+  }
 }
