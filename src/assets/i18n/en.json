@@ -282,8 +282,9 @@
       "suppliers": "Suppliers",
       "salesMan": "SalesMan",
       "productGroup": "Product Group",
-      "transfers":"transfers",
-      "requests":"requests"
+      "transfers":"Transfers",
+      "requests":"Requests",
+      "customergroup":"Customer Group"
     },
     "Category": {
       "category": "Category",
@@ -488,6 +489,21 @@
       "submit": "Submit",
       "login": "Login",
       "goToLogin": "Go To Login"
+    }
+  },
+  "salesflow":{
+    "customerGroup":{
+      "customerGroup":"Customer Group",
+      "customerGroups":"Customer Groups",
+      "delete":"Delete ",
+      "create":"Create Customer Group",
+      "active":"Active",
+      "disActive":"DisActive",
+      "cancel":"Cancel",
+      "confirm":"Confirm",
+      "areyousureyouwanttodeletetheselectedCustomerGroups":"Are you sure you want to delete the selected CustomerGroups?",
+      "editCustomerGroup":"Edit Customer Group",
+      "saveChanges":"Save Changes"
     }
   }
 }

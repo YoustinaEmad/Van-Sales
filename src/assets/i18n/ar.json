@@ -273,7 +273,8 @@
       "salesMan": "مندوب المبيعات",
       "productGroup": "مجموعة المنتجات",
       "transfers": "التحويلات",
-      "requests": "الطلبات"
+      "requests": "الطلبات",
+      "customergroup":"مجموعة العملاء"
     },
     "Category": {
       "category": "فئة",
@@ -476,6 +477,21 @@
       "submit": "ارسال",
       "login": "تسجيل الدخول",
       "goToLogin": "اذهب لتسجيل الدخول"
+    }
+  },
+  "salesflow":{
+    "customerGroup":{
+      "customerGroup":"مجموعة العملاء",
+      "customerGroups":"مجموعات العملاء",
+      "delete":"حذف",
+      "create":"انشاء مجموعة عملاء",
+      "active":"تفعيل",
+      "disActive":"الغاء التفعيل",
+      "cancel":"الغاء",
+      "confirm":"تاكيد",
+      "areyousureyouwanttodeletetheselectedCustomerGroups":"هل أنت متأكد من أنك تريد حذف مجموعات العملاء المحددة؟",
+      "editCustomerGroup":"تعديل مجموعة العملاء",
+      "saveChanges":"حفظ التغيرات"
     }
   }
 }

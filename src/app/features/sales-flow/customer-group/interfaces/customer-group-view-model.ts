@@ -1,13 +1,13 @@
 export interface customerGroupViewModel {
     id: string;
     name: string;
-    taxExempted: boolean;
     selected?: boolean; 
+   // isActive:boolean;
 }
 export class customerGroupCreateViewModel {
     id:string;
     name:string;
-    taxExempted:boolean
+   // isActive:boolean;
 }
 export class customerGroupSearchViewModel {
     Name:string;

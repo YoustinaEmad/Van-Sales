@@ -45,5 +45,14 @@ export class CustomerGroupService {
   bulkDelete(ids: string[]) {
     return this._apiService.remove(`/BulkDeleteClientGroupsEndpoint/BulkDeleteClientGroups`, { ids });
   }
+
+  bulkActivate(ids: string[]) {
+    return this._apiService.update(`/BulkActiveProductGroupEndPoint/BulkActivateProductGroup`, { ids });
+  }
+
+
+  bulkDeactivate(ids: string[]) {
+    return this._apiService.update(`/BulkDeactiveProductGroupEndPoint/BulkDeactivateProductGroup`, { ids });
+  }
   
 }
