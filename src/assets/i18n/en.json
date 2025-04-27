@@ -284,7 +284,8 @@
       "productGroup": "Product Group",
       "transfers":"Transfers",
       "requests":"Requests",
-      "customergroup":"Customer Group"
+      "customergroup":"Customer Group",
+      "roles":"Roles"
     },
     "Category": {
       "category": "Category",

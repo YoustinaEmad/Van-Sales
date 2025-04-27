@@ -274,7 +274,8 @@
       "productGroup": "مجموعة المنتجات",
       "transfers": "التحويلات",
       "requests": "الطلبات",
-      "customergroup":"مجموعة العملاء"
+      "customergroup":"مجموعة العملاء",
+      "roles":"الادوار"
     },
     "Category": {
       "category": "فئة",
