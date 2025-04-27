@@ -98,10 +98,14 @@ export function httpLoaderFactory(http: HttpClient) {
 export class SharedModule {
   constructor(
     private translate: TranslateService,
-    @Inject(DOCUMENT) private document: Document,
 
-    private localizationService: LocalizationService
-  ) {
+    private localizationService: LocalizationService,
+    @Inject(DOCUMENT) private document: Document
+  ) 
+  
+  {
+
+   
     //this.translate.use(localizationService.getLanguage());
     //localizationService.setLanguage(localizationService.getLanguage());
 
