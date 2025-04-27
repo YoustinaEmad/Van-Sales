@@ -4,16 +4,32 @@
         <div class="container">
             <div class="d-flex align-items-center w-100 ">
                 <h1 class=" m-0 color-gray-900">Logo</h1>
-                <input type="text" class="form-control cr2 pad-8-16 search-input mx-4 flex-grow-1"
-                    placeholder="Search...">
+                <div type="text" class=" cr2 pad-8-16  mx-4 flex-grow-1"></div>
 
                 <!-- Right section: User Profile -->
-                <div class="d-flex align-items-center" routerLink="/sites/employeeProfile" class="pointer">
+                <div class="d-flex align-items-center " routerLink="/sites/employeeProfile" class="pointer">
                     <img src="./assets/images/avatar.svg" alt="User Image" class="rounded-circle" width="40"
                         height="40">
                     <div class="ms-2">
-                        <span class="ts color-gray-800 text-nowrap" >Yasmin Ahmed</span><br>
-                        <small class="ts text-muted" >Admin</small>
+                        <span class="ts color-gray-800 text-nowrap">Yasmin Ahmed</span><br>
+                        <small class="ts text-muted">Admin</small>
+                    </div>
+                </div>
+
+                <div class="dropdown ms-3 position-relative">
+                    <button #langButton class="btn d-flex  dropdown-toggle align-items-center rounded-pill px-3 py-1"
+                        type="button" (click)="toggleLangOptions()">
+                        🌐 <span class="mx-2 color-gray-900">{{ currentLang.toUpperCase() }}</span>
+                    </button>
+
+                    <div #langDropdown class="dropdown-menu show custom-lang-dropdown position-absolute end-0 mt-2 "
+                        *ngIf="showLangOptions">
+                        <a class="dropdown-item lang-option  color-gray-900" (click)="changeLang('en')">
+                            <span class="me-2 ">🇺🇸</span> English
+                        </a>
+                        <a class="dropdown-item lang-option color-gray-900" (click)="changeLang('ar')">
+                            <span class="me-2">🇸🇦</span> العربية
+                        </a>
                     </div>
                 </div>
             </div>

@@ -98,27 +98,25 @@ export function httpLoaderFactory(http: HttpClient) {
 export class SharedModule {
   constructor(
     private translate: TranslateService,
-    private localizationService: LocalizationService,
-    @Inject(DOCUMENT) private document: Document
-  ) 
-  
-  {
-    const lang="ar";
+    @Inject(DOCUMENT) private document: Document,
 
+    private localizationService: LocalizationService
+  ) {
+    //this.translate.use(localizationService.getLanguage());
+    //localizationService.setLanguage(localizationService.getLanguage());
+
+    const lang = localizationService.getLanguage();
     this.translate.use(lang);
-    localizationService.setLanguage(lang);
     this.setDirection(lang);
+    // const lang = 'en';
+    // this.translate.use(lang);
+    // localizationService.setLanguage(lang);
+    // this.setDirection(lang);
 
   }
-
-  private setDirection(lang: string): void {
-    const html = this.document.documentElement;
-    if (lang === 'ar') {
-      html.setAttribute('dir', 'rtl');
-      html.setAttribute('lang', 'ar');
-    } else {
-      html.setAttribute('dir', 'ltr');
-      html.setAttribute('lang', 'en');
-    }
+  setDirection(lang: string) {
+    const dir = lang === 'ar' || lang === 'he' ? 'rtl' : 'ltr';
+    this.document.documentElement.dir = dir;
+    this.document.documentElement.lang = lang;
   }
 }
