@@ -245,7 +245,7 @@ Tabs:any[]=[];
         wholesalePrice: [this.item.wholesalePrice || '', Validators.required],
         retailPrice: [this.item.retailPrice, [Validators.required, Validators.min(1)]],
         numOfUnitPerCartoon: [this.item.numOfUnitPerCartoon, [Validators.required, Validators.min(1)]],
-        vIPClientsPrice: [this.item.vIPClientsPrice, [Validators.required, Validators.min(1)]],
+        vipClientsPrice: [this.item.vipClientsPrice, [Validators.required, Validators.min(1)]],
         safetyStocks: [this.item.safetyStocks, [Validators.required, Validators.min(1)]],
         packSize: [this.item.packSize, [Validators.required, Validators.min(1)]],
         netWeightPerLitre: [this.item.netWeightPerLitre, [Validators.required, Validators.min(1)]],
@@ -262,7 +262,7 @@ Tabs:any[]=[];
         productStatus: [this.item.productStatus, [Validators.required] ],
         categoryID: [this.item.categoryID, Validators.required],
         productGroupID: [this.item.productGroupID, [Validators.required]],
-        ProductAPI: [this.item.ProductAPI, [Validators.required]],
+        productAPI: [this.item.productAPI, [Validators.required]],
 
       },
       { validators }
@@ -296,6 +296,7 @@ Tabs:any[]=[];
         this.page.responseViewModel = res;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
+          console.log(res)
           this._router.navigate(['/sites/product']);
         }
       },

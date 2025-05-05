@@ -5,7 +5,7 @@ export interface productViewModel {
   smallerUnitsOfMeasurements:number;
   wholesalePrice:number;
   retailPrice:number;
-  vIPClientsPrice:number
+  vipClientsPrice:number
   numOfUnitPerCartoon:number;
   safetyStocks:number;
   packSize:number;
@@ -30,7 +30,7 @@ export class productCreateViewModel {
   smallerUnitsOfMeasurements:number;
   wholesalePrice:number;
   retailPrice:number;
-  vIPClientsPrice:number;
+  vipClientsPrice:number;
   numOfUnitPerCartoon:number;
   safetyStocks:number;
   packSize:number;
@@ -42,7 +42,7 @@ export class productCreateViewModel {
   productStatus:number;
   categoryID:string;
   productGroupID:string
-  ProductAPI:string;
+  productAPI:string;
 
 }
 export class productSearchViewModel {
