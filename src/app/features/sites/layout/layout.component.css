@@ -20,3 +20,17 @@ a:hover {
   text-overflow: ellipsis;
   vertical-align: middle;
 }
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: rgb(215, 211, 211) !important;
+}
+.dropdown-menu {
+  transform: translateX(-50%); 
+  left: 50% !important; 
+  top: 100% !important; 
+}
+.dropdown-menu.show {
+ 
+  position: absolute;
+
+}

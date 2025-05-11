@@ -275,7 +275,9 @@
       "transfers": "التحويلات",
       "requests": "الطلبات",
       "customergroup":"مجموعة العملاء",
-      "roles":"الادوار"
+      "roles":"الادوار",
+      "supplyChain":"سلاسل الامداد",
+      "location":"الموقع "
     },
     "Category": {
       "category": "فئة",

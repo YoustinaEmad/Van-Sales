@@ -285,7 +285,9 @@
       "transfers":"Transfers",
       "requests":"Requests",
       "customergroup":"Customer Group",
-      "roles":"Roles"
+      "roles":"Roles",
+      "supplyChain":"Supply Chain",
+      "location":"Location"
     },
     "Category": {
       "category": "Category",

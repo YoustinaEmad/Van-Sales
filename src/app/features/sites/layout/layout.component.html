@@ -1,31 +1,99 @@
 <nav class="d-flex justify-content-start py-3 border-bottom bg-gray-100 px-5">
-    <div class="container">
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/sites/dashboard">Home</a> -->
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/governorates">{{"sites.layout.governorates"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/cities">{{"sites.layout.cities"|translate}}</a>
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/sites/company">Companies</a> -->
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/category">{{"sites.layout.category"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/product">{{"sites.layout.product"|translate}}</a>
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/salesflow/customers">Customers</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/salesflow/order">Order</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/salesflow/roles">Roles</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/salesflow/customergroup">CustomerGroup</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/sites/signUpRequest">SignUpRequest</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/salesflow/email">Email</a> -->
-        <!-- <a class="ms-3 color-gray-900  no-underline" routerLink="/sites/jobTitle">Employees</a> -->
+    <div class="container d-flex align-items-center flex-wrap">
 
-        <a class="ms-3 color-gray-900  no-underline" routerLink="/sites/warehouse">{{"sites.layout.warehouse"|translate}}</a>
+        <!-- Location Dropdown -->
+        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'location'">
+            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('location')">
+                {{"sites.layout.location" | translate}}
+            </a>
+            <ul class="dropdown-menu" [class.show]="openDropdown === 'location'">
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/governorates"  (click)="openDropdown = null">
+                        {{"sites.layout.governorates" | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/cities" (click)="openDropdown = null">
+                        {{"sites.layout.cities" | translate}}
+                    </a>
+                </li>
+            </ul>
+        </li>
 
 
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/supplier">{{"sites.layout.suppliers"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/salesMan">{{"sites.layout.salesMan"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/productGroup">{{"sites.layout.productGroup"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/transfers">{{"sites.layout.transfers"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/sites/request">{{"sites.layout.requests"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/salesflow/customergroup">{{"sites.layout.customergroup"|translate}}</a>
-        <a class="navbar-link ms-3 color-gray-900  no-underline" routerLink="/salesflow/roles">{{"sites.layout.roles"|translate}}</a>
+         <!-- Items Dropdown -->
+         <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'items'">
+            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('items')">
+                {{"sites.layout.items" | translate}}
+            </a>
+            <ul class="dropdown-menu" [class.show]="openDropdown === 'items'">
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/category"  (click)="openDropdown = null">
+                        {{"sites.layout.category" | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/product"  (click)="openDropdown = null">
+                        {{"sites.layout.product" | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/productGroup"  (click)="openDropdown = null">
+                        {{"sites.layout.productGroup" | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/brand"  (click)="openDropdown = null">
+                        {{"sites.layout.brand" | translate}}
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+
+        <!-- SNO Dropdown -->
+        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'supplyChain'">
+            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('supplyChain')">
+                {{"sites.layout.supplyChain" | translate}}
+            </a>
+            <ul class="dropdown-menu" [class.show]="openDropdown === 'supplyChain'">
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/transfers"(click)="openDropdown = null">
+                        {{"sites.layout.transfers" | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/warehouse"(click)="openDropdown = null">
+                        {{"sites.layout.warehouse" | translate}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Other Navigation Links -->
+      
+       
+       
+        <!-- <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/supplier">
+            {{"sites.layout.suppliers" | translate}}
+        </a> -->
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/salesMan">
+            {{"sites.layout.salesMan" | translate}}
+        </a>
+        
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/request">
+            {{"sites.layout.requests" | translate}}
+        </a>
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customergroup">
+            {{"sites.layout.customergroup" | translate}}
+        </a>
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/roles">
+            {{"sites.layout.roles" | translate}}
+        </a>
+
     </div>
 </nav>
+
 <div class="my-5 bg-gray-25 container cr5">
-<router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </div>
