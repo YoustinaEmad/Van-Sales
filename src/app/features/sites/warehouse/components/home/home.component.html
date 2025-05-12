@@ -96,14 +96,14 @@
                     </td>
                 </tr>
                 <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
-                    <tr>
+                    <tr class="clickable-row " (click)="navigateToWarehouseDetails(item.id)">
                         <!-- Added Checkbox in the Second Column -->
 
 
                         <td>
                             <input type="checkbox" [(ngModel)]="item.selected" />
                         </td>
-                        <td>{{i+1}}</td>
+                        <td >{{i+1}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.code}}</td>
                         <td>{{item.data}}</td>

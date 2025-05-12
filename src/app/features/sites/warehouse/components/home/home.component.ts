@@ -266,4 +266,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
+   navigateToWarehouseDetails(id: string) {
+    this._router.navigate(['/sites/warehouse/details', id]);
+
+  }
+
+
 }
