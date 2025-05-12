@@ -283,6 +283,7 @@
       "salesMan": "SalesMan",
       "productGroup": "Product Group",
       "transfersWarehouseToWarehouse":"Transfers Warehouse To Warehouse",
+      "transferSalesManToSalesMan":"Transfer SalesMan To SalesMan",
       "requests":"Requests",
       "customergroup":"Customer Group",
       "roles":"Roles",

@@ -273,6 +273,7 @@
       "salesMan": "مندوب المبيعات",
       "productGroup": "مجموعة المنتجات",
       "transfersWarehouseToWarehouse": " التحويلات من مخزن الى مخزن",
+      "transferSalesManToSalesMan":"التحويلات من مندوب الى مندوب ",
       "requests": "الطلبات",
       "customergroup":"مجموعة العملاء",
       "roles":"الادوار",

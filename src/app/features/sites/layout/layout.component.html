@@ -57,14 +57,20 @@
                 {{"sites.layout.supplyChain" | translate}}
             </a>
             <ul class="dropdown-menu" [class.show]="openDropdown === 'supplyChain'">
+               
+                <li>
+                    <a class="dropdown-item" routerLink="/sites/warehouse"(click)="openDropdown = null">
+                        {{"sites.layout.warehouse" | translate}}
+                    </a>
+                </li>
                 <li>
                     <a class="dropdown-item" routerLink="/sites/transfers"(click)="openDropdown = null">
                         {{"sites.layout.transfersWarehouseToWarehouse" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/warehouse"(click)="openDropdown = null">
-                        {{"sites.layout.warehouse" | translate}}
+                    <a class="dropdown-item" routerLink="/sites/transferSalesManToSalesMan"(click)="openDropdown = null">
+                        {{"sites.layout.transferSalesManToSalesMan" | translate}}
                     </a>
                 </li>
             </ul>
