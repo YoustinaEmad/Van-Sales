@@ -55,12 +55,12 @@ getStatusName(statusId: number): string {
  initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
-      { Name: "clientNumber", Title: "clientNumber", Selectable: false, Sortable: true },
-      { Name: "fromSalesManName", Title: "fromSalesManName", Selectable: false, Sortable: true },
-      { Name: "toSalesMan", Title: "toSalesMan", Selectable: false, Sortable: true },
-       { Name: "transactionStatus", Title: "transactionStatus", Selectable: false, Sortable: true },
-        { Name: "productsQuantity", Title: "productsQuantity", Selectable: false, Sortable: true },
-           { Name: "createdDate", Title: "createdDate", Selectable: false, Sortable: true },
+      { Name: "transactionNumber", Title: "sites.transferSalesManToSalesMan.transactionNumber", Selectable: false, Sortable: true },
+      { Name: "fromSalesManName", Title: "sites.transferSalesManToSalesMan.fromSalesManID", Selectable: false, Sortable: true },
+      { Name: "toSalesMan", Title: "sites.transferSalesManToSalesMan.toSalesManID", Selectable: false, Sortable: true },
+       { Name: "transactionStatus", Title: "sites.transferSalesManToSalesMan.transactionStatus", Selectable: false, Sortable: true },
+        { Name: "productsQuantity", Title: "sites.transferSalesManToSalesMan.productsQuantity", Selectable: false, Sortable: true },
+           { Name: "createdDate", Title: "sites.transferSalesManToSalesMan.createdDate", Selectable: false, Sortable: true },
       { Name: "", Title: "Action", Selectable: false, Sortable: true },
     ];
 

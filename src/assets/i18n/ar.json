@@ -469,6 +469,22 @@
       "transactionNumber":"رقم التحويل",
       "warehouseStatus":"حالة المخزن",
       "SalesMan OR Transaction_Number":" رقم التحويل او مندوب المبيعات "
+    },
+    "transferSalesManToSalesMan": {
+      "transferSalesManToSalesMan":"تحويل من بائع إلى بائع",
+      "transfer":"تحويل",
+      "fromSalesManID":"من البائع",
+      "toSalesManID":"إلى البائع",
+      "transactionStatus":"حالة المعاملة",
+      "transactionNumber":"رقم المعاملة",
+      "productsQuantity":"كمية المنتجات",
+      "createdDate":"تاريخ الإنشاء",
+      "approve":"قبول",
+      "reject":"رفض",
+      "enter rejection reason":"أدخل سبب الرفض",
+      "cancel":"الغاء",
+      "sendFeedback":"إرسال ردود الفعل",
+      "rejectReason":"سبب الرفض"
     }
   },
   "auth": {
