@@ -12,7 +12,12 @@ export class CustomersService {
   [x: string]: any;
 
   constructor(private _apiService: ApiService) { }
-
+  private formatDate(date: Date): string {
+    const yyyy = date.getFullYear();
+    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+    const dd = date.getDate().toString().padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
   get(searchViewModel: customerSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number = 0) {
     if (pageSize == 0)
       pageSize = environment.pageSize;
@@ -30,11 +35,14 @@ export class CustomersService {
     if (searchViewModel.NationalNumber) {
       params = params.set("NationalNumber", searchViewModel.NationalNumber);
     }
-    if (searchViewModel.VerifyStatus) {
-      params = params.set("VerifyStatus", searchViewModel.VerifyStatus);
-    }
     if (searchViewModel.Mobile) {
       params = params.set("Mobile", searchViewModel.Mobile);
+    }
+    if (searchViewModel.From) {
+      params = params.set("From", this.formatDate(searchViewModel.From));
+    }
+    if (searchViewModel.To) {
+      params = params.set("To", this.formatDate(searchViewModel.To));
     }
     return this._apiService.get(`/SearchClientEndPoint/SearchClient?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
@@ -56,9 +64,7 @@ export class CustomersService {
     if (searchViewModel.NationalNumber) {
       params = params.set("NationalNumber", searchViewModel.NationalNumber);
     }
-    if (searchViewModel.VerifyStatus) {
-      params = params.set("VerifyStatus", searchViewModel.VerifyStatus);
-    }
+    
     if (searchViewModel.Mobile) {
       params = params.set("Mobile", searchViewModel.Mobile);
     }
@@ -109,7 +115,6 @@ export class CustomersService {
   }
   
   getCustomerExcel(searchViewModel: customerSearchViewModel) {
-    
     let params = new HttpParams();
     if (searchViewModel.Name) {
       params = params.set("Name", searchViewModel.Name);
@@ -122,9 +127,6 @@ export class CustomersService {
     }
     if (searchViewModel.NationalNumber) {
       params = params.set("NationalNumber", searchViewModel.NationalNumber);
-    }
-    if (searchViewModel.VerifyStatus) {
-      params = params.set("VerifyStatus", searchViewModel.VerifyStatus);
     }
     if (searchViewModel.Mobile) {
       params = params.set("Mobile", searchViewModel.Mobile);

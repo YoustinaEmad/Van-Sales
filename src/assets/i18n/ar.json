@@ -499,6 +499,34 @@
       "saveChanges":"حفظ التغيرات",
       "name":"الاسم",
       "action":"الاجراءات"
-    }
+    },
+    "customers":{
+      "name":"العميل",
+      "activation":"تفعيل",
+      "Client Group Name":"مجموعة العملاء",
+      "email":"ايميل",
+      "nationalNumber":"الرقم القومي",
+      "mobile":"الموبايل",
+      "Img":"الصورة",
+      "action":"الاجراءات",
+      "customers":"العملاء",
+      "download":"تنزيل",
+      "active": "تفعيل",
+      "disActive": "الغاء التفعيل",
+      "cancel": "الغاء",
+      "confirm": "تاكيد",
+      "Add New Customer":"اضافة عميل ",
+      "clientGroup":"مجموعة العملاء",
+      "from":"من تاريخ",
+      "to":"الى تاريخ",
+      "gender":"النوع",
+      "governorate":"المحافظة",
+      "landmark":"علامة مميزة",
+      "city":"المدينة",
+      "street":"الشارع",
+      "Select Location":"حدد الموقع",
+      "Upload New Image":"اضافة صورة جديدة",
+      "Error Uploading":"خطا فى التحميل"
+        }
   }
 }

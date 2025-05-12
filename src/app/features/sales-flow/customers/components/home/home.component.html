@@ -1,14 +1,15 @@
 <div class="mb-2">
   <div class="d-flex justify-content-between align-items-center py-2 px-3">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="mb-0 color-gray-600 ts-5">Customers</h2>
-      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Customers
+      <h2 class="mb-0 color-gray-600 ts-5">{{"salesflow.customers.customers" |translate}}</h2>
+      <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}}
+        {{"salesflow.customers.customers" |translate}}
       </div>
     </div>
-   
 
 
-      <!-- <div class="d-flex">
+
+    <!-- <div class="d-flex">
         <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
         (click)="downloadExcel()">Download Excel</button>
         <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
@@ -25,58 +26,65 @@
 
     <div class="d-flex">
       <div class="position-relative">
-          <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="toggleDownloadOptions()">Download</button>
-          
-          <div *ngIf="showDownloadOptions" class="download-options">
-              <button (click)="downloadExcel()">Excel</button>
-              <button (click)="downloadPDF()">PDF</button>
-          </div>
+        <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+          (click)="toggleDownloadOptions()">{{"salesflow.customers.download" |translate}}</button>
+
+        <div *ngIf="showDownloadOptions" class="download-options">
+          <button (click)="downloadExcel()">Excel</button>
+          <button (click)="downloadPDF()">PDF</button>
+        </div>
       </div>
-  
+
       <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-          (click)="activateCustomers()">Activate</button>
-      
+        (click)="activateCustomers()">{{"salesflow.customers.active" |translate}}</button>
+
       <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-          (click)="disActiveCustomers()">Disactivate</button>
-      
-      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" 
-          (click)="navigateToCreateCustomer()">Add New Customer</button>
-  </div>
-  
+        (click)="disActiveCustomers()">{{"salesflow.customers.disActive" |translate}}</button>
+
+      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
+        (click)="navigateToCreateCustomer()">{{"salesflow.customers.Add New Customer" |translate}}</button>
+    </div>
+
   </div>
   <hr />
   <form [formGroup]="page.searchForm">
     <div class="form-body">
       <div class="row g-2">
-        <div class="col-2">
-          <ng-control [form]="page.searchForm" control="Name" label="Customer Name" placeholder="Customer Name">
+        <div class="col-6 col-md-4 col-lg-3">
+          <ng-control [form]="page.searchForm" control="Name" label="salesflow.customers.name" placeholder="salesflow.customers.name">
           </ng-control>
         </div>
-        <div class="col-2">
-          <ng-control [form]="page.searchForm" control="Email" label="Email" placeholder="Email">
+        <div class="col-6 col-md-4 col-lg-3">
+          <ng-control [form]="page.searchForm" control="Email" label="salesflow.customers.email" placeholder="salesflow.customers.email">
           </ng-control>
         </div>
-        <div class="col-2">
-          <ng-control [form]="page.searchForm" control="NationalNumber" label="National Number"
-            placeholder="National Number">
+        <div class="col-6 col-md-4 col-lg-3">
+          <ng-control [form]="page.searchForm" control="NationalNumber" label="salesflow.customers.nationalNumber"
+            placeholder="salesflow.customers.nationalNumber">
           </ng-control>
         </div>
-        <div class="col-2">
-          <ng-control [form]="page.searchForm" control="Mobile" label="Mobile"
-            placeholder="Mobile">
+        <div class="col-6 col-md-4 col-lg-3">
+          <ng-control [form]="page.searchForm" control="Mobile" label="salesflow.customers.mobile" placeholder="salesflow.customers.mobile">
           </ng-control>
         </div>
-        <div class="col-2">
-          <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="VerifyStatus" label="Verify Status"
-            placeholder="Verify Status" [items]="verifyStatuslist"></ng-control>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ClientGroupId" label="salesflow.customers.clientGroup"
+            placeholder="salesflow.customers.clientGroup" [items]="customerGroups"></ng-control>
         </div>
-        <div class="col-2">
-          <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ClientGroupId" label="Client Group"
-            placeholder="Client GroupId" [items]="customerGroups"></ng-control>
+        <div class="col-6 col-md-4 col-lg-3">
+
+          <ng-control [form]="page.searchForm" control="From" label="salesflow.customers.from"
+            [type]="page.ControlType.INPUT_DATE"></ng-control>
         </div>
-       
-        <div class="col-2 ms-auto d-flex align-items-end">
+
+        <div class="col-6 col-md-4 col-lg-3">
+
+          <ng-control [form]="page.searchForm" control="To" label="salesflow.customers.to"
+            [type]="page.ControlType.INPUT_DATE"></ng-control>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3 ms-auto d-flex align-items-end">
           <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
             [disabled]="page.searchForm.invalid || page.isSearching">
             <i class="uil uil-search"></i>
@@ -84,7 +92,7 @@
               {{'shared.search'|translate}}</span>
           </button>
         </div>
-        
+
       </div>
     </div>
   </form>
@@ -116,11 +124,11 @@
         </tr>
         <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
           <tr>
-           
+
             <td>
               <input type="checkbox" [(ngModel)]="item.selected" />
-          </td>
-          <td>{{i+1}}</td>
+            </td>
+            <td>{{i+1}}</td>
             <td>{{item.name}}</td>
             <td>
               <div class="flex justify-content-center">
@@ -129,16 +137,12 @@
               </div>
             </td>
             <td>{{item.clientGroupName}}</td>
-            <td >{{item.email}}</td>
-            <td>{{ getVerifyStatusName(item.verifyStatus) }}</td>
+            <td>{{item.email}}</td>
             <td>{{item.nationalNumber}}</td>
-            <td>{{item.totalOrders}}</td>
             <td>{{item.mobile}}</td>
-            <td>{{item.phone}}</td>
-
-            <td>{{getOrderStatusName(item.clientActivity)}}</td>
             <td>
-              <img [src]="getImageUrl(item.path)" alt="Cust Image" class="img-thumbnail" style="width: 100px; height: 50px;">
+              <img [src]="getImageUrl(item.path)" alt="Cust Image" class="img-thumbnail"
+                style="width: 100px; height: 50px;">
             </td>
             <td>
               <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info pointer p-0"
@@ -163,11 +167,10 @@
         <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
       </p>
       <div class="d-flex mt-4">
-        <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">Cancel</button>
+        <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"salesflow.customers.cancel" |translate}}</button>
         <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
-          (click)="remove();modalRef.hide();">Confirm</button>
+          (click)="remove();modalRef.hide();">{{"salesflow.customers.confirm" |translate}}</button>
       </div>
     </div>
   </div>
 </ng-template>
-

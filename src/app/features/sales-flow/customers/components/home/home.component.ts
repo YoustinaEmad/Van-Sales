@@ -60,33 +60,23 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   }
 
-  getVerifyStatusName(statusId: number): string {
-
-    const status = this.verifyStatuslist.find(s => s.id === statusId);
-    return status ? status.name : 'Unknown';
-  }
 
   initializePage() {
     this.page.columns = [
 
       { Name: 'No', Title: '#', Selectable: true, Sortable: false },
-      { Name: 'Name', Title: 'Customers', Selectable: false, Sortable: true },
-      { Name: 'Activation', Title: 'Activation', Selectable: false, Sortable: true },
-      { Name: 'Client Group Name', Title: 'Client Group Name', Selectable: false, Sortable: true },
-      { Name: 'Email', Title: 'Email', Selectable: false, Sortable: true },
-      { Name: 'Verify Status', Title: 'Verify Status', Selectable: false, Sortable: true },
-      { Name: 'National Number', Title: 'National Number', Selectable: false, Sortable: true },
-      { Name: 'Total Orders', Title: 'Total Orders', Selectable: false, Sortable: true },
-      { Name: 'Mobile', Title: 'Mobile', Selectable: false, Sortable: true },
-      { Name: 'Phone', Title: 'Phone ', Selectable: false, Sortable: true },
-      { Name: "Customer Activity", Title: "Customer Activity", Selectable: false, Sortable: true },
-      { Name: "Path", Title: "Img", Selectable: false, Sortable: true },
-      { Name: 'Action', Title: 'Action', Selectable: false, Sortable: true },
+      { Name: 'Name', Title: 'salesflow.customers.name', Selectable: false, Sortable: true },
+      { Name: 'Activation', Title: 'salesflow.customers.activation', Selectable: false, Sortable: true },
+      { Name: 'Client Group Name', Title: 'salesflow.customers.Client Group Name', Selectable: false, Sortable: true },
+      { Name: 'Email', Title: 'salesflow.customers.email', Selectable: false, Sortable: true },
+      { Name: 'National Number', Title: 'salesflow.customers.nationalNumber', Selectable: false, Sortable: true },
+      { Name: 'Mobile', Title: 'salesflow.customers.mobile', Selectable: false, Sortable: true },
+      { Name: "Path", Title: "salesflow.customers.Img", Selectable: false, Sortable: true },
+      { Name: 'Action', Title: 'salesflow.customers.action', Selectable: false, Sortable: true },
 
 
     ];
     forkJoin([this._pageService.getClientGroups()]).subscribe((res) => {
-      // this.status = res[0].data;
       this.customerGroups = res[0].data;
     });
     this.createSearchForm();
@@ -105,9 +95,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
       Name: [this.searchViewModel.Name],
       Email: [this.searchViewModel.Email],
       NationalNumber: [this.searchViewModel.NationalNumber],
-      VerifyStatus: [this.searchViewModel.VerifyStatus],
       ClientGroupId: [this.searchViewModel.ClientGroupId],
-      Mobile: [this.searchViewModel.Mobile]
+      Mobile: [this.searchViewModel.Mobile],
+      From: [this.searchViewModel.From],
+      To: [this.searchViewModel.To]
 
     });
     this.page.isPageLoaded = true;
@@ -302,12 +293,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.isActive ? "Active" : "Inactive",
       item.clientGroupName,
       item.email,
-      this.getVerifyStatusName(Number(item.verifyStatus)),
       item.nationalNumber,
-      item.totalOrders,
       item.mobile,
-      item.phone,
-      this.getOrderStatusName(item.clientActivity) ,
     ]);
   
     // Generate Table with Better Formatting
