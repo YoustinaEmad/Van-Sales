@@ -320,7 +320,8 @@
       "cancel": "الغاء",
       "areyousureyouwanttodeletetheselectedWarehouses?": "هل أنت متأكد أنك تريد حذف المخازن المحددة ؟",
       "selectLocation": "حدد الموقع",
-      "numberOfProduts": "عدد المنتجات"
+      "numberOfProduts": "عدد انواع المنتجات" ,
+      "totalQuantity": "اجمالي الكمية"
     },
     "product": {
       "product": "منتج",

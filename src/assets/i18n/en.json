@@ -330,7 +330,8 @@
       "cancel": "Cancel",
       "areyousureyouwanttodeletetheselectedWarehouses?": "Are You Sure You Want To Delete The Selected Warehouses ?",
       "selectLocation": "select Location",
-      "numberOfProduts": "Number Of Products"
+ "numberOfProduts":"Number Of Product Types",
+      "totalQuantity":"Total Quantity"
     },
     "product": {
       "product": "Product",

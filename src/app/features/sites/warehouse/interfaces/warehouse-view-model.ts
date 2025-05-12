@@ -17,6 +17,7 @@ export interface WarehouseViewModel {
   isActive:boolean;
   selected:boolean;
   numberOfProduts:number;
+  totalQuantity:number;
 }
 
 export class warehouseCreateViewModel {
@@ -49,4 +50,27 @@ export class warehouseSearchViewModel {
 }
 export class warehouseActivateViewModel {
   id:string;
+}
+
+export class warehouseDetailsViewModel {
+  id:string;
+  name:string;
+  code:string;
+  data:string;
+  warehouseType:number;
+  governorateId:string;
+  governorateName:string;
+  cityId:string;
+  cityName:string;
+  street:string;
+  landmark:string;
+  latitude:string;
+  longitude:string;
+  buildingData:string;
+  warehouseProducts: WarehouseProductViewModel[];
+}
+
+export class WarehouseProductViewModel {
+  productId: string;
+  quantity: number;
 }
