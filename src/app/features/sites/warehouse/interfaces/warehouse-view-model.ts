@@ -16,6 +16,7 @@ export interface WarehouseViewModel {
   buildingData:string;
   isActive:boolean;
   selected:boolean;
+  numberOfProduts:number;
 }
 
 export class warehouseCreateViewModel {

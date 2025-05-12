@@ -129,6 +129,7 @@
             <td>{{item.productGroupName}}</td>
             <td>{{getGradeName(item.grade)}}</td>
             <td>{{getStatusName(item.productStatus)}}</td>
+             <td>{{item.expiryDate}}</td>
             <td>
               <div class="flex justify-content-center">
                 <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving "

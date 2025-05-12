@@ -329,7 +329,8 @@
       "confirm":"Confirm",
       "cancel":"Cancel",
       "areyousureyouwanttodeletetheselectedWarehouses?":"Are You Sure You Want To Delete The Selected Warehouses ?",
-      "selectLocation":"select Location"
+      "selectLocation":"select Location",
+      "numberOfProduts":"Number Of Products"
 
     },
     "product": {
@@ -368,6 +369,7 @@
       "netWeightPerLitre":"Net Weight Per Litre",
       "weightPerKG":"weight Per KG",
       "futureDate":"Please select a future date."
+      
     },
     "ProductGroup":{
       "productGroup": "ProductGroup",

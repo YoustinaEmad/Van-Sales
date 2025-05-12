@@ -2,18 +2,19 @@
     <div class="d-flex justify-content-between align-items-center py-2 px-3">
         <div class="d-flex align-items-center">
             <h2 class="mb-0 color-gray-600 ts-5">{{"sites.Warehouse.warehouses" |translate}}</h2>
-            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} {{"sites.Warehouse.warehouse" |translate}}
+            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}}
+                {{"sites.Warehouse.warehouse" |translate}}
             </div>
         </div>
 
         <!-- Flex container for buttons to be side by side -->
         <div class="d-flex">
             <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="deleteSelectedWarehousees()">{{"sites.Warehouse.delete" |translate}}</button>
-          <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="activateWarehousees()">{{"sites.Warehouse.active" |translate}}</button>
-          <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-              (click)="disActiveWarehouses()">{{"sites.Warehouse.disActive" |translate}}</button>
+                (click)="deleteSelectedWarehousees()">{{"sites.Warehouse.delete" |translate}}</button>
+            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="activateWarehousees()">{{"sites.Warehouse.active" |translate}}</button>
+            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="disActiveWarehouses()">{{"sites.Warehouse.disActive" |translate}}</button>
             <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 "
                 (click)="navigateToCreateWarehouse()">{{"sites.Warehouse.create" |translate}}</button>
 
@@ -25,117 +26,119 @@
         <div class="form-body">
             <div class="row g-2">
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="Name" label="sites.Warehouse.warehouse" placeholder="sites.Warehouse.warehouse">
+                    <ng-control [form]="page.searchForm" control="Name" label="sites.Warehouse.warehouse"
+                        placeholder="sites.Warehouse.warehouse">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
-                    <ng-control [form]="page.searchForm" control="Code" label="sites.Warehouse.code" placeholder="sites.Warehouse.code">
+                    <ng-control [form]="page.searchForm" control="Code" label="sites.Warehouse.code"
+                        placeholder="sites.Warehouse.code">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
                     <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="GovernorateId"
-                        (change)="onGovernorateChange($event.id)" label="sites.Warehouse.governorate" placeholder="sites.Warehouse.selectGovernorate"
-                        [items]="governorates">
+                        (change)="onGovernorateChange($event.id)" label="sites.Warehouse.governorate"
+                        placeholder="sites.Warehouse.selectGovernorate" [items]="governorates">
                     </ng-control>
                 </div>
 
                 <div class="col-2">
-                    <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="CityId" label="sites.Warehouse.city"
-                        placeholder="sites.Warehouse.selectCity" [items]="cities">
+                    <ng-control [type]="page.ControlType.SELECT" [form]="page.searchForm" control="CityId"
+                        label="sites.Warehouse.city" placeholder="sites.Warehouse.selectCity" [items]="cities">
                     </ng-control>
                 </div>
 
                 <div class="col-2 d-flex align-items-end">
-                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="onSearchClicked()"
-                        [disabled]="page.searchForm.invalid || page.isSearching">
+                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100'
+                        (click)="onSearchClicked()" [disabled]="page.searchForm.invalid || page.isSearching">
                         <i class="uil uil-search"></i>
                         <span class="rb-btn-text d-md-inline-block">
                             {{'shared.search'|translate}}</span>
                     </button>
-    
+
                 </div>
             </div>
 
-           
+
 
         </div>
 
-</form>
+    </form>
 
-<div class="scolled mt-3 h-100">
-    <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
-    <table class="table" *ngIf="!page.isSearching">
-        <thead>
+    <div class="scolled mt-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table" *ngIf="!page.isSearching">
+            <thead>
 
-            <tr class="th-header">
-                <th>
-                      <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()" />
+                <tr class="th-header">
+                    <th>
+                        <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()" />
                     </th>
 
-                <ng-container *ngFor="let colum of page.columns ;let i=index;">
-                    <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
-                        {{colum.Title | translate}}
-                        <div *ngIf="colum.Sortable" class="d-inline-block"
-                            [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
-                            <i class="uil uil-sort sort-icon"
-                                [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
-                        </div>
-                    </th>
-                </ng-container>
-            </tr>
-        </thead>
-        <tbody>
-            <tr [hidden]="page.isSearching || items.length>0">
-                <td colspan="100%">
-                    <span>{{'shared.no-data-found'|translate}}</span>
-                </td>
-            </tr>
-            <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
-                <tr>
-                    <!-- Added Checkbox in the Second Column -->
-
-
-                    <td>
-                          <input type="checkbox" [(ngModel)]="item.selected" />
-                      </td>
-                    <td>{{i+1}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.code}}</td>
-                    <td>{{item.data}}</td>
-                    <td>{{ getWarehouseTypeName(item.warehouseType) }}</td>
-                    <td>{{item.governorateName}}</td>
-                    <td>{{item.cityName}}</td>
-                    <td>{{item.street}}</td>
-                    <td>{{item.landmark}}</td>
-                    <td>{{item.buildingData}}</td>
-
-                    <td>
-                          <div class="flex justify-content-center">
-                              <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving"
-                                  (ngModelChange)="updateActivation(item,item.isActive)"></p-inputSwitch>
-                          </div>
-                      </td>
-                    <td>
-                        <button pButton icon="pi pi-trash"
-                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
-                            (click)="showDeleteConfirmation(item)">
-                        </button>
-                        <button pButton icon="pi pi-pencil"
-                            class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
-                            (click)="editWarehouse(item.id)">
-                        </button>
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr [hidden]="page.isSearching || items.length>0">
+                    <td colspan="100%">
+                        <span>{{'shared.no-data-found'|translate}}</span>
                     </td>
                 </tr>
-            </ng-container>
-            <th></th>
-    </table>
-</div>
-<div class="pb-2">
-    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
-    </ng-pagination>
-</div>
+                <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
+                    <tr>
+                        <!-- Added Checkbox in the Second Column -->
+
+
+                        <td>
+                            <input type="checkbox" [(ngModel)]="item.selected" />
+                        </td>
+                        <td>{{i+1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.data}}</td>
+                        <td>{{ getWarehouseTypeName(item.warehouseType) }}</td>
+                        <td>{{item.governorateName}}</td>
+                        <td>{{item.cityName}}</td>
+                        <td>{{item.street}}</td>
+                        <td>{{item.landmark}}</td>
+                        <td>{{item.buildingData}}</td>
+                        <td>{{item.numberOfProduts}}</td>
+                        <td>
+                            <div class="flex justify-content-center">
+                                <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving"
+                                    (ngModelChange)="updateActivation(item,item.isActive)"></p-inputSwitch>
+                            </div>
+                        </td>
+                        <td>
+                            <button pButton icon="pi pi-trash"
+                                class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                                (click)="showDeleteConfirmation(item)">
+                            </button>
+                            <button pButton icon="pi pi-pencil"
+                                class="p-button-rounded p-button-text p-button-info  pointer p-0" aria-label="Edit"
+                                (click)="editWarehouse(item.id)">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+                <th></th>
+        </table>
+    </div>
+    <div class="pb-2">
+        <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+        </ng-pagination>
+    </div>
 
 </div>
 <ng-template #confirmDeleteTemplate>
@@ -146,7 +149,8 @@
                 <strong *ngIf="selectedItem">{{selectedItem.name}}</strong>
             </p>
             <div class="d-flex mt-4">
-                <button type="button" class="btn cancel-btn me-auto" (click)="modalRef.hide() ">{{"sites.Warehouse.cancel" |translate}}</button>
+                <button type="button" class="btn cancel-btn me-auto"
+                    (click)="modalRef.hide() ">{{"sites.Warehouse.cancel" |translate}}</button>
                 <button type="button" *ngIf="selectedItem" class="btn btn-without-icon bg-e5 ms-2"
                     (click)="remove();modalRef.hide();">{{"sites.Warehouse.confirm" |translate}}</button>
             </div>
@@ -158,7 +162,8 @@
         <p>{{"sites.Warehouse.areyousureyouwanttodeletetheselectedWarehouses?" |translate}}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.Warehouse.cancel" |translate}}</button>
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">{{"sites.Warehouse.cancel"
+            |translate}}</button>
         <button class="btn btn-without-icon bg-e5 ms-2"
             (click)="modalRef.content.onConfirm(); modalRef.hide()">{{"sites.Warehouse.confirm" |translate}}</button>
 

@@ -22,6 +22,7 @@ export interface productViewModel {
   productAPI:string;
   isActive:boolean;
   selected:boolean;
+  
 }
 export class productCreateViewModel {
   id: string;

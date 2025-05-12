@@ -1,1 +1,125 @@
-<p>home works!</p>
+<div class="mb-2">
+    <div class="d-flex justify-content-between align-items-center py-2 px-3">
+        <div class="d-flex align-items-center">
+            <h2 class="mb-0 color-gray-600 ts-5">Transfer salesMan to salesMan</h2>
+            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}} Transfer
+            </div>
+        </div>
+
+        <!-- Flex container for buttons to be side by side -->
+        <!-- <div class="d-flex">
+            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="deleteSelectedSuppliers()">{{"sites.supplier.delete"|translate}}</button>
+            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="activateSuppliers()">{{"sites.supplier.active"|translate}}</button>
+            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
+                (click)="disActiveSuppliers()">{{"sites.supplier.disActive"|translate}}</button>
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateSupplier()">{{"sites.supplier.create"|translate}}</button>
+
+        </div> -->
+    </div>
+
+    <hr />
+    <form [formGroup]="page.searchForm">
+        <div class="form-body">
+            <div class="row g-2">
+                <div class="col-3">
+
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromSalesManID"
+                        label="From SalesMan ID" placeholder="From SalesMan ID"
+                        [items]="salesManList"></ng-control>
+                </div>
+                <div class="col-3">
+
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToSalesManID"
+                        label="To SalesMan ID" placeholder="To SalesMan ID" [items]="salesManList"></ng-control>
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="transactionStatus"
+                        label="Transaction Status" placeholder="Transaction Status"
+                        [items]="TransactionStatus"></ng-control>
+                </div>
+                <div class="col-3 d-flex align-items-end">
+                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                        [disabled]="page.searchForm.invalid || page.isSearching">
+                        <i class="uil uil-search"></i>
+                        <span class="rb-btn-text d-md-inline-block">
+                            {{'shared.search'|translate}}</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+    <div class="scrolled mt-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table">
+            <thead>
+                <tr class="th-header">
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- Data Rows -->
+                <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.transactionNumber }}</td>
+                        <td>{{ item.fromSalesManName }}</td>
+                        <td>{{ item.toSalesMan }}</td>
+                          <td>{{getStatusName(item.transactionStatus)}}</td>
+                        <td>{{ item.productsQuantity }}</td>
+                        <td>{{ item.createdDate | date:'yyyy-MM-dd'}}</td>
+                        <td>
+                            <!-- Approve Button -->
+                            <button class="no-border bg-green-500 cr3 color-gray-25 px-2"
+                                [disabled]="item.transactionStatus === 3 " (click)="item.transactionStatus === 1 && approveRequest(item,item.transactionStatus)">
+                                <img class="pe-2" src="../assets/images/check.png">approve
+                            </button>
+
+                            <!-- Reject Button (disabled if the status is 'Approved') -->
+                            <button class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
+                                [disabled]="item.transactionStatus === 2"  (click)="item.transactionStatus === 1 && showRejectConfirmation(item)">
+                                <img class="pe-2" src="../assets/images/close.png">reject
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+    </ng-pagination>
+</div>
+
+
+
+<ng-template #confirmRejectTemplate>
+    <div class="modal-body modal-content text-center">
+        <p>{{"sites.signUpRequest.rejectReason"|translate}}</p>
+        <textarea [(ngModel)]="selectedItem.rejectReason" class="form-control" rows="3"
+            [placeholder]="'sites.signUpRequest.enter rejection reason' | translate">
+    </textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="btn cancel-btn me-auto"
+            (click)="modalRef.hide()">{{"sites.signUpRequest.cancel"|translate}}</button>
+        <button class="btn btn-without-icon bg-e5 ms-2" (click)="rejectRequest(); modalRef.hide()">
+            {{"sites.signUpRequest.sendFeedback"|translate}}
+        </button>
+    </div>
+</ng-template>

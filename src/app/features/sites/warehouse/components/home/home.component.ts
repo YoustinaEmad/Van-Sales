@@ -62,6 +62,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "street", Title: "sites.Warehouse.street", Selectable: false, Sortable: true },
       { Name: "landmark", Title: "sites.Warehouse.landmark", Selectable: false, Sortable: true },
       { Name: "buildingData", Title: "sites.Warehouse.buildingData", Selectable: false, Sortable: true },
+        { Name: "numberOfProduts", Title: "sites.Warehouse.numberOfProduts", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.Warehouse.activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.Warehouse.action", Selectable: false, Sortable: true },
 
