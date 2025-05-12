@@ -44,7 +44,7 @@ export class productCreateViewModel {
   categoryID:string;
   productGroupID:string
   productAPI:string;
-
+ brandID:string;
 }
 export class productSearchViewModel {
   Name:string;
