@@ -11,13 +11,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateComponent } from './components/create/create.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', component:HomeComponent }, 
   { path:'create', component: CreateComponent },
   { path:'edit/:id', component: CreateComponent },
-  { path:'changePassword/:id', component: ChangePasswordComponent },
 
 ];
 
@@ -25,7 +23,7 @@ const routes: Routes = [
   declarations: [
     HomeComponent,
     CreateComponent,
-    ChangePasswordComponent
+    
   ],
   imports: [
     

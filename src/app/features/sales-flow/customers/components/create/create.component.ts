@@ -89,74 +89,52 @@ export class CreateComponent implements OnInit {
   }
 
   getEditableItem() {
-    this._customersService.getById(this.id).subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.item = res.data;
-          this.item.id = this.id;
-          this.editeform();
-          this.page.isPageLoaded = true;
-        }
-      },
-      error: (err) => {
-        this._sharedService.showToastr(err);
+  this._customersService.getById(this.id).subscribe({
+    next: (res) => {
+      if (res.isSuccess) {
+        this.item = res.data;
+        this.item.id = this.id;
+        this.createForm();
         this.page.isPageLoaded = true;
+
+        // ✅ تحديث موقع الخريطة حسب بيانات العميل
+        const lat = this.item.latitude || 26.8206;
+        const lng = this.item.longitude || 30.8025;
+        this.updateMapLocation(lat, lng);
       }
-    });
-  }
-  editeform() {
-    this.page.form = this._sharedService.formBuilder.group({
-      name: [this.item.name, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      nationalNumber: [this.item.nationalNumber, [ Validators.pattern(/^\d{14}$/)]],
-      age: [this.item.age],
-      userName: [this.item.userName, [Validators.required]],
-      gender: [this.item.gender],
-      email: [this.item.email, [Validators.email, ]],
-      mobile: [this.item.mobile, [Validators.required, , Validators.pattern(/^(010|011|012|015)\d{8}$/)]],
-      phone: [this.item.phone],
-      clientGroupId: [this.item.clientGroupId],
-      clientActivity: [this.item.clientActivity],
+    },
+    error: (err) => {
+      this._sharedService.showToastr(err);
+      this.page.isPageLoaded = true;
+    }
+  });
+}
 
-    });
-    this.page.isPageLoaded = true;
-
-  }
+  
   validateImages(): boolean {
     return this.images.some(image => image.uploaded);
-    
-    
+
+
   }
   createForm() {
     this.page.form = this._sharedService.formBuilder.group({
       name: [this.item.name, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+
       nationalNumber: [
         this.item.nationalNumber,
-        [ Validators.pattern(/^\d{14}$/)]
+        [Validators.pattern(/^\d{14}$/)]
       ],
-      age: [this.item.age],
       gender: [this.item.gender],
-      userName: [this.item.userName, [Validators.required]],
-      password: [
-        this.item.password,
-        [Validators.required, Validators.minLength(8), Validators.maxLength(100)]
-      ],
       mobile: [this.item.mobile, [Validators.required, Validators.pattern(/^(010|011|012|015)\d{8}$/)]],
-      phone: [this.item.phone],
-
       governorateId: [this.item.governorateId, [Validators.required]],
       cityId: [this.item.cityId, [Validators.required]],
       street: [this.item.street, [Validators.required]],
-      landmark: ['', [Validators.required]],
+      landmark: [''],
       latitude: [0],
       longitude: [0],
-      buildingData: [this.item.buildingData, [Validators.required]],
       email: [this.item.email, [Validators.email]],
-      confirmPassword: [
-        this.item.confirmPassword,
-        [Validators.required]
-      ],
+
       clientGroupId: [this.item.clientGroupId],
-      clientActivity: [this.item.clientActivity],
     });
     this.page.isPageLoaded = true;
   }
@@ -164,7 +142,8 @@ export class CreateComponent implements OnInit {
 
   Save() {
     if (this.page.isSaving || this.page.form.invalid) return;
-    this.areImagesValid = this.validateImages(); // Validate images before saving
+    this.areImagesValid = this.validateImages(); 
+
 
     this.page.isSaving = true;
     Object.assign(this.item, this.page.form.value);
@@ -268,6 +247,13 @@ export class CreateComponent implements OnInit {
       }, 2000);
     });
   }
+  updateMapLocation(lat: number, lng: number): void {
+    if (this.map && this.marker) {
+      this.map.setView([lat, lng], 13);
+      this.marker.setLatLng([lat, lng]);
+    }
+  }
+  
 
   initMap(): void {
     const mapContainer = document.getElementById('map');

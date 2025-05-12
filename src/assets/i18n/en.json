@@ -532,6 +532,34 @@
       "saveChanges":"Save Changes",
       "name":" Name",
       "action":"Action"
-    }
+    },
+    "customers":{
+      "name":"Name",
+      "activation":"Activation",
+      "Client Group Name":"Client Group Name",
+      "email":"Email",
+      "nationalNumber":"National Number",
+      "mobile":"Mobile",
+      "Img":"Img",
+      "action":"Action",
+      "customers":"Customers",
+      "download":"Download",
+      "active": "Active",
+      "disActive": "DisActive",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "Add New Customer":"Add New Customer",
+      "clientGroup":"Client Group",
+      "from":"From Date",
+      "to":"To Date",
+      "gender":"Gender",
+      "governorate":"Governorate",
+      "landmark":"Landmark",
+      "city":"city",
+      "street":"street",
+      "Select Location":"Select Location",
+      "Upload New Image":"Upload New Image",
+      "Error Uploading":"Error Uploading"
+        }
   }
 }
