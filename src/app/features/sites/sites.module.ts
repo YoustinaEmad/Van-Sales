@@ -13,6 +13,8 @@ const routes: Routes = [{
     { path: "governorates", loadChildren: () => import('./governorates/governorates.module').then(m => m.GovernoratesModule) },
     { path: "cities", loadChildren: () => import('./city/city.module').then(m => m.CityModule) },
     { path: "company", loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
+    { path: "brand", loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule) },
+
     { path: "product", loadChildren: () => import('./Product/product.module').then(m => m.ProductModule) },
     { path: "category", loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
     { path: "dashboard", loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },

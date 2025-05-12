@@ -485,6 +485,27 @@
       "cancel":"الغاء",
       "sendFeedback":"إرسال ردود الفعل",
       "rejectReason":"سبب الرفض"
+    },
+    "Brand": {
+      "brand": "الماركة",
+      "brands": "الماركات",
+      "name": " اسم الماركة",
+      "paths": "الصورة",
+      "isActive": "تفعيل ",
+      "tags": "الكلمات الدلالية",
+      "action": "الاجراءات",
+      "create": "اضافة ماركة",
+      "delete": "حذف ",
+      "active": "تفعيل",
+      "disActive": "الغاء التفعيل",
+      "Press Space to add another tag": "اضغط  مسافه  لاضافه  كلمه  دلاليه  اخري",
+      "Uploaded Image": "الصورة المرفوعة",
+      "Upload New Image": "رفع صورة جديدة",
+      "Error Uploading": "خطأ في رفع الصورة",
+      "cancel":"الغاء",
+      "confirm":"تأكيد",
+      "deleteSelectedBrands":"هل أنت متأكد أنك تريد حذف الماركات المحددة؟",
+      "yes":"نعم"
     }
   },
   "auth": {

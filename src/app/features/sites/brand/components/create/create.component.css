@@ -1,0 +1,11 @@
+.icon-size {
+    width: 20px;
+    height: 20px;
+  }
+  .btn-delete {
+    background-color: #ff0000e6;
+  }
+  
+  .btn-delete:hover {
+    background-color: #ff0000 !important;
+  }
