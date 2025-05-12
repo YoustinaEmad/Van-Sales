@@ -272,7 +272,7 @@
       "suppliers": "الموردون",
       "salesMan": "مندوب المبيعات",
       "productGroup": "مجموعة المنتجات",
-      "transfers": "التحويلات",
+      "transfersWarehouseToWarehouse": " التحويلات من مخزن الى مخزن",
       "requests": "الطلبات",
       "customergroup":"مجموعة العملاء",
       "roles":"الادوار",

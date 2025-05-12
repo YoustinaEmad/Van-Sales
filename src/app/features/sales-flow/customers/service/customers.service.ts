@@ -63,8 +63,7 @@ export class CustomersService {
       params = params.set("Mobile", searchViewModel.Mobile);
     }
 
-
-    return this._apiService.get(`/GetAllOrdersEndpoint/GetAllOrders?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+    return this._apiService.get(`/SearchClientEndPoint/SearchClient?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
   getById(ID: string) {
     return this._apiService.get(`/GetClientByIdEndPoint/GetClientById?ID=${ID}`,);
@@ -86,9 +85,7 @@ export class CustomersService {
     return this._apiService.update(`/DeactivateClientsEndPoint/DeactivateClient`, body);
   }
 
-  getStatus() {
-    return this._apiService.get('/GetVerifyStatusListEndpoint/SelectList');
-  }
+  
   getClientGroups() {
     return this._apiService.get('/SelectClientGroupListEndPoint/SelectClientGroupList');
   }

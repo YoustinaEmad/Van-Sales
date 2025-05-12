@@ -282,7 +282,7 @@
       "suppliers": "Suppliers",
       "salesMan": "SalesMan",
       "productGroup": "Product Group",
-      "transfers":"Transfers",
+      "transfersWarehouseToWarehouse":"Transfers Warehouse To Warehouse",
       "requests":"Requests",
       "customergroup":"Customer Group",
       "roles":"Roles",

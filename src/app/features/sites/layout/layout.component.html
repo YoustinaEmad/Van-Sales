@@ -59,7 +59,7 @@
             <ul class="dropdown-menu" [class.show]="openDropdown === 'supplyChain'">
                 <li>
                     <a class="dropdown-item" routerLink="/sites/transfers"(click)="openDropdown = null">
-                        {{"sites.layout.transfers" | translate}}
+                        {{"sites.layout.transfersWarehouseToWarehouse" | translate}}
                     </a>
                 </li>
                 <li>
@@ -72,7 +72,9 @@
 
         <!-- Other Navigation Links -->
       
-       
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customers">
+            {{"sites.layout.customers" | translate}}
+        </a>
        
         <!-- <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/supplier">
             {{"sites.layout.suppliers" | translate}}

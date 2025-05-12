@@ -27,13 +27,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
   selectedItem: customerViewModel;
   showDownloadOptions = false;
   records: number;
-
   activation: customerActivateViewModel = { id: '' }
   verifyStatuslist = [
     { id: 1, name: 'Pending' },
     { id: 2, name: 'Verified' },
     { id: 3, name: 'Approve' },
-    { id: 4, name: 'Approve' }
 
   ];
 
@@ -87,9 +85,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
     ];
-    forkJoin([this._pageService.getStatus(), this._pageService.getClientGroups()]).subscribe((res) => {
-      this.status = res[0].data;
-      this.customerGroups = res[1].data;
+    forkJoin([this._pageService.getClientGroups()]).subscribe((res) => {
+      // this.status = res[0].data;
+      this.customerGroups = res[0].data;
     });
     this.createSearchForm();
     this.activatedRoute.queryParams.subscribe((params) => {
