@@ -471,10 +471,10 @@
       "SalesMan OR Transaction_Number":" رقم التحويل او مندوب المبيعات "
     },
     "transferSalesManToSalesMan": {
-      "transferSalesManToSalesMan":"تحويل من بائع إلى بائع",
+      "transferSalesManToSalesMan":"تحويل من مندوب إلى مندوب",
       "transfer":"تحويل",
-      "fromSalesManID":"من البائع",
-      "toSalesManID":"إلى البائع",
+      "fromSalesManID":"من المندوب",
+      "toSalesManID":"إلى المندوب",
       "transactionStatus":"حالة المعاملة",
       "transactionNumber":"رقم المعاملة",
       "productsQuantity":"كمية المنتجات",
