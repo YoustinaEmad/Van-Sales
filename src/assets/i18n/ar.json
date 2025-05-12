@@ -357,7 +357,9 @@
       "vIPClientsPrice": "سعر عملاء vIP",
       "netWeightPerLitre": "الوزن الصافي لكل لتر",
       "weightPerKG": "الوزن لكل كجم",
-      "futureDate": "الرجاء تحديد تاريخ مستقبلي."
+      "futureDate": "الرجاء تحديد تاريخ مستقبلي.",
+      "brandName": "اسم الماركة",
+      "brand": "الماركة"
     },
     "ProductGroup": {
       "productGroup": "مجموعة المنتجات",

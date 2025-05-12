@@ -56,16 +56,19 @@
 
       
         
-          <div class="col-1">
+          <div class="col-2">
             <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Grade"
               label="sites.product.grade" placeholder="sites.product.grade" [items]="Grades"></ng-control>
           </div>
         
-          <div class="col-1">
+          <div class="col-2">
             <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="Unit"
               label="sites.product.unit" placeholder="sites.product.unit" [items]="Units"></ng-control>
           </div>
-        
+         <div class="col-2">
+            <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="BrandID"
+              label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"></ng-control>
+          </div>
         <!-- Search Button -->
         <div class="col-2 d-flex align-items-end">
           <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="onSearchClicked()"
@@ -119,6 +122,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.code }}</td>
+              <td>{{ item.brandName }}</td>
             <td>{{ item.packSize }}</td>
             <td>{{ item.smallerUnitsOfMeasurements }} </td>
             <td>{{ getUnitName(item.unit) }}</td>

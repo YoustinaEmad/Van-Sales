@@ -368,7 +368,9 @@
       "vIPClientsPrice":"vIP Clients Price",
       "netWeightPerLitre":"Net Weight Per Litre",
       "weightPerKG":"weight Per KG",
-      "futureDate":"Please select a future date."
+      "futureDate":"Please select a future date.",
+      "brandName":"Brand Name",
+      "brand":"Brand"
       
     },
     "ProductGroup":{

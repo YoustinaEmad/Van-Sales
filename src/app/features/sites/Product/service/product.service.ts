@@ -38,6 +38,9 @@ export class ProductService {
     if (searchViewModel.Unit) {
       params = params.set("Unit", searchViewModel.Unit);
     }
+     if (searchViewModel.BrandID) {
+      params = params.set("BrandID", searchViewModel.BrandID);
+    }
     if (searchViewModel.IsActive) {
       params = params.set("IsActive", searchViewModel.IsActive);
     }
@@ -98,7 +101,10 @@ export class ProductService {
   //   return this._apiService.postMedia('/UploadMediaEndPoint/UploadMedia', formData, true);
   // }
 
- 
+ getBrands() {
+
+    return this._apiService.get(`/SelectBrandListEndpoint/SelectBrandList`);
+  }
   getProductsExcel(searchViewModel: productSearchViewModel) {
 
     let params = new HttpParams();
