@@ -67,4 +67,10 @@ export class warehouseDetailsViewModel {
   latitude:string;
   longitude:string;
   buildingData:string;
+  warehouseProducts: WarehouseProductViewModel[];
+}
+
+export class WarehouseProductViewModel {
+  productId: string;
+  quantity: number;
 }

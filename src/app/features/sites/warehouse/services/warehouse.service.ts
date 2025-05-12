@@ -36,7 +36,7 @@ export class WarehouseService {
     return this._apiService.get(`/GetWarehouseByIDEndpoint/GetWarehouseByID?ID=${ID}`);
   }
 getWarehouseDetails(ID: string) {
-    return this._apiService.get(`/GetWarehouseByIDEndpoint/GetWarehouseByID?ID=${ID}`);
+    return this._apiService.get(`/GetWarehouseByIdWithProductsEndpoint/GetWarehouseByIdWithProducts?ID=${ID}`);
 }
   getCities(governorateId?: string) {
     let url: string;
