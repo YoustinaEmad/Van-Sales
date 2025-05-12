@@ -8,18 +8,20 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { WarehouseDetailsComponent } from './components/warehouse-details/warehouse-details.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'create', component: CreateComponent },
   { path: 'edit/:id', component: CreateComponent },
-
+{path: 'details/:id', component: WarehouseDetailsComponent},
 ];
 @NgModule({
   declarations: [
     HomeComponent,
-    CreateComponent
+    CreateComponent,
+    WarehouseDetailsComponent
   ],
   imports: [
     CommonModule,

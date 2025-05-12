@@ -1,3 +1,8 @@
+.clickable-row {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  border-radius: 5px;
+}
 .modal-overlay {
   position: fixed;
   top: 0;

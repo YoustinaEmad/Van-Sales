@@ -319,7 +319,8 @@
       "confirm": "تاكيد",
       "cancel": "الغاء",
       "areyousureyouwanttodeletetheselectedWarehouses?": "هل أنت متأكد أنك تريد حذف المخازن المحددة ؟",
-      "selectLocation": "حدد الموقع"
+      "selectLocation": "حدد الموقع",
+      "numberOfProduts": "عدد المنتجات"
     },
     "product": {
       "product": "منتج",
@@ -356,7 +357,9 @@
       "vIPClientsPrice": "سعر عملاء vIP",
       "netWeightPerLitre": "الوزن الصافي لكل لتر",
       "weightPerKG": "الوزن لكل كجم",
-      "futureDate": "الرجاء تحديد تاريخ مستقبلي."
+      "futureDate": "الرجاء تحديد تاريخ مستقبلي.",
+      "brandName": "اسم الماركة",
+      "brand": "الماركة"
     },
     "ProductGroup": {
       "productGroup": "مجموعة المنتجات",
@@ -466,6 +469,22 @@
       "transactionNumber":"رقم التحويل",
       "warehouseStatus":"حالة المخزن",
       "SalesMan OR Transaction_Number":" رقم التحويل او مندوب المبيعات "
+    },
+    "transferSalesManToSalesMan": {
+      "transferSalesManToSalesMan":"تحويل من مندوب إلى مندوب",
+      "transfer":"تحويل",
+      "fromSalesManID":"من المندوب",
+      "toSalesManID":"إلى المندوب",
+      "transactionStatus":"حالة المعاملة",
+      "transactionNumber":"رقم المعاملة",
+      "productsQuantity":"كمية المنتجات",
+      "createdDate":"تاريخ الإنشاء",
+      "approve":"قبول",
+      "reject":"رفض",
+      "enter rejection reason":"أدخل سبب الرفض",
+      "cancel":"الغاء",
+      "sendFeedback":"إرسال ردود الفعل",
+      "rejectReason":"سبب الرفض"
     }
   },
   "auth": {

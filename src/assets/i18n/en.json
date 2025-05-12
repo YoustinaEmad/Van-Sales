@@ -329,7 +329,8 @@
       "confirm":"Confirm",
       "cancel":"Cancel",
       "areyousureyouwanttodeletetheselectedWarehouses?":"Are You Sure You Want To Delete The Selected Warehouses ?",
-      "selectLocation":"select Location"
+      "selectLocation":"select Location",
+      "numberOfProduts":"Number Of Products"
 
     },
     "product": {
@@ -367,7 +368,10 @@
       "vIPClientsPrice":"vIP Clients Price",
       "netWeightPerLitre":"Net Weight Per Litre",
       "weightPerKG":"weight Per KG",
-      "futureDate":"Please select a future date."
+      "futureDate":"Please select a future date.",
+      "brandName":"Brand Name",
+      "brand":"Brand"
+      
     },
     "ProductGroup":{
       "productGroup": "ProductGroup",
@@ -477,6 +481,22 @@
       "transactionNumber":"Transaction Number",
       "warehouseStatus":"Warehouse Status",
       "SalesMan OR Transaction_Number":"SalesMan OR Transaction_Number"
+    },
+    "transferSalesManToSalesMan": {
+      "transferSalesManToSalesMan":"Transfer SalesMan To SalesMan",
+      "transfer":"Transfer",
+      "fromSalesManID":"From SalesMan",
+      "toSalesManID":"To SalesMan",
+      "transactionStatus":"Transaction Status",
+      "transactionNumber":"Transaction Number",
+      "productsQuantity":"Products Quantity",
+      "createdDate":"Created Date",
+      "approve":"Approve",
+      "reject":"Reject",
+      "enter rejection reason":"Enter rejection reason",
+      "cancel":"Cancel",
+      "sendFeedback":"Send Feedback",
+      "rejectReason":"Reject Reason"
     }
     
   },

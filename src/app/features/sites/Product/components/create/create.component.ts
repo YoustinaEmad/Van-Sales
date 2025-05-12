@@ -78,6 +78,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   //selectedItem: productViewModel;
   categories: categorySelectedItem[] = [];
   ProductAPI: any[] = [];
+  Brands: any[] = [];
   productGroup: brandSelectedItem[] = [];
   selectedCategoryId: string = '';
   selectedTab: TabEnum = TabEnum.GeneralData;
@@ -170,6 +171,7 @@ Tabs:any[]=[];
         }
       ];
     });
+    this.getAllBrands();
     this._activatedRoute.paramMap.subscribe((params) => {
       if (params.has('id')) {
         this.id = params.get('id');
@@ -259,6 +261,7 @@ Tabs:any[]=[];
         ],
         unit: [this.item.unit, Validators.required],
         grade: [this.item.grade, Validators.required],
+         brandID: [this.item.brandID, Validators.required],
         productStatus: [this.item.productStatus, [Validators.required] ],
         categoryID: [this.item.categoryID, Validators.required],
         productGroupID: [this.item.productGroupID, [Validators.required]],
@@ -317,7 +320,15 @@ Tabs:any[]=[];
       item.isSelected = item.ID === tabID;
     });
   }
-
+getAllBrands() {
+    this._productService.getBrands().subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.Brands = res.data;
+        } 
+      }
+    });
+  }
   
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);

@@ -22,6 +22,7 @@ export interface productViewModel {
   productAPI:string;
   isActive:boolean;
   selected:boolean;
+  brandName:string;
 }
 export class productCreateViewModel {
   id: string;
@@ -43,7 +44,7 @@ export class productCreateViewModel {
   categoryID:string;
   productGroupID:string
   productAPI:string;
-
+ brandID:string;
 }
 export class productSearchViewModel {
   Name:string;
@@ -53,6 +54,7 @@ export class productSearchViewModel {
   Grade:string;
   Unit:string;
   IsActive:boolean;
+  BrandID:string;
 }
 
 export class categorySelectedItem {
