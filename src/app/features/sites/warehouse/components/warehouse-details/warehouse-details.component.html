@@ -1,10 +1,20 @@
 <div class="card shadow-sm border-0 rounded-4 p-3 warehouse-details-card">
  <div class="card-header bg-transparent border-bottom-0 pb-0 d-flex justify-content-between align-items-start">
+ <div class="d-flex align-items-center mb-3">
+
+  <img src="/assets/icons/keyboard_backspace.svg"
+       class="me-2 pointer"
+       style="width: 20px; height: 20px;"
+       routerLink="/sites/warehouse"
+       alt="Back" />
+
+  
   <div>
-    <h3 class="mb-0">{{ warehouse.name }}</h3>
-    <small class="text-muted">Code: {{ warehouse.code }}</small>
+    <h3 class="mb-0 color-purple-700">{{ warehouse.name }} Details</h3>
   </div>
-  <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3" (click)="showCartDialog($event)"
+</div>
+
+  <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 " (click)="showCartDialog($event)"
     >Add Product</button>
 </div>
 
@@ -20,7 +30,10 @@
       <div class="col-md-6 mb-3"><strong>Landmark:</strong> {{ warehouse.landmark }}</div>
 
       <div class="col-md-6 mb-3"><strong>Building Data:</strong> {{ warehouse.buildingData }}</div>
-      <div class="col-md-6 mb-3"><strong>Coordinates:</strong> {{ warehouse.latitude }}, {{ warehouse.longitude }}</div>
+      <div class="col-md-6 mb-3"><strong>Latitude:</strong> {{ warehouse.latitude }}</div>
+
+  <div class="col-md-6 mb-3"><strong>Longitude:</strong> {{ warehouse.longitude }}</div>
+ <div class="col-md-6 mb-3"><strong>Code:</strong>{{ warehouse.code }}</div>
     </div>
 
     <!-- Products Section -->
@@ -31,17 +44,16 @@
           <div class="card h-100 border rounded-4 shadow-sm product-card">
             <div class="card-body">
               <div class="d-flex align-items-center mb-3">
-                <div class="product-icon bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3">
+                <div class="product-icon bg-purple-500  text-white rounded-circle d-flex justify-content-center align-items-center me-3">
                   <i class="pi pi-box" style="font-size: 1.2rem;"></i>
                 </div>
                 <div>
-                  <div class="text-muted small">Product</div>
                   <div class="fw-bold">{{ product.productName }}</div>
                 </div>
               </div>
 
               <div class="text-end mt-auto">
-                <span class="badge bg-secondary">Quantity: {{ product.quantity }}</span>
+                <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">Quantity: {{ product.quantity }}</span>
               </div>
             </div>
           </div>
@@ -114,7 +126,11 @@
   </div>
 
   <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
-    <button class="btn btn-outline-secondary" (click)="closeCartDialog()">
+    <button pButton type="button" [ngStyle]="{
+            'border': '1px solid purple',
+            'color': 'purple',
+            'background-color': 'transparent'
+          }" class="rounded" (click)="closeCartDialog()">
       {{ "sites.request.cancel" | translate }}
     </button>
     <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
