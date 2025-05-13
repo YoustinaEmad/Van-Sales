@@ -29,7 +29,9 @@ export class CreateComponent implements OnInit {
   controlType = ControlType;
   environment = environment;
   areImagesValid: boolean = true;
-
+  private pendingLat?: number;
+  private pendingLng?: number;
+  
   isEqualPassword: boolean = true;
   id: string;
   map: L.Map;
@@ -99,8 +101,9 @@ export class CreateComponent implements OnInit {
 
         // ✅ تحديث موقع الخريطة حسب بيانات العميل
         const lat = this.item.latitude || 26.8206;
-        const lng = this.item.longitude || 30.8025;
-        this.updateMapLocation(lat, lng);
+const lng = this.item.longitude || 30.8025;
+this.pendingLat = lat;
+this.pendingLng = lng;
       }
     },
     error: (err) => {
@@ -249,7 +252,7 @@ export class CreateComponent implements OnInit {
   }
   updateMapLocation(lat: number, lng: number): void {
     if (this.map && this.marker) {
-      this.map.setView([lat, lng], 13);
+      this.map.setView([lat, lng], 5); // أو 8 حسب ما يناسبك
       this.marker.setLatLng([lat, lng]);
     }
   }
@@ -301,10 +304,14 @@ export class CreateComponent implements OnInit {
         });
         this.marker.setLatLng([lat, lng]); // Update marker position
       });
+      if (this.pendingLat && this.pendingLng) {
+        this.updateMapLocation(this.pendingLat, this.pendingLng);
+      }
 
       this.map.invalidateSize(); // Forces Leaflet to recalculate the map size
     }
   }
+
   changePassword() {
     this._router.navigate(['/salesflow/customers/changePassword']);
   }
