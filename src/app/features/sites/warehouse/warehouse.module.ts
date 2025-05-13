@@ -11,6 +11,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { WarehouseDetailsComponent } from './components/warehouse-details/warehouse-details.component';
 
 
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'create', component: CreateComponent },

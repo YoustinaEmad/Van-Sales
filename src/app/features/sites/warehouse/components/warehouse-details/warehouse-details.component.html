@@ -1,43 +1,59 @@
 <div class="card shadow-sm border-0 rounded-4 p-3 warehouse-details-card">
-  <div class="card-header bg-transparent border-bottom-0 pb-0">
-    <h3 class="mb-0">{{ warehouse.name }}</h3>
-    <small class="text-muted">Code: {{ warehouse.code }}</small>
+ <div class="card-header bg-transparent border-bottom-0 pb-0 d-flex justify-content-between align-items-start">
+ <div class="d-flex align-items-center mb-3">
+
+  <img src="/assets/icons/keyboard_backspace.svg"
+       class="me-2 pointer"
+       style="width: 20px; height: 20px;"
+       routerLink="/sites/warehouse"
+       alt="Back" />
+
+  
+  <div>
+    <h3 class="mb-0 color-purple-700">{{ warehouse.name }} {{"sites.Warehouse.details"|translate}}</h3>
   </div>
+</div>
+
+  <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 " (click)="showCartDialog($event)"
+    >{{"sites.Warehouse.addProduct"|translate}}</button>
+</div>
 
   <div class="card-body">
     <div class="row">
-      <div class="col-md-6 mb-3"><strong>Data:</strong> {{ warehouse.data }}</div>
-      <div class="col-md-6 mb-3"><strong>Type:</strong> {{ getWarehouseTypeName(warehouse.warehouseType) }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.data"|translate}}:</strong> {{ warehouse.data }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.type"|translate}}:</strong> {{ getWarehouseTypeName(warehouse.warehouseType) }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Governorate:</strong> {{ warehouse.governorateName }}</div>
-      <div class="col-md-6 mb-3"><strong>City:</strong> {{ warehouse.cityName }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.governorate"|translate}}:</strong> {{ warehouse.governorateName }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.city"|translate}}:</strong> {{ warehouse.cityName }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Street:</strong> {{ warehouse.street }}</div>
-      <div class="col-md-6 mb-3"><strong>Landmark:</strong> {{ warehouse.landmark }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.street"|translate}}:</strong> {{ warehouse.street }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.landmark"|translate}}:</strong> {{ warehouse.landmark }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Building Data:</strong> {{ warehouse.buildingData }}</div>
-      <div class="col-md-6 mb-3"><strong>Coordinates:</strong> {{ warehouse.latitude }}, {{ warehouse.longitude }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.buildingData"|translate}}:</strong> {{ warehouse.buildingData }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.latitude"|translate}}:</strong> {{ warehouse.latitude }}</div>
+
+  <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.longitude"|translate}}:</strong> {{ warehouse.longitude }}</div>
+ <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.code"|translate}}:</strong>{{ warehouse.code }}</div>
     </div>
 
     <!-- Products Section -->
     <div class="mt-4">
-      <h5 class="mb-3">Products in Warehouse</h5>
+      <h5 class="mb-3">{{"sites.Warehouse.Products in Warehouse"|translate}}</h5>
       <div class="row">
         <div class="col-md-4 col-sm-6 mb-4" *ngFor="let product of warehouse.warehouseProducts">
           <div class="card h-100 border rounded-4 shadow-sm product-card">
             <div class="card-body">
               <div class="d-flex align-items-center mb-3">
-                <div class="product-icon bg-primary text-white rounded-circle d-flex justify-content-center align-items-center me-3">
+                <div class="product-icon bg-purple-500  text-white rounded-circle d-flex justify-content-center align-items-center me-3">
                   <i class="pi pi-box" style="font-size: 1.2rem;"></i>
                 </div>
                 <div>
-                  <div class="text-muted small">Product ID</div>
-                  <div class="fw-bold">{{ product.productId }}</div>
+                  <div class="fw-bold">{{ product.productName }}</div>
                 </div>
               </div>
 
               <div class="text-end mt-auto">
-                <span class="badge bg-secondary">Quantity: {{ product.quantity }}</span>
+                <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{"sites.Warehouse.quantity"|translate}}: {{ product.quantity }}</span>
               </div>
             </div>
           </div>
@@ -45,10 +61,85 @@
 
         <div class="col-12" *ngIf="!warehouse.warehouseProducts?.length">
           <div class="alert alert-secondary text-center">
-            No products found
+           {{"sites.Warehouse.noProductsFound"|translate}}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<div class="sidebar" [class.open]="cartVisible">
+  <div class="sidebar-header d-flex justify-content-between align-items-center">
+    <h4>{{"sites.Warehouse.addProduct"|translate}}</h4>
+    <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+  </div>
+
+  <div class="sidebar-body p-3">
+    <div class="transfer-process d-flex align-items-center mb-3">
+      <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
+           style="width: 30px; height: 30px;" />
+      <p class="mb-0 fw-bold">{{"sites.Warehouse.productProcess"|translate}}</p>
+    </div>
+
+    <!-- Dropdown لاختيار المنتج -->
+    <div class="row p-2" style="font-size: 12px;">
+      <p class="form-label">
+       {{"sites.Warehouse.product"|translate}} <span class="text-danger">*</span>
+      </p>
+
+      <ng-control
+        [type]="controlType.SELECT"
+        [form]="productForm"
+        control="selectedProduct"
+        placeholder="sites.transfer.product"
+        [items]="products"
+        (change)="onProductSelected($event)">
+      </ng-control>
+    </div>
+
+    <!-- جدول المنتجات المختارة -->
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr>
+          <th>{{ "sites.request.product" | translate }}</th>
+          <th>{{ "sites.request.quantity" | translate }}</th>
+          <th class="text-center">{{ "sites.request.action" | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems; let i = index">
+          <td>{{ item.productName }}</td>
+          <td class="d-flex align-items-center gap-2">
+            <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary" (click)="decreaseQuantity(i)"></button>
+            {{ item.quantity }}
+            <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary" (click)="increaseQuantity(i)"></button>
+          </td>
+          <td class="text-center">
+            <button pButton icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete" (click)="removeProduct(i)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+    <button pButton type="button" [ngStyle]="{
+            'border': '1px solid purple',
+            'color': 'purple',
+            'background-color': 'transparent'
+          }" class="rounded" (click)="closeCartDialog()">
+      {{ "sites.request.cancel" | translate }}
+    </button>
+    <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+            [disabled]="pageCreate.form?.invalid || pageCreate.isSaving || cartItems.length === 0"
+            (click)="saveRequest()">
+      {{ "sites.request.save" | translate }}
+    </button>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/service/api.service';
-import { warehouseActivateViewModel, warehouseCreateViewModel, warehouseSearchViewModel, WarehouseViewModel } from '../interfaces/warehouse-view-model';
+import { warehouseActivateViewModel, warehouseCreateViewModel, WarehouseProductCreateViewModel, warehouseSearchViewModel, WarehouseViewModel } from '../interfaces/warehouse-view-model';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 
@@ -80,5 +80,13 @@ getWarehouseDetails(ID: string) {
   // Bulk deactivate governorates
   bulkDeactivate(ids: string[]) {
     return this._apiService.update(`/BulkDeactivateWarehouseEndpoint/BulkDectivatedWarehouses`, { ids });
+  }
+   getProducts() {
+    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+  }
+
+
+   postProduct(body:WarehouseProductCreateViewModel ) {
+   return this._apiService.post(`/AssignProductWarehouseEndpoint/AssignProductWarehouse`, body)
   }
 }
