@@ -27,8 +27,6 @@ const routes: Routes = [{
     { path: "jobTitle", loadChildren: () => import('./job-title/job-title.module').then(m => m.JobTitleModule) },
     { path: "employeeProfile", loadChildren: () => import('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule) },
     { path: "warehouse", loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule) },
-
-
     { path: "supplier", loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule) },
     { path: "salesMan", loadChildren: () => import('./van/salesMan.module').then(m => m.salesMan) },
     { path: "productGroup", loadChildren: () => import('./product-group/product-group.module').then(m => m.ProductGroupModule) },

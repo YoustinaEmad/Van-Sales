@@ -4,50 +4,47 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { LayoutComponent } from './shared/components/layout/layout.component';
 
 const routes: Routes = [
-  
+
+
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+
   {
-    path: '',
-    children: [
-      { path: '', redirectTo: 'auth', pathMatch: 'full' },
-      {
-        path: 'auth',
-        loadChildren: () =>
-          import('./features/auth/auth.module').then((m) => m.AuthModule),
-      },
-    ],
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
+
+
+  // {
+  //   path: '',
+  //   component: LayoutComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       loadChildren: () =>
+  //         import('./features/website/website.module').then(
+  //           (m) => m.WebsiteModule
+  //         ),
+  //     },
+  //   ],
+  // },
   {
-    path: '',
-    component: LayoutComponent,
+    path: 'sites',
+    component: MainLayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('./features/website/website.module').then(
-            (m) => m.WebsiteModule
-          ),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: MainLayoutComponent,
-    children: [
-      { path: '', redirectTo: 'sites', pathMatch: 'full' },
-      {
-        path: 'sites',
         loadChildren: () =>
           import('./features/sites/sites.module').then((m) => m.SitesModule),
       },
     ],
   },
   {
-    path: '',
+    path: 'salesflow',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: 'salesflow', pathMatch: 'full' },
       {
-        path: 'salesflow',
+        path: '',
         loadChildren: () =>
           import('./features/sales-flow/sales-flow.module').then(
             (m) => m.SalesFlowModule
@@ -61,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
