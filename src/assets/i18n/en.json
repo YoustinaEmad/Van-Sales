@@ -331,7 +331,17 @@
       "areyousureyouwanttodeletetheselectedWarehouses?": "Are You Sure You Want To Delete The Selected Warehouses ?",
       "selectLocation": "select Location",
  "numberOfProduts":"Number Of Product Types",
-      "totalQuantity":"Total Quantity"
+      "totalQuantity":"Total Quantity",
+      "details":"Details",
+      "type":"Type",
+      "latitude":"Latitude",
+      "longitude":"Longitude",
+      "Products in Warehouse":"Products in Warehouse",
+      "quantity":"Quantity",
+      "addProduct":"Add Product",
+      "productProcess":"Product Process",
+      "noProductsFound":"No Products Found",
+      "product":"Product"
     },
     "product": {
       "product": "Product",

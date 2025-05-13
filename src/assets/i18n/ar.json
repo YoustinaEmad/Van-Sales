@@ -321,7 +321,17 @@
       "areyousureyouwanttodeletetheselectedWarehouses?": "هل أنت متأكد أنك تريد حذف المخازن المحددة ؟",
       "selectLocation": "حدد الموقع",
       "numberOfProduts": "عدد انواع المنتجات" ,
-      "totalQuantity": "اجمالي الكمية"
+      "totalQuantity": "اجمالي الكمية",
+       "details":"تفاصيل",
+      "type":"نوع المخزن",
+      "latitude":"خط العرض",
+      "longitude":"خط الطول",
+      "Products in Warehouse":"المنتجات في المخزن",
+      "quantity":"الكمية",
+      "addProduct":"اضافة منتج",
+      "productProcess":"عملية المنتج",
+      "noProductsFound":"لا توجد منتجات",
+      "product":"المنتج"
     },
     "product": {
       "product": "منتج",

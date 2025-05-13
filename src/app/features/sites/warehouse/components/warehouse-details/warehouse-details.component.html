@@ -10,35 +10,35 @@
 
   
   <div>
-    <h3 class="mb-0 color-purple-700">{{ warehouse.name }} Details</h3>
+    <h3 class="mb-0 color-purple-700">{{ warehouse.name }} {{"sites.Warehouse.details"|translate}}</h3>
   </div>
 </div>
 
   <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 " (click)="showCartDialog($event)"
-    >Add Product</button>
+    >{{"sites.Warehouse.addProduct"|translate}}</button>
 </div>
 
   <div class="card-body">
     <div class="row">
-      <div class="col-md-6 mb-3"><strong>Data:</strong> {{ warehouse.data }}</div>
-      <div class="col-md-6 mb-3"><strong>Type:</strong> {{ getWarehouseTypeName(warehouse.warehouseType) }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.data"|translate}}:</strong> {{ warehouse.data }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.type"|translate}}:</strong> {{ getWarehouseTypeName(warehouse.warehouseType) }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Governorate:</strong> {{ warehouse.governorateName }}</div>
-      <div class="col-md-6 mb-3"><strong>City:</strong> {{ warehouse.cityName }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.governorate"|translate}}:</strong> {{ warehouse.governorateName }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.city"|translate}}:</strong> {{ warehouse.cityName }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Street:</strong> {{ warehouse.street }}</div>
-      <div class="col-md-6 mb-3"><strong>Landmark:</strong> {{ warehouse.landmark }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.street"|translate}}:</strong> {{ warehouse.street }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.landmark"|translate}}:</strong> {{ warehouse.landmark }}</div>
 
-      <div class="col-md-6 mb-3"><strong>Building Data:</strong> {{ warehouse.buildingData }}</div>
-      <div class="col-md-6 mb-3"><strong>Latitude:</strong> {{ warehouse.latitude }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.buildingData"|translate}}:</strong> {{ warehouse.buildingData }}</div>
+      <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.latitude"|translate}}:</strong> {{ warehouse.latitude }}</div>
 
-  <div class="col-md-6 mb-3"><strong>Longitude:</strong> {{ warehouse.longitude }}</div>
- <div class="col-md-6 mb-3"><strong>Code:</strong>{{ warehouse.code }}</div>
+  <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.longitude"|translate}}:</strong> {{ warehouse.longitude }}</div>
+ <div class="col-md-6 mb-3"><strong>{{"sites.Warehouse.code"|translate}}:</strong>{{ warehouse.code }}</div>
     </div>
 
     <!-- Products Section -->
     <div class="mt-4">
-      <h5 class="mb-3">Products in Warehouse</h5>
+      <h5 class="mb-3">{{"sites.Warehouse.Products in Warehouse"|translate}}</h5>
       <div class="row">
         <div class="col-md-4 col-sm-6 mb-4" *ngFor="let product of warehouse.warehouseProducts">
           <div class="card h-100 border rounded-4 shadow-sm product-card">
@@ -53,7 +53,7 @@
               </div>
 
               <div class="text-end mt-auto">
-                <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">Quantity: {{ product.quantity }}</span>
+                <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{"sites.Warehouse.quantity"|translate}}: {{ product.quantity }}</span>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
 
         <div class="col-12" *ngIf="!warehouse.warehouseProducts?.length">
           <div class="alert alert-secondary text-center">
-            No products found
+           {{"sites.Warehouse.noProductsFound"|translate}}
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
 
 <div class="sidebar" [class.open]="cartVisible">
   <div class="sidebar-header d-flex justify-content-between align-items-center">
-    <h4>Add Product</h4>
+    <h4>{{"sites.Warehouse.addProduct"|translate}}</h4>
     <button class="btn-close" (click)="closeCartDialog()">&times;</button>
   </div>
 
@@ -80,13 +80,13 @@
     <div class="transfer-process d-flex align-items-center mb-3">
       <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
            style="width: 30px; height: 30px;" />
-      <p class="mb-0 fw-bold">Product Process</p>
+      <p class="mb-0 fw-bold">{{"sites.Warehouse.productProcess"|translate}}</p>
     </div>
 
     <!-- Dropdown لاختيار المنتج -->
     <div class="row p-2" style="font-size: 12px;">
       <p class="form-label">
-       Product <span class="text-danger">*</span>
+       {{"sites.Warehouse.product"|translate}} <span class="text-danger">*</span>
       </p>
 
       <ng-control
