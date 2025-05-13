@@ -273,12 +273,12 @@
       "salesMan": "مندوب المبيعات",
       "productGroup": "مجموعة المنتجات",
       "transfersWarehouseToWarehouse": " التحويلات من مخزن الى مخزن",
-      "transferSalesManToSalesMan":"التحويلات من مندوب الى مندوب ",
+      "transferSalesManToSalesMan": "التحويلات من مندوب الى مندوب ",
       "requests": "الطلبات",
-      "customergroup":"مجموعة العملاء",
-      "roles":"الادوار",
-      "supplyChain":"سلاسل الامداد",
-      "location":"الموقع "
+      "customergroup": "مجموعة العملاء",
+      "roles": "الادوار",
+      "supplyChain": "سلاسل الامداد",
+      "location": "الموقع "
     },
     "Category": {
       "category": "فئة",
@@ -320,7 +320,7 @@
       "cancel": "الغاء",
       "areyousureyouwanttodeletetheselectedWarehouses?": "هل أنت متأكد أنك تريد حذف المخازن المحددة ؟",
       "selectLocation": "حدد الموقع",
-      "numberOfProduts": "عدد انواع المنتجات" ,
+      "numberOfProduts": "عدد انواع المنتجات",
       "totalQuantity": "اجمالي الكمية"
     },
     "product": {
@@ -360,7 +360,10 @@
       "weightPerKG": "الوزن لكل كجم",
       "futureDate": "الرجاء تحديد تاريخ مستقبلي.",
       "brandName": "اسم الماركة",
-      "brand": "الماركة"
+      "brand": "الماركة",
+      "expired": "منتهى",
+      "available": "متوفر",
+      "expiration": "الصلاحية"
     },
     "ProductGroup": {
       "productGroup": "مجموعة المنتجات",
@@ -467,25 +470,25 @@
       "save": "حفظ",
       "cancel": "الغاء",
       "action": "الاجراءات",
-      "transactionNumber":"رقم التحويل",
-      "warehouseStatus":"حالة المخزن",
-      "SalesMan OR Transaction_Number":" رقم التحويل او مندوب المبيعات "
+      "transactionNumber": "رقم التحويل",
+      "warehouseStatus": "حالة المخزن",
+      "SalesMan OR Transaction_Number": " رقم التحويل او مندوب المبيعات "
     },
     "transferSalesManToSalesMan": {
-      "transferSalesManToSalesMan":"تحويل من مندوب إلى مندوب",
-      "transfer":"تحويل",
-      "fromSalesManID":"من المندوب",
-      "toSalesManID":"إلى المندوب",
-      "transactionStatus":"حالة المعاملة",
-      "transactionNumber":"رقم المعاملة",
-      "productsQuantity":"كمية المنتجات",
-      "createdDate":"تاريخ الإنشاء",
-      "approve":"قبول",
-      "reject":"رفض",
-      "enter rejection reason":"أدخل سبب الرفض",
-      "cancel":"الغاء",
-      "sendFeedback":"إرسال ردود الفعل",
-      "rejectReason":"سبب الرفض"
+      "transferSalesManToSalesMan": "تحويل من مندوب إلى مندوب",
+      "transfer": "تحويل",
+      "fromSalesManID": "من المندوب",
+      "toSalesManID": "إلى المندوب",
+      "transactionStatus": "حالة المعاملة",
+      "transactionNumber": "رقم المعاملة",
+      "productsQuantity": "كمية المنتجات",
+      "createdDate": "تاريخ الإنشاء",
+      "approve": "قبول",
+      "reject": "رفض",
+      "enter rejection reason": "أدخل سبب الرفض",
+      "cancel": "الغاء",
+      "sendFeedback": "إرسال ردود الفعل",
+      "rejectReason": "سبب الرفض"
     },
     "Brand": {
       "brand": "الماركة",
@@ -503,10 +506,10 @@
       "Uploaded Image": "الصورة المرفوعة",
       "Upload New Image": "رفع صورة جديدة",
       "Error Uploading": "خطأ في رفع الصورة",
-      "cancel":"الغاء",
-      "confirm":"تأكيد",
-      "deleteSelectedBrands":"هل أنت متأكد أنك تريد حذف الماركات المحددة؟",
-      "yes":"نعم"
+      "cancel": "الغاء",
+      "confirm": "تأكيد",
+      "deleteSelectedBrands": "هل أنت متأكد أنك تريد حذف الماركات المحددة؟",
+      "yes": "نعم"
     }
   },
   "auth": {
@@ -525,49 +528,49 @@
       "goToLogin": "اذهب لتسجيل الدخول"
     }
   },
-  "salesflow":{
-    "customerGroup":{
-      "customerGroup":"مجموعة العملاء",
-      "customerGroups":"مجموعات العملاء",
-      "delete":"حذف",
-      "create":"انشاء مجموعة عملاء",
-      "active":"تفعيل",
-      "disActive":"الغاء التفعيل",
-      "cancel":"الغاء",
-      "confirm":"تاكيد",
-      "areyousureyouwanttodeletetheselectedCustomerGroups":"هل أنت متأكد من أنك تريد حذف مجموعات العملاء المحددة؟",
-      "editCustomerGroup":"تعديل مجموعة العملاء",
-      "saveChanges":"حفظ التغيرات",
-      "name":"الاسم",
-      "action":"الاجراءات"
-    },
-    "customers":{
-      "name":"العميل",
-      "activation":"تفعيل",
-      "Client Group Name":"مجموعة العملاء",
-      "email":"ايميل",
-      "nationalNumber":"الرقم القومي",
-      "mobile":"الموبايل",
-      "Img":"الصورة",
-      "action":"الاجراءات",
-      "customers":"العملاء",
-      "download":"تنزيل",
+  "salesflow": {
+    "customerGroup": {
+      "customerGroup": "مجموعة العملاء",
+      "customerGroups": "مجموعات العملاء",
+      "delete": "حذف",
+      "create": "انشاء مجموعة عملاء",
       "active": "تفعيل",
       "disActive": "الغاء التفعيل",
       "cancel": "الغاء",
       "confirm": "تاكيد",
-      "Add New Customer":"اضافة عميل ",
-      "clientGroup":"مجموعة العملاء",
-      "from":"من تاريخ",
-      "to":"الى تاريخ",
-      "gender":"النوع",
-      "governorate":"المحافظة",
-      "landmark":"علامة مميزة",
-      "city":"المدينة",
-      "street":"الشارع",
-      "Select Location":"حدد الموقع",
-      "Upload New Image":"اضافة صورة جديدة",
-      "Error Uploading":"خطا فى التحميل"
-        }
+      "areyousureyouwanttodeletetheselectedCustomerGroups": "هل أنت متأكد من أنك تريد حذف مجموعات العملاء المحددة؟",
+      "editCustomerGroup": "تعديل مجموعة العملاء",
+      "saveChanges": "حفظ التغيرات",
+      "name": "الاسم",
+      "action": "الاجراءات"
+    },
+    "customers": {
+      "name": "العميل",
+      "activation": "تفعيل",
+      "Client Group Name": "مجموعة العملاء",
+      "email": "ايميل",
+      "nationalNumber": "الرقم القومي",
+      "mobile": "الموبايل",
+      "Img": "الصورة",
+      "action": "الاجراءات",
+      "customers": "العملاء",
+      "download": "تنزيل",
+      "active": "تفعيل",
+      "disActive": "الغاء التفعيل",
+      "cancel": "الغاء",
+      "confirm": "تاكيد",
+      "Add New Customer": "اضافة عميل ",
+      "clientGroup": "مجموعة العملاء",
+      "from": "من تاريخ",
+      "to": "الى تاريخ",
+      "gender": "النوع",
+      "governorate": "المحافظة",
+      "landmark": "علامة مميزة",
+      "city": "المدينة",
+      "street": "الشارع",
+      "Select Location": "حدد الموقع",
+      "Upload New Image": "اضافة صورة جديدة",
+      "Error Uploading": "خطا فى التحميل"
+    }
   }
 }

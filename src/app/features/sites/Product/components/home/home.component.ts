@@ -79,6 +79,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "grade", Title: "sites.product.grade", Selectable: false, Sortable: true },
       { Name: "productStatus", Title: "sites.product.productStatus", Selectable: false, Sortable: true },
       { Name: "expiryDate", Title: "sites.product.expiryDate", Selectable: false, Sortable: true },
+      { Name: "expiryDate", Title: "sites.product.expiration", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.product.isActive", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.product.action", Selectable: false, Sortable: true },
     ];
@@ -141,7 +142,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
-
+  isExpired(dateString: string): boolean {
+    const today = new Date();
+    const expiry = new Date(dateString);
+    return expiry < today;
+  }
+  
   editProduct(id: string) {
     this._router.navigate(['/sites/product/edit', id]);
   }

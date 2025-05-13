@@ -38,4 +38,20 @@
   .download-options button:hover {
     background: #f1f1f1;
   }
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 5px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+  }
   
+  .status-chip .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .bg-green-50 {
+    background-color: #dff4ea;
+  }

@@ -134,6 +134,25 @@
             <td>{{getGradeName(item.grade)}}</td>
             <td>{{getStatusName(item.productStatus)}}</td>
              <td>{{item.expiryDate}}</td>
+             <td>
+              <span
+                class="status-chip"
+                [ngClass]="{
+                  'bg-red-50 text-red-500': isExpired(item.expiryDate),
+                  'bg-green-50 text-green-500': !isExpired(item.expiryDate)
+                }"
+              ><span
+              class="dot mx-1"
+              [ngClass]="{
+                'bg-red-500': isExpired(item.expiryDate),
+                'bg-green-500': !isExpired(item.expiryDate)
+              }"
+            ></span>
+            {{ isExpired(item.expiryDate) ? ('sites.product.expired' | translate) : ('sites.product.available' | translate) }}
+                
+              </span>
+            </td>
+            
             <td>
               <div class="flex justify-content-center">
                 <p-inputSwitch [(ngModel)]="item.isActive" [disAbled]="page.isSaving "

@@ -370,7 +370,10 @@
       "weightPerKG": "weight Per KG",
       "futureDate": "Please select a future date.",
       "brandName": "Brand Name",
-      "brand": "Brand"
+      "brand": "Brand",
+      "expired": "Expired",
+      "available": "Available",
+      "expiration": "Expiration"
     },
     "ProductGroup": {
       "productGroup": "ProductGroup",

@@ -31,7 +31,7 @@ export class CreateComponent implements OnInit {
   areImagesValid: boolean = true;
   private pendingLat?: number;
   private pendingLng?: number;
-  
+
   isEqualPassword: boolean = true;
   id: string;
   map: L.Map;
@@ -91,29 +91,29 @@ export class CreateComponent implements OnInit {
   }
 
   getEditableItem() {
-  this._customersService.getById(this.id).subscribe({
-    next: (res) => {
-      if (res.isSuccess) {
-        this.item = res.data;
-        this.item.id = this.id;
-        this.createForm();
+    this._customersService.getById(this.id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.item = res.data;
+          this.item.id = this.id;
+          this.createForm();
+          this.page.isPageLoaded = true;
+
+          // ✅ تحديث موقع الخريطة حسب بيانات العميل
+          const lat = this.item.latitude || 26.8206;
+          const lng = this.item.longitude || 30.8025;
+          this.pendingLat = lat;
+          this.pendingLng = lng;
+        }
+      },
+      error: (err) => {
+        this._sharedService.showToastr(err);
         this.page.isPageLoaded = true;
-
-        // ✅ تحديث موقع الخريطة حسب بيانات العميل
-        const lat = this.item.latitude || 26.8206;
-const lng = this.item.longitude || 30.8025;
-this.pendingLat = lat;
-this.pendingLng = lng;
       }
-    },
-    error: (err) => {
-      this._sharedService.showToastr(err);
-      this.page.isPageLoaded = true;
-    }
-  });
-}
+    });
+  }
 
-  
+
   validateImages(): boolean {
     return this.images.some(image => image.uploaded);
 
@@ -145,7 +145,7 @@ this.pendingLng = lng;
 
   Save() {
     if (this.page.isSaving || this.page.form.invalid) return;
-    this.areImagesValid = this.validateImages(); 
+    this.areImagesValid = this.validateImages();
 
 
     this.page.isSaving = true;
@@ -241,9 +241,8 @@ this.pendingLng = lng;
           clearInterval(checkInterval);
           resolve();
         }
-      }, 50); // Check every 50ms
+      }, 50);
 
-      // Timeout after 2 seconds if the container is still not found
       setTimeout(() => {
         clearInterval(checkInterval);
         reject();
@@ -252,11 +251,11 @@ this.pendingLng = lng;
   }
   updateMapLocation(lat: number, lng: number): void {
     if (this.map && this.marker) {
-      this.map.setView([lat, lng], 5); // أو 8 حسب ما يناسبك
+      this.map.setView([lat, lng], 5); 
       this.marker.setLatLng([lat, lng]);
     }
   }
-  
+
 
   initMap(): void {
     const mapContainer = document.getElementById('map');
@@ -266,7 +265,7 @@ this.pendingLng = lng;
 
     // Only initialize the map once
     if (!this.map) {
-      this.map = L.map(mapContainer).setView([26.8206, 30.8025], 6); // Center the map on Egypt and set zoom level
+      this.map = L.map(mapContainer).setView([26.8206, 30.8025], 6);
 
       // Set up the tile layer (OpenStreetMap tiles)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
