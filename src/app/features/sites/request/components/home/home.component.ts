@@ -62,7 +62,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "warehouseName", Title: "sites.request.warehouseName", Selectable: false, Sortable: true },
        { Name: "quantity", Title: "sites.request.quantity", Selectable: false, Sortable: true },
        { Name: "createDate", Title: "sites.request.createDate", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "sites.request.action", Selectable: false, Sortable: true },
+      // { Name: "Action", Title: "sites.request.action", Selectable: false, Sortable: true },
 
     ];
     this.createSearchForm();
