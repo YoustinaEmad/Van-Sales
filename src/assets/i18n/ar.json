@@ -278,7 +278,8 @@
       "customergroup": "مجموعة العملاء",
       "roles": "الادوار",
       "supplyChain": "سلاسل الامداد",
-      "location": "الموقع "
+      "location": "الموقع ",
+      "transfer":"التحويلات"
     },
     "Category": {
       "category": "فئة",

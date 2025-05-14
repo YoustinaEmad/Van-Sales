@@ -288,7 +288,8 @@
       "customergroup": "Customer Group",
       "roles": "Roles",
       "supplyChain": "Supply Chain",
-      "location": "Location"
+      "location": "Location",
+      "transfer":"Transfers"
     },
     "Category": {
       "category": "Category",

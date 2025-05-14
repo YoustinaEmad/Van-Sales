@@ -8,7 +8,7 @@
             </a>
             <ul class="dropdown-menu" [class.show]="openDropdown === 'location'">
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/governorates"  (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/governorates" (click)="openDropdown = null">
                         {{"sites.layout.governorates" | translate}}
                     </a>
                 </li>
@@ -21,56 +21,53 @@
         </li>
 
 
-         <!-- Items Dropdown -->
-         <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'items'">
+        <!-- Items Dropdown -->
+        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'items'">
             <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('items')">
                 {{"sites.layout.items" | translate}}
             </a>
             <ul class="dropdown-menu" [class.show]="openDropdown === 'items'">
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/category"  (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/category" (click)="openDropdown = null">
                         {{"sites.layout.category" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/product"  (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/product" (click)="openDropdown = null">
                         {{"sites.layout.product" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/productGroup"  (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/productGroup" (click)="openDropdown = null">
                         {{"sites.layout.productGroup" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/brand"  (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/brand" (click)="openDropdown = null">
                         {{"sites.layout.brand" | translate}}
                     </a>
                 </li>
-                
-                
+
+
             </ul>
         </li>
 
         <!-- SNO Dropdown -->
-        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'supplyChain'">
-            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('supplyChain')">
-                {{"sites.layout.supplyChain" | translate}}
+        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'transfer'">
+            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('transfer')">
+                {{"sites.layout.transfer" | translate}}
             </a>
-            <ul class="dropdown-menu" [class.show]="openDropdown === 'supplyChain'">
-               
+            <ul class="dropdown-menu" [class.show]="openDropdown === 'transfer'">
+
+
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/warehouse"(click)="openDropdown = null">
-                        {{"sites.layout.warehouse" | translate}}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" routerLink="/sites/transfers"(click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/transfers" (click)="openDropdown = null">
                         {{"sites.layout.transfersWarehouseToWarehouse" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/transferSalesManToSalesMan"(click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/transferSalesManToSalesMan"
+                        (click)="openDropdown = null">
                         {{"sites.layout.transferSalesManToSalesMan" | translate}}
                     </a>
                 </li>
@@ -78,18 +75,22 @@
         </li>
 
         <!-- Other Navigation Links -->
-      
+
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/warehouse" >
+            {{"sites.layout.warehouse" | translate}}
+        </a>
+
         <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customers">
             {{"sites.layout.customers" | translate}}
         </a>
-       
+
         <!-- <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/supplier">
             {{"sites.layout.suppliers" | translate}}
         </a> -->
         <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/salesMan">
             {{"sites.layout.salesMan" | translate}}
         </a>
-        
+
         <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/request">
             {{"sites.layout.requests" | translate}}
         </a>
