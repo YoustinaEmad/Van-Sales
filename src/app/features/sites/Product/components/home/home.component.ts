@@ -465,4 +465,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   isAllSelected(): boolean {
     return this.items.every(item => item.selected);
   }
+
+    navigateToProductDetails(id: string) {
+    this._router.navigate(['/sites/product/details', id]);
+
+  }
+
 }

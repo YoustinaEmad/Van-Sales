@@ -13,17 +13,20 @@ import { ChipsModule } from 'primeng/chips';
 import { TableModule } from 'primeng/table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'create', component: CreateComponent },
   { path: 'edit/:id', component: CreateComponent },
+   {path:'details/:id',component:ProductDetailsComponent},
 
 ];
 
 @NgModule({
   declarations: [
     HomeComponent,
-    CreateComponent
+    CreateComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,
