@@ -18,7 +18,7 @@ export interface WarehouseViewModel {
   selected: boolean;
   numberOfProduts: number;
   totalQuantity: number;
-  totalProductsWight:number;
+  totalProductsWeight:number;
 }
 
 export class warehouseCreateViewModel {

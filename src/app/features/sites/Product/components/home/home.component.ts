@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -48,7 +48,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
   Brands = [];
   restockQuantity: number = 1;
   selectedProduct: productViewModel;
+  @ViewChild('downloadButton') downloadButton: ElementRef;
+  @ViewChild('downloadOptions') downloadOptions: ElementRef;
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const clickedInside = this.downloadOptions?.nativeElement.contains(event.target) ||
+      this.downloadButton?.nativeElement.contains(event.target);
 
+    if (!clickedInside) {
+      this.showDownloadOptions = false;
+    }
+  }
   constructor(
     public override _sharedService: SharedService,
     private _productService: ProductService,
