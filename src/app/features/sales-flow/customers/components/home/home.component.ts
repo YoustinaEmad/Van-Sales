@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { customerActivateViewModel, customerSearchViewModel, customerSelectedViewModel, customerViewModel } from '../../interfaces/customers';
@@ -28,13 +28,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
   showDownloadOptions = false;
   records: number;
   activation: customerActivateViewModel = { id: '' }
-  verifyStatuslist = [
-    { id: 1, name: 'Pending' },
-    { id: 2, name: 'Verified' },
-    { id: 3, name: 'Approve' },
+  @ViewChild('downloadButton') downloadButton: ElementRef;
+  @ViewChild('downloadOptions') downloadOptions: ElementRef;
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const clickedInside = this.downloadOptions?.nativeElement.contains(event.target) ||
+      this.downloadButton?.nativeElement.contains(event.target);
 
-  ];
-
+    if (!clickedInside) {
+      this.showDownloadOptions = false;
+    }
+  }
 
   customerActivity = [
     { id: 1, name: 'CarWash' },
@@ -143,8 +147,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
         this._sharedService.showToastr(response);
         if (response.isSuccess) {
           this.initializePage();
-      
-        } 
+
+        }
       },
       error: (error) => {
         this._sharedService.showToastr(error);
@@ -193,7 +197,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       });
     }
   }
-  
+
 
   getImageUrl(imagePath: string): string {
     return `${environment.api}/` + imagePath;
@@ -232,7 +236,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   downloadPDF() {
     this.showDownloadOptions = false;
     this.page.isSearching = true;
-  
+
     this._pageService
       .get(
         this.searchViewModel,
@@ -243,17 +247,17 @@ export class HomeComponent extends CrudIndexBaseUtils {
       )
       .subscribe((response) => {
         this.page.isSearching = false;
-  
+
         if (response.isSuccess) {
           this.page.isAllSelected = false;
           this.confingPagination(response);
           this.items = response.data.items as customerViewModel[];
           this.records = response.data.records;
-  
+
           // Now generate the PDF after fetching the data
           this.generatePDF();
         }
-  
+
         this.fireEventToParent();
       });
   }
@@ -264,11 +268,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
       unit: "mm",
       format: "a4",
     });
-  
+
     // Title Styling
     doc.setFontSize(18);
     doc.text("Customers List", 14, 15);
-  
+
     // Table Headers
     const headers = [
       [
@@ -285,7 +289,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
         "Customer Activity",
       ],
     ];
-  
+
     // Table Data
     const data = this.items.map((item, index) => [
       index + 1,
@@ -296,7 +300,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       item.nationalNumber,
       item.mobile,
     ]);
-  
+
     // Generate Table with Better Formatting
     autoTable(doc, {
       head: headers,
@@ -328,11 +332,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
       margin: { top: 20 },
       pageBreak: "auto", // Automatically insert page breaks
     });
-  
+
     // Save PDF
     doc.save("customers.pdf");
   }
-  
+
   toggleDownloadOptions() {
     this.showDownloadOptions = !this.showDownloadOptions;
   }
