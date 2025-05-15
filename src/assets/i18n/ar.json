@@ -278,7 +278,8 @@
       "customergroup": "مجموعة العملاء",
       "roles": "الادوار",
       "supplyChain": "سلاسل الامداد",
-      "location": "الموقع "
+      "location": "الموقع ",
+      "transfer":"التحويلات"
     },
     "Category": {
       "category": "فئة",
@@ -331,7 +332,9 @@
       "addProduct":"اضافة منتج",
       "productProcess":"عملية المنتج",
       "noProductsFound":"لا توجد منتجات",
-      "product":"المنتج"
+      "product":"المنتج",
+      "totalWigthPerKG":"الوزن الكلى",
+      "totalProductsWight":"الوزن الكلى للمنتجات"
     },
     "product": {
       "product": "منتج",
