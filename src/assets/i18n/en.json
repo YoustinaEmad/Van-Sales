@@ -342,7 +342,9 @@
       "addProduct":"Add Product",
       "productProcess":"Product Process",
       "noProductsFound":"No Products Found",
-      "product":"Product"
+      "product":"Product",
+      "totalWigthPerKG":"Total Wigth",
+      "totalProductsWight":"Total Products Wight"
     },
     "product": {
       "product": "Product",

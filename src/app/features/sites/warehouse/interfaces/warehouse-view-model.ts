@@ -18,6 +18,7 @@ export interface WarehouseViewModel {
   selected: boolean;
   numberOfProduts: number;
   totalQuantity: number;
+  totalProductsWight:number;
 }
 
 export class warehouseCreateViewModel {
@@ -68,12 +69,15 @@ export class warehouseDetailsViewModel {
   longitude: string;
   buildingData: string;
   warehouseProducts: WarehouseProductViewModel[];
+
 }
 
 export class WarehouseProductViewModel {
   productId: string;
   productName: string;
   quantity: number;
+  wigthPerKG:number;
+  totalWigthPerKG:number;
 }
 
 export class productDetailsVM {

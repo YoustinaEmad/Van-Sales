@@ -62,11 +62,14 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "street", Title: "sites.Warehouse.street", Selectable: false, Sortable: true },
       { Name: "landmark", Title: "sites.Warehouse.landmark", Selectable: false, Sortable: true },
       { Name: "buildingData", Title: "sites.Warehouse.buildingData", Selectable: false, Sortable: true },
-        { Name: "numberOfProduts", Title: "sites.Warehouse.numberOfProduts", Selectable: false, Sortable: true },
-         { Name: "totalQuantity", Title: "sites.Warehouse.totalQuantity", Selectable: false, Sortable: true },
+      { Name: "numberOfProduts", Title: "sites.Warehouse.numberOfProduts", Selectable: false, Sortable: true },
+      { Name: "totalQuantity", Title: "sites.Warehouse.totalQuantity", Selectable: false, Sortable: true },
+      { Name: "totalQuantity", Title: "sites.Warehouse.totalProductsWight", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.Warehouse.activation", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.Warehouse.action", Selectable: false, Sortable: true },
 
+
+      
     ];
 
 
@@ -98,7 +101,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
-  
+
   loadCities(governorateId?: string) {
     this.cities = [];
     this._pageService.getCities(governorateId).subscribe(res => {
@@ -217,7 +220,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     };
   }
 
-   activateWarehousees() {
+  activateWarehousees() {
     const selectedIds = this.items
       .filter(item => item.selected)
       .map(item => item.id);
@@ -267,7 +270,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-   navigateToWarehouseDetails(id: string) {
+  navigateToWarehouseDetails(id: string) {
     this._router.navigate(['/sites/warehouse/details', id]);
 
   }

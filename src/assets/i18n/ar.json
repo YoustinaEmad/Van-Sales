@@ -332,7 +332,9 @@
       "addProduct":"اضافة منتج",
       "productProcess":"عملية المنتج",
       "noProductsFound":"لا توجد منتجات",
-      "product":"المنتج"
+      "product":"المنتج",
+      "totalWigthPerKG":"الوزن الكلى",
+      "totalProductsWight":"الوزن الكلى للمنتجات"
     },
     "product": {
       "product": "منتج",
