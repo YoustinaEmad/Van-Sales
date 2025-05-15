@@ -89,3 +89,41 @@ export class productActivateViewModel{
 export class pointActivateViewModel{
   id:string;
 }
+
+
+export class productDetailsVM {
+   id: string;
+  name: string;
+  code:string;
+  smallerUnitsOfMeasurements:number;
+  wholesalePrice:number;
+  retailPrice:number;
+  vipClientsPrice:number;
+  numOfUnitPerCartoon:number;
+  safetyStocks:number;
+  packSize:number;
+  netWeightPerLitre:number;
+  weightPerKG:number;
+  expiryDate:Date;
+  unit:number;
+  grade:number;
+  productStatus:number;
+  categoryID:string;
+  categoryName:string;
+  productGroupID:string;
+  productGroupName:string;
+  productAPI:string;
+  isActive:boolean;
+ brandID:string;
+ brandName:string;
+ totalWeight:number;
+  totalQuantity :number;
+  warehouses:ProductWarehouseDetailesVM [];
+}
+
+export class ProductWarehouseDetailesVM {
+  warehouseId :string;
+  warehouseName :string;
+  quantity :number;
+  weight:number; 
+}

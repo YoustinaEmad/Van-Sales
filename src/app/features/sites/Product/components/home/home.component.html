@@ -84,7 +84,7 @@
   </form>
   <div class="scrolled mt-3 h-100">
     <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
-    <table class="table" *ngIf="!page.isSearching">
+    <table class="table table-hover" *ngIf="!page.isSearching">
         <thead>
             
             <tr class="th-header">
@@ -114,7 +114,7 @@
 
         <!-- Data Rows -->
         <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-          <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }">
+          <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }" (click)="navigateToProductDetails(item.id)">
 
             <td>
               <input type="checkbox" [(ngModel)]="item.selected" />
