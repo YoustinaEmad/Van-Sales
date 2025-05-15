@@ -55,8 +55,8 @@
       <div class="col-md-6 col-xl-4">
         <div class="card rounded-4 shadow-sm p-3 h-100">
           <h6 class="text-purple-700 mb-3">📚 Classification</h6>
-          <p><strong>Unit:</strong> {{ product.unit }}</p>
-          <p><strong>Grade:</strong> {{ product.grade }}</p>
+          <p><strong>Unit:</strong> {{  getUnitName(product.unit) }}</p>
+          <p><strong>Grade:</strong> {{ getGradeName(product.grade) }}</p>
           <p><strong>Status:</strong> {{ product.productStatus == 1 ? 'Available' : 'Unavailable' }}</p>
         </div>
       </div>
