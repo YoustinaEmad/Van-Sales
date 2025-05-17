@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
@@ -15,7 +15,7 @@ import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent extends CrudIndexBaseUtils {
   override page: CRUDIndexPage = new CRUDIndexPage();
@@ -53,7 +53,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
     private _transfersWarehouseToWarehouseServiceService: TransfersWarehouseToWarehouseServiceService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {
     super(_sharedService);
   }
@@ -331,21 +332,36 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.cartItems.splice(index, 1);
 
   }
-  increaseQuantity(index: number) {
+//   increaseQuantity(index: number) {
+//     const item = this.cartItems[index];
+//     if (item.quantity < item.maxQuantity) {
+//       item.quantity++;
+//         this.cartItems = [...this.cartItems];
+//     }
+//   }
+
+//  decreaseQuantity(index: number) {
+//   const item = this.cartItems[index];
+//   if (item.quantity > 1) {
+//     item.quantity--;
+//     this.cartItems = [...this.cartItems];
+//     this.cdr.detectChanges(); 
+//   }
+// }
+
+increaseQuantity(index: number): void {
     const item = this.cartItems[index];
-    if (item.quantity < item.maxQuantity) {
-      item.quantity++;
+    const product = this.products.find(p => p.id === item.productId);
+    if (product && item.quantity < product.maxQuantity) {
+      item.quantity += 1;
     }
   }
 
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity > 1) {
-      this.cartItems[index].quantity -= 1;
-    }
-  }
-
-
-
+      this.cartItems[index].quantity -= 1;
+    }
+  }
   editSalesMan(id: string) {
     this.pageCreate.isEdit = true;
     this.id = id;

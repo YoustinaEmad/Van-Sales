@@ -112,7 +112,7 @@
                         </button>
                         {{ item.quantity }}
                         <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
-                            [disabled]="item.quantity >= item.maxQuantity" (click)="increaseQuantity(i)">
+                            (click)="increaseQuantity(i)">
                         </button>
 
                     </td>
