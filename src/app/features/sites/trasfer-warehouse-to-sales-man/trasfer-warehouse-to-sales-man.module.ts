@@ -4,6 +4,14 @@ import { HomeComponent } from './components/home/home.component';
 import { CreateComponent } from './components/create/create.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { TableModule } from 'primeng/table';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,8 +26,29 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    SharedModule,
-    RouterModule.forChild(routes)
+         DropdownModule,
+         TableModule,
+         SharedModule,
+         ButtonModule,
+         FormsModule,
+         RouterModule.forChild(routes),
+         ReactiveFormsModule,
+         InputSwitchModule,
+         CommonModule,
+         ButtonModule,
+         FormsModule,
+         TableModule,
+         SharedModule,
+         DropdownModule,
+         InputSwitchModule,    
+         TranslateModule,
+         CalendarModule,
+         NgxPaginationModule,
+         ReactiveFormsModule,
+         RouterModule.forChild(routes)
+
+
+    
 
   ]
 })

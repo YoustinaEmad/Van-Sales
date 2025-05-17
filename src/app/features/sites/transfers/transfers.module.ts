@@ -34,9 +34,6 @@ const routes: Routes = [
          RouterModule.forChild(routes),
          ReactiveFormsModule,
          InputSwitchModule,
-
-
-
          CommonModule,
          ButtonModule,
          FormsModule,

@@ -13,54 +13,54 @@ import { SharedService } from 'src/app/shared/service/shared.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent  extends CrudIndexBaseUtils{
-override page: CRUDIndexPage = new CRUDIndexPage();
- modalRef: BsModalRef;
+export class HomeComponent extends CrudIndexBaseUtils {
+  override page: CRUDIndexPage = new CRUDIndexPage();
+  modalRef: BsModalRef;
   status: string = 'pending';
   override items: transferSalesManToSalesManViewModel[] = [];
-    selectedItem: RejectReasonViewModel=new RejectReasonViewModel();
-      override searchViewModel: transferSalesManToSalesManSearchViewModel = new transferSalesManToSalesManSearchViewModel();
+  selectedItem: RejectReasonViewModel = new RejectReasonViewModel();
+  override searchViewModel: transferSalesManToSalesManSearchViewModel = new transferSalesManToSalesManSearchViewModel();
   TransactionStatus = [
-     { id: 1, name: 'Pending' },
+    { id: 1, name: 'Pending' },
     { id: 2, name: 'Approve' },
     { id: 3, name: 'Reject' },
   ]
   salesManList: any[] = [];
-    constructor(
+  constructor(
     public override _sharedService: SharedService,
     private _transfersWarehouseToWarehouseServiceService: TransfersWarehouseToWarehouseServiceService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-      private translate: TranslateService
+    private translate: TranslateService
   ) {
     super(_sharedService);
   }
- ngOnInit(): void {
+  ngOnInit(): void {
     this.initializePage();
     this.getSalesManList();
- }
+  }
 
 
-getSalesManList() {
+  getSalesManList() {
     this._transfersWarehouseToWarehouseServiceService.getSalesManList().subscribe(response => {
-this.salesManList = response.data;
+      this.salesManList = response.data;
     });
   }
 
-getStatusName(statusId: number): string {
-  const status = this.TransactionStatus.find(s => s.id === statusId);
-  return status ? status.name.trim() : '';
-}
+  getStatusName(statusId: number): string {
+    const status = this.TransactionStatus.find(s => s.id === statusId);
+    return status ? status.name.trim() : '';
+  }
 
- initializePage() {
+  initializePage() {
     this.page.columns = [
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
       { Name: "transactionNumber", Title: "sites.transferSalesManToSalesMan.transactionNumber", Selectable: false, Sortable: true },
       { Name: "fromSalesManName", Title: "sites.transferSalesManToSalesMan.fromSalesManID", Selectable: false, Sortable: true },
       { Name: "toSalesMan", Title: "sites.transferSalesManToSalesMan.toSalesManID", Selectable: false, Sortable: true },
-       { Name: "transactionStatus", Title: "sites.transferSalesManToSalesMan.transactionStatus", Selectable: false, Sortable: true },
-        { Name: "productsQuantity", Title: "sites.transferSalesManToSalesMan.productsQuantity", Selectable: false, Sortable: true },
-           { Name: "createdDate", Title: "sites.transferSalesManToSalesMan.createdDate", Selectable: false, Sortable: true },
+      { Name: "transactionStatus", Title: "sites.transferSalesManToSalesMan.transactionStatus", Selectable: false, Sortable: true },
+      { Name: "productsQuantity", Title: "sites.transferSalesManToSalesMan.productsQuantity", Selectable: false, Sortable: true },
+      { Name: "createdDate", Title: "sites.transferSalesManToSalesMan.createdDate", Selectable: false, Sortable: true },
       { Name: "", Title: "Action", Selectable: false, Sortable: true },
     ];
 
@@ -72,11 +72,11 @@ getStatusName(statusId: number): string {
   }
 
 
- override createSearchForm() {
+  override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       FromSalesManID: [this.searchViewModel.FromSalesManID],
-      ToSalesManID:[this.searchViewModel.ToSalesManID],
-        transactionStatus:[this.searchViewModel.transactionStatus],
+      ToSalesManID: [this.searchViewModel.ToSalesManID],
+      transactionStatus: [this.searchViewModel.transactionStatus],
     });
     this.page.isPageLoaded = true;
   }
@@ -97,30 +97,30 @@ getStatusName(statusId: number): string {
   }
 
 
- approveRequest(item: transferSalesManToSalesManViewModel, newStatus: string) {
-      this._transfersWarehouseToWarehouseServiceService.Approved(item.id).subscribe({
-        next: (response) => {
-          this.page.isSaving = false;
-          if (response.isSuccess) {
-            console.log(response);
-            this._sharedService.showToastr(response);
-            this.initializePage();
-            this.status='Approved'
-          }
-        },
-        error: (error) => {
-          this.page.isSaving = false;
-          this._sharedService.showToastr(error);
+  approveRequest(item: transferSalesManToSalesManViewModel, newStatus: string) {
+    this._transfersWarehouseToWarehouseServiceService.Approved(item.id).subscribe({
+      next: (response) => {
+        this.page.isSaving = false;
+        if (response.isSuccess) {
+          console.log(response);
+          this._sharedService.showToastr(response);
+          this.initializePage();
+          this.status = 'Approved'
         }
-      })
-    }
-  
-  
+      },
+      error: (error) => {
+        this.page.isSaving = false;
+        this._sharedService.showToastr(error);
+      }
+    })
+  }
+
+
 
   @ViewChild('confirmRejectTemplate', { static: false }) confirmRejectTemplate: any;
-  showRejectConfirmation(Item:transferSalesManToSalesManViewModel) {
+  showRejectConfirmation(Item: transferSalesManToSalesManViewModel) {
     this.selectedItem = new RejectReasonViewModel();
-    this.selectedItem.transactionId=Item.id;
+    this.selectedItem.transactionId = Item.id;
     this.modalRef = this._sharedService.modalService.show(this.confirmRejectTemplate, { class: 'modal-sm' });
   }
 
@@ -131,7 +131,7 @@ getStatusName(statusId: number): string {
         if (response.isSuccess) {
           this._sharedService.showToastr(response);
           this.initializePage();
-          this.status='Rejected'
+          this.status = 'Rejected'
         }
       },
       error: (error) => {

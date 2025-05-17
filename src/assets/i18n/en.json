@@ -289,8 +289,8 @@
       "roles": "Roles",
       "supplyChain": "Supply Chain",
       "location": "Location",
-      "transfer":"Transfers",
-      "transferWarehouseToSalesMan":"Transfer Warehouse To SalesMan"
+      "transfer": "Transfers",
+      "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan"
     },
     "Category": {
       "category": "Category",
@@ -332,20 +332,20 @@
       "cancel": "Cancel",
       "areyousureyouwanttodeletetheselectedWarehouses?": "Are You Sure You Want To Delete The Selected Warehouses ?",
       "selectLocation": "select Location",
- "numberOfProduts":"Number Of Product Types",
-      "totalQuantity":"Total Quantity",
-      "details":"Details",
-      "type":"Type",
-      "latitude":"Latitude",
-      "longitude":"Longitude",
-      "Products in Warehouse":"Products in Warehouse",
-      "quantity":"Quantity",
-      "addProduct":"Add Product",
-      "productProcess":"Product Process",
-      "noProductsFound":"No Products Found",
-      "product":"Product",
-      "totalWigthPerKG":"Total Weigth",
-      "totalProductsWight":"Total Products Weight"
+      "numberOfProduts": "Number Of Product Types",
+      "totalQuantity": "Total Quantity",
+      "details": "Details",
+      "type": "Type",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "Products in Warehouse": "Products in Warehouse",
+      "quantity": "Quantity",
+      "addProduct": "Add Product",
+      "productProcess": "Product Process",
+      "noProductsFound": "No Products Found",
+      "product": "Product",
+      "totalWigthPerKG": "Total Weigth",
+      "totalProductsWight": "Total Products Weight"
     },
     "product": {
       "product": "Product",
@@ -534,6 +534,33 @@
       "confirm": "Confirm",
       "deleteSelectedBrands": "Are you sure you want to delete the selected Brands?",
       "yes": "Yes"
+    },
+    "transferWarehouseToSalesMan": {
+      "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
+      "transfer": "Transfer",
+      "create": "Create",
+      "searchText": "Search",
+      "warehouseName": "Warehouse Name",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "addTransferOperation": "Add Transfer Operation",
+      "transferProcess": "Transfer Process",
+      "salesMan": "SalesMan",
+      "Warehouse": "Warehouse",
+      "product": "Product",
+      "quantity": "Quantity",
+      "action": "Action",
+      "cancel": "Cancel",
+      "save": "Save",
+      "approve": "Approve",
+      "reject": "Reject",
+      "rejectReason": "Reject Reason",
+      "enter rejection reason": "Enter rejection reason",
+      "sendFeedback": "Send Feedback",
+      "transactionNumber": "Transaction Number",
+      "createdDate": "Created Date",
+      "productNumber": "Products Count",
+      "transactionStatus": "Transaction Status"
     }
   },
   "auth": {
@@ -551,7 +578,6 @@
       "login": "Login",
       "goToLogin": "Go To Login"
     }
-    
   },
   "salesflow": {
     "customerGroup": {
