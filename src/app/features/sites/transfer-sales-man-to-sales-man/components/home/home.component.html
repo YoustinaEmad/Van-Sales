@@ -1,125 +1,230 @@
-<div class="mb-2">
-    <div class="d-flex justify-content-between align-items-center py-2 px-3">
-        <div class="d-flex align-items-center">
-            <h2 class="mb-0 color-gray-600 ts-5"> {{"sites.transferSalesManToSalesMan.transferSalesManToSalesMan"|translate}}</h2>
-            <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{page.options.totalItems}}  {{"sites.transferSalesManToSalesMan.transfer"|translate}}
+<div class="row p-3 cr3">
+    <div class="mb-2">
+        <div class="d-flex justify-content-between align-items-center py-2 px-3">
+            <div class="d-flex align-items-center">
+                <h2 class="mb-0 color-gray-600 ts-5">
+                    {{"sites.transferSalesManToSalesMan.transferSalesManToSalesMan" | translate}}
+                </h2>
+                <div class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">
+                    {{ page.options.totalItems }} {{"sites.transferSalesManToSalesMan.transfer" | translate}}
+                </div>
+            </div>
+
+            <!-- أزرار بجانب بعض -->
+            <div class="d-flex">
+                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="showCartDialog($event)">
+                    {{"sites.supplier.create" | translate}}
+                </button>
             </div>
         </div>
 
-        <!-- Flex container for buttons to be side by side -->
-        <!-- <div class="d-flex">
-            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="deleteSelectedSuppliers()">{{"sites.supplier.delete"|translate}}</button>
-            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="activateSuppliers()">{{"sites.supplier.active"|translate}}</button>
-            <button class="bg-purple-100 py-2 px-4 color-purple-500 no-border cr3 mx-1"
-                (click)="disActiveSuppliers()">{{"sites.supplier.disActive"|translate}}</button>
-                <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="navigateToCreateSupplier()">{{"sites.supplier.create"|translate}}</button>
+        <hr />
 
-        </div> -->
+        <!-- فورم البحث -->
+        <form [formGroup]="page.searchForm" (ngSubmit)="search()">
+            <div class="form-body">
+                <div class="row g-2">
+                    <div class="col-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromSalesManID"
+                            label="sites.transferSalesManToSalesMan.fromSalesManID"
+                            placeholder="sites.transferSalesManToSalesMan.fromSalesManID" [items]="salesManList">
+                        </ng-control>
+                    </div>
+                    <div class="col-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToSalesManID"
+                            label="sites.transferSalesManToSalesMan.toSalesManID"
+                            placeholder="sites.transferSalesManToSalesMan.toSalesManID" [items]="salesManList">
+                        </ng-control>
+                    </div>
+                    <div class="col-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="transactionStatus"
+                            label="sites.transferSalesManToSalesMan.transactionStatus"
+                            placeholder="sites.transferSalesManToSalesMan.transactionStatus"
+                            [items]="TransactionStatus">
+                        </ng-control>
+                    </div>
+                    <div class="col-3 d-flex align-items-end">
+                        <button type="submit" class="color-purple-700 rb-btn rb-btn-secondary rb-btn-sm w-100"
+                            [disabled]="page.searchForm.invalid || page.isSearching">
+                            <i class="uil uil-search"></i>
+                            <span class="rb-btn-text d-md-inline-block">{{ 'shared.search' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="sidebar" [class.open]="cartVisible">
+    <div class="sidebar-header d-flex justify-content-between align-items-center">
+        <h4>{{ "sites.transferSalesManToSalesMan.addTransfer" | translate }}</h4>
+        <button class="btn-close" (click)="closeCartDialog()">&times;</button>
     </div>
 
-    <hr />
-    <form [formGroup]="page.searchForm">
-        <div class="form-body">
-            <div class="row g-2">
-                <div class="col-3">
-
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromSalesManID"
-                        label="sites.transferSalesManToSalesMan.fromSalesManID" placeholder="sites.transferSalesManToSalesMan.fromSalesManID"
-                        [items]="salesManList"></ng-control>
-                </div>
-                <div class="col-3">
-
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToSalesManID"
-                        label="sites.transferSalesManToSalesMan.toSalesManID" placeholder="sites.transferSalesManToSalesMan.toSalesManID" [items]="salesManList"></ng-control>
-                </div>
-                <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="transactionStatus"
-                        label="sites.transferSalesManToSalesMan.transactionStatus" placeholder="sites.transferSalesManToSalesMan.transactionStatus"
-                        [items]="TransactionStatus"></ng-control>
-                </div>
-                <div class="col-3 d-flex align-items-end">
-                    <button class='color-purple-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
-                        [disabled]="page.searchForm.invalid || page.isSearching">
-                        <i class="uil uil-search"></i>
-                        <span class="rb-btn-text d-md-inline-block">
-                            {{'shared.search'|translate}}</span>
-                    </button>
-
-                </div>
-
-            </div>
-
+    <div class="sidebar-body p-3">
+        <div class="transfer-process d-flex align-items-center mb-3">
+            <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
+                style="width: 30px; height: 30px;" />
+            <p class="mb-0 fw-bold">{{ "sites.transferSalesManToSalesMan.transferProcess" | translate }}</p>
         </div>
-    </form>
-    <div class="scrolled mt-3 h-100">
-        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
-        <table class="table">
+
+
+        <div class="row p-2">
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="fromSalesmanId"
+                label="sites.transferSalesManToSalesMan.fromSalesMan" placeholder="sites.transferSalesManToSalesMan.fromSalesMan" [items]="salesManList">
+            </ng-control>
+        </div>
+
+
+        <div class="row p-2">
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId" label="sites.transferSalesManToSalesMan.toSalesMan"
+                placeholder="sites.transferSalesManToSalesMan.toSalesMan" [items]="salesManList">
+            </ng-control>
+        </div>
+
+
+        <div class="row p-2" style="font-size: 12px;">
+            <p class="form-label">
+                {{"sites.transfer.product" | translate}} <span class="text-danger">*</span>
+            </p>
+            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+                placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
+            </ng-control>
+        </div>
+
+
+        <table class="table table-bordered mt-4">
             <thead>
-                <tr class="th-header">
-                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
-                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
-                            {{colum.Title | translate}}
-                            <div *ngIf="colum.Sortable" class="d-inline-block"
-                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
-                                <i class="uil uil-sort sort-icon"
-                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
-                            </div>
-                        </th>
-                    </ng-container>
+                <tr>
+                    <th>{{ "sites.transferSalesManToSalesMan.product" | translate }}</th>
+                    <th>{{ "sites.transferSalesManToSalesMan.quantity" | translate }}</th>
+                    <th class="text-center">{{ "sites.transferSalesManToSalesMan.action" | translate }}</th>
                 </tr>
             </thead>
             <tbody>
+                <tr *ngFor="let item of cartItems; let i = index">
+                    <td>{{ item.productName }}</td>
+                    <td class="d-flex align-items-center gap-2">
+                        <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="decreaseQuantity(i)">
+                        </button>
+                        {{ item.quantity }}
+                        <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="increaseQuantity(i)">
+                        </button>
 
-                <!-- Data Rows -->
-                <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-                    <tr>
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ item.transactionNumber }}</td>
-                        <td>{{ item.fromSalesManName }}</td>
-                        <td>{{ item.toSalesMan }}</td>
-                          <td>{{getStatusName(item.transactionStatus)}}</td>
-                        <td>{{ item.productsQuantity }}</td>
-                        <td>{{ item.createdDate | date:'yyyy-MM-dd'}}</td>
-                        <td>
-                            <!-- Approve Button -->
-                            <button class="no-border bg-green-500 cr3 color-gray-25 px-2"
-                                [disabled]="item.transactionStatus === 3 " (click)="item.transactionStatus === 1 && approveRequest(item,item.transactionStatus)">
-                                <img class="pe-2" src="../assets/images/check.png">{{"sites.transferSalesManToSalesMan.approve"|translate}}
-                            </button>
-
-                            <!-- Reject Button (disabled if the status is 'Approved') -->
-                            <button class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
-                                [disabled]="item.transactionStatus === 2"  (click)="item.transactionStatus === 1 && showRejectConfirmation(item)">
-                                <img class="pe-2" src="../assets/images/close.png">{{"sites.transferSalesManToSalesMan.reject"|translate}}
-                            </button>
-                        </td>
-                    </tr>
-                </ng-container>
+                    </td>
+                    <td class="text-center">
+                        <button pButton icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                            (click)="removeProduct(i)">
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Pagination -->
+    <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+        <button pButton type="button"
+            [ngStyle]="{ 'border': '1px solid purple', color: 'purple', 'background-color': 'transparent' }"
+            class="rounded" (click)="closeCartDialog()">
+            {{"sites.transferSalesManToSalesMan.cancel" | translate}}
+        </button>
+        <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+            [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0" (click)="saveRequest()">
+            {{"sites.transferSalesManToSalesMan.save" | translate}}
+        </button>
+    </div>
+</div>
+
+
+<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
+
+<!-- جدول البيانات مع السكلتون للتحميل -->
+<div class="scrolled mt-3 h-100">
+    <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+
+    <table class="table">
+        <thead>
+            <tr class="th-header">
+                <ng-container *ngFor="let colum of page.columns; let i = index">
+                    <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                        {{ colum.Title | translate }}
+                        <div *ngIf="colum.Sortable" class="d-inline-block"
+                            [ngClass]="isColumnAscending(colum.Name) != null ? 'arrow-sort' : ''">
+                            <i class="uil uil-sort sort-icon" [ngClass]="
+                  isColumnAscending(colum)
+                    ? 'sort-icon-ase'
+                    : 'sort-icon-des'
+                ">
+                            </i>
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.transactionNumber }}</td>
+                    <td>{{ item.fromSalesManName }}</td>
+                    <td>{{ item.toSalesMan }}</td>
+                    <td>{{ getStatusName(item.transactionStatus) }}</td>
+                    <td>{{ item.productsQuantity }}</td>
+                    <td>{{ item.createdDate | date: "yyyy-MM-dd" }}</td>
+                    <td>
+                        <!-- زر الموافقة -->
+                        <button class="no-border bg-green-500 cr3 color-gray-25 px-2"
+                            [disabled]="item.transactionStatus === 3" (click)="
+                item.transactionStatus === 1 &&
+                approveRequest(item, item.transactionStatus)
+              ">
+                            <img class="p-2" src="../assets/images/check.png" />
+                            {{"sites.transferSalesManToSalesMan.approve" | translate}}
+                        </button>
+
+                        <!-- زر الرفض -->
+                        <button class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
+                            [disabled]="item.transactionStatus === 2" (click)="
+                item.transactionStatus === 1 &&
+                showRejectConfirmation(item)
+              ">
+                            <img class="p-2" src="../assets/images/close.png" />
+                            {{"sites.transferSalesManToSalesMan.reject" | translate}}
+                        </button>
+
+                           <button *ngIf="item.transactionStatus === 1" pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                                aria-label="Edit" (click)="editSalesMan(item.id)">
+                            </button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <!-- الترقيم -->
     <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
     </ng-pagination>
 </div>
 
-
-
+<!-- قالب تأكيد الرفض -->
 <ng-template #confirmRejectTemplate>
     <div class="modal-body modal-content text-center">
-        <p>{{"sites.transferSalesManToSalesMan.rejectReason"|translate}}</p>
+        <p>{{ "sites.transferSalesManToSalesMan.rejectReason" | translate }}</p>
         <textarea [(ngModel)]="selectedItem.rejectReason" class="form-control" rows="3"
             [placeholder]="'sites.transferSalesManToSalesMan.enter rejection reason' | translate">
     </textarea>
     </div>
     <div class="modal-footer">
-        <button class="btn cancel-btn me-auto"
-            (click)="modalRef.hide()">{{"sites.transferSalesManToSalesMan.cancel"|translate}}</button>
+        <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">
+            {{"sites.transferSalesManToSalesMan.cancel" | translate}}
+        </button>
         <button class="btn btn-without-icon bg-e5 ms-2" (click)="rejectRequest(); modalRef.hide()">
-            {{"sites.transferSalesManToSalesMan.sendFeedback"|translate}}
+            {{"sites.transferSalesManToSalesMan.sendFeedback" | translate}}
         </button>
     </div>
 </ng-template>

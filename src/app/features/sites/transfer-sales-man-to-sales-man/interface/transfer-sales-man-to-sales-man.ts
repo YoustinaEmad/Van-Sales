@@ -19,3 +19,16 @@ export class RejectReasonViewModel {
   transactionId: string;
   rejectReason?: string;
 }
+
+export class AddSalesmanToSalesmanTransactionDetailsVM {
+  quantity:number;
+  productId:string;
+  storageType:number;
+}
+
+export class salesManToSalesManCreateViewNodel {
+  id:string
+  toSalesManId:string;
+  fromSalesmanId:string;
+  transactionDetails:AddSalesmanToSalesmanTransactionDetailsVM [];
+}
