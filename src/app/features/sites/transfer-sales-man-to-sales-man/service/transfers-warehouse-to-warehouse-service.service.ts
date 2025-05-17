@@ -50,6 +50,8 @@ export class TransfersWarehouseToWarehouseServiceService {
  getProducts(ID: string) {
   return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
 }
-
+  getById(ID: string) {
+    return this._apiService.get(`/GetSalesmanToSalesmanTransactionByIDEndpoint/GetSalesmanToSalesmanTransactionById?ID=${ID}`,);
+  }
 
 }

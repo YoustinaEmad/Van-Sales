@@ -538,7 +538,15 @@
       "enter rejection reason": "Enter rejection reason",
       "cancel": "Cancel",
       "sendFeedback": "Send Feedback",
-      "rejectReason": "Reject Reason"
+      "rejectReason": "Reject Reason",
+      "product": "Product",
+      "quantity": "Quantity",
+      "save": "Save",
+      "action": "Action",
+      "toSalesMan":"To SalesMan",
+      "fromSalesMan":"From SalesMan",
+      "addTransfer":"Add Transfer",
+      "transferProcess":"Transfer Process"
     },
     "Brand": {
       "brand": "Brand",

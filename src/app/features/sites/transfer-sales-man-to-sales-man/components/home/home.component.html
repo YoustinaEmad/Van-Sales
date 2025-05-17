@@ -59,7 +59,7 @@
 
 <div class="sidebar" [class.open]="cartVisible">
     <div class="sidebar-header d-flex justify-content-between align-items-center">
-        <h4>{{ "sites.request.addRequest" | translate }}</h4>
+        <h4>{{ "sites.transferSalesManToSalesMan.addTransfer" | translate }}</h4>
         <button class="btn-close" (click)="closeCartDialog()">&times;</button>
     </div>
 
@@ -67,20 +67,20 @@
         <div class="transfer-process d-flex align-items-center mb-3">
             <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
                 style="width: 30px; height: 30px;" />
-            <p class="mb-0 fw-bold">{{ "sites.request.requestProcess" | translate }}</p>
+            <p class="mb-0 fw-bold">{{ "sites.transferSalesManToSalesMan.transferProcess" | translate }}</p>
         </div>
 
 
         <div class="row p-2">
             <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="fromSalesmanId"
-                label="From SalesMan" placeholder="From SalesMan" [items]="salesManList">
+                label="sites.transferSalesManToSalesMan.fromSalesMan" placeholder="sites.transferSalesManToSalesMan.fromSalesMan" [items]="salesManList">
             </ng-control>
         </div>
 
 
         <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId" label="To SalesMan"
-                placeholder="To SalesMan" [items]="salesManList">
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId" label="sites.transferSalesManToSalesMan.toSalesMan"
+                placeholder="sites.transferSalesManToSalesMan.toSalesMan" [items]="salesManList">
             </ng-control>
         </div>
 
@@ -98,9 +98,9 @@
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
-                    <th>{{ "sites.request.product" | translate }}</th>
-                    <th>{{ "sites.request.quantity" | translate }}</th>
-                    <th class="text-center">{{ "sites.request.action" | translate }}</th>
+                    <th>{{ "sites.transferSalesManToSalesMan.product" | translate }}</th>
+                    <th>{{ "sites.transferSalesManToSalesMan.quantity" | translate }}</th>
+                    <th class="text-center">{{ "sites.transferSalesManToSalesMan.action" | translate }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,11 +131,11 @@
         <button pButton type="button"
             [ngStyle]="{ 'border': '1px solid purple', color: 'purple', 'background-color': 'transparent' }"
             class="rounded" (click)="closeCartDialog()">
-            {{"sites.request.cancel" | translate}}
+            {{"sites.transferSalesManToSalesMan.cancel" | translate}}
         </button>
         <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
             [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0" (click)="saveRequest()">
-            {{"sites.request.save" | translate}}
+            {{"sites.transferSalesManToSalesMan.save" | translate}}
         </button>
     </div>
 </div>
@@ -196,6 +196,10 @@
                             <img class="pe-2" src="../assets/images/close.png" />
                             {{"sites.transferSalesManToSalesMan.reject" | translate}}
                         </button>
+
+                           <button *ngIf="item.transactionStatus === 1" pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                                aria-label="Edit" (click)="editSalesMan(item.id)">
+                            </button>
                     </td>
                 </tr>
             </ng-container>

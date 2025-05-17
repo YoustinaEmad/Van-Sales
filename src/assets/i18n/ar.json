@@ -528,7 +528,15 @@
       "enter rejection reason": "أدخل سبب الرفض",
       "cancel": "الغاء",
       "sendFeedback": "إرسال ردود الفعل",
-      "rejectReason": "سبب الرفض"
+      "rejectReason": "سبب الرفض",
+        "product": "المنتج",
+      "quantity": "الكمية",
+      "save": "حفظ",
+      "action": "الاجراءات",
+       "toSalesMan":"الي المندوب",
+      "fromSalesMan":"من المندوب",
+       "addTransfer":"إضافة عملية تحويل",
+      "transferProcess":"عملية التحويل"
     },
     "Brand": {
       "brand": "الماركة",

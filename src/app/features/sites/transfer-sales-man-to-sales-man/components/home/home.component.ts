@@ -23,17 +23,18 @@ export class HomeComponent extends CrudIndexBaseUtils {
   modalRef: BsModalRef;
   status: string = 'pending';
   cartVisible = false;
-   selectedProduct = '';
+  selectedProduct = '';
+  id: string;
   item: salesManToSalesManCreateViewNodel = new salesManToSalesManCreateViewNodel;
   override items: transferSalesManToSalesManViewModel[] = [];
   selectedItem: RejectReasonViewModel = new RejectReasonViewModel();
-  cartItems: { productId: string; storageType:number; quantity: number ,productName:string , maxQuantity :number}[] = [];
-productForm: FormGroup;
-   products: any[] = [];
-   override controlType = ControlType;
+  cartItems: { productId: string; storageType: number; quantity: number, productName: string, maxQuantity: number }[] = [];
+  productForm: FormGroup;
+  products: any[] = [];
+  override controlType = ControlType;
 
-cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
- filteredProducts = this.products;
+  cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
+  filteredProducts = this.products;
   override searchViewModel: transferSalesManToSalesManSearchViewModel = new transferSalesManToSalesManSearchViewModel();
   TransactionStatus = [
     { id: 1, name: 'Pending' },
@@ -56,19 +57,19 @@ cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
   ) {
     super(_sharedService);
   }
- ngOnInit(): void {
-  this.initializePage();  
-  this.productForm = this._sharedService.formBuilder.group({
-    selectedProduct: ['']  
-  });
-  
-  this.pageCreate.form = this._sharedService.formBuilder.group({
-    fromSalesmanId: ['', Validators.required],
-    toSalesManId: ['', Validators.required],
-    transactionDetails: this._sharedService.formBuilder.array([])
-  });
-  
-}
+  ngOnInit(): void {
+    this.initializePage();
+    this.productForm = this._sharedService.formBuilder.group({
+      selectedProduct: ['']
+    });
+
+    this.pageCreate.form = this._sharedService.formBuilder.group({
+      fromSalesmanId: ['', Validators.required],
+      toSalesManId: ['', Validators.required],
+      transactionDetails: this._sharedService.formBuilder.array([])
+    });
+
+  }
 
 
   getSalesManList() {
@@ -94,7 +95,7 @@ cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
       { Name: "transactionStatus", Title: "sites.transferSalesManToSalesMan.transactionStatus", Selectable: false, Sortable: true },
       { Name: "productsQuantity", Title: "sites.transferSalesManToSalesMan.productsQuantity", Selectable: false, Sortable: true },
       { Name: "createdDate", Title: "sites.transferSalesManToSalesMan.createdDate", Selectable: false, Sortable: true },
-      { Name: "", Title: "Action", Selectable: false, Sortable: true },
+      { Name: "", Title: "sites.transferSalesManToSalesMan.action", Selectable: false, Sortable: true },
     ];
     this.createSearchForm();
     this._activatedRoute.queryParams.subscribe(params => {
@@ -115,7 +116,7 @@ cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
     this.page.isPageLoaded = true;
   }
 
- 
+
 
   override search() {
     this.page.isSearching = true;
@@ -140,7 +141,7 @@ cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
         this.fireEventToParent();
       });
   }
-  
+
   approveRequest(item: transferSalesManToSalesManViewModel, newStatus: string) {
     this._transfersWarehouseToWarehouseServiceService.Approved(item.id).subscribe({
       next: (response) => {
@@ -159,18 +160,18 @@ cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
     })
   }
 
-loadProducts() {
-  const fromSalesmanId = this.pageCreate.form.get('fromSalesmanId')?.value;
-  if (!fromSalesmanId) {
-    return;
-  }
-  this._transfersWarehouseToWarehouseServiceService.getProducts(fromSalesmanId).subscribe((res: any) => {
-    if (res.isSuccess) {
-      this.products = res.data;
-      this.filteredProducts = this.products;
+  loadProducts() {
+    const fromSalesmanId = this.pageCreate.form.get('fromSalesmanId')?.value;
+    if (!fromSalesmanId) {
+      return;
     }
-  });
-}
+    this._transfersWarehouseToWarehouseServiceService.getProducts(fromSalesmanId).subscribe((res: any) => {
+      if (res.isSuccess) {
+        this.products = res.data;
+        this.filteredProducts = this.products;
+      }
+    });
+  }
 
 
   @ViewChild('confirmRejectTemplate', { static: false }) confirmRejectTemplate: any;
@@ -199,55 +200,56 @@ loadProducts() {
 
   showCartDialog(event: Event) {
     event.preventDefault();
-  this.getSalesManList();
-  
+    this.getSalesManList();
+
     this.loadProducts();
     this.createForm();
-    this.cartVisible = true;
+
     this.cartItems = [];
     this.pageCreate.form.reset();
+    this.cartVisible = true;
   }
 
   closeCartDialog() {
     this.cartVisible = false;
-     this.cartItems = [];
-  this.productForm.reset();
-  this.pageCreate.form.reset()
+    this.cartItems = [];
+    this.productForm.reset();
+    this.pageCreate.form.reset()
   }
 
-//  onProductSelected(event: any): void {
-//     const selected = this.products.find(p => p.id === event.id);
-//     if (selected && !this.cartItems.find(i => i.productId === selected.id)) {
-//       this.cartItems.push({
-//         productId: selected.id,
-//         quantity: 1,
-//         storageType:1,
-//         productName:selected.name
-//       });
-//       this.productForm.reset(); 
-//     }
-//   }
-onProductSelected(event: any) {
-  const selectedProductId = this.productForm.get('selectedProduct')?.value;
-  const selectedProduct = this.products.find(p => p.id === selectedProductId);
+  //  onProductSelected(event: any): void {
+  //     const selected = this.products.find(p => p.id === event.id);
+  //     if (selected && !this.cartItems.find(i => i.productId === selected.id)) {
+  //       this.cartItems.push({
+  //         productId: selected.id,
+  //         quantity: 1,
+  //         storageType:1,
+  //         productName:selected.name
+  //       });
+  //       this.productForm.reset(); 
+  //     }
+  //   }
+  onProductSelected(event: any) {
+    const selectedProductId = this.productForm.get('selectedProduct')?.value;
+    const selectedProduct = this.products.find(p => p.id === selectedProductId);
 
-  if (!selectedProduct) return;
+    if (!selectedProduct) return;
 
-  const existingItem = this.cartItems.find(item => item.productId === selectedProductId);
-  
-  if (!existingItem) {
-    this.cartItems.push({
-      productId: selectedProduct.id,
-      productName: selectedProduct.name,
-      quantity: 1,
-      storageType: 1,
-      maxQuantity: selectedProduct.maxQuantity 
-    });
+    const existingItem = this.cartItems.find(item => item.productId === selectedProductId);
+
+    if (!existingItem) {
+      this.cartItems.push({
+        productId: selectedProduct.id,
+        productName: selectedProduct.name,
+        quantity: 1,
+        storageType: 1,
+        maxQuantity: selectedProduct.maxQuantity
+      });
+    }
   }
-}
 
   createForm() {
-     this.productForm = this._sharedService.formBuilder.group({
+    this.productForm = this._sharedService.formBuilder.group({
       selectedProduct: [null]
     });
 
@@ -260,11 +262,11 @@ onProductSelected(event: any) {
         )
       },
     );
- this.pageCreate.form.get('fromSalesmanId')?.valueChanges.subscribe(value => {
-    if (value) {
-      this.loadProducts();
-    }
-  });
+    this.pageCreate.form.get('fromSalesmanId')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.loadProducts();
+      }
+    });
     this.page.isPageLoaded = true;
   }
 
@@ -280,10 +282,6 @@ onProductSelected(event: any) {
   saveRequest(): void {
     if (this.pageCreate.isSaving) return;
 
-    if (this.cartItems.length === 0) {
-      return;
-    }
-
     if (this.pageCreate.form.invalid) {
       return;
     }
@@ -293,9 +291,9 @@ onProductSelected(event: any) {
     this.cartItems.forEach(item => {
       detailsFormArray.push(
         this._sharedService.formBuilder.group({
-         productId: [item.productId, Validators.required],
-        quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-        storageType: [item.storageType, Validators.required]
+          productId: [item.productId, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+          storageType: [item.storageType, Validators.required]
         })
       );
     });
@@ -304,7 +302,7 @@ onProductSelected(event: any) {
 
     this.pageCreate.isSaving = true;
     Object.assign(this.item, this.pageCreate.form.value);
-
+    this.pageCreate.isSaving = true;
     this._transfersWarehouseToWarehouseServiceService.postOrUpdate(this.item).subscribe({
       next: (res) => {
         this.pageCreate.isSaving = false;
@@ -312,32 +310,86 @@ onProductSelected(event: any) {
         if (res.isSuccess) {
           this._router.navigate(['/sites/transferSalesManToSalesMan']);
           this.cartVisible = false;
+          this.item = new salesManToSalesManCreateViewNodel();
+          this.cartItems = [];
+          this.pageCreate.form.reset();
           this.search();
+           this.pageCreate.isSaving = false;
         }
       },
       error: () => {
         this.pageCreate.isSaving = false;
       }
     });
+
   }
 
 
 
-    removeProduct(index: number): void {
+  removeProduct(index: number): void {
 
     this.cartItems.splice(index, 1);
 
   }
- increaseQuantity(index: number) {
-  const item = this.cartItems[index];
-  if (item.quantity < item.maxQuantity) {
-    item.quantity++;
-  } 
-}
+  increaseQuantity(index: number) {
+    const item = this.cartItems[index];
+    if (item.quantity < item.maxQuantity) {
+      item.quantity++;
+    }
+  }
 
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity > 1) {
       this.cartItems[index].quantity -= 1;
     }
   }
+
+
+
+  editSalesMan(id: string) {
+    this.pageCreate.isEdit = true;
+    this.id = id;
+    this.cartVisible = true;
+    this.getSalesManList();
+    this.loadProducts();
+    this.getEditableItem();
+
+  }
+
+
+
+  getEditableItem() {
+    this._transfersWarehouseToWarehouseServiceService.getById(this.id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.item = res.data;
+          this.item.id = this.id;
+
+
+          this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => ({
+            productId: detail.productId,
+            productName: detail.productName,
+            quantity: detail.quantity,
+            storageType: detail.storageType
+          }));
+
+
+          this.createForm();
+
+
+          this.pageCreate.form.patchValue({
+            fromSalesmanId: this.item.fromSalesmanId,
+            toSalesManId: this.item.toSalesManId
+          });
+
+          this.pageCreate.isPageLoaded = true;
+        }
+      },
+      error: (err) => {
+        this.pageCreate.isPageLoaded = true;
+      },
+    });
+  }
+
+
 }
