@@ -366,12 +366,16 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.item.id = this.id;
 
 
-          this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => ({
+         this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => {
+          const product = this.products.find(p => p.id === detail.productId);
+          return {
             productId: detail.productId,
             productName: detail.productName,
             quantity: detail.quantity,
-            storageType: detail.storageType
-          }));
+            storageType: detail.storageType,
+           maxQuantity: product ? product.maxQuantity : null 
+          };
+        });
 
 
           this.createForm();
