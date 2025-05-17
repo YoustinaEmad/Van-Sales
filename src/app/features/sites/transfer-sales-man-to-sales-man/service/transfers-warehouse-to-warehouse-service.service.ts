@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/shared/service/api.service';
-import { RejectReasonViewModel, transferSalesManToSalesManSearchViewModel } from '../interface/transfer-sales-man-to-sales-man';
+import { RejectReasonViewModel, salesManToSalesManCreateViewNodel, transferSalesManToSalesManSearchViewModel } from '../interface/transfer-sales-man-to-sales-man';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 
@@ -37,4 +37,19 @@ export class TransfersWarehouseToWarehouseServiceService {
   getSalesManList() {
     return this._apiService.get(`/SalesmanSelectListEndpoint/SelectSalesmanList`);
   }
+
+   postOrUpdate(body: salesManToSalesManCreateViewNodel) {
+      console.log(body)
+      if (body.id) return this._apiService.update(`/EditSalesmanToSalesmanTransactionEndpoint/EditSalesmanToSalesmanTransaction`, body)
+      else return this._apiService.post(`/StartSalesmanToSalesmanTransactionEndPoint/StartSalesmanToSalesmanTransaction`, body)
+    }
+
+     getSalesMen() {
+    return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
+  }
+ getProducts(ID: string) {
+  return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
+}
+
+
 }
