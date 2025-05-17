@@ -279,7 +279,8 @@
       "roles": "الادوار",
       "supplyChain": "سلاسل الامداد",
       "location": "الموقع ",
-      "transfer":"التحويلات"
+      "transfer":"التحويلات",
+      "transferWarehouseToSalesMan":"التحويلات من مخزن الى مندوب"
     },
     "Category": {
       "category": "فئة",

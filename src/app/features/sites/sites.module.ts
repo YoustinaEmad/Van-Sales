@@ -33,6 +33,7 @@ const routes: Routes = [{
     { path: "transfers", loadChildren: () => import('./transfers/transfers.module').then(m => m.TransfersModule) },
     { path: "request", loadChildren: () => import('./request/request.module').then(m => m.RequestModule) },
     { path: "transferSalesManToSalesMan", loadChildren: () => import('./transfer-sales-man-to-sales-man/transfer-sales-man-to-sales-man.module').then(m => m.TransferSalesManToSalesManModule) },
+    { path: "transferWarehouseToSalesMan", loadChildren: () => import('./trasfer-warehouse-to-sales-man/trasfer-warehouse-to-sales-man.module').then(m => m.TrasferWarehouseToSalesManModule) },
 
   ]
 }
