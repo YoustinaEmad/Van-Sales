@@ -55,6 +55,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
     this.loadWarehouses();
+    
 
   }
   OnWarehouseIdChange(warehouseId: any) {
@@ -76,6 +77,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     ];
     this.createSearchForm();
+   // this.createForm();
     this.activatedRoute.queryParams.subscribe(params => {
       this._sharedService.getFilterationFromURL(params, this.page.searchForm)
       this.search();
