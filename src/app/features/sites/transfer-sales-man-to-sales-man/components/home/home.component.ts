@@ -62,16 +62,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.initializePage();
     this.getSalesManList();
 
-    this.productForm = this._sharedService.formBuilder.group({
-      selectedProduct: ['']
-    });
-
-    this.pageCreate.form = this._sharedService.formBuilder.group({
-      fromSalesmanId: ['', Validators.required],
-      toSalesManId: ['', Validators.required],
-      transactionDetails: this._sharedService.formBuilder.array([])
-    });
-
   }
 
 
@@ -101,6 +91,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "", Title: "sites.transferSalesManToSalesMan.action", Selectable: false, Sortable: true },
     ];
     this.createSearchForm();
+    this.createForm();
     this._activatedRoute.queryParams.subscribe(params => {
       this._sharedService.getFilterationFromURL(params, this.page.searchForm)
       this.search();
