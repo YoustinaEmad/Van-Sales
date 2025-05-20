@@ -7,3 +7,65 @@
   border: 1px solid #E9EAEB;
   border-radius: 6px;
 }
+
+
+.custom-clean-table {
+  width: 100%;
+}
+
+.custom-clean-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+  border: 1px solid #dedddd !important;
+  border-radius: 12px !important;
+}
+
+.custom-clean-table td {
+  background-color: #ffffff;
+   border: 1px solid #dedddd !important;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 1rem;
+   border-radius: 12px !important; 
+  vertical-align: middle;
+}
+
+/* 
+.status-badge {
+  background-color: #ffd6d6;
+  color: #ff3e3e;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+} */
+
+.status-badge {
+  display: inline-block;
+  font-weight: 400;
+  padding: 6px 16px;
+  border-radius: 3px;
+
+}
+
+
+.status-badge.completed {
+  background-color: #D1FADF; 
+  color: #039855; 
+}
+
+
+.status-badge.not-completed {
+  background-color: #FEF0C7; 
+  color: #DC6803;
+}
+
+.card {
+  border: 1px solid #dedddd;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+
+.card-header {
+  background-color: transparent;
+  border-bottom: none;
+}
