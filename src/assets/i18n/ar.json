@@ -596,8 +596,9 @@
       "salesManName":" المندوب",
       "startDate":"تاريخ البداية",
       "client":"العميل",
-      "action":"الاجراءات"
-      
+      "action":"الاجراءات",
+      "actual":"الجارية",
+      "planned":"القادمة"      
     }
   },
   "auth": {
