@@ -57,55 +57,6 @@
 
 
 
-        <div *ngIf="selectedTab === TabEnum.Planned" class="p-4 bg-white rounded">
-          <div class="container mt-4">
-            <div class="d-flex justify-content-end align-items-center mb-3">
-
-              <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1" (click)="showCartDialog($event)">
-                {{"sites.dispatch.create"|translate}}
-              </button>
-            </div>
-
-            <div class="card mb-4" *ngFor="let request of repeatedRequests">
-              <!-- Header -->
-              <div class="card-header d-flex flex-column align-items-end border-bottom-0 bg-white">
-                <div class="fw-bold fs-5">{{ request.name }}</div>
-                <div class="text-muted">
-                  رقم الرحلة:
-                  <a class="text-primary text-decoration-none fw-bold">#{{ request.id }}</a>
-                </div>
-              </div>
-
-              <!-- Table -->
-              <div class="px-3 pb-3 cr3">
-                <table class="table custom-clean-table text-center mb-0 cr3">
-                  <thead>
-                    <tr>
-                      <th>حالة خط السير</th>
-                      <th>التاريخ</th>
-                      <th>العميل</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let row of request.routes">
-                      <td>
-                        <span class="status-badge" [ngClass]="{
-                  'completed': row.status === 'تمت',
-                  'not-completed': row.status === 'لم تتم'
-                }">
-                          {{ row.status }}
-                        </span>
-                      </td>
-
-                      <td>{{ row.date }}</td>
-                      <td>{{ row.client }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
 
 
 
@@ -114,7 +65,7 @@
             <div class="d-flex justify-content-end align-items-center mb-3">
 
               <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1" (click)="showCartDialog($event)">
-                create
+                {{"sites.dispatch.create"|translate}}
               </button>
             </div>
 
