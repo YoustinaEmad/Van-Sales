@@ -13,3 +13,15 @@ export class createDispatchPlannedViewModel {
   clientIDs:string[];
 }
 
+export class GetAllPlannedDispatchs {
+  id:string;
+  startDate:Date;
+  salesManID:string;
+  salesManName:string;
+  details: GetAllPlannedDispatchsDetails;
+}
+
+export class GetAllPlannedDispatchsDetails {
+  clientID:string;
+  clientName:string;
+}

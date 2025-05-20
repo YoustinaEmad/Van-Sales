@@ -11,21 +11,31 @@
 
 .custom-clean-table {
   width: 100%;
+ border-radius: 5px !important; 
+}
+
+.custom-clean-table2 th {
+  background-color: #D2D6DB;
+  font-weight: bold;
+  border:  solid #D2D6DB !important;
+width: 50%;
+}
+
+.custom-clean-table2 th,
+.custom-clean-table2 td {
+  border: 1px solid #dedddd !important;
 }
 
 .custom-clean-table th {
-  background-color: #f9f9f9;
+  background-color: #D2D6DB;
   font-weight: bold;
-  border: 1px solid #dedddd !important;
-  border-radius: 12px !important;
+  border:  solid #D2D6DB !important;
 }
-
 .custom-clean-table td {
   background-color: #ffffff;
    border: 1px solid #dedddd !important;
   border-bottom: 1px solid #f1f1f1;
   padding: 1rem;
-   border-radius: 12px !important; 
   vertical-align: middle;
 }
 
@@ -60,8 +70,6 @@
 
 .card {
   border: 1px solid #dedddd;
-  border-radius: 12px;
-  box-shadow: none;
 }
 
 
@@ -101,3 +109,4 @@
     font-size: 24px;
     cursor: pointer;
   }
+
