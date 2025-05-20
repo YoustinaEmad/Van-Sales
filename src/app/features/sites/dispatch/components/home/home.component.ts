@@ -10,7 +10,8 @@ import { createWarehouseToSalesmanViewModel } from '../../../trasfer-warehouse-t
 import { WarehouseToSalesmanServiceService } from '../../../trasfer-warehouse-to-sales-man/service/warehouse-to-salesman-service.service';
 import { DispatchService } from '../../service/dispatch.service';
 import { createDispatchPlannedViewModel } from '../../interface/dispatch-view-model';
-import { FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
   cartVisible = false;
   SalesMen: any[] = [];
   Clients: any[] = [];
-  cartItems: { Id: string }[] = [];
+  cartItems: { Id: string ,clientName:string}[] = [];
+  clientsForm: FormGroup;
+  override controlType = ControlType; // add this line if missing
 
   Tabs = [
     {
@@ -70,6 +73,7 @@ repeatedRequests = [
       ]
     }
   ];
+
   switchTab(tabID: number) {
     this.selectedTab = tabID;
     this.Tabs.forEach((tab) => {
@@ -84,7 +88,16 @@ repeatedRequests = [
       //.getApprovedAndReject() // Approved or Rejected
     }
   }
-
+  onClientsSelected(event: any): void {
+    const selected = this.Clients.find(p => p.id === event.id);
+    if (selected && !this.cartItems.find(i => i.Id === selected.id)) {
+      this.cartItems.push({
+        Id: selected.id,
+        clientName:selected.name
+      });
+      this.clientsForm.reset(); // optional: clear selection after adding
+    }
+  }
   loadSalesMen() {
     this._pageService.getSalesMen().subscribe((res: any) => {
       if (res && res.isSuccess) {
@@ -93,7 +106,7 @@ repeatedRequests = [
     });
   }
   loadClients() {
-    this._pageService.getSalesMen().subscribe((res: any) => {
+    this._pageService.getClients().subscribe((res: any) => {
       if (res && res.isSuccess) {
         this.Clients = res.data || [];
       }
@@ -115,45 +128,64 @@ repeatedRequests = [
   }
 
   createForm() {
+    this.clientsForm = this._sharedService.formBuilder.group({
+      selectedClient: [null]
+    });
     this.pageCreate.form = this._sharedService.formBuilder.group(
       {
         salesManID: [this.item.salesManID, Validators.required],
-        startDate: [this.item.startDate, Validators.required],
-        clientIDs: this._sharedService.formBuilder.array(
-          this.item.clientIDs?.map(detail => this.createDetailFormGroup(detail)) || []
-        )
+        startDate: [this.item.startDate || new Date(), [Validators.required,this.validatePastDate
+        ]],
+        clientIDs: [[], [Validators.required, this.requireNonEmptyArray()]],
+
       });
 
     this.pageCreate.isPageLoaded = true;
   }
+  validatePastDate(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) return null;
 
-  createDetailFormGroup(clientID: string): FormGroup {
-    return this._sharedService.formBuilder.group({
-      clientID: [clientID, Validators.required]
-    });
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+
+    // Reset time parts to compare only dates
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    if (selectedDate <= today) {
+      return { pastDate: 'sites.product.futureDate' };
+    }
+
+    return null;
   }
+  requireNonEmptyArray(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return Array.isArray(value) && value.length > 0 ? null : { required: true };
+    };
+  }
+  
+
+  // createDetailFormGroup(clientID: string): FormGroup {
+  //   return this._sharedService.formBuilder.group({
+  //     clientID: [clientID, Validators.required]
+  //   });
+  // }
 
 
   saveTransfer(): void {
-    if (this.pageCreate.isSaving) return;
-    if (this.pageCreate.form.invalid) {
-      return;
-    }
-  
-    const detailsFormArray = this._sharedService.formBuilder.array(
-      this.cartItems.map(item =>
-        this._sharedService.formBuilder.group({
-          clientID: [item.Id, Validators.required]
-        })
-      )
-    );
-    
-    this.pageCreate.form.setControl('clientIDs', detailsFormArray);
-    
-    // ✅ Set the cart items into the form
-    //this.pageCreate.form.setControl('transactionDetails', detailsFormArray);
+    this.pageCreate.form.get('clientIDs')?.setValue(this.cartItems.map(c => c.Id));
+this.pageCreate.form.get('clientIDs')?.updateValueAndValidity();
 
-    // Now assign the form value to your model
+if (this.pageCreate.isSaving) return;
+if (this.pageCreate.form.invalid) {
+  console.log(this.pageCreate.form.errors); // لمساعدتك على معرفة السبب
+  return;
+}
+
+  
+
+    
     Object.assign(this.item, this.pageCreate.form.value);
 
     this.pageCreate.isSaving = true;
@@ -177,6 +209,12 @@ repeatedRequests = [
         this.pageCreate.isSaving = false;
       }
     });
+  }
+
+  removeClient(index: number): void {
+
+    this.cartItems.splice(index, 1);
+
   }
 
 }
