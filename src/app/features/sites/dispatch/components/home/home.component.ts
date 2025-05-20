@@ -34,7 +34,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   cartVisible = false;
   SalesMen: any[] = [];
   Clients: any[] = [];
-  cartItems: { Id: string ,clientName:string}[] = [];
+  cartItems: { Id: string, clientName: string }[] = [];
   clientsForm: FormGroup;
   override controlType = ControlType; // add this line if missing
 
@@ -52,7 +52,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   ];
 
-repeatedRequests = [
+  repeatedRequests = [
     {
       name: 'احمد محمود',
       id: 3989586,
@@ -79,12 +79,12 @@ repeatedRequests = [
     this.Tabs.forEach((tab) => {
       tab.isSelected = tab.ID === tabID;
     });
-  
+
     if (this.selectedTab === TabEnum.Actual) {
-     // this.items = this.items.filter(item => item.verifyStatus === 1); // Pending
-     // this.initializePage();
+      // this.items = this.items.filter(item => item.verifyStatus === 1); // Pending
+      // this.initializePage();
     } else if (this.selectedTab === TabEnum.Planned) {
-     // this.items = this.items.filter(item => item.verifyStatus !== 1);
+      // this.items = this.items.filter(item => item.verifyStatus !== 1);
       //.getApprovedAndReject() // Approved or Rejected
     }
   }
@@ -93,7 +93,7 @@ repeatedRequests = [
     if (selected && !this.cartItems.find(i => i.Id === selected.id)) {
       this.cartItems.push({
         Id: selected.id,
-        clientName:selected.name
+        clientName: selected.name
       });
       this.clientsForm.reset(); // optional: clear selection after adding
     }
@@ -134,7 +134,7 @@ repeatedRequests = [
     this.pageCreate.form = this._sharedService.formBuilder.group(
       {
         salesManID: [this.item.salesManID, Validators.required],
-        startDate: [this.item.startDate || new Date(), [Validators.required,this.validatePastDate
+        startDate: [this.item.startDate || new Date(), [Validators.required, this.validatePastDate
         ]],
         clientIDs: [[], [Validators.required, this.requireNonEmptyArray()]],
 
@@ -164,7 +164,7 @@ repeatedRequests = [
       return Array.isArray(value) && value.length > 0 ? null : { required: true };
     };
   }
-  
+
 
   // createDetailFormGroup(clientID: string): FormGroup {
   //   return this._sharedService.formBuilder.group({
@@ -175,17 +175,17 @@ repeatedRequests = [
 
   saveTransfer(): void {
     this.pageCreate.form.get('clientIDs')?.setValue(this.cartItems.map(c => c.Id));
-this.pageCreate.form.get('clientIDs')?.updateValueAndValidity();
+    this.pageCreate.form.get('clientIDs')?.updateValueAndValidity();
 
-if (this.pageCreate.isSaving) return;
-if (this.pageCreate.form.invalid) {
-  console.log(this.pageCreate.form.errors); // لمساعدتك على معرفة السبب
-  return;
-}
+    if (this.pageCreate.isSaving) return;
+    if (this.pageCreate.form.invalid) {
+      console.log(this.pageCreate.form.errors); // لمساعدتك على معرفة السبب
+      return;
+    }
 
-  
 
-    
+
+
     Object.assign(this.item, this.pageCreate.form.value);
 
     this.pageCreate.isSaving = true;
@@ -201,7 +201,7 @@ if (this.pageCreate.form.invalid) {
           this.cartItems = [];
           this.pageCreate.form.reset();
           this.search();
-           this.pageCreate.isSaving = false;
+          this.pageCreate.isSaving = false;
         }
       },
       error: (err) => {
