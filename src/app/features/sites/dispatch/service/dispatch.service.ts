@@ -18,13 +18,13 @@ export class DispatchService {
 
     return this._apiService.get(`/GetAllVerifiedStatusEndPoint/GetList?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
-  getPlanned(searchViewModel: DispatchPlannedViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number = 0) {
+  getPlanned( orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number = 0) {
     if (pageSize == 0)
       pageSize = environment.pageSize;
 
     let params = new HttpParams();
 
-    return this._apiService.get(`/GetAllApproveOrRejectUserEndpoint/GetList?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
+    return this._apiService.get(`/GetAllPlannedDispatchsEndpoint/GetAllPlanedDispatchs?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
   postOrUpdate(body: createDispatchPlannedViewModel) {
     // if (body.id) return this._apiService.update(`/EditWarehouseToSalesmanTransactionEndPoint/EditWarehouseToSalesmanTransaction`, body) else

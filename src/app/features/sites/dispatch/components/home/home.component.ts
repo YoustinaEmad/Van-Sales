@@ -9,7 +9,7 @@ import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { createWarehouseToSalesmanViewModel } from '../../../trasfer-warehouse-to-sales-man/interface/warehouse-to-salesman-view-model';
 import { WarehouseToSalesmanServiceService } from '../../../trasfer-warehouse-to-sales-man/service/warehouse-to-salesman-service.service';
 import { DispatchService } from '../../service/dispatch.service';
-import { createDispatchPlannedViewModel } from '../../interface/dispatch-view-model';
+import { createDispatchPlannedViewModel, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 
@@ -36,6 +36,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   Clients: any[] = [];
   cartItems: { Id: string, clientName: string }[] = [];
   clientsForm: FormGroup;
+  plannedDispatches: GetAllPlannedDispatchs[] = [];
   override controlType = ControlType; // add this line if missing
 
   Tabs = [
@@ -84,6 +85,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       // this.items = this.items.filter(item => item.verifyStatus === 1); // Pending
       // this.initializePage();
     } else if (this.selectedTab === TabEnum.Planned) {
+       this.loadPlannedDispatches();
       // this.items = this.items.filter(item => item.verifyStatus !== 1);
       //.getApprovedAndReject() // Approved or Rejected
     }
@@ -178,10 +180,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.pageCreate.form.get('clientIDs')?.updateValueAndValidity();
 
     if (this.pageCreate.isSaving) return;
-    if (this.pageCreate.form.invalid) {
-      console.log(this.pageCreate.form.errors); // لمساعدتك على معرفة السبب
-      return;
-    }
+   
 
 
 
@@ -210,6 +209,15 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
+
+
+  loadPlannedDispatches() {
+  this._pageService.getPlanned('startDate', false, 1).subscribe((res: any) => {
+    if (res && res.isSuccess) {
+      this.plannedDispatches = res.data.items || [];
+    }
+  });
+}
 
   removeClient(index: number): void {
 
