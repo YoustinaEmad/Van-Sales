@@ -49,7 +49,6 @@ export class WarehouseToSalesmanServiceService {
   }
 
   postOrUpdate(body: createWarehouseToSalesmanViewModel) {
-    console.log(body)
     if (body.id) return this._apiService.update(`/EditWarehouseToSalesmanTransactionEndPoint/EditWarehouseToSalesmanTransaction`, body)
     else return this._apiService.post(`/StartWarehouseToSalesmanTransactionEndPoint/StartWarehouseToSalesmanTransaction`, body)
   }
