@@ -166,12 +166,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-  // createDetailFormGroup(clientID: string): FormGroup {
-  //   return this._sharedService.formBuilder.group({
-  //     clientID: [clientID, Validators.required]
-  //   });
-  // }
-
 
   saveTransfer(): void {
     this.pageCreate.form.get('clientIDs')?.setValue(this.cartItems.map(c => c.Id));

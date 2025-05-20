@@ -587,6 +587,17 @@
       "createdDate": "تاريخ الإنشاء",
       "productNumber": "عدد المنتجات",
       "transactionStatus": "حالة المعاملة"
+    },
+    "dispatch":{
+      "dispatch":"خط السير",
+      "create":"إنشاء",
+      "addDispatch":"اضافة خط سير",
+      "addProcess":"عملية الاضافة",
+      "salesManName":" المندوب",
+      "startDate":"تاريخ البداية",
+      "client":"العميل",
+      "action":"الاجراءات"
+      
     }
   },
   "auth": {

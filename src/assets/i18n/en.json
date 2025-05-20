@@ -597,6 +597,17 @@
       "createdDate": "Created Date",
       "productNumber": "Products Count",
       "transactionStatus": "Transaction Status"
+    },
+    "dispatch":{
+      "dispatch":"Dispatch",
+      "create":"Create",
+      "addDispatch":"Add Dispatch",
+      "addProcess":"Add Process",
+      "salesManName":" SalesMan",
+      "startDate":"StartDate",
+      "client":"Client",
+      "action":"Action"
+      
     }
   },
   "auth": {

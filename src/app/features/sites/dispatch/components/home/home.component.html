@@ -1,4 +1,4 @@
-<h2 class=" color-gray-600 ts-5 my-3">Sign Up Requests</h2>
+<h2 class=" color-gray-600 ts-5 my-3">{{"sites.dispatch.dispatch"|translate}}</h2>
 <ng-container>
   <!-- Tabs Section -->
   <div class="no-border">
@@ -62,7 +62,7 @@
             <div class="d-flex justify-content-end align-items-center mb-3">
 
               <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1" (click)="showCartDialog($event)">
-                create
+                {{"sites.dispatch.create"|translate}}
               </button>
             </div>
 
@@ -109,23 +109,23 @@
               <!-- Sidebar -->
               <div class="sidebar open">
                 <div class="sidebar-header d-flex justify-content-between align-items-center">
-                  <h4>{{ "sites.request.addRequest" | translate }}</h4>
+                  <h4>{{ "sites.dispatch.addDispatch" | translate }}</h4>
                   <button class="btn-close" (click)="closeCartDialog()">&times;</button>
                 </div>
                 <div class="sidebar-body p-3">
                   <div class="transfer-process d-flex align-items-center mb-3">
                     <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
                       style="width: 30px; height: 30px;" />
-                    <p class="mb-0 fw-bold">{{ "sites.request.requestProcess" | translate }}</p>
+                    <p class="mb-0 fw-bold">{{ "sites.dispatch.addProcess" | translate }}</p>
                   </div>
                   <div class="row p-2">
                     <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
-                      label="sites.request.salesManName" placeholder="sites.request.salesManName" [items]="SalesMen">
+                      label="sites.dispatch.salesManName" placeholder="sites.dispatch.salesManName" [items]="SalesMen">
                     </ng-control>
                   </div>
                   <div class="row p-2">
                     <ng-control [form]="pageCreate.form" [type]="pageCreate.ControlType.INPUT_DATE" control="startDate"
-                      label="sites.product.expiryDate" placeholder="sites.product.expiryDate"></ng-control>
+                      label="sites.dispatch.startDate" placeholder="sites.dispatch.startDate"></ng-control>
 
                       <div *ngIf="pageCreate.form.get('startDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
                         {{ pageCreate.form.get('startDate')?.errors?.pastDate | translate }}
@@ -135,10 +135,10 @@
 
                   <div class="row p-2" style="font-size: 12px;">
                     <p class="form-label ">
-                      {{ "sites.transfer.product" | translate }} <span class="text-danger">*</span>
+                      {{ "sites.dispatch.client" | translate }} <span class="text-danger">*</span>
                     </p>
                     <ng-control [type]="controlType.SELECT" [form]="clientsForm" control="selectedClient"
-                      placeholder="sites.transfer.product" [items]="Clients" (change)="onClientsSelected($event)">
+                      placeholder="sites.dispatch.client" [items]="Clients" (change)="onClientsSelected($event)">
                     </ng-control>
 
                   </div>
@@ -146,8 +146,8 @@
                   <table class="table table-bordered mt-4">
                     <thead>
                       <tr>
-                        <th>{{ "sites.request.product" | translate }}</th>
-                        <th class="text-center">{{ "sites.request.action" | translate }}</th>
+                        <th>{{ "sites.dispatch.client" | translate }}</th>
+                        <th class="text-center">{{ "sites.dispatch.action" | translate }}</th>
                       </tr>
                     </thead>
                     <tbody>
