@@ -58,140 +58,138 @@
 
 
         <div *ngIf="selectedTab === TabEnum.Planned" class="p-4 bg-white rounded">
-  <div class="container mt-4">
-    <div class="d-flex justify-content-end align-items-center mb-3">
-      <h4 class="mb-0"></h4>
-      <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1"
-        (click)="showCartDialog($event)">
-        create
-      </button>
-    </div>
+          <div class="container mt-4">
+            <div class="d-flex justify-content-end align-items-center mb-3">
+              <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1" (click)="showCartDialog($event)">
+                create
+              </button>
+            </div>
 
-    <div class="card mb-4" *ngFor="let request of repeatedRequests">
-      <!-- Header -->
-      <div class="card-header d-flex flex-column align-items-end border-bottom-0 bg-white">
-        <div class="fw-bold fs-5">{{ request.name }}</div>
-        <div class="text-muted">
-          رقم الرحلة:
-          <a class="text-primary text-decoration-none fw-bold">#{{ request.id }}</a>
-        </div>
-      </div>
+            <div class="card mb-4" *ngFor="let request of repeatedRequests">
+              <!-- Header -->
+              <div class="card-header d-flex flex-column align-items-end border-bottom-0 bg-white">
+                <div class="fw-bold fs-5">{{ request.name }}</div>
+                <div class="text-muted">
+                  رقم الرحلة:
+                  <a class="text-primary text-decoration-none fw-bold">#{{ request.id }}</a>
+                </div>
+              </div>
 
-      <!-- Table -->
-      <div class="px-3 pb-3 cr3">
-        <table class="table custom-clean-table text-center mb-0 cr3">
-          <thead>
-            <tr>
-              <th>حالة خط السير</th>
-              <th>التاريخ</th>
-              <th>العميل</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of request.routes">
-              <td>
-                <span class="status-badge" [ngClass]="{
+              <!-- Table -->
+              <div class="px-3 pb-3 cr3">
+                <table class="table custom-clean-table text-center mb-0 cr3">
+                  <thead>
+                    <tr>
+                      <th>حالة خط السير</th>
+                      <th>التاريخ</th>
+                      <th>العميل</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of request.routes">
+                      <td>
+                        <span class="status-badge" [ngClass]="{
                   'completed': row.status === 'تمت',
                   'not-completed': row.status === 'لم تتم'
                 }">
-                  {{ row.status }}
-                </span>
-              </td>
-              <td>{{ row.date }}</td>
-              <td>{{ row.client }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+                          {{ row.status }}
+                        </span>
+                      </td>
+                      <td>{{ row.date }}</td>
+                      <td>{{ row.client }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-    <!-- Sidebar Section -->
-    <div *ngIf="cartVisible">
-      <!-- Sidebar -->
-      <div class="sidebar open">
-        <div class="sidebar-header d-flex justify-content-between align-items-center">
-          <h4>{{ "sites.request.addRequest" | translate }}</h4>
-          <button class="btn-close" (click)="closeCartDialog()">&times;</button>
-        </div>
-        <div class="sidebar-body p-3">
-          <div class="transfer-process d-flex align-items-center mb-3">
-            <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
-              style="width: 30px; height: 30px;" />
-            <p class="mb-0 fw-bold">{{ "sites.request.requestProcess" | translate }}</p>
-          </div>
-          <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
-              label="sites.request.salesManName" placeholder="sites.request.salesManName" [items]="SalesMen">
-            </ng-control>
-          </div>
-          <div class="row p-2">
-            <ng-control [type]="pageCreate.ControlType.SELECT" [form]="pageCreate.form" control="warehouseId"
-              label="sites.request.warehouse" placeholder="sites.request.warehouse" [items]="WarehouseList">
-            </ng-control>
-          </div>
+            <!-- Sidebar Section -->
+            <div *ngIf="cartVisible">
+              <!-- Sidebar -->
+              <div class="sidebar open">
+                <div class="sidebar-header d-flex justify-content-between align-items-center">
+                  <h4>{{ "sites.request.addRequest" | translate }}</h4>
+                  <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+                </div>
+                <div class="sidebar-body p-3">
+                  <div class="transfer-process d-flex align-items-center mb-3">
+                    <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
+                      style="width: 30px; height: 30px;" />
+                    <p class="mb-0 fw-bold">{{ "sites.request.requestProcess" | translate }}</p>
+                  </div>
+                  <div class="row p-2">
+                    <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
+                      label="sites.request.salesManName" placeholder="sites.request.salesManName" [items]="SalesMen">
+                    </ng-control>
+                  </div>
+                  <div class="row p-2">
+                    <ng-control [type]="pageCreate.ControlType.SELECT" [form]="pageCreate.form" control="warehouseId"
+                      label="sites.request.warehouse" placeholder="sites.request.warehouse" [items]="WarehouseList">
+                    </ng-control>
+                  </div>
 
-          <div class="row p-2" style="font-size: 12px;">
-            <p class="form-label ">
-              {{ "sites.transfer.product" | translate }} <span class="text-danger">*</span>
-            </p>
-            <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
-              placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
-            </ng-control>
-          </div>
+                  <div class="row p-2" style="font-size: 12px;">
+                    <p class="form-label ">
+                      {{ "sites.transfer.product" | translate }} <span class="text-danger">*</span>
+                    </p>
+                    <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+                      placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
+                    </ng-control>
+                  </div>
 
-          <table class="table table-bordered mt-4">
-            <thead>
-              <tr>
-                <th>{{ "sites.request.product" | translate }}</th>
-                <th>{{ "sites.request.quantity" | translate }}</th>
-                <th class="text-center">{{ "sites.request.action" | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of cartItems; let i = index">
-                <td>{{ item.productName }}</td>
-                <td class="d-flex align-items-center gap-2">
-                  <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
-                    (click)="decreaseQuantity(i)">
-                  </button>
-                  {{ item.quantity }}
-                  <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
-                    (click)="increaseQuantity(i)">
-                  </button>
-                </td>
-                <td class="text-center">
-                  <button pButton icon="pi pi-trash"
-                    class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
-                    (click)="removeProduct(i)">
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  <table class="table table-bordered mt-4">
+                    <thead>
+                      <tr>
+                        <th>{{ "sites.request.product" | translate }}</th>
+                        <th>{{ "sites.request.quantity" | translate }}</th>
+                        <th class="text-center">{{ "sites.request.action" | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of cartItems; let i = index">
+                        <td>{{ item.productName }}</td>
+                        <td class="d-flex align-items-center gap-2">
+                          <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="decreaseQuantity(i)">
+                          </button>
+                          {{ item.quantity }}
+                          <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
+                            (click)="increaseQuantity(i)">
+                          </button>
+                        </td>
+                        <td class="text-center">
+                          <button pButton icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
+                            (click)="removeProduct(i)">
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-        <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
-          <button pButton type="button" [ngStyle]="{
+                <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+                  <button pButton type="button" [ngStyle]="{
               'border': '1px solid purple',
               'color': 'purple',
               'background-color': 'transparent'
             }" class="rounded" (click)="closeCartDialog()">
-            {{ "sites.request.cancel" | translate }}
-          </button>
-          <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
-            [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0"
-            (click)="saveRequest()">
-            {{ "sites.request.save" | translate }}
-          </button>
+                    {{ "sites.request.cancel" | translate }}
+                  </button>
+                  <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+                    [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0"
+                    (click)="saveRequest()">
+                    {{ "sites.request.save" | translate }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Overlay -->
+              <div class="overlay" (click)="closeCartDialog()"></div>
+            </div>
+          </div>
         </div>
+
+
       </div>
-
-      <!-- Overlay -->
-      <div class="overlay" (click)="closeCartDialog()"></div>
-    </div>
-  </div>
-</div>
-
-  
-  </div>
-</ng-container>
+    </ng-container>
