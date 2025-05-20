@@ -606,7 +606,9 @@
       "salesManName":" SalesMan",
       "startDate":"StartDate",
       "client":"Client",
-      "action":"Action"
+      "action":"Action",
+      "actual":"Actual",
+      "planned":"Planned"  
       
     }
   },

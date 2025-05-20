@@ -28,4 +28,5 @@ export class CRUDIndexPage {
     totalItems: 0,
     totalPages: 0,
   };
+  isEdit: boolean;
 }

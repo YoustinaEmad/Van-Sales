@@ -12,6 +12,7 @@ import { DispatchService } from '../../service/dispatch.service';
 import { createDispatchPlannedViewModel, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -19,8 +20,13 @@ import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent extends CrudIndexBaseUtils {
+  _activatedRoute: any;
+  id: any;
+  _productService: any;
+  categories: any;
+  productGroup: any;
 
-  constructor(public override _sharedService: SharedService, private _router: Router, private activatedRoute: ActivatedRoute, private _pageService: DispatchService,) {
+  constructor(public override _sharedService: SharedService, private _router: Router, private activatedRoute: ActivatedRoute, private _pageService: DispatchService, private translate: TranslateService) {
     super(_sharedService);
   }
 
@@ -75,6 +81,36 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   ];
 
+ 
+  ngOnInit(): void {
+    this.page.isPageLoaded = false;
+    this.translate.get([
+      'sites.dispatch.actual',
+      'sites.dispatch.planned',
+    ]).subscribe(translations => {
+      this.Tabs = [
+        {
+          ID: 1,
+          name: translations['sites.dispatch.actual'],
+          isSelected: true,
+        },
+        {
+          ID: 2,
+          name: translations['sites.dispatch.planned'],
+          isSelected: false,
+        },
+      ];
+    });
+   
+
+    
+  }
+  getAllBrands() {
+    throw new Error('Method not implemented.');
+  }
+  getEditableItem() {
+    throw new Error('Method not implemented.');
+  }
   switchTab(tabID: number) {
     this.selectedTab = tabID;
     this.Tabs.forEach((tab) => {
@@ -85,7 +121,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       // this.items = this.items.filter(item => item.verifyStatus === 1); // Pending
       // this.initializePage();
     } else if (this.selectedTab === TabEnum.Planned) {
-       this.loadPlannedDispatches();
+      this.loadPlannedDispatches();
       // this.items = this.items.filter(item => item.verifyStatus !== 1);
       //.getApprovedAndReject() // Approved or Rejected
     }
@@ -174,7 +210,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.pageCreate.form.get('clientIDs')?.updateValueAndValidity();
 
     if (this.pageCreate.isSaving) return;
-   
+
 
 
 
@@ -206,12 +242,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
   loadPlannedDispatches() {
-  this._pageService.getPlanned('startDate', false, 1).subscribe((res: any) => {
-    if (res && res.isSuccess) {
-      this.plannedDispatches = res.data.items || [];
-    }
-  });
-}
+    this._pageService.getPlanned('startDate', false, 1).subscribe((res: any) => {
+      if (res && res.isSuccess) {
+        this.plannedDispatches = res.data.items || [];
+      }
+    });
+  }
 
   removeClient(index: number): void {
 
