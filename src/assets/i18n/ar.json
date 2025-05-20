@@ -280,7 +280,8 @@
       "supplyChain": "سلاسل الامداد",
       "location": "الموقع ",
       "transfer": "التحويلات",
-      "transferWarehouseToSalesMan": "التحويلات من مخزن الى مندوب"
+      "transferWarehouseToSalesMan": "التحويلات من مخزن الى مندوب",
+      "dispatch":"خط السير"
     },
     "Category": {
       "category": "فئة",

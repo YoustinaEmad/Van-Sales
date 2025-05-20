@@ -1,0 +1,103 @@
+<h2 class=" color-gray-600 ts-5 my-3">Sign Up Requests</h2>
+<ng-container>
+  <!-- Tabs Section -->
+  <div class="no-border">
+    <ul class="nav nav-tabs mt-4 d-flex align-items-center">
+      <li class="nav-item me-1" *ngFor="let tab of Tabs">
+        <a class="nav-link d-flex align-items-center px-2 py-1 pointer" [ngClass]="{
+          'bg-purple-100 color-purple-500': tab.isSelected,
+          'color-gray-100 color-gray-100': !tab.isSelected
+        }" (click)="switchTab(tab.ID)">
+
+          {{ tab.name }}
+        </a>
+      </li>
+    </ul>
+    <ng-container>
+      <div class="tab-content ">
+        <!-- New Requests Tab -->
+        <div *ngIf="selectedTab === TabEnum.Actual" class="p-4 bg-white rounded">
+
+          <div class="container mt-4">
+            <div class="card mb-4" *ngFor="let request of repeatedRequests">
+                <div class="card-header d-flex flex-column align-items-end">
+                    <div class="fw-bold">{{ request.name }}</div>
+                    <div>رقم الرحلة: <a href="#" class="text-primary">#{{ request.id }}</a></div>
+                </div>
+                <div class="table-responsive card-header">
+                    <table class="table table-bordered text-center mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>حالة خط السير</th>
+                                <th>التاريخ</th>
+                                <th>العميل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of request.routes">
+                                <td>
+                                    <span class="badge" [ngClass]="{
+                                'bg-success': row.status === 'تمت',
+                                'bg-warning text-dark': row.status === 'لم تتم'
+                              }">
+                                        {{ row.status }}
+                                    </span>
+                                </td>
+                                <td>{{ row.date }}</td>
+                                <td>{{ row.client }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        
+        
+        </div>
+
+    
+        </div>
+
+        <div *ngIf="selectedTab === TabEnum.Planned" class="p-4 bg-white rounded">
+
+          <div class="container mt-4">
+            <div class="card mb-4" *ngFor="let request of repeatedRequests">
+                <div class="card-header d-flex flex-column align-items-end">
+                    <div class="fw-bold">{{ request.name }}</div>
+                    <div>رقم الرحلة: <a href="#" class="text-primary">#{{ request.id }}</a></div>
+                </div>
+                <div class="table-responsive card-header">
+                    <table class="table table-bordered text-center mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>حالة خط السير</th>
+                                <th>التاريخ</th>
+                                <th>العميل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of request.routes">
+                                <td>
+                                    <span class="badge" [ngClass]="{
+                                'bg-success': row.status === 'تمت',
+                                'bg-warning text-dark': row.status === 'لم تتم'
+                              }">
+                                        {{ row.status }}
+                                    </span>
+                                </td>
+                                <td>{{ row.date }}</td>
+                                <td>{{ row.client }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        
+        
+        </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

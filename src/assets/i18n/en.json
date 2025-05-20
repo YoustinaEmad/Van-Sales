@@ -290,7 +290,8 @@
       "supplyChain": "Supply Chain",
       "location": "Location",
       "transfer": "Transfers",
-      "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan"
+      "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
+      "dispatch":"Dispatch"
     },
     "Category": {
       "category": "Category",

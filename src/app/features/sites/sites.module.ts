@@ -34,6 +34,7 @@ const routes: Routes = [{
     { path: "request", loadChildren: () => import('./request/request.module').then(m => m.RequestModule) },
     { path: "transferSalesManToSalesMan", loadChildren: () => import('./transfer-sales-man-to-sales-man/transfer-sales-man-to-sales-man.module').then(m => m.TransferSalesManToSalesManModule) },
     { path: "transferWarehouseToSalesMan", loadChildren: () => import('./trasfer-warehouse-to-sales-man/trasfer-warehouse-to-sales-man.module').then(m => m.TrasferWarehouseToSalesManModule) },
+    { path: "dispatch", loadChildren: () => import('./dispatch/dispatch.module').then(m => m.DispatchModule) },
 
   ]
 }

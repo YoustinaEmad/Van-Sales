@@ -1,0 +1,9 @@
+.nav-tabs .nav-link.bg-purple-100 {
+  background-color:  #eed1ff;
+  color: #972ccc;
+}
+
+.nav-link {
+  border: 1px solid #E9EAEB;
+  border-radius: 6px;
+}
