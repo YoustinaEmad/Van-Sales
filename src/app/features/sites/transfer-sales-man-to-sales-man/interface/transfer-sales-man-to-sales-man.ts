@@ -1,17 +1,17 @@
 export interface transferSalesManToSalesManViewModel {
-    id:string;
-    transactionNumber :string;
-    fromSalesManName:string;
-    toSalesMan :string;
-    transactionStatus:number;
-    productsQuantity:number;
-    createdDate:Date;
+  id: string;
+  transactionNumber: string;
+  fromSalesManName: string;
+  toSalesMan: string;
+  transactionStatus: number;
+  productsQuantity: number;
+  createdDate: Date;
 }
 
 export class transferSalesManToSalesManSearchViewModel {
-FromSalesManID:string;
-ToSalesManID:string;
-transactionStatus:number;
+  FromSalesManID: string;
+  ToSalesManID: string;
+  transactionStatus: number;
 }
 
 
@@ -21,14 +21,21 @@ export class RejectReasonViewModel {
 }
 
 export class AddSalesmanToSalesmanTransactionDetailsVM {
-  quantity:number;
-  productId:string;
-  storageType:number;
+  quantity: number;
+  productId: string;
+  storageType: number;
 }
 
 export class salesManToSalesManCreateViewNodel {
-  id:string
-  toSalesManId:string;
-  fromSalesmanId:string;
-  transactionDetails:AddSalesmanToSalesmanTransactionDetailsVM [];
+  id: string
+  toSalesManId: string;
+  fromSalesmanId: string;
+  transactionDetails: AddSalesmanToSalesmanTransactionDetailsVM[];
+  transactionNumber: string;
+  transactionStatus: number;
+  rejectReason: string;
+  deliveredDate: Date;
+  createdDate: Date;
+  toSalesManName: string;
+  fromSalesManName: string
 }

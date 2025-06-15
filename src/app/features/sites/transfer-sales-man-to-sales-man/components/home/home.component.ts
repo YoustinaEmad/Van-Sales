@@ -404,6 +404,8 @@ increaseQuantity(index: number): void {
       },
     });
   }
-
+navigateToTransferDetails(id: string) {
+     this._router.navigate(['/sites/transferSalesManToSalesMan/details', id]);
+  }
 
 }

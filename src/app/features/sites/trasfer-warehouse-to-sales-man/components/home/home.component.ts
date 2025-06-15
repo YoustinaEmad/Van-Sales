@@ -371,6 +371,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     })
   }
-
+navigateToTransferDetails(id: string) {
+     this._router.navigate(['/sites/transferWarehouseToSalesMan/details', id]);
+  }
 }
 

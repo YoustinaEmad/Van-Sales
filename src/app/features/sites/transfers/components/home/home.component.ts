@@ -363,5 +363,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   }
 
-
+navigateToTransferDetails(id: string) {
+     this._router.navigate(['/sites/transfers/details', id]);
+  }
 }

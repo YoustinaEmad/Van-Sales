@@ -147,9 +147,9 @@
 <div class="scrolled mt-3 h-100">
     <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
 
-    <table class="table">
+    <table class="table table-hover pointer">
         <thead>
-            <tr class="th-header">
+            <tr class="th-header" >
                 <ng-container *ngFor="let colum of page.columns; let i = index">
                     <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
                         {{ colum.Title | translate }}
@@ -168,14 +168,14 @@
         </thead>
         <tbody>
             <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-                <tr>
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.transactionNumber }}</td>
-                    <td>{{ item.fromSalesManName }}</td>
-                    <td>{{ item.toSalesMan }}</td>
-                    <td>{{ getStatusName(item.transactionStatus) }}</td>
-                    <td>{{ item.productsQuantity }}</td>
-                    <td>{{ item.createdDate | date: "yyyy-MM-dd" }}</td>
+                <tr >
+                    <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ item.transactionNumber }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ item.fromSalesManName }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ item.toSalesMan }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ getStatusName(item.transactionStatus) }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ item.productsQuantity }}</td>
+                    <td (click)="navigateToTransferDetails(item.id)">{{ item.createdDate | date: "yyyy-MM-dd" }}</td>
                     <td>
                         <!-- زر الموافقة -->
                         <button class="no-border bg-green-500 cr3 color-gray-25 px-2"
