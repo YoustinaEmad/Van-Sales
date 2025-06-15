@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { salesManToSalesManCreateViewNodel } from '../../../transfer-sales-man-to-sales-man/interface/transfer-sales-man-to-sales-man';
+import { WarehouseToSalesmanServiceService } from '../../service/warehouse-to-salesman-service.service';
 
 @Component({
   selector: 'app-details',
@@ -6,5 +9,47 @@ import { Component } from '@angular/core';
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent {
+item: salesManToSalesManCreateViewNodel;
+  isLoading = true;
+ TransactionStatus = [
+    { id: 1, name: 'Pending' },
+    { id: 2, name: 'Approve' },
+    { id: 3, name: 'Reject' },
+  ]
+  StorageType = [
+    { id: 1, name: 'Transaction' },
+    { id: 2, name: 'selling' },
+  ]
+  constructor(private route: ActivatedRoute, private _WarehouseToSalesmanServiceService: WarehouseToSalesmanServiceService) {}
 
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.getTransactionDetails(id);
+    }
+  }
+
+  getTransactionDetails(id: string): void {
+    this._WarehouseToSalesmanServiceService.getById(id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.item = res.data;
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Error loading details:', err);
+      }
+    });
+  }
+
+   getStatusName(statusId: number): string {
+    const status = this.TransactionStatus.find(s => s.id === statusId);
+    return status ? status.name.trim() : '';
+  }
+   getStorageTypeName(storageTypeId: number): string {
+    const storageType = this.StorageType.find(s => s.id === storageTypeId);
+    return storageType ? storageType.name.trim() : '';
+  }
 }

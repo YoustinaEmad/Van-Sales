@@ -16,7 +16,11 @@ export class createWarehouseToSalesmanViewModel {
   salesManID: string;
   warehouseId: string;
   transactionDetails: WarehouseToSalesmanTransactionDetailsDTO[];
-
+salesManName: string;
+warehouseName: string;
+  transactionStatus: number;
+  transactionNumber: string;
+  createdDate: Date;
 }
 
 export interface WarehouseToSalesmanTransactionDetailsDTO {

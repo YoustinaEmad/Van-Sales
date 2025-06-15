@@ -205,16 +205,16 @@
 
                 <!-- Data Rows -->
                 <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }"  (click)="navigateToTransferDetails(item.id)">
+                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }"  >
 
 
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ item.transactionNumber }}</td>
-                        <td>{{ item.salesManName }}</td>
-                        <td>{{ item.fromWarehouseName }}</td>
-                        <td>{{ item.toWarehouseName }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.transactionNumber }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.salesManName }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.fromWarehouseName }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.toWarehouseName }}</td>
                         <td>{{ getWarehouseStatusName(item.warehouseToWarehouseStatus) }}</td>
-                        <td>{{item.productsQuantity}}
+                        <td (click)="navigateToTransferDetails(item.id)">{{item.productsQuantity}}
                         <td>
                             
                             <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil"

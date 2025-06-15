@@ -1,1 +1,82 @@
-<p>details works!</p>
+<div *ngIf="isLoading" class="text-center py-5">
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="!isLoading && item" class="container">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center">
+      <img src="/assets/icons/keyboard_backspace.svg"
+           class="me-3 pointer"
+           style="width: 24px; height: 24px;"
+           routerLink="/sites/transferSalesManToSalesMan"
+           alt="Back" />
+      <h2 class="mb-0 color-purple-700">Transaction Details</h2>
+    </div>
+  </div>
+
+  <!-- Transaction Info -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-2">
+      <span class="fw-bold">Transaction Number: </span>
+      <span>{{ item.transactionNumber }}</span>
+    </div>
+    <div class="col-md-6 mb-2">
+      <span class="fw-bold">Status: </span>
+      <span>{{ getStatusName(item.transactionStatus) }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6 mb-2">
+      <span class="fw-bold">Salesman: </span>
+      <span>{{ item.salesManName }}</span>
+    </div>
+    <div class="col-md-6 mb-2">
+      <span class="fw-bold">Warehouse Name: </span>
+      <span>{{ item.warehouseName }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6 mb-2">
+      <span class="fw-bold">Created Date: </span>
+      <span>{{ item.createdDate | date: 'short' }}</span>
+    </div>
+    <div class="col-md-6 mb-2" *ngIf="item.deliveredDate">
+      <span class="fw-bold">Delivered Date:</span>
+      <span>{{ item.deliveredDate | date: 'short' }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="item.rejectReason">
+    <div class="col-12">
+      <span class="fw-bold">Reject Reason: </span>
+      <span>{{ item.rejectReason }}</span>
+    </div>
+  </div>
+
+  <!-- Product Table -->
+  <h5 class="mt-4">Products</h5>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped mt-2">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Storage Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of item.warehouseToSalesmanTransactionDetailsDTO; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ getStorageTypeName(product.storageType) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
