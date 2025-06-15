@@ -22,6 +22,11 @@ export class transferCreateViewModel {
     fromWarehouseId: string;
     toWarehouseId: string;
     transactionDetailsVM: WarehouseToWarehouseTransactionDetailsVM[];
+    fromWarehouseName : string;
+    toWarehouseName : string;
+    warehouseToWarehouseStatus : number;
+    salesmanName : string;
+    transactionNumber : string;
 }
 export class WarehouseToWarehouseTransactionDetailsVM {
     productID: string;
