@@ -2,48 +2,58 @@
     <div class="container d-flex align-items-center flex-wrap">
 
         <!-- Location Dropdown -->
-        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'location'">
-            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('location')">
-                {{"sites.layout.location" | translate}}
-            </a>
+        <li class="nav-item dropdown ms-3 pointer" [class.show]="openDropdown === 'location'">
+            <a 
+            class="color-gray-900 dropdown-toggle no-underline"
+            [ngClass]="{ 'active-link': isLocationActive() }"
+            (click)="toggleDropdown('location')">
+            {{"sites.layout.location" | translate}}
+          </a>
+          
+          
             <ul class="dropdown-menu" [class.show]="openDropdown === 'location'">
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/governorates" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/governorates"  routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.governorates" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/cities" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/cities" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.cities" | translate}}
                     </a>
                 </li>
             </ul>
         </li>
-
-
+    
         <!-- Items Dropdown -->
-        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'items'">
-            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('items')">
+        <li class="nav-item dropdown ms-3 pointer " [class.show]="openDropdown === 'items'">
+            <a class="color-gray-900 dropdown-toggle no-underline" [ngClass]="{ 'active-link': isItemsActive() }" (click)="toggleDropdown('items')">
                 {{"sites.layout.items" | translate}}
             </a>
             <ul class="dropdown-menu" [class.show]="openDropdown === 'items'">
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/category" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/category"  routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.category" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/product" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/product"  routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.product" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/productGroup" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/productGroup"  routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.productGroup" | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/brand" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/brand" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.brand" | translate}}
                     </a>
                 </li>
@@ -53,27 +63,30 @@
         </li>
 
         <!-- SNO Dropdown -->
-        <li class="nav-item dropdown ms-3 pointer list-unstyled" [class.show]="openDropdown === 'transfer'">
-            <a class="color-gray-900 dropdown-toggle no-underline" (click)="toggleDropdown('transfer')">
+        <li class="nav-item dropdown ms-3 pointer " [class.show]="openDropdown === 'transfer'">
+            <a class="color-gray-900 dropdown-toggle no-underline" [ngClass]="{ 'active-link': isSNOActive() }" (click)="toggleDropdown('transfer')">
                 {{"sites.layout.transfer" | translate}}
             </a>
             <ul class="dropdown-menu" [class.show]="openDropdown === 'transfer'">
 
 
                 <li>
-                    <a class="dropdown-item" routerLink="/sites/transfers" (click)="openDropdown = null">
+                    <a class="dropdown-item" routerLink="/sites/transfers"  routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.transfersWarehouseToWarehouse" | translate}}
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" routerLink="/sites/transferSalesManToSalesMan"
-                        (click)="openDropdown = null">
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.transferSalesManToSalesMan" | translate}}
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" routerLink="/sites/transferWarehouseToSalesMan"
-                        (click)="openDropdown = null">
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
                         {{"sites.layout.transferWarehouseToSalesMan" | translate}}
                     </a>
                 </li>
@@ -82,31 +95,32 @@
 
         <!-- Other Navigation Links -->
 
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/warehouse" >
+
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/warehouse" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }" >
             {{"sites.layout.warehouse" | translate}}
         </a>
 
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customers">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customers" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.customers" | translate}}
         </a>
 
         <!-- <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/supplier">
             {{"sites.layout.suppliers" | translate}}
         </a> -->
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/salesMan">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/salesMan" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.salesMan" | translate}}
         </a>
 
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/request">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/request" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.requests" | translate}}
         </a>
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customergroup">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/customergroup" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.customergroup" | translate}}
         </a>
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/roles">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/salesflow/roles" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.roles" | translate}}
         </a>
-        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/dispatch">
+        <a class="navbar-link ms-3 color-gray-900 no-underline" routerLink="/sites/dispatch" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
             {{"sites.layout.dispatch" | translate}}
         </a>
 
