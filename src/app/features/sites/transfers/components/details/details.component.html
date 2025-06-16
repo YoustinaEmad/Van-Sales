@@ -1,80 +1,73 @@
-<div *ngIf="isLoading" class="text-center py-5">
-  <p>{{"sites.transfer.Loading..."|translate}}</p>
+<div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center py-5">
+  <div class="spinner-border color-brand-700 mb-3" role="status"></div>
+  <p class="text-muted">{{ "sites.transfer.Loading..." | translate }}</p>
 </div>
 
-<div *ngIf="!isLoading && item" class="container">
-
+<div *ngIf="!isLoading && item" class="container py-5">
   <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div class="d-flex align-items-center">
-      <img src="/assets/icons/keyboard_backspace.svg"
-           class="me-3 pointer"
-           style="width: 24px; height: 24px;"
-           routerLink="/sites/transfers"
-           alt="Back" />
-      <h2 class="mb-0 color-purple-700">{{"sites.transfer.transactionDetails"|translate}}: </h2>
+  <div class="d-flex align-items-center mb-4">
+    <img 
+      src="/assets/icons/keyboard_backspace.svg"
+      class="me-3 pointer"
+      style="width: 30px; height: 30px;"
+      routerLink="/sites/transfers"
+      alt="Back" 
+    />
+    <h2 class="color-purple-400 mb-0">{{ "sites.transfer.transactionDetails" | translate }}</h2>
+  </div>
+
+  <!-- Transaction Info Cards -->
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let info of [
+      {label: 'sites.transfer.transactionNumber', value: item.transactionNumber},
+      {label: 'sites.transfer.status', value: getStatusName(item.warehouseToWarehouseStatus)},
+      {label: 'sites.transfer.fromWarehouse', value: item.fromWarehouseName},
+      {label: 'sites.transfer.toWarehouse', value: item.toWarehouseName},
+      {label: 'sites.transfer.createdDate', value: (item.createdDate | date:'mediumDate')},
+      {label: 'sites.transfer.salesMan', value: item.salesmanName}
+    ]">
+      <div class="border rounded p-3 h-100 bg-light">
+        <div class="small text-muted">{{ info.label | translate }}</div>
+        <div class="fw-semibold">{{ info.value }}</div>
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="item.rejectReason">
+      <div class="border rounded p-3 bg-danger bg-opacity-25">
+        <div class="small text-danger fw-bold">{{ "sites.transfer.rejectReason" | translate }}</div>
+        <div class="text-danger">{{ item.rejectReason }}</div>
+      </div>
     </div>
   </div>
 
-  <!-- Transaction Info -->
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.transactionNumber"|translate}}: </span>
-      <span>{{ item.transactionNumber }}</span>
-    </div>
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.status"|translate}}: </span>
-      <span>{{ getStatusName(item.warehouseToWarehouseStatus) }}</span>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.fromWarehouse"|translate}}: </span>
-      <span>{{ item.fromWarehouseName }}</span>
-    </div>
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.toWarehouse"|translate}}: </span>
-      <span>{{ item.toWarehouseName }}</span>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.createdDate"|translate}}: </span>
-      <span>{{ item.createdDate | date: 'short' }}</span>
-    </div>
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transfer.salesMan"|translate}}: </span>
-      <span>{{ item.salesmanName }}</span>
+  <!-- Products Table -->
+  <div class="mt-5">
+    <h4 class="fw-bold color-purple-500">{{ "sites.transfer.products" | translate }}</h4>
+    <div class="table-responsive mt-3">
+      <table class="table table-hover pointer">
+        <thead class="text-white" style="background-color: #6c757d;"> <!-- لون رمادي غامق -->
+          <tr class="th-header" >
+            <th class="text-center" style="width: 50px;">#</th>
+            <th>{{ "sites.transfer.product" | translate }}</th>
+            <th class="text-center">{{ "sites.transfer.quantity" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let product of item.transactionDetailsDTOs; let i = index"
+            style="background-color: #f8f9fa;"
+            (mouseover)="hover = i" 
+            (mouseleave)="hover = -1"
+            [ngStyle]="hover === i ? {'background-color': '#e2e6ea'} : {}"
+          >
+            <td class="text-center">{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td class="text-center">{{ product.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="row mb-3" *ngIf="item.rejectReason">
-    <div class="col-12">
-      <span class="fw-bold">{{"sites.transfer.rejectReason"|translate}}: </span>
-      <span>{{ item.rejectReason }}</span>
-    </div>
-  </div>
-
-  <!-- Product Table -->
-  <h5 class="mt-4">{{"sites.transfer.products"|translate}}</h5>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped mt-2">
-      <thead class="table-light">
-        <tr>
-          <th>#</th>
-          <th>{{"sites.transfer.product"|translate}}</th>
-          <th>{{"sites.transfer.quantity"|translate}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of item.transactionDetailsDTOs; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ product.productName }}</td>
-          <td>{{ product.quantity }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  
+  
 </div>

@@ -1,82 +1,79 @@
-<div *ngIf="isLoading" class="text-center py-5">
-  <p>{{"sites.transferSalesManToSalesMan.Loading..." | translate}}</p>
+<div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center py-5">
+  <div class="spinner-border text-primary mb-3" role="status"></div>
+  <p class="text-muted">{{ "sites.transferSalesManToSalesMan.Loading..." | translate }}</p>
 </div>
 
-<div *ngIf="!isLoading && item" class="container">
+<div *ngIf="!isLoading && item" class="container py-5">
 
   <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div class="d-flex align-items-center">
-      <img src="/assets/icons/keyboard_backspace.svg"
-           class="me-3 pointer"
-           style="width: 24px; height: 24px;"
-           routerLink="/sites/transferSalesManToSalesMan"
-           alt="Back" />
-      <h2 class="mb-0 color-purple-700">{{"sites.transferSalesManToSalesMan.transactionDetails" | translate}}</h2>
+  <div class="d-flex align-items-center mb-4">
+    <img 
+      src="/assets/icons/keyboard_backspace.svg"
+      class="me-3 pointer"
+      style="width: 30px; height: 30px;"
+      routerLink="/sites/transferSalesManToSalesMan"
+      alt="Back" 
+    />
+    <h2 class="mb-0  color-purple-400">{{ "sites.transferSalesManToSalesMan.transactionDetails" | translate }}</h2>
+  </div>
+
+  <!-- Transaction Info Cards -->
+  <div class="row g-3">
+    <ng-container *ngFor="let info of [
+      { label: 'sites.transferSalesManToSalesMan.transactionNumber', value: item.transactionNumber },
+      { label: 'sites.transferSalesManToSalesMan.transactionStatus', value: getStatusName(item.transactionStatus) },
+      { label: 'sites.transferSalesManToSalesMan.fromSalesManID', value: item.fromSalesManName },
+      { label: 'sites.transferSalesManToSalesMan.toSalesManID', value: item.toSalesManName },
+      { label: 'sites.transferSalesManToSalesMan.createdDate', value: (item.createdDate | date: 'mediumDate') },
+    ]">
+      <div class="col-sm-6 col-md-4">
+        <div class="border rounded shadow-sm p-3 bg-white">
+          <div class="small text-muted">{{ info.label | translate }}</div>
+          <div class="fw-semibold text-dark">{{ info.value }}</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="col-sm-6 col-md-4" *ngIf="item.deliveredDate">
+      <div class="border rounded shadow-sm p-3 bg-white">
+        <div class="small text-muted">{{ 'sites.transferSalesManToSalesMan.deliveredDate' | translate }}</div>
+        <div class="fw-semibold text-dark">{{ item.deliveredDate | date: 'mediumDate' }}</div>
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="item.rejectReason">
+      <div class="border rounded shadow-sm p-3 bg-danger bg-opacity-10">
+        <div class="small fw-bold text-danger">{{ "sites.transferSalesManToSalesMan.rejectReason" | translate }}</div>
+        <div class="text-danger">{{ item.rejectReason }}</div>
+      </div>
     </div>
   </div>
 
-  <!-- Transaction Info -->
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.transactionNumber" | translate}}: </span>
-      <span>{{ item.transactionNumber }}</span>
+  <!-- Products Table -->
+  <div class="mt-5">
+    <h4 class="fw-bold color-purple-500">{{ "sites.transferSalesManToSalesMan.products" | translate }}</h4>
+    <div class="table-responsive mt-3">
+      <table class="table table-hover pointer">
+        <thead class="text-white" style="background-color: #6c757d;">
+          <tr  class="th-header">
+            <th class="text-center" style="width: 50px;">#</th>
+            <th>{{ "sites.transferSalesManToSalesMan.product" | translate }}</th>
+            <th class="text-center">{{ "sites.transferSalesManToSalesMan.quantity" | translate }}</th>
+            <th class="text-center">{{ "sites.transferSalesManToSalesMan.storageType" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of item.transactionDetailsByIdDTOs; let i = index"
+              (mouseenter)="hover = i" 
+              (mouseleave)="hover = -1"
+              [ngClass]="{'table-secondary': hover === i}">
+            <td class="text-center">{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td class="text-center">{{ product.quantity }}</td>
+            <td class="text-center">{{ getStorageTypeName(product.storageType) }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.transactionStatus" | translate}}: </span>
-      <span>{{ getStatusName(item.transactionStatus) }}</span>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.fromSalesManID" | translate}}: </span>
-      <span>{{ item.fromSalesManName }}</span>
-    </div>
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.toSalesManID" | translate}}: </span>
-      <span>{{ item.toSalesManName }}</span>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6 mb-2">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.createdDate" | translate}}: </span>
-      <span>{{ item.createdDate | date: 'short' }}</span>
-    </div>
-    <div class="col-md-6 mb-2" *ngIf="item.deliveredDate">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.deliveredDate" | translate}}:</span>
-      <span>{{ item.deliveredDate | date: 'short' }}</span>
-    </div>
-  </div>
-
-  <div class="row mb-3" *ngIf="item.rejectReason">
-    <div class="col-12">
-      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.rejectReason" | translate}}: </span>
-      <span>{{ item.rejectReason }}</span>
-    </div>
-  </div>
-
-  <!-- Product Table -->
-  <h5 class="mt-4">{{"sites.transferSalesManToSalesMan.products" | translate}}</h5>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped mt-2">
-      <thead class="table-light">
-        <tr>
-          <th>#</th>
-          <th>{{"sites.transferSalesManToSalesMan.product" | translate}}</th>
-          <th>{{"sites.transferSalesManToSalesMan.quantity" | translate}}</th>
-          <th>{{"sites.transferSalesManToSalesMan.storageType" | translate}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of item.transactionDetailsByIdDTOs; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ product.productName }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>{{ getStorageTypeName(product.storageType) }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
