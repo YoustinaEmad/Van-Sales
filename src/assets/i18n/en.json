@@ -524,7 +524,14 @@
       "action": "Action",
       "transactionNumber": "Transaction Number",
       "warehouseStatus": "Warehouse Status",
-      "SalesMan OR Transaction_Number": "SalesMan OR Transaction_Number"
+      "SalesMan OR Transaction_Number": "SalesMan OR Transaction_Number",
+      "Loading...": "Loading...",
+      "transactionDetails":"Transaction Details",
+      "createdDate":"Created Date",
+      "rejectReason":"Reject Reason",
+      "products":"Products",
+      "status":"Status"
+      
     },
     "transferSalesManToSalesMan": {
       "transferSalesManToSalesMan": "Transfer SalesMan To SalesMan",
@@ -548,7 +555,12 @@
       "toSalesMan":"To SalesMan",
       "fromSalesMan":"From SalesMan",
       "addTransfer":"Add Transfer",
-      "transferProcess":"Transfer Process"
+      "transferProcess":"Transfer Process",
+       "Loading...": "Loading...",
+      "transactionDetails":"Transaction Details",
+      "deliveredDate":"Delivered Date",
+      "products":"Products",
+      "storageType":"Storage Type"
     },
     "Brand": {
       "brand": "Brand",
@@ -596,7 +608,12 @@
       "transactionNumber": "Transaction Number",
       "createdDate": "Created Date",
       "productNumber": "Products Count",
-      "transactionStatus": "Transaction Status"
+      "transactionStatus": "Transaction Status",
+        "Loading...": "Loading...",
+      "transactionDetails":"Transaction Details",
+      "deliveredDate":"Delivered Date",
+      "products":"Products",
+      "storageType":"Storage Type"
     },
     "dispatch":{
       "dispatch":"Dispatch",

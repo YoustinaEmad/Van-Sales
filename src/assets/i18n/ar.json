@@ -514,7 +514,13 @@
       "action": "الاجراءات",
       "transactionNumber": "رقم التحويل",
       "warehouseStatus": "حالة المخزن",
-      "SalesMan OR Transaction_Number": " رقم التحويل او مندوب المبيعات "
+      "SalesMan OR Transaction_Number": " رقم التحويل او مندوب المبيعات " ,
+        "Loading...": "جاري التحميل...",
+      "transactionDetails":"تفاصيل المعاملة",
+      "createdDate":"تاريخ الإنشاء",
+      "rejectReason":"سبب الرفض",
+      "products":"المنتجات",
+      "status":"الحالة"
     },
     "transferSalesManToSalesMan": {
       "transferSalesManToSalesMan": "تحويل من مندوب إلى مندوب",
@@ -538,7 +544,12 @@
        "toSalesMan":"الي المندوب",
       "fromSalesMan":"من المندوب",
        "addTransfer":"إضافة عملية تحويل",
-      "transferProcess":"عملية التحويل"
+      "transferProcess":"عملية التحويل",
+        "Loading...": "جاري التحميل...",
+      "transactionDetails":"تفاصيل المعاملة",
+      "deliveredDate":"تاريخ التسليم",
+      "products":"المنتجات",
+      "storageType":"نوع التخزين"
     },
     "Brand": {
       "brand": "الماركة",
@@ -586,7 +597,12 @@
       "transactionNumber": "رقم التحويل",
       "createdDate": "تاريخ الإنشاء",
       "productNumber": "عدد المنتجات",
-      "transactionStatus": "حالة المعاملة"
+      "transactionStatus": "حالة المعاملة",
+        "Loading...": "جاري التحميل...",
+      "transactionDetails":"تفاصيل المعاملة",
+      "deliveredDate":"تاريخ التسليم",
+      "products":"المنتجات",
+      "storageType":"نوع التخزين"
     },
     "dispatch":{
       "dispatch":"خط السير",

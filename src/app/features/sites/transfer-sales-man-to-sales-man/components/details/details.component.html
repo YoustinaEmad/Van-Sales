@@ -1,5 +1,5 @@
 <div *ngIf="isLoading" class="text-center py-5">
-  <p>Loading...</p>
+  <p>{{"sites.transferSalesManToSalesMan.Loading..." | translate}}</p>
 </div>
 
 <div *ngIf="!isLoading && item" class="container">
@@ -12,61 +12,61 @@
            style="width: 24px; height: 24px;"
            routerLink="/sites/transferSalesManToSalesMan"
            alt="Back" />
-      <h2 class="mb-0 color-purple-700">Transaction Details</h2>
+      <h2 class="mb-0 color-purple-700">{{"sites.transferSalesManToSalesMan.transactionDetails" | translate}}</h2>
     </div>
   </div>
 
   <!-- Transaction Info -->
   <div class="row mb-3">
     <div class="col-md-6 mb-2">
-      <span class="fw-bold">Transaction Number: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.transactionNumber" | translate}}: </span>
       <span>{{ item.transactionNumber }}</span>
     </div>
     <div class="col-md-6 mb-2">
-      <span class="fw-bold">Status: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.transactionStatus" | translate}}: </span>
       <span>{{ getStatusName(item.transactionStatus) }}</span>
     </div>
   </div>
 
   <div class="row mb-3">
     <div class="col-md-6 mb-2">
-      <span class="fw-bold">From Salesman: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.fromSalesManID" | translate}}: </span>
       <span>{{ item.fromSalesManName }}</span>
     </div>
     <div class="col-md-6 mb-2">
-      <span class="fw-bold">To Salesman: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.toSalesManID" | translate}}: </span>
       <span>{{ item.toSalesManName }}</span>
     </div>
   </div>
 
   <div class="row mb-3">
     <div class="col-md-6 mb-2">
-      <span class="fw-bold">Created Date: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.createdDate" | translate}}: </span>
       <span>{{ item.createdDate | date: 'short' }}</span>
     </div>
     <div class="col-md-6 mb-2" *ngIf="item.deliveredDate">
-      <span class="fw-bold">Delivered Date:</span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.deliveredDate" | translate}}:</span>
       <span>{{ item.deliveredDate | date: 'short' }}</span>
     </div>
   </div>
 
   <div class="row mb-3" *ngIf="item.rejectReason">
     <div class="col-12">
-      <span class="fw-bold">Reject Reason: </span>
+      <span class="fw-bold">{{"sites.transferSalesManToSalesMan.rejectReason" | translate}}: </span>
       <span>{{ item.rejectReason }}</span>
     </div>
   </div>
 
   <!-- Product Table -->
-  <h5 class="mt-4">Products</h5>
+  <h5 class="mt-4">{{"sites.transferSalesManToSalesMan.products" | translate}}</h5>
   <div class="table-responsive">
     <table class="table table-bordered table-striped mt-2">
       <thead class="table-light">
         <tr>
           <th>#</th>
-          <th>Product Name</th>
-          <th>Quantity</th>
-          <th>Storage Type</th>
+          <th>{{"sites.transferSalesManToSalesMan.product" | translate}}</th>
+          <th>{{"sites.transferSalesManToSalesMan.quantity" | translate}}</th>
+          <th>{{"sites.transferSalesManToSalesMan.storageType" | translate}}</th>
         </tr>
       </thead>
       <tbody>
