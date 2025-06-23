@@ -68,6 +68,34 @@
                 {{"sites.dispatch.create"|translate}}
               </button>
             </div>
+            <form [formGroup]="page.searchForm">
+              <div class="form-body p-3">
+                <div class="row g-2">
+                  <div class="col-4">
+                    <ng-control [form]="page.searchForm" control="From" label="sites.transfer.fromDate"
+                      [type]="page.ControlType.INPUT_DATE">
+                    </ng-control>
+                  </div>
+
+                  <div class="col-4">
+                    <ng-control [form]="page.searchForm" control="To" label="sites.transfer.toDate"
+                      [type]="page.ControlType.INPUT_DATE">
+                    </ng-control>
+                  </div>
+
+                  <div class="col-4 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn rb-btn-secondary rb-btn-sm w-100' (click)="search()"
+                      [disabled]="page.searchForm.invalid || page.isSearching">
+                      <i class="uil uil-search"></i>
+                      <span class="rb-btn-text d-md-inline-block">
+                        {{'shared.search' | translate}}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
 
             <div class="card mb-4" *ngFor="let dispatch of plannedDispatches">
               <!-- Header -->
@@ -98,7 +126,7 @@
                   {{ row.status }}
                 </span>
               </td> -->
-                      <td>{{ dispatch.startDate | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ row.startDate | date:'dd/MM/yyyy' }}</td>
                       <td>{{ row.clientName }}</td>
                     </tr>
                   </tbody>

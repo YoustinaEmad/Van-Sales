@@ -15,7 +15,6 @@ export class createDispatchPlannedViewModel {
 
 export class GetAllPlannedDispatchs {
   id:string;
-  startDate:Date;
   salesManID:string;
   salesManName:string;
   details: GetAllPlannedDispatchsDetails;
@@ -24,4 +23,10 @@ export class GetAllPlannedDispatchs {
 export class GetAllPlannedDispatchsDetails {
   clientID:string;
   clientName:string;
+  startDate:Date;
+}
+
+export class DispatchPlannedSearchViewModel {
+  From :Date;
+  To :Date;
 }

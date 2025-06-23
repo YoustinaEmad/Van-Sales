@@ -9,7 +9,7 @@ import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { createWarehouseToSalesmanViewModel } from '../../../trasfer-warehouse-to-sales-man/interface/warehouse-to-salesman-view-model';
 import { WarehouseToSalesmanServiceService } from '../../../trasfer-warehouse-to-sales-man/service/warehouse-to-salesman-service.service';
 import { DispatchService } from '../../service/dispatch.service';
-import { createDispatchPlannedViewModel, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
+import { createDispatchPlannedViewModel, DispatchPlannedSearchViewModel, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 import { TranslateService } from '@ngx-translate/core';
@@ -44,7 +44,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   clientsForm: FormGroup;
   plannedDispatches: GetAllPlannedDispatchs[] = [];
   override controlType = ControlType; // add this line if missing
-
+  override searchViewModel: DispatchPlannedSearchViewModel = new DispatchPlannedSearchViewModel();
   Tabs = [
     {
       ID: 1,
@@ -81,7 +81,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   ];
 
- 
+
   ngOnInit(): void {
     this.page.isPageLoaded = false;
     this.translate.get([
@@ -101,9 +101,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
         },
       ];
     });
-   
 
-    
+    this.createSearchForm();
+
   }
   getAllBrands() {
     throw new Error('Method not implemented.');
@@ -242,11 +242,30 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
   loadPlannedDispatches() {
-    this._pageService.getPlanned('startDate', false, 1).subscribe((res: any) => {
-      if (res && res.isSuccess) {
-        this.plannedDispatches = res.data.items || [];
-      }
-    });
+
+        this.page.isSearching = true;
+        this.items = [];
+        Object.assign(this.searchViewModel, this.page.searchForm.value);
+    
+        this._pageService
+          .getPlanned(
+            this.searchViewModel,
+            this.page.orderBy,
+            this.page.isAscending,
+            this.page.options.currentPage,
+            this.page.options.itemsPerPage
+          )
+          .subscribe((response) => {
+            this.page.isSearching = false;
+            if (response.isSuccess) {
+              this.page.isAllSelected = false;
+              this.confingPagination(response);
+               this.plannedDispatches = response.data.items || [];
+    
+            }
+            this.fireEventToParent();
+          });
+   
   }
 
   removeClient(index: number): void {
@@ -254,5 +273,22 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.cartItems.splice(index, 1);
 
   }
+
+
+  override createSearchForm() {
+    this.page.searchForm = this._sharedService.formBuilder.group({
+      From: [this.searchViewModel.From],
+      To: [this.searchViewModel.To],
+    });
+    this.page.isPageLoaded = true;
+    
+  }
+override search(): void {
+  if (this.page.searchForm.invalid) return;
+  
+  Object.assign(this.searchViewModel, this.page.searchForm.value);
+  this.page.options.currentPage = 1; 
+  this.loadPlannedDispatches();
+}
 
 }
