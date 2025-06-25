@@ -47,8 +47,15 @@ export class TransfersWarehouseToWarehouseServiceService {
      getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
- getProducts(ID: string) {
-  return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
+//  getProducts(ID: string) {
+//   return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?SalesManID=${ID}`);
+// }
+getProducts(salesmanID: string) {
+  const params = new HttpParams()
+    .set('SalesManID', salesmanID)
+    .set('StorageType', '1');
+
+  return this._apiService.get('/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman', params);
 }
   getById(ID: string) {
     return this._apiService.get(`/GetSalesmanToSalesmanTransactionByIDEndpoint/GetSalesmanToSalesmanTransactionById?ID=${ID}`,);
