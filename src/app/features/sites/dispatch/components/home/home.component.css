@@ -68,6 +68,13 @@ width: 50%;
   color: #DC6803;
 }
 
+
+
+.status-badge.not-done {
+  background-color: #FEE4E2; 
+  color: #F04438;
+}
+
 .card {
   border: 1px solid #dedddd;
 }

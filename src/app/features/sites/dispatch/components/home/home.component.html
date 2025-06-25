@@ -17,13 +17,56 @@
       <div class="tab-content ">
         <div *ngIf="selectedTab === TabEnum.Actual" class="p-4 bg-white rounded">
           <div class="container mt-4">
-            <div class="card mb-4" *ngFor="let request of repeatedRequests">
+          <form [formGroup]="actualSearchForm">
+  <div class="form-body p-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-2">
+        <ng-control [form]="actualSearchForm" control="From" label="sites.transfer.fromDate"
+                    [type]="page.ControlType.INPUT_DATE">
+        </ng-control>
+      </div>
+
+      <div class="col-2">
+        <ng-control [form]="actualSearchForm" control="To" label="sites.transfer.toDate"
+                    [type]="page.ControlType.INPUT_DATE">
+        </ng-control>
+      </div>
+
+      <div class="col-3">
+        <ng-control [type]="controlType.SELECT" [form]="actualSearchForm" control="DispatchStatus"
+                    label="sites.dispatch.status" placeholder="sites.dispatch.status"
+                    [items]="ActualDispatchStatus">
+        </ng-control>
+      </div>
+
+      <div class="col-3">
+        <button class="color-brand-700 rb-btn rb-btn-secondary rb-btn-sm w-100"
+                (click)="search()"
+                [disabled]="actualSearchForm.invalid || page.isSearching">
+          <i class="uil uil-search"></i>
+          <span class="rb-btn-text d-md-inline-block">{{'shared.search' | translate}}</span>
+        </button>
+      </div>
+
+      <div class="col-2 text-end">
+        <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 w-100"
+                (click)="showActualCartDialog($event)">
+          {{"sites.dispatch.create"|translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+            <div class="card mb-4" *ngFor="let dispatch of actualDispatches">
               <!-- Header -->
               <div class="card-header d-flex flex-column align-items-end border-bottom-0 bg-white">
-                <div class="fw-bold fs-5">{{ request.name }}</div>
-                <div class="text-muted">
-                  رقم الرحلة:
-                  <a class="text-primary text-decoration-none fw-bold">#{{ request.id }}</a>
+                <div class="fw-bold fs-5">{{ dispatch.salesManName }}</div>
+                <div *ngIf="dispatch.dispatchNumber" class="text-muted">
+                  {{"sites.dispatch.dispatchNumber"|translate}}:
+                  <a *ngIf="dispatch.dispatchNumber" class="text-primary text-decoration-none fw-bold">#{{
+                    dispatch.dispatchNumber }}</a>
                 </div>
               </div>
 
@@ -32,69 +75,133 @@
                 <table class="table custom-clean-table text-center mb-0">
                   <thead>
                     <tr>
-                      <th>حالة خط السير</th>
-                      <th>التاريخ</th>
-                      <th>العميل</th>
+                      <th>{{"sites.dispatch.status"|translate}}</th>
+                      <th>{{"sites.dispatch.visitDate"|translate}}</th>
+                      <th>{{"sites.dispatch.client"|translate}}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of request.routes">
+                    <tr *ngFor="let row of dispatch.details">
                       <td>
                         <span class="status-badge" [ngClass]="{
-                  'completed': row.status === 'تمت',
-                  'not-completed': row.status === 'لم تتم'
+                  'completed': row.dispatchStatus === 1,
+                  'not-completed': row.dispatchStatus === 2,
+                  'not-done': row.dispatchStatus === 3
                 }">
-                          {{ row.status }}
+                          {{ getStatusName(row.dispatchStatus) }}
                         </span>
                       </td>
-
-                      <td>{{ row.date }}</td>
-                      <td>{{ row.client }}</td>
+                      <td>{{ row.visitDate | date: 'shortDate' }}</td>
+                      <td>{{ row.clientName }}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+            </div>
+             <div *ngIf="cartVisible">
+              <!-- Sidebar -->
+              <div class="sidebar open">
+                <div class="sidebar-header d-flex justify-content-between align-items-center">
+                  <h4>{{ "sites.dispatch.addDispatch" | translate }}</h4>
+                  <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+                </div>
+                <div class="sidebar-body p-3">
+                  <div class="transfer-process d-flex align-items-center mb-3">
+                    <img src="../assets/images/addOrder.png" alt="Transfer Process Icon" class="me-2"
+                      style="width: 30px; height: 30px;" />
+                    <p class="mb-0 fw-bold">{{ "sites.dispatch.addProcess" | translate }}</p>
+                  </div>
+                  <div class="row p-2">
+                    <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
+                      label="sites.dispatch.salesManName" placeholder="sites.dispatch.salesManName" [items]="SalesMen">
+                    </ng-control>
+                  </div>
+                  <div class="row p-2">
+                    <ng-control [form]="pageCreate.form" [type]="pageCreate.ControlType.INPUT_DATE" control="visitDate"
+                      label="sites.dispatch.visitDate" placeholder="sites.dispatch.visitDate"></ng-control>
+
+                    <div *ngIf="pageCreate.form.get('visitDate')?.errors?.pastDate"
+                      class="text-danger extra-small mt-1">
+                      {{ pageCreate.form.get('visitDate')?.errors?.pastDate | translate }}
+                    </div>
+
+                  </div>
+                   <div class="row p-2">
+                    <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="dispatchStatus"
+                      label="sites.dispatch.status" placeholder="sites.dispatch.status" [items]="ActualDispatchStatus">
+                    </ng-control>
+                  </div>
+
+                  <div class="row p-2" style="font-size: 12px;">
+                    <p class="form-label ">
+                      {{ "sites.dispatch.client" | translate }} <span class="text-danger">*</span>
+                    </p>
+                    <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="clientId"
+                      placeholder="sites.dispatch.client" [items]="Clients" >
+                    </ng-control>
+
+                  </div>
+
+                </div>
+
+                <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+                  <button pButton type="button" [ngStyle]="{
+                    'border': '1px solid purple',
+                    'color': 'purple',
+                    'background-color': 'transparent'
+                  }" class="rounded"
+                    (click)="closeCartDialog()">{{"sites.transferWarehouseToSalesMan.cancel"|translate}}</button>
+                  <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+                    [disabled]="page.isSaving || pageCreate.form.invalid"
+                    (click)="saveActual()">{{"sites.transferWarehouseToSalesMan.save"|translate}}</button>
+                </div>
+              </div>
+
+              <!-- Overlay -->
+              <div class="overlay" (click)="closeCartDialog()"></div>
             </div>
           </div>
         </div>
 
 
 
+
         <div *ngIf="selectedTab === TabEnum.Planned" class="p-4 bg-white rounded">
           <div class="container ">
-            <div class="d-flex justify-content-end align-items-center mb-3">
+           <form [formGroup]="page.searchForm">
+  <div class="form-body p-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-3">
+        <ng-control [form]="page.searchForm" control="From" label="sites.transfer.fromDate"
+                    [type]="page.ControlType.INPUT_DATE">
+        </ng-control>
+      </div>
 
-              <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 mx-1" (click)="showCartDialog($event)">
-                {{"sites.dispatch.create"|translate}}
-              </button>
-            </div>
-            <form [formGroup]="page.searchForm">
-              <div class="form-body p-3">
-                <div class="row g-2">
-                  <div class="col-4">
-                    <ng-control [form]="page.searchForm" control="From" label="sites.transfer.fromDate"
-                      [type]="page.ControlType.INPUT_DATE">
-                    </ng-control>
-                  </div>
+      <div class="col-3">
+        <ng-control [form]="page.searchForm" control="To" label="sites.transfer.toDate"
+                    [type]="page.ControlType.INPUT_DATE">
+        </ng-control>
+      </div>
 
-                  <div class="col-4">
-                    <ng-control [form]="page.searchForm" control="To" label="sites.transfer.toDate"
-                      [type]="page.ControlType.INPUT_DATE">
-                    </ng-control>
-                  </div>
+      <div class="col-4">
+        <button class="color-brand-700 rb-btn rb-btn-secondary rb-btn-sm w-100"
+                (click)="search()"
+                [disabled]="page.searchForm.invalid || page.isSearching">
+          <i class="uil uil-search"></i>
+          <span class="rb-btn-text d-md-inline-block">{{'shared.search' | translate}}</span>
+        </button>
+      </div>
 
-                  <div class="col-4 d-flex align-items-end">
-                    <button class='color-brand-700 rb-btn rb-btn-secondary rb-btn-sm w-100' (click)="search()"
-                      [disabled]="page.searchForm.invalid || page.isSearching">
-                      <i class="uil uil-search"></i>
-                      <span class="rb-btn-text d-md-inline-block">
-                        {{'shared.search' | translate}}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+      <div class="col-2 text-end">
+        <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 w-100"
+                (click)="showCartDialog($event)">
+          {{"sites.dispatch.create"|translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
 
 
             <div class="card mb-4" *ngFor="let dispatch of plannedDispatches">
