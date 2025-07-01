@@ -625,8 +625,13 @@
       "client":"Client",
       "action":"Action",
       "actual":"Actual",
-      "planned":"Planned" 
-      
+      "planned":"Planned" ,
+      "status":"Dispatch Status",
+      "visitDate":"Visit Date",
+      "successful":"Successful",
+      "failed":"Failed",
+      "notDone":"Not Done",
+      "dispatchNumber":"Dispatch Number"
     }
   },
   "auth": {

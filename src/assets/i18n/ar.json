@@ -614,7 +614,13 @@
       "client":"العميل",
       "action":"الاجراءات",
       "actual":"الجارية",
-      "planned":"القادمة"      
+      "planned":"القادمة",
+      "status":"حالة خط السير",
+      "visitDate":"تاريخ الزيارة",
+       "successful":"ناجحة",
+      "failed":"لم تنجح",
+      "notDone":"لم تتم",
+      "dispatchNumber":"رقم الرحلة"
     }
   },
   "auth": {

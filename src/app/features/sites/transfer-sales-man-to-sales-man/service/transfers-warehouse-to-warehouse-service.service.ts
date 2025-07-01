@@ -26,10 +26,10 @@ export class TransfersWarehouseToWarehouseServiceService {
     return this._apiService.get(`/GetAllSalesmanToSalesmanTransactionsEndPoint/GetAllSalesmanToSalesmanTransactions?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
 
-  Approved(ID:string) {
-    return this._apiService.update(`/ApproveSalesmanToSalesmanTransactionEndPoint/ApproveSalesmanToSalesmanTransaction`, {ID});
+  Approved(ID: string) {
+    return this._apiService.update(`/ApproveSalesmanToSalesmanTransactionEndPoint/ApproveSalesmanToSalesmanTransaction`, { ID });
   }
-  Rejected(body:RejectReasonViewModel) {
+  Rejected(body: RejectReasonViewModel) {
     return this._apiService.update(`/RejectSalesmanToSalesmanTransactionEndPoint/RejectSalesmanToSalesmanTransaction`, body);
   }
 
@@ -38,18 +38,26 @@ export class TransfersWarehouseToWarehouseServiceService {
     return this._apiService.get(`/SalesmanSelectListEndpoint/SelectSalesmanList`);
   }
 
-   postOrUpdate(body: salesManToSalesManCreateViewNodel) {
-      console.log(body)
-      if (body.id) return this._apiService.update(`/EditSalesmanToSalesmanTransactionEndpoint/EditSalesmanToSalesmanTransaction`, body)
-      else return this._apiService.post(`/StartSalesmanToSalesmanTransactionEndPoint/StartSalesmanToSalesmanTransaction`, body)
-    }
+  postOrUpdate(body: salesManToSalesManCreateViewNodel) {
+    console.log(body)
+    if (body.id) return this._apiService.update(`/EditSalesmanToSalesmanTransactionEndpoint/EditSalesmanToSalesmanTransaction`, body)
+    else return this._apiService.post(`/StartSalesmanToSalesmanTransactionEndPoint/StartSalesmanToSalesmanTransaction`, body)
+  }
 
-     getSalesMen() {
+  getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
- getProducts(ID: string) {
-  return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
-}
+  // getProducts(ID: string) {
+  //   return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
+  // }
+
+  getProducts(salesmanID: string) {
+    const params = new HttpParams()
+      .set('SalesManID', salesmanID)
+      .set('StorageType', '1');
+  
+    return this._apiService.get('/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman', params);
+  }
   getById(ID: string) {
     return this._apiService.get(`/GetSalesmanToSalesmanTransactionByIDEndpoint/GetSalesmanToSalesmanTransactionById?ID=${ID}`,);
   }

@@ -9,7 +9,7 @@ import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { createWarehouseToSalesmanViewModel } from '../../../trasfer-warehouse-to-sales-man/interface/warehouse-to-salesman-view-model';
 import { WarehouseToSalesmanServiceService } from '../../../trasfer-warehouse-to-sales-man/service/warehouse-to-salesman-service.service';
 import { DispatchService } from '../../service/dispatch.service';
-import { createDispatchPlannedViewModel, DispatchPlannedSearchViewModel, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
+import { createDispatchActualViewModel, createDispatchPlannedViewModel, DispatchActualSearchViewModel, DispatchPlannedSearchViewModel, GetAllActualDispatchs, GetAllPlannedDispatchs } from '../../interface/dispatch-view-model';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,57 +36,29 @@ export class HomeComponent extends CrudIndexBaseUtils {
   modalRef: BsModalRef;
   item: createDispatchPlannedViewModel = new createDispatchPlannedViewModel();
   selectedTab: TabEnum = TabEnum.Actual;
+  actualSearchForm: FormGroup;
   TabEnum = TabEnum;
   cartVisible = false;
   SalesMen: any[] = [];
   Clients: any[] = [];
+  ActualDispatchStatus = [];
+  isCreatingActual: boolean = false;
   cartItems: { Id: string, clientName: string }[] = [];
   clientsForm: FormGroup;
+  actualDispatches: GetAllActualDispatchs[] = [];
   plannedDispatches: GetAllPlannedDispatchs[] = [];
-  override controlType = ControlType; // add this line if missing
+  override controlType = ControlType; 
   override searchViewModel: DispatchPlannedSearchViewModel = new DispatchPlannedSearchViewModel();
-  Tabs = [
-    {
-      ID: 1,
-      name: 'Actual',
-      isSelected: true,
-    },
-    {
-      ID: 2,
-      name: 'Planned',
-      isSelected: false,
-    },
-
-  ];
-
-  repeatedRequests = [
-    {
-      name: 'احمد محمود',
-      id: 3989586,
-      routes: [
-        { status: 'تمت', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' },
-        { status: 'لم تتم', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' },
-        { status: 'تمت', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' },
-        { status: 'لم تتم', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' }
-      ]
-    },
-    {
-      name: 'احمد محمود',
-      id: 3989586,
-      routes: [
-        { status: 'تمت', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' },
-        { status: 'لم تتم', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' },
-        { status: 'تمت', date: '09/06/2025', client: 'العالمية لتجارة الزيوت' }
-      ]
-    }
-  ];
-
-
+  searchViewModel2: DispatchActualSearchViewModel = new DispatchActualSearchViewModel();
+  Tabs =  [];
   ngOnInit(): void {
     this.page.isPageLoaded = false;
     this.translate.get([
       'sites.dispatch.actual',
       'sites.dispatch.planned',
+      'sites.dispatch.successful',
+      'sites.dispatch.failed',
+      'sites.dispatch.notDone'
     ]).subscribe(translations => {
       this.Tabs = [
         {
@@ -100,10 +72,16 @@ export class HomeComponent extends CrudIndexBaseUtils {
           isSelected: false,
         },
       ];
+       this.ActualDispatchStatus = [
+      { id: 1, name: translations['sites.dispatch.successful'] },
+      { id: 2, name: translations['sites.dispatch.failed'] },
+      { id: 3, name: translations['sites.dispatch.notDone'] }
+    ];
     });
 
     this.createSearchForm();
-
+    this.createActualSearchForm();
+    this.loadActualDispatches();
   }
   getAllBrands() {
     throw new Error('Method not implemented.');
@@ -118,12 +96,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
 
     if (this.selectedTab === TabEnum.Actual) {
-      // this.items = this.items.filter(item => item.verifyStatus === 1); // Pending
-      // this.initializePage();
+      this.loadActualDispatches();
     } else if (this.selectedTab === TabEnum.Planned) {
       this.loadPlannedDispatches();
-      // this.items = this.items.filter(item => item.verifyStatus !== 1);
-      //.getApprovedAndReject() // Approved or Rejected
     }
   }
   onClientsSelected(event: any): void {
@@ -243,29 +218,56 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   loadPlannedDispatches() {
 
-        this.page.isSearching = true;
-        this.items = [];
-        Object.assign(this.searchViewModel, this.page.searchForm.value);
-    
-        this._pageService
-          .getPlanned(
-            this.searchViewModel,
-            this.page.orderBy,
-            this.page.isAscending,
-            this.page.options.currentPage,
-            this.page.options.itemsPerPage
-          )
-          .subscribe((response) => {
-            this.page.isSearching = false;
-            if (response.isSuccess) {
-              this.page.isAllSelected = false;
-              this.confingPagination(response);
-               this.plannedDispatches = response.data.items || [];
-    
-            }
-            this.fireEventToParent();
-          });
-   
+    this.page.isSearching = true;
+    this.items = [];
+    Object.assign(this.searchViewModel, this.page.searchForm.value);
+
+    this._pageService
+      .getPlanned(
+        this.searchViewModel,
+        this.page.orderBy,
+        this.page.isAscending,
+        this.page.options.currentPage,
+        this.page.options.itemsPerPage
+      )
+      .subscribe((response) => {
+        this.page.isSearching = false;
+        if (response.isSuccess) {
+          this.page.isAllSelected = false;
+          this.confingPagination(response);
+          this.plannedDispatches = response.data.items || [];
+
+        }
+        this.fireEventToParent();
+      });
+
+  }
+
+
+
+  loadActualDispatches() {
+    this.page.isSearching = true;
+    this.actualDispatches = [];
+
+ Object.assign(this.searchViewModel2, this.actualSearchForm.value);
+
+    this._pageService
+      .getActual(
+        this.searchViewModel2,
+        this.page.orderBy,
+        this.page.isAscending,
+        this.page.options.currentPage,
+        this.page.options.itemsPerPage
+      )
+      .subscribe((response) => {
+        this.page.isSearching = false;
+        if (response.isSuccess) {
+          this.page.isAllSelected = false;
+          this.confingPagination(response);
+          this.actualDispatches = response.data.items || [];
+        }
+        this.fireEventToParent();
+      });
   }
 
   removeClient(index: number): void {
@@ -281,14 +283,89 @@ export class HomeComponent extends CrudIndexBaseUtils {
       To: [this.searchViewModel.To],
     });
     this.page.isPageLoaded = true;
-    
+
   }
-override search(): void {
-  if (this.page.searchForm.invalid) return;
-  
-  Object.assign(this.searchViewModel, this.page.searchForm.value);
-  this.page.options.currentPage = 1; 
-  this.loadPlannedDispatches();
+  // override search(): void {
+  //   if (this.page.searchForm.invalid) return;
+
+  //   Object.assign(this.searchViewModel, this.page.searchForm.value);
+  //   this.page.options.currentPage = 1;
+  //   this.loadPlannedDispatches();
+  // }
+  createActualSearchForm() {
+    this.actualSearchForm = this._sharedService.formBuilder.group({
+      From: [this.searchViewModel2.From],
+      To: [this.searchViewModel2.To],
+      DispatchStatus: [this.searchViewModel2.DispatchStatus]
+    });
+  }
+
+  override search(): void {
+    if (this.selectedTab === TabEnum.Actual) {
+      if (this.actualSearchForm.invalid) return;
+      Object.assign(this.searchViewModel2, this.actualSearchForm.value);
+      this.page.options.currentPage = 1;
+      this.loadActualDispatches();
+    } else {
+      if (this.page.searchForm.invalid) return;
+      Object.assign(this.searchViewModel, this.page.searchForm.value);
+      this.page.options.currentPage = 1;
+      this.loadPlannedDispatches();
+    }
+  }
+
+  getStatusName(statusId: number) {
+    const status = this.ActualDispatchStatus.find(s => s.id === statusId);
+    return status ? status.name : 'Unknown';
+  }
+showActualCartDialog(event: Event) {
+  event.preventDefault();
+  this.loadClients();
+  this.loadSalesMen();
+  this.cartItems = [];
+
+  this.createActualForm();
+  this.pageCreate.form.reset();
+
+  this.cartVisible = true;
+  this.isCreatingActual = true;
 }
+createActualForm() {
+ 
+
+  this.pageCreate.form = this._sharedService.formBuilder.group({
+    salesManID: [null, Validators.required],
+    visitDate: [new Date(), Validators.required],
+    clientId: [null, Validators.required],
+    dispatchStatus: [null, Validators.required]
+  });
+
+  this.pageCreate.isPageLoaded = true;
+}
+saveActual(): void {
+  if (this.pageCreate.isSaving || this.pageCreate.form.invalid) return;
+
+  const body = this.pageCreate.form.value as createDispatchActualViewModel;
+
+  this.pageCreate.isSaving = true;
+
+  this._pageService.postOrUpdateActual(body).subscribe({
+    next: (res) => {
+      this.pageCreate.isSaving = false;
+      this._sharedService.showToastr(res);
+      if (res.isSuccess) {
+        this.cartVisible = false;
+        this.isCreatingActual = false;
+        this.pageCreate.form.reset();
+        this.loadActualDispatches();
+      }
+    },
+    error: (err) => {
+      this._sharedService.showToastr(err);
+      this.pageCreate.isSaving = false;
+    }
+  });
+}
+
 
 }
