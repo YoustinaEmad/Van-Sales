@@ -291,7 +291,8 @@
       "location": "Location",
       "transfer": "Transfers",
       "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
-      "dispatch":"Dispatch"
+      "dispatch":"Dispatch",
+      "bills":"Bills"
     },
     "Category": {
       "category": "Category",

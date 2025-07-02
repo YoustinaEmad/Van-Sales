@@ -281,7 +281,8 @@
       "location": "الموقع ",
       "transfer": "التحويلات",
       "transferWarehouseToSalesMan": "التحويلات من مخزن الى مندوب",
-      "dispatch":"خط السير"
+      "dispatch":"خط السير",
+      "bills":"الفواتير"
     },
     "Category": {
       "category": "فئة",

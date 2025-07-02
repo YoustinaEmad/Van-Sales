@@ -14,6 +14,7 @@ const routes: Routes = [{
     { path: "cities", loadChildren: () => import('./city/city.module').then(m => m.CityModule) },
     { path: "company", loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
     { path: "brand", loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule) },
+    { path: "invoice", loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule) },
 
     { path: "product", loadChildren: () => import('./Product/product.module').then(m => m.ProductModule) },
     { path: "category", loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
