@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IvoiceSearchViewModel, InvoiceViewModel } from '../interface/invoice-view-model';
+import { IvoiceSearchViewModel, InvoiceViewModel, InvoiceCreateViewModel } from '../interface/invoice-view-model';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from 'src/app/shared/service/api.service';
 import { environment } from 'src/environments/environment';
@@ -38,7 +38,9 @@ export class InvoiceService {
     return this._apiService.get(`/GetAllSellingInvoicesEndpoint/GetAllSellingInvoices?orderBy=${orderBy}&pageIndex=${pageIndex}&pageSize=${pageSize}`, params);
   }
 
-
+  postOrUpdate(body: InvoiceCreateViewModel) {
+     return this._apiService.post(`/AddSellingInvoicesEndPoint/AddSellingInvoices`, body)
+  }
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
@@ -46,4 +48,13 @@ export class InvoiceService {
   getClients() {
     return this._apiService.get('/ClientSelectListEndPoint/SelectClientList');
   }
+
+  getProducts(payload: {
+    SalesManID: string;
+    ClientID: string;
+    StorageType: number;
+  }) {
+    return this._apiService.post('/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID', payload);
+  }
+
 }

@@ -38,6 +38,9 @@ export class CustomersService {
     if (searchViewModel.Mobile) {
       params = params.set("Mobile", searchViewModel.Mobile);
     }
+    if (searchViewModel.clientType) {
+      params = params.set("clientType", searchViewModel.clientType);
+    }
     if (searchViewModel.From) {
       params = params.set("From", this.formatDate(searchViewModel.From));
     }

@@ -7,6 +7,7 @@ export interface customerViewModel {
   nationalNumber:string;
   path:string;
   mobile:number;
+  clientType:number;
   selected?: boolean; 
 }
 export class customerSearchViewModel {
@@ -16,6 +17,7 @@ export class customerSearchViewModel {
   ClientGroupId:string;
   From:Date;
   To:Date;
+  clientType:number;
   Mobile:string;
 }
 export class customerSelectedViewModel {
@@ -40,6 +42,7 @@ export class customerCreateViewModel {
   clientGroupId?: string;
   email?: string;
   paths?: string[];
+  clientType:number;
 }
 export class changePasswordViewModel {
   password:string;

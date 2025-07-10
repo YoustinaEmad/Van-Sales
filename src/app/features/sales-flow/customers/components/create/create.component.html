@@ -75,6 +75,11 @@
       <div class="col-12 col-sm-6 col-lg-4">
         <ng-control [form]="page.form" control="street" label="salesflow.customers.street" placeholder="salesflow.customers.street"></ng-control>
       </div>
+       <div class="col-12 col-sm-6 col-lg-4">
+       <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="clientType" label="salesflow.customers.clientType"
+          placeholder="salesflow.customers.clientType" [items]="ClientType">
+        </ng-control>
+      </div>
     </div>
     <div class="row g-3 mb-4" style="display: flex; justify-content: space-between;">
       <div class="col-12 col-md-6"  >

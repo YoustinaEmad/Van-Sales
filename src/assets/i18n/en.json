@@ -710,7 +710,8 @@
       "street": "street",
       "Select Location": "Select Location",
       "Upload New Image": "Upload New Image",
-      "Error Uploading": "Error Uploading"
+      "Error Uploading": "Error Uploading",
+      "clientType": "Client Type"
     }
   }
 }

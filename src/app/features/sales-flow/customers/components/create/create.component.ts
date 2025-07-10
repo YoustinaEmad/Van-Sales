@@ -48,6 +48,13 @@ export class CreateComponent implements OnInit {
     { id: 1, name: 'Male' },
     { id: 2, name: 'Female' }
   ];
+
+
+   ClientType = [
+    { id: 1, name: 'Retail' },
+    { id: 2, name: 'Wholesale' },
+    { id: 3, name: 'VIPClients' }
+  ];
   constructor(private _router: Router, private _customersService: CustomersService, private _sharedService: SharedService,
     private _activatedRoute: ActivatedRoute, private _apiService: ApiService, private _cityService: CityService, private _companyService: CompanyService
   ) {
@@ -132,12 +139,14 @@ export class CreateComponent implements OnInit {
       governorateId: [this.item.governorateId, [Validators.required]],
       cityId: [this.item.cityId, [Validators.required]],
       street: [this.item.street, [Validators.required]],
-      landmark: [''],
-      latitude: [0],
-      longitude: [0],
+      clientType: [this.item.clientType, [Validators.required]],
+
+      landmark: [this.item.landmark],
+      latitude: [this.item.latitude ],
+      longitude: [this.item.longitude ],
       email: [this.item.email, [Validators.email]],
 
-      clientGroupId: [this.item.clientGroupId],
+      clientGroupId: [this.item.clientGroupId, Validators.required],
     });
     this.page.isPageLoaded = true;
   }

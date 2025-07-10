@@ -16,8 +16,9 @@ constructor(private _router:Router,private _roleService:RoleService){}
  RolesEnum = [
   { id: 1, name: 'SuperAdmin' },
   { id: 2, name: 'Admin' },
-  { id: 3, name: 'Company' },
-  { id: 4, name: 'Client' },
+  { id: 3, name: 'SalesMan' },
+  { id: 4, name: 'Supervisor' },
+    { id: 5, name: 'Manager' },
 ];
 
 viewRoleDetails(id: string){

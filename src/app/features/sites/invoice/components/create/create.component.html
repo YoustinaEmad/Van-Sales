@@ -1,1 +1,157 @@
-<p>create works!</p>
+<div class="container-fluid py-4 px-5">
+    <!-- Header -->
+
+    <div class="w-100 bg-gray-200 p-3 cr3 mb-4">
+        <p class="mb-0 text-gray-900 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
+                routerLink="/sites/invoice"> Bills</p>
+        <p class="text-sm text-gray-600 max-w-xl mb-4">
+            This tool helps you manage invoices efficiently, allowing you to easily categorize and update information to
+            ensure an organized user experience.
+        </p>
+    </div>
+
+    <div class="row">
+
+
+        <!-- البيانات المحاسبية -->
+        <div class="col-lg-3">
+            <div class="card p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <!-- <img src="/assets/images/calculate.png" style="width: 20px; height: 20px;"> -->
+                    <h5 class="fw-bold mb-0 color-purple-600">Accounting data</h5>
+                </div>
+
+
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>Total</label>
+                        <span class=" text-dark">00.00 ج.م</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>Tax</label>
+                        <span class=" text-dark">14%</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>Tax Amount</label>
+                        <span class=" text-dark">00.00 ج.م</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>Net Invoice</label>
+                        <span class="text-dark">00.00 ج.م</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>Net Item Weight Per KG </label>
+                        <span class="text-dark">00.00</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button pButton type="button" [ngStyle]="{
+            'border': '1px solid purple',
+            'color': 'purple',
+            'background-color': 'transparent'
+          }" class="rounded">cancel</button>
+
+                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 ">save</button>
+                </div>
+            </div>
+        </div>
+        <!-- الفاتورة والمخزن والعميل -->
+        <div class="col-lg-9">
+            <div class="card p-4 mb-4">
+
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <!-- <img src="/assets/images/salesInvoice.png"> -->
+                    <h5 class="fw-bold color-purple-600">Sales invoice</h5>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="clientID"
+                            label="sites.Invoice.client" placeholder="sites.Invoice.client" [items]="Clients"
+                            (change)="onClientChange()">
+                        </ng-control>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productId" label="Product"
+                            placeholder="Select product" [items]="allProducts" bindValue="id" bindLabel="name"
+                            (change)="onProductSelect($event)">
+                        </ng-control>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- الأصناف -->
+            <!-- Products Table -->
+            <div class="card p-4">
+
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <!-- <img src="/assets/images/productList.png"> -->
+                    <h5 class="fw-bold color-purple-600">Products List</h5>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table pointer">
+                        <thead class="text-white" style="background-color: #6c757d;">
+
+
+                            <tr class="th-header">
+                                <th>{{ "sites.transfer.product" | translate }}</th>
+                                <th class="text-center">{{ "sites.transfer.quantity" | translate }}</th>
+                                <th class="text-center">{{ "sites.transfer.price" | translate }}</th>
+                                <th class="text-center">{{ "sites.transfer.weight" | translate }}</th>
+                                <th class="text-center">{{ "sites.transfer.action" | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedProducts; let i = index">
+                                <td>{{ item.name }}</td>
+
+                                <!-- Quantity: قابل للتعديل فقط لو هو في حالة edit -->
+                                <td>
+                                    <input type="number" class="form-control text-center" [(ngModel)]="item.quantity"
+                                        [readonly]="!item.isEditing" min="1">
+                                </td>
+
+                                <!-- Price: دائمًا readonly -->
+                                <td>
+                                    {{item.price | number:'1.2-2'}} ج.م
+                                    <input type="hidden" [(ngModel)]="item.price">
+                                </td>
+                                <td>
+                                    {{item.weight }}
+                                    <input type="hidden" [(ngModel)]="item.weight">
+                                </td>
+                                <!-- Edit button toggles edit mode -->
+                                <td>
+                                    <button class="btn btn-sm mx-2"
+                                        [ngClass]="item.isEditing ? 'btn-success' : 'btn-warning'"
+                                        (click)="toggleEdit(i)">
+                                        {{ item.isEditing ? 'Save' : 'Edit' }}
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" (click)="deleteProduct(i)">Delete</button>
+                                </td>
+
+                            </tr>
+                            <tr *ngIf="selectedProducts.length === 0">
+                                <td colspan="5" class="text-muted">No products added.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>

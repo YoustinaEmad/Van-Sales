@@ -47,6 +47,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
     { id: 4, name: 'Trader' },
 
   ]
+
+   ClientType = [
+    { id: 1, name: 'Retail' },
+    { id: 2, name: 'Wholesale' },
+    { id: 3, name: 'VIPClients' }
+  ];
   status: customerSelectedViewModel[] = [];
   customerGroups: customerSelectedViewModel[] = [];
   constructor(
@@ -72,6 +78,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: 'Name', Title: 'salesflow.customers.name', Selectable: false, Sortable: true },
       { Name: 'Activation', Title: 'salesflow.customers.activation', Selectable: false, Sortable: true },
       { Name: 'Client Group Name', Title: 'salesflow.customers.Client Group Name', Selectable: false, Sortable: true },
+      { Name: 'ClientType', Title: 'salesflow.customers.clientType', Selectable: false, Sortable: true },
       { Name: 'Email', Title: 'salesflow.customers.email', Selectable: false, Sortable: true },
       { Name: 'National Number', Title: 'salesflow.customers.nationalNumber', Selectable: false, Sortable: true },
       { Name: 'Mobile', Title: 'salesflow.customers.mobile', Selectable: false, Sortable: true },
@@ -101,6 +108,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       NationalNumber: [this.searchViewModel.NationalNumber],
       ClientGroupId: [this.searchViewModel.ClientGroupId],
       Mobile: [this.searchViewModel.Mobile],
+      clientType: [this.searchViewModel.clientType],
       From: [this.searchViewModel.From],
       To: [this.searchViewModel.To]
 
@@ -204,6 +212,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
   getOrderStatusName(statusId: number): string {
     const status = this.customerActivity.find(s => s.id === Number(statusId));
+    return status ? status.name : 'Unknown';
+  }
+
+
+  getClientType(statusId: number): string {
+    const status = this.ClientType.find(s => s.id === Number(statusId));
     return status ? status.name : 'Unknown';
   }
 
