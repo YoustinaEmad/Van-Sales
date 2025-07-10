@@ -622,6 +622,23 @@
       "failed":"لم تنجح",
       "notDone":"لم تتم",
       "dispatchNumber":"رقم الرحلة"
+    } ,
+     "Invoice":{
+      "invoice":"فاتورة",
+      "invoices":"الفواتير",
+      "create":"إنشاء فاتورة",
+      "invoiceNumber":"رقم الفاتورة",
+      "clientName":"اسم العميل",
+      "to":"الي تاريح",
+      "from":"من تاريخ",
+      "salesMan":"مندوب المبيعات",
+      "client":"العميل",
+      "totalPrice":"إجمالي السعر",
+      "totalNetPrice":"إجمالي السعر الصافي",
+      "totalWeightInKG":"إجمالي الوزن بالكيلوغرام",
+      "totalQuantity":"إجمالي الكمية",
+      "createdDate":"تاريخ الإنشاء"
+
     }
   },
   "auth": {

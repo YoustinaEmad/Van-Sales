@@ -633,6 +633,23 @@
       "failed":"Failed",
       "notDone":"Not Done",
       "dispatchNumber":"Dispatch Number"
+    } ,
+    "Invoice":{
+      "invoice":"Bill",
+      "invoices":"Bills",
+      "create":"Create Bill",
+      "invoiceNumber":"Bill Number",
+      "clientName":"Client Name",
+      "to":"To",
+      "from":"From",
+      "salesMan":"SalesMan",
+      "client":"Client",
+      "totalPrice":"Total Price",
+      "totalNetPrice":"Total Net Price",
+      "totalWeightInKG":"Total Weight In KG",
+      "totalQuantity":"Total Quantity",
+      "createdDate":"Created Date"
+      
     }
   },
   "auth": {
