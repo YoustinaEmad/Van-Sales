@@ -196,15 +196,15 @@
 
         <!-- Data Rows -->
         <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-          <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }"  (click)="navigateToTransferDetails(item.id)">
+          <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }"  >
 
 
-            <td>{{ i + 1 }}</td>
-            <td>{{ item.transactionNumber }}</td>
-            <td>{{ item.salesManName }}</td>
-            <td>{{ item.warehouseName }}</td>
-            <td>{{ item.createdDate | date:'medium' }}</td>
-            <td>{{item.productNumber}}
+            <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
+            <td (click)="navigateToTransferDetails(item.id)">{{ item.transactionNumber }}</td>
+            <td (click)="navigateToTransferDetails(item.id)">{{ item.salesManName }}</td>
+            <td (click)="navigateToTransferDetails(item.id)">{{ item.warehouseName }}</td>
+            <td (click)="navigateToTransferDetails(item.id)">{{ item.createdDate | date:'medium' }}</td>
+            <td (click)="navigateToTransferDetails(item.id)">{{item.productNumber}}
             <td>
               <!-- Approve Button -->
               <button class="no-border bg-green-500 cr3 color-gray-25 px-2" [disabled]="item.transactionStatus === 3 "
