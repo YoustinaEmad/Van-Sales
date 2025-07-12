@@ -3,53 +3,56 @@
 
     <div class="w-100 bg-gray-200 p-3 cr3 mb-4">
         <p class="mb-0 text-gray-900 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
-                routerLink="/sites/invoice"> Bills</p>
+                routerLink="/sites/invoice">  {{ "sites.Invoice.invoices" | translate }}</p>
         <p class="text-sm text-gray-600 max-w-xl mb-4">
-            This tool helps you manage invoices efficiently, allowing you to easily categorize and update information to
-            ensure an organized user experience.
+           {{ "sites.Invoice.defination" | translate }}
         </p>
     </div>
 
-    <div class="row">
+    <div class="row g-3 align-items-stretch">
 
 
         <!-- البيانات المحاسبية -->
-        <div class="col-lg-3">
-            <div class="card p-4">
+        <div class="col-lg-3 col-12 d-flex ">
+
+            <div class="card p-4 w-100 d-flex flex-column justify-content-between">
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <!-- <img src="/assets/images/calculate.png" style="width: 20px; height: 20px;"> -->
-                    <h5 class="fw-bold mb-0 color-purple-600">Accounting data</h5>
+                    <h5 class="fw-bold mb-0 color-purple-600"> {{ "sites.Invoice.accountingData" | translate }}</h5>
                 </div>
 
 
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>Total</label>
-                        <span class=" text-dark">00.00 ج.م</span>
+                        <label> {{ "sites.Invoice.total" | translate }}</label>
+                        <span class=" text-dark">{{ total | number:'1.2-2' }} ج.م</span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>Tax</label>
+                        <label> {{ "sites.Invoice.tax" | translate }}</label>
                         <span class=" text-dark">14%</span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>Tax Amount</label>
-                        <span class=" text-dark">00.00 ج.م</span>
+                        <label>{{ "sites.Invoice.taxAmount" | translate }}</label>
+                        <span class=" text-dark">{{ taxAmount | number:'1.2-2' }} ج.م</span>
+
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>Net Invoice</label>
-                        <span class="text-dark">00.00 ج.م</span>
+                        <label>{{ "sites.Invoice.netInvoice" | translate }}</label>
+                        <span class="text-dark">{{ netInvoice | number:'1.2-2' }} ج.م</span>
+
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>Net Item Weight Per KG </label>
-                        <span class="text-dark">00.00</span>
+                        <label>{{ "sites.Invoice.netItemWeightPerKG" | translate }}</label>
+                        <span class="text-dark">{{ netWeight | number:'1.2-2' }}</span>
+
                     </div>
                 </div>
 
@@ -58,33 +61,34 @@
             'border': '1px solid purple',
             'color': 'purple',
             'background-color': 'transparent'
-          }" class="rounded">cancel</button>
+          }" class="rounded" (click)="onCancel()"> {{ "sites.Invoice.cancel" | translate }}</button>
 
-                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3 ">save</button>
+                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"> {{ "sites.Invoice.save" | translate }}</button>
+
                 </div>
             </div>
         </div>
         <!-- الفاتورة والمخزن والعميل -->
-        <div class="col-lg-9">
-            <div class="card p-4 mb-4">
+        <div class="col-lg-9 col-12 d-flex flex-column gap-3">
+            <div class="card p-4 flex-grow-1">
 
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <!-- <img src="/assets/images/salesInvoice.png"> -->
-                    <h5 class="fw-bold color-purple-600">Sales invoice</h5>
+                    <h5 class="fw-bold color-purple-600"> {{ "sites.Invoice.salesInvoice" | translate }}</h5>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
                         <ng-control [type]="controlType.SELECT" [form]="page.form" control="clientID"
-                            label="sites.Invoice.client" placeholder="sites.Invoice.client" [items]="Clients"
-                            (change)="onClientChange()">
+                            label="sites.Invoice.client" placeholder="sites.Invoice.client" [items]="Clients">
                         </ng-control>
+
+
 
                     </div>
                     <div class="col-md-6 mb-3">
-                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productId" label="Product"
-                            placeholder="Select product" [items]="allProducts" bindValue="id" bindLabel="name"
-                            (change)="onProductSelect($event)">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productID" label="sites.Invoice.product"
+                            placeholder="sites.Invoice.product" [items]="allProducts" bindValue="id" bindLabel="name">
                         </ng-control>
                     </div>
 
@@ -93,11 +97,11 @@
 
             <!-- الأصناف -->
             <!-- Products Table -->
-            <div class="card p-4">
+            <div class="card p-4 flex-grow-1">
 
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <!-- <img src="/assets/images/productList.png"> -->
-                    <h5 class="fw-bold color-purple-600">Products List</h5>
+                    <h5 class="fw-bold color-purple-600">{{ "sites.Invoice.productList" | translate }}</h5>
                 </div>
                 <div class="table-responsive mt-3">
                     <table class="table pointer">
@@ -105,11 +109,11 @@
 
 
                             <tr class="th-header">
-                                <th>{{ "sites.transfer.product" | translate }}</th>
-                                <th class="text-center">{{ "sites.transfer.quantity" | translate }}</th>
-                                <th class="text-center">{{ "sites.transfer.price" | translate }}</th>
-                                <th class="text-center">{{ "sites.transfer.weight" | translate }}</th>
-                                <th class="text-center">{{ "sites.transfer.action" | translate }}</th>
+                                <th>{{ "sites.Invoice.product" | translate }}</th>
+                                <th class="text-center">{{ "sites.Invoice.quantity" | translate }}</th>
+                                <th class="text-center">{{ "sites.Invoice.price" | translate }}</th>
+                                <th class="text-center">{{ "sites.Invoice.weight" | translate }}</th>
+                                <th class="text-center">{{ "sites.Invoice.action" | translate }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,8 +123,11 @@
                                 <!-- Quantity: قابل للتعديل فقط لو هو في حالة edit -->
                                 <td>
                                     <input type="number" class="form-control text-center" [(ngModel)]="item.quantity"
-                                        [readonly]="!item.isEditing" min="1">
+                                        [readonly]="!item.isEditing" min="1" />
+                                    <span class="text-danger text-sm" *ngIf="quantityErrors[i]">{{ quantityErrors[i]
+                                        }}</span>
                                 </td>
+
 
                                 <!-- Price: دائمًا readonly -->
                                 <td>
@@ -133,17 +140,26 @@
                                 </td>
                                 <!-- Edit button toggles edit mode -->
                                 <td>
-                                    <button class="btn btn-sm mx-2"
-                                        [ngClass]="item.isEditing ? 'btn-success' : 'btn-warning'"
+                                    <button class="mx-2 px-4 py-2 no-border cr3 color-gray-25"
+                                        [ngClass]="item.isEditing ? 'bg-purple-500' : 'bg-purple-500'"
                                         (click)="toggleEdit(i)">
                                         {{ item.isEditing ? 'Save' : 'Edit' }}
                                     </button>
-                                    <button class="btn btn-sm btn-danger" (click)="deleteProduct(i)">Delete</button>
+
+                                    <!-- زرار Delete بنفس الحجم لكن ستايل شفاف -->
+                                    <button class="px-4 py-2 cr3" [ngStyle]="{
+    'border': '1px solid purple',
+    'color': 'purple',
+    'background-color': 'transparent'
+  }" (click)="deleteProduct(i)">
+                                        Delete
+                                    </button>
+
                                 </td>
 
                             </tr>
                             <tr *ngIf="selectedProducts.length === 0">
-                                <td colspan="5" class="text-muted">No products added.</td>
+                                <td colspan="5" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}</td>
                             </tr>
                         </tbody>
                     </table>

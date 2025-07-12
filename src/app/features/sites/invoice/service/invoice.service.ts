@@ -49,12 +49,22 @@ export class InvoiceService {
     return this._apiService.get('/ClientSelectListEndPoint/SelectClientList');
   }
 
-  getProducts(payload: {
-    SalesManID: string;
-    ClientID: string;
-    StorageType: number;
-  }) {
-    return this._apiService.post('/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID', payload);
-  }
+ getProducts(payload: {
+  SalesManID: string;
+  ClientID: string;
+  StorageType: number;
+}) {
+  let params = new HttpParams();
+
+  params = params.set("SalesManID", payload.SalesManID);
+  params = params.set("ClientID", payload.ClientID);
+  params = params.set("StorageType", payload.StorageType.toString());
+
+  return this._apiService.get(
+    '/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID',
+    params
+  );
+}
+
 
 }

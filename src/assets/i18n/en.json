@@ -648,7 +648,24 @@
       "totalNetPrice":"Total Net Price",
       "totalWeightInKG":"Total Weight In KG",
       "totalQuantity":"Total Quantity",
-      "createdDate":"Created Date"
+      "createdDate":"Created Date",
+      "defination":"This tool helps you manage invoices efficiently, allowing you to easily categorize and update information to ensure an organized user experience.",
+      "accountingData":"Accounting Data",
+      "salesInvoice":"Sales Invoice",
+      "productList":"Product List",
+      "product":"Product",
+      "quantity":"Quantity",
+      "price":"Price",
+      "weight":"Weight",
+      "total":"Total",
+      "action": "Action",
+      "tax": "Tax",
+      "taxAmount": "Tax Amount",
+      "netInvoice": "Net Invoice",
+      "netItemWeightPerKG": "Net Item Weight Per KG",
+      "save": "Save",
+      "cancel": "Cancel",
+      "noProductsAdded": "No Products Added"
       
     }
   },

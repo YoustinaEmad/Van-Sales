@@ -43,3 +43,4 @@ export class productDetails {
     itemWeightPerKG : number;
     itemPrice : number;
 }
+
