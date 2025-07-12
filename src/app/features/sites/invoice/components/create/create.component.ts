@@ -22,7 +22,7 @@ export class CreateComponent implements OnInit {
   environment = environment;
   controlType = ControlType;
   constructor(public _sharedService: SharedService,
-    private _pageService: InvoiceService, private _router: Router, private activatedRoute: ActivatedRoute,private translate: TranslateService
+    private _pageService: InvoiceService, private _router: Router, private activatedRoute: ActivatedRoute, private translate: TranslateService
 
   ) {
   }
@@ -211,31 +211,34 @@ export class CreateComponent implements OnInit {
     this.taxAmount = (this.total * 0.14);
     this.netInvoice = this.total + this.taxAmount;
     this.netWeight = this.selectedProducts.reduce((sum, item) => {
-    return sum + (item.weight * item.quantity);
-  }, 0);
+      return sum + (item.weight * item.quantity);
+    }, 0);
   }
 
-onCancel() {
+  onCancel() {
     this._router.navigate(['/sites/invoice']);
   }
 
-
-onQuantityChange(index: number) {
+  onQuantityChange(index: number) {
   const item = this.selectedProducts[index];
 
-  if (item.quantity < 1) {
+  if (item.quantity < 1 || !item.quantity) {
     item.quantity = 1;
   }
 
   if (item.quantity > item.maxQuantity) {
     item.quantity = item.maxQuantity;
-    this.quantityErrors[index] = this.translate.instant('sites.Invoice.maxQuantityError', { max: item.maxQuantity });
+    this.quantityErrors[index] = this.translate.instant('sites.Invoice.maxQuantityError', {
+      max: item.maxQuantity
+    });
   } else {
     this.quantityErrors[index] = '';
   }
 
   this.calculateTotal();
 }
+
+
 
 
 }

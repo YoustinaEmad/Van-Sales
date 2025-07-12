@@ -120,7 +120,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of selectedProducts; let i = index">
-                                <td>{{ item.name }}</td>
+                                <td >{{ item.name }}</td>
 
                                 <!-- Quantity: قابل للتعديل فقط لو هو في حالة edit -->
                                 <td>
@@ -134,32 +134,25 @@
 
 
                                 <!-- Price: دائمًا readonly -->
-                                <td>
+                                <td class="text-center align-middle">
                                     {{item.price | number:'1.2-2'}} ج.م
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>
-                                <td>
+                                <td class="text-center align-middle">
                                     {{item.weight }}
                                     <input type="hidden" [(ngModel)]="item.weight">
                                 </td>
                                 <!-- Edit button toggles edit mode -->
-                                <td>
-                                    <!-- <button class="mx-2 px-4 py-2 no-border cr3 color-gray-25"
-                                        [ngClass]="item.isEditing ? 'bg-purple-500' : 'bg-purple-500'"
-                                        (click)="toggleEdit(i)">
-                                        {{ item.isEditing ? 'Save' : 'Edit' }}
-                                    </button> -->
-
-                                    <!-- زرار Delete بنفس الحجم لكن ستايل شفاف -->
-                                    <button class="px-4 py-2 cr3" [ngStyle]="{
-    'border': '1px solid purple',
-    'color': 'purple',
-    'background-color': 'transparent'
-  }" (click)="deleteProduct(i)">
-                                        Delete
-                                    </button>
-
+                                <td class="text-center align-middle">
+                                    <div
+                                        style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                        <button pButton icon="pi pi-trash"
+                                            class="p-button-rounded p-button-text p-button-danger p-0 pointer"
+                                            aria-label="Delete" (click)="deleteProduct(i)">
+                                        </button>
+                                    </div>
                                 </td>
+
 
                             </tr>
                             <tr *ngIf="selectedProducts.length === 0">
