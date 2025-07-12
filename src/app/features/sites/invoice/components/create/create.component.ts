@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { InvoiceCreateViewModel } from '../../interface/invoice-view-model';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 import { Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create',
@@ -21,7 +22,7 @@ export class CreateComponent implements OnInit {
   environment = environment;
   controlType = ControlType;
   constructor(public _sharedService: SharedService,
-    private _pageService: InvoiceService, private _router: Router, private activatedRoute: ActivatedRoute
+    private _pageService: InvoiceService, private _router: Router, private activatedRoute: ActivatedRoute,private translate: TranslateService
 
   ) {
   }
@@ -217,4 +218,24 @@ export class CreateComponent implements OnInit {
 onCancel() {
     this._router.navigate(['/sites/invoice']);
   }
+
+
+onQuantityChange(index: number) {
+  const item = this.selectedProducts[index];
+
+  if (item.quantity < 1) {
+    item.quantity = 1;
+  }
+
+  if (item.quantity > item.maxQuantity) {
+    item.quantity = item.maxQuantity;
+    this.quantityErrors[index] = this.translate.instant('sites.Invoice.maxQuantityError', { max: item.maxQuantity });
+  } else {
+    this.quantityErrors[index] = '';
+  }
+
+  this.calculateTotal();
+}
+
+
 }

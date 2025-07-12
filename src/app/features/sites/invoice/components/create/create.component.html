@@ -3,9 +3,9 @@
 
     <div class="w-100 bg-gray-200 p-3 cr3 mb-4">
         <p class="mb-0 text-gray-900 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
-                routerLink="/sites/invoice">  {{ "sites.Invoice.invoices" | translate }}</p>
+                routerLink="/sites/invoice"> {{ "sites.Invoice.invoices" | translate }}</p>
         <p class="text-sm text-gray-600 max-w-xl mb-4">
-           {{ "sites.Invoice.defination" | translate }}
+            {{ "sites.Invoice.defination" | translate }}
         </p>
     </div>
 
@@ -63,7 +63,8 @@
             'background-color': 'transparent'
           }" class="rounded" (click)="onCancel()"> {{ "sites.Invoice.cancel" | translate }}</button>
 
-                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"> {{ "sites.Invoice.save" | translate }}</button>
+                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"> {{
+                        "sites.Invoice.save" | translate }}</button>
 
                 </div>
             </div>
@@ -87,8 +88,9 @@
 
                     </div>
                     <div class="col-md-6 mb-3">
-                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productID" label="sites.Invoice.product"
-                            placeholder="sites.Invoice.product" [items]="allProducts" bindValue="id" bindLabel="name">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productID"
+                            label="sites.Invoice.product" placeholder="sites.Invoice.product" [items]="allProducts"
+                            bindValue="id" bindLabel="name">
                         </ng-control>
                     </div>
 
@@ -122,8 +124,10 @@
 
                                 <!-- Quantity: قابل للتعديل فقط لو هو في حالة edit -->
                                 <td>
+                                    <!-- <input type="number" class="form-control text-center" [(ngModel)]="item.quantity"
+                                        [readonly]="!item.isEditing" min="1" /> -->
                                     <input type="number" class="form-control text-center" [(ngModel)]="item.quantity"
-                                        [readonly]="!item.isEditing" min="1" />
+                                        (ngModelChange)="onQuantityChange(i)" [max]="item.maxQuantity" [min]="1" />
                                     <span class="text-danger text-sm" *ngIf="quantityErrors[i]">{{ quantityErrors[i]
                                         }}</span>
                                 </td>
@@ -140,11 +144,11 @@
                                 </td>
                                 <!-- Edit button toggles edit mode -->
                                 <td>
-                                    <button class="mx-2 px-4 py-2 no-border cr3 color-gray-25"
+                                    <!-- <button class="mx-2 px-4 py-2 no-border cr3 color-gray-25"
                                         [ngClass]="item.isEditing ? 'bg-purple-500' : 'bg-purple-500'"
                                         (click)="toggleEdit(i)">
                                         {{ item.isEditing ? 'Save' : 'Edit' }}
-                                    </button>
+                                    </button> -->
 
                                     <!-- زرار Delete بنفس الحجم لكن ستايل شفاف -->
                                     <button class="px-4 py-2 cr3" [ngStyle]="{
@@ -159,7 +163,8 @@
 
                             </tr>
                             <tr *ngIf="selectedProducts.length === 0">
-                                <td colspan="5" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}</td>
+                                <td colspan="5" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>

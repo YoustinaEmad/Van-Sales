@@ -654,8 +654,8 @@
       "netItemWeightPerKG": "الوزن الصافي لكل كيلوغرام",
       "save": "حفظ",
       "cancel": "إلغاء",
-      "noProductsAdded": "لا توجد منتجات مضافة"
-
+      "noProductsAdded": "لا توجد منتجات مضافة",
+ "maxQuantityError": "الكمية لا يمكن أن تتجاوز {{max}}"
     }
   },
   "auth": {

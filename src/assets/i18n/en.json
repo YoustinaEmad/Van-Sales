@@ -665,8 +665,8 @@
       "netItemWeightPerKG": "Net Item Weight Per KG",
       "save": "Save",
       "cancel": "Cancel",
-      "noProductsAdded": "No Products Added"
-      
+      "noProductsAdded": "No Products Added",
+       "maxQuantityError": "Quantity cannot exceed {{max}}"
     }
   },
   "auth": {
