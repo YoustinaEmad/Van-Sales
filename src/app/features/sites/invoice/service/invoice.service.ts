@@ -39,7 +39,7 @@ export class InvoiceService {
   }
 
   postOrUpdate(body: InvoiceCreateViewModel) {
-     return this._apiService.post(`/AddSellingInvoicesEndPoint/AddSellingInvoices`, body)
+    return this._apiService.post(`/AddSellingInvoicesEndPoint/AddSellingInvoices`, body)
   }
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
@@ -48,23 +48,25 @@ export class InvoiceService {
   getClients() {
     return this._apiService.get('/ClientSelectListEndPoint/SelectClientList');
   }
+  getById(ID: string) {
+    return this._apiService.get(`/GetSellingInvoiceByIdEndPoint/GetSellingInvoiceById?ID=${ID}`);
+  }
+  getProducts(payload: {
+    SalesManID: string;
+    ClientID: string;
+    StorageType: number;
+  }) {
+    let params = new HttpParams();
 
- getProducts(payload: {
-  SalesManID: string;
-  ClientID: string;
-  StorageType: number;
-}) {
-  let params = new HttpParams();
+    params = params.set("SalesManID", payload.SalesManID);
+    params = params.set("ClientID", payload.ClientID);
+    params = params.set("StorageType", payload.StorageType.toString());
 
-  params = params.set("SalesManID", payload.SalesManID);
-  params = params.set("ClientID", payload.ClientID);
-  params = params.set("StorageType", payload.StorageType.toString());
-
-  return this._apiService.get(
-    '/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID',
-    params
-  );
-}
+    return this._apiService.get(
+      '/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID',
+      params
+    );
+  }
 
 
 }

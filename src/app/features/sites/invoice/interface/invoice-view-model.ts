@@ -36,11 +36,30 @@ export class SellingInvoicesDetailsVM {
     quantity:number;
     itemPrice:number;
 }
-export class productDetails {
-    name: string;
-    id:string;
-    maxQuantity : number;
-    itemWeightPerKG : number;
-    itemPrice : number;
+
+export class InvoiceDetailsViewModel {
+    id: string;
+    invoiceNumber: string;
+    clientID : string;
+    clientName : string;
+   salesManID : string;
+   salesManName : string;
+   totalPrice : number;
+   totalNetPrice : number;
+   totalWeightInKG : number;
+   totalQuantity : number;
+   taxAmount : number;
+   sellingInvoicesDetails : SellingInvoicesDetailsVM2[];
 }
 
+
+export class SellingInvoicesDetailsVM2 {
+productId : string;
+productName : string;
+quantity : number;
+itemPrice : number;
+price : number;
+itemWeightPerKG : number;
+weightPerKG : number;
+unit : number;
+}

@@ -78,11 +78,27 @@
                     </div>
                 </div>
 
-                <!-- زر طباعة (يظهر تحت بعد الحفظ) -->
-                <div *ngIf="showPrintButton" class="d-flex justify-content-center mt-3">
-                    <button class="bg-gray-500 py-2 px-4 text-white no-border cr3" (click)="printInvoice()">
-                        {{ "sites.Invoice.print" | translate }}
-                    </button>
+                <!-- زر طباعة (يظهر تحت بعد الحفظ)  *ngIf="showPrintButton"-->
+                <div class="d-flex justify-content-between align-items-center flex-wrap mt-3 gap-2">
+
+                    <!-- زر طباعة -->
+                    <div>
+                        <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="printInvoice()">
+                            {{ "sites.Invoice.print" | translate }}
+                        </button>
+                    </div>
+
+                    <!-- زر تحميل PDF -->
+                    <div>
+                        <button pButton type="button" [ngStyle]="{
+      'border': '1px solid purple',
+      'color': 'purple',
+      'background-color': 'transparent'
+    }" class="rounded px-4 py-2" (click)="downloadInvoiceAsPDF()">
+                            {{ "sites.Invoice.download" | translate }}
+                        </button>
+                    </div>
+
                 </div>
 
 

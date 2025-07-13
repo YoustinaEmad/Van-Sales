@@ -667,8 +667,14 @@
       "cancel": "Cancel",
       "noProductsAdded": "No Products Added",
        "maxQuantityError": "Quantity cannot exceed {{max}}",
-       "print":"Print"
-       
+       "print":"Print",
+       "download":"Download",
+       "unit":"Unit",
+       "unitPrice":"Unit Price",
+       "itemWeight":"Item Weight",
+       "totalWeight":"Total Weight",
+       "finalTotal":"Final Total"
+
     }
   },
   "auth": {
