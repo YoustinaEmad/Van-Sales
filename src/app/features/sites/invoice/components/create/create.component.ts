@@ -216,7 +216,13 @@ export class CreateComponent implements OnInit {
   }
 
   onCancel() {
-    this._router.navigate(['/sites/invoice']);
+   this.page.form.reset();
+  this.selectedProducts = [];
+  this.quantityErrors = [];
+  this.total = 0;
+  this.taxAmount = 0;
+  this.netInvoice = 0;
+  this.netWeight = 0;
   }
 
   onQuantityChange(index: number) {

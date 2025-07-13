@@ -101,11 +101,11 @@
             <!-- Products Table -->
             <div class="card p-4 flex-grow-1">
 
-                <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
                     <!-- <img src="/assets/images/productList.png"> -->
                     <h5 class="fw-bold color-purple-600">{{ "sites.Invoice.productList" | translate }}</h5>
                 </div>
-                <div class="table-responsive mt-3">
+                <div class="table-responsive mt-2">
                     <table class="table pointer">
                         <thead class="text-white" style="background-color: #6c757d;">
 
@@ -114,6 +114,7 @@
                                 <th>{{ "sites.Invoice.product" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.quantity" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.price" | translate }}</th>
+                                  <th class="text-center">{{ "sites.Invoice.totalPrice" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.weight" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.action" | translate }}</th>
                             </tr>
@@ -138,6 +139,10 @@
                                     {{item.price | number:'1.2-2'}} ج.م
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>
+                                 <td class="text-center align-middle">
+                                    {{ (item.quantity * item.price) | number:'1.2-2' }} ج.م
+                                    <input type="hidden" [(ngModel)]="item.price">
+                                </td>
                                 <td class="text-center align-middle">
                                     {{item.weight }}
                                     <input type="hidden" [(ngModel)]="item.weight">
@@ -156,7 +161,7 @@
 
                             </tr>
                             <tr *ngIf="selectedProducts.length === 0">
-                                <td colspan="5" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}
+                                <td colspan="6" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}
                                 </td>
                             </tr>
                         </tbody>
