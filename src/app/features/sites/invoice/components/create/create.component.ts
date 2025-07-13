@@ -21,7 +21,7 @@ export class CreateComponent implements OnInit {
   page: CRUDCreatePage = new CRUDCreatePage();
   item: InvoiceCreateViewModel = new InvoiceCreateViewModel();
   itemDetails: InvoiceDetailsViewModel = new InvoiceDetailsViewModel();
-  id: string = "5fe8a1ce-6ed5-49cd-a950-92f5bff0e10a"
+  id: string ;
   showPrintButton: boolean = false;
   environment = environment;
   showDownloadOptions = false;
