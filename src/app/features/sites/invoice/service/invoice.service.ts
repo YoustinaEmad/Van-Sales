@@ -46,7 +46,7 @@ export class InvoiceService {
   }
 
   getClients() {
-    return this._apiService.get('/ClientSelectListEndPoint/SelectClientList');
+    return this._apiService.get('/ClientSelectListBySalesManEndpoint/ClientSelectListBySalesMan');
   }
   getById(ID: string) {
     return this._apiService.get(`/GetSellingInvoiceByIdEndPoint/GetSellingInvoiceById?ID=${ID}`);
