@@ -19,6 +19,7 @@ export class CreateComponent implements OnInit {
   page: CRUDCreatePage = new CRUDCreatePage();
   item: InvoiceCreateViewModel = new InvoiceCreateViewModel();
   id: string;
+  showPrintButton: boolean = false;
   environment = environment;
   controlType = ControlType;
   constructor(public _sharedService: SharedService,
@@ -71,7 +72,6 @@ export class CreateComponent implements OnInit {
       this.calculateTotal();
     }
 
-    // Reset selection
     this.selectedProductId = null;
     this.page.form.get('productID')?.setValue(null);
   }
@@ -97,22 +97,14 @@ export class CreateComponent implements OnInit {
 
   Save() {
     this.page.isSaving = true;
-
-    // استخراج SalesManID من التوكن
     const salesManID = this.getSalesmanIdFromToken();
-
-    // استخراج القيم من الفورم
     const formValues = this.page.form.value;
-
-    // تحويل selectedProducts إلى invoiceDetails[]
     const invoiceDetails = this.selectedProducts.map(p => ({
       productId: p.id,
       itemWeightPerKG: p.weight,
       quantity: p.quantity,
       itemPrice: p.price
     }));
-
-    // بناء الـ InvoiceCreateViewModel للإرسال
     const payload: InvoiceCreateViewModel = {
       id: this.item.id,
       clientID: formValues.clientID,
@@ -120,15 +112,14 @@ export class CreateComponent implements OnInit {
       notes: formValues.notes,
       invoiceDetails: invoiceDetails
     };
-
-    // إرسال الريكوست
     this._pageService.postOrUpdate(payload).subscribe({
       next: (res) => {
         this.page.isSaving = false;
         this.page.responseViewModel = res;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
-          this._router.navigate(['/sites/invoice']);
+           this.showPrintButton = true; 
+          // this._router.navigate(['/sites/invoice']);
         }
       },
       error: () => {
@@ -170,6 +161,9 @@ export class CreateComponent implements OnInit {
     });
   }
 
+printInvoice() {
+  window.print();
+}
 
 
   onClientChange() {

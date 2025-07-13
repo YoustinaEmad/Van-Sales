@@ -666,7 +666,8 @@
       "save": "Save",
       "cancel": "Cancel",
       "noProductsAdded": "No Products Added",
-       "maxQuantityError": "Quantity cannot exceed {{max}}"
+       "maxQuantityError": "Quantity cannot exceed {{max}}",
+       "print":"Print"
        
     }
   },

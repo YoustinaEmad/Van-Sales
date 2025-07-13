@@ -56,17 +56,37 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <button pButton type="button" [ngStyle]="{
-            'border': '1px solid purple',
-            'color': 'purple',
-            'background-color': 'transparent'
-          }" class="rounded" (click)="onCancel()"> {{ "sites.Invoice.cancel" | translate }}</button>
 
-                    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"> {{
-                        "sites.Invoice.save" | translate }}</button>
+                <div class="d-flex justify-content-between align-items-center flex-wrap mt-3 gap-2">
 
+                    <!-- زر إلغاء -->
+                    <div>
+                        <button pButton type="button" [ngStyle]="{
+      'border': '1px solid purple',
+      'color': 'purple',
+      'background-color': 'transparent'
+    }" class="rounded px-4 py-2" (click)="onCancel()">
+                            {{ "sites.Invoice.cancel" | translate }}
+                        </button>
+                    </div>
+
+                    <!-- زر حفظ -->
+                    <div>
+                        <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()">
+                            {{ "sites.Invoice.save" | translate }}
+                        </button>
+                    </div>
                 </div>
+
+                <!-- زر طباعة (يظهر تحت بعد الحفظ) -->
+                <div *ngIf="showPrintButton" class="d-flex justify-content-center mt-3">
+                    <button class="bg-gray-500 py-2 px-4 text-white no-border cr3" (click)="printInvoice()">
+                        {{ "sites.Invoice.print" | translate }}
+                    </button>
+                </div>
+
+
+
             </div>
         </div>
         <!-- الفاتورة والمخزن والعميل -->
@@ -114,14 +134,14 @@
                                 <th>{{ "sites.Invoice.product" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.quantity" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.price" | translate }}</th>
-                                  <th class="text-center">{{ "sites.Invoice.totalPrice" | translate }}</th>
+                                <th class="text-center">{{ "sites.Invoice.totalPrice" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.weight" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.action" | translate }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of selectedProducts; let i = index">
-                                <td >{{ item.name }}</td>
+                                <td>{{ item.name }}</td>
 
                                 <!-- Quantity: قابل للتعديل فقط لو هو في حالة edit -->
                                 <td>
@@ -139,7 +159,7 @@
                                     {{item.price | number:'1.2-2'}} ج.م
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>
-                                 <td class="text-center align-middle">
+                                <td class="text-center align-middle">
                                     {{ (item.quantity * item.price) | number:'1.2-2' }} ج.م
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>

@@ -655,7 +655,8 @@
       "save": "حفظ",
       "cancel": "إلغاء",
       "noProductsAdded": "لا توجد منتجات مضافة",
- "maxQuantityError": "الكمية لا يمكن أن تتجاوز {{max}}"
+ "maxQuantityError": "الكمية لا يمكن أن تتجاوز {{max}}",
+ "print": "طباعة"
     }
   },
   "auth": {
