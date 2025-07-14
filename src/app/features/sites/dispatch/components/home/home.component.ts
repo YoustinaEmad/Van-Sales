@@ -47,10 +47,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
   clientsForm: FormGroup;
   actualDispatches: GetAllActualDispatchs[] = [];
   plannedDispatches: GetAllPlannedDispatchs[] = [];
-  override controlType = ControlType; 
+  override controlType = ControlType;
   override searchViewModel: DispatchPlannedSearchViewModel = new DispatchPlannedSearchViewModel();
   searchViewModel2: DispatchActualSearchViewModel = new DispatchActualSearchViewModel();
-  Tabs =  [];
+  Tabs = [];
   ngOnInit(): void {
     this.page.isPageLoaded = false;
     this.translate.get([
@@ -72,11 +72,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
           isSelected: false,
         },
       ];
-       this.ActualDispatchStatus = [
-      { id: 1, name: translations['sites.dispatch.successful'] },
-      { id: 2, name: translations['sites.dispatch.failed'] },
-      { id: 3, name: translations['sites.dispatch.notDone'] }
-    ];
+      this.ActualDispatchStatus = [
+        { id: 1, name: translations['sites.dispatch.successful'] },
+        { id: 2, name: translations['sites.dispatch.failed'] },
+        { id: 3, name: translations['sites.dispatch.notDone'] }
+      ];
     });
 
     this.createSearchForm();
@@ -187,6 +187,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
     if (this.pageCreate.isSaving) return;
 
 
+    const formValue = this.pageCreate.form.value;
+
+    formValue.startDate = this.normalizeDate(formValue.startDate);
+    formValue.visitDate = this.normalizeDate(formValue.visitDate);
 
 
 
@@ -249,7 +253,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.page.isSearching = true;
     this.actualDispatches = [];
 
- Object.assign(this.searchViewModel2, this.actualSearchForm.value);
+    Object.assign(this.searchViewModel2, this.actualSearchForm.value);
 
     this._pageService
       .getActual(
@@ -276,7 +280,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   }
 
-
+  normalizeDate(date: Date): Date {
+    const normalized = new Date(date);
+    normalized.setHours(12, 0, 0, 0);
+    return normalized;
+  }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
       From: [this.searchViewModel.From],
@@ -318,54 +326,58 @@ export class HomeComponent extends CrudIndexBaseUtils {
     const status = this.ActualDispatchStatus.find(s => s.id === statusId);
     return status ? status.name : 'Unknown';
   }
-showActualCartDialog(event: Event) {
-  event.preventDefault();
-  this.loadClients();
-  this.loadSalesMen();
-  this.cartItems = [];
+  showActualCartDialog(event: Event) {
+    event.preventDefault();
+    this.loadClients();
+    this.loadSalesMen();
+    this.cartItems = [];
 
-  this.createActualForm();
-  this.pageCreate.form.reset();
+    this.createActualForm();
+    this.pageCreate.form.reset();
 
-  this.cartVisible = true;
-  this.isCreatingActual = true;
-}
-createActualForm() {
- 
+    this.cartVisible = true;
+    this.isCreatingActual = true;
+  }
+  createActualForm() {
 
-  this.pageCreate.form = this._sharedService.formBuilder.group({
-    salesManID: [null, Validators.required],
-    visitDate: [new Date(), Validators.required],
-    clientId: [null, Validators.required],
-    dispatchStatus: [null, Validators.required]
-  });
 
-  this.pageCreate.isPageLoaded = true;
-}
-saveActual(): void {
-  if (this.pageCreate.isSaving || this.pageCreate.form.invalid) return;
+    this.pageCreate.form = this._sharedService.formBuilder.group({
+      salesManID: [null, Validators.required],
+      visitDate: [new Date(), Validators.required],
+      clientId: [null, Validators.required],
+      dispatchStatus: [null, Validators.required]
+    });
 
-  const body = this.pageCreate.form.value as createDispatchActualViewModel;
+    this.pageCreate.isPageLoaded = true;
+  }
+  saveActual(): void {
+    const formValue = this.pageCreate.form.value;
 
-  this.pageCreate.isSaving = true;
+    formValue.startDate = this.normalizeDate(formValue.startDate);
+    formValue.visitDate = this.normalizeDate(formValue.visitDate);
+    if (this.pageCreate.isSaving || this.pageCreate.form.invalid) return;
 
-  this._pageService.postOrUpdateActual(body).subscribe({
-    next: (res) => {
-      this.pageCreate.isSaving = false;
-      this._sharedService.showToastr(res);
-      if (res.isSuccess) {
-        this.cartVisible = false;
-        this.isCreatingActual = false;
-        this.pageCreate.form.reset();
-        this.loadActualDispatches();
+    const body = this.pageCreate.form.value as createDispatchActualViewModel;
+
+    this.pageCreate.isSaving = true;
+
+    this._pageService.postOrUpdateActual(body).subscribe({
+      next: (res) => {
+        this.pageCreate.isSaving = false;
+        this._sharedService.showToastr(res);
+        if (res.isSuccess) {
+          this.cartVisible = false;
+          this.isCreatingActual = false;
+          this.pageCreate.form.reset();
+          this.loadActualDispatches();
+        }
+      },
+      error: (err) => {
+        this._sharedService.showToastr(err);
+        this.pageCreate.isSaving = false;
       }
-    },
-    error: (err) => {
-      this._sharedService.showToastr(err);
-      this.pageCreate.isSaving = false;
-    }
-  });
-}
+    });
+  }
 
 
 }
