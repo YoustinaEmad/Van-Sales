@@ -21,7 +21,8 @@ export class CreateComponent implements OnInit {
   page: CRUDCreatePage = new CRUDCreatePage();
   item: InvoiceCreateViewModel = new InvoiceCreateViewModel();
   itemDetails: InvoiceDetailsViewModel = new InvoiceDetailsViewModel();
-  id: string ;
+  id: string;
+  translations: any = {};
   showPrintButton: boolean = false;
   environment = environment;
   showDownloadOptions = false;
@@ -67,6 +68,25 @@ export class CreateComponent implements OnInit {
         this.id = params.get('id');
         this.page.isEdit = true;
       }
+      this.translate.get([
+    'sites.Invoice.salesInvoice',
+    'sites.Invoice.invoiceNumber',
+    'sites.Invoice.client',
+    'sites.Invoice.salesMan',
+    'sites.Invoice.index',
+    'sites.Invoice.product',
+    'sites.Invoice.unit',
+    'sites.Invoice.quantity',
+    'sites.Invoice.unitPrice',
+    'sites.Invoice.total',
+    'sites.Invoice.itemWeight',
+    'sites.Invoice.totalWeight',
+    'sites.Invoice.tax',
+    'sites.Invoice.totalNetPrice',
+    'sites.Invoice.totalWeightLabel'
+  ]).subscribe(trans => {
+    this.translations = trans;
+  });
     });
 
 
@@ -143,7 +163,7 @@ export class CreateComponent implements OnInit {
         this.page.responseViewModel = res;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
-          // this.id = res.data?.sellingInvoiceId || this.id;
+          this.id = res.data?.sellingInvoiceId || this.id;
           this.showPrintButton = true;
           // this._router.navigate(['/sites/invoice']);
         }
@@ -187,46 +207,15 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  //  printInvoice() {
+printInvoice() {
+  const printWindow = window.open('', '_blank');
+  this._pageService.getById(this.id).subscribe({
+    next: (res) => {
+      if (res.isSuccess && res.data) {
+        const invoice = res.data as InvoiceDetailsViewModel;
+        const t = this.translations;
 
-  //   this._pageService.getById(this.id).subscribe({
-  //     next: (res) => {
-  //       if (res.isSuccess) {
-  //         const printWindow = window.open('', '_blank');
-  //         printWindow.document.write(res.data);
-  //         printWindow.document.close();
-  //         printWindow.print();
-  //       }
-  //     },
-
-  //   });
-  // }
-
-  printInvoice() {
-  this.translate.get([
-    'sites.Invoice.salesInvoice',
-    'sites.Invoice.invoiceNumber',
-    'sites.Invoice.client',
-    'sites.Invoice.salesMan',
-    'sites.Invoice.index',
-    'sites.Invoice.product',
-    'sites.Invoice.unit',
-    'sites.Invoice.quantity',
-    'sites.Invoice.unitPrice',
-    'sites.Invoice.total',
-    'sites.Invoice.itemWeight',
-    'sites.Invoice.totalWeight',
-    'sites.Invoice.tax',
-    'sites.Invoice.finalTotal',
-    'sites.Invoice.totalWeightLabel'
-  ]).subscribe(trans => {
-
-    this._pageService.getById(this.id).subscribe({
-      next: (res) => {
-        if (res.isSuccess && res.data) {
-          const invoice = res.data as InvoiceDetailsViewModel;
-
-          const printContent = `
+        const printContent = `
           <html lang="ar" dir="rtl">
             <head>
               <meta charset="UTF-8">
@@ -267,22 +256,22 @@ export class CreateComponent implements OnInit {
               </style>
             </head>
             <body>
-              <h2>${trans['sites.Invoice.salesInvoice']}</h2>
-              <p><strong>${trans['sites.Invoice.invoiceNumber']}:</strong> ${invoice.invoiceNumber}</p>
-              <p><strong>${trans['sites.Invoice.client']}:</strong> ${invoice.clientName}</p>
-              <p><strong>${trans['sites.Invoice.salesMan']}:</strong> ${invoice.salesManName}</p>
+              <h2>${t['sites.Invoice.salesInvoice']}</h2>
+              <p><strong>${t['sites.Invoice.invoiceNumber']}:</strong> ${invoice.invoiceNumber}</p>
+              <p><strong>${t['sites.Invoice.client']}:</strong> ${invoice.clientName}</p>
+              <p><strong>${t['sites.Invoice.salesMan']}:</strong> ${invoice.salesManName}</p>
 
               <table>
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th >${trans['sites.Invoice.product']}</th>
-                    <th>${trans['sites.Invoice.unit']}</th>
-                    <th>${trans['sites.Invoice.quantity']}</th>
-                    <th>${trans['sites.Invoice.unitPrice']}</th>
-                    <th>${trans['sites.Invoice.total']}</th>
-                    <th>${trans['sites.Invoice.itemWeight']}</th>
-                    <th>${trans['sites.Invoice.totalWeight']}</th>
+                    <th>${t['sites.Invoice.product']}</th>
+                    <th>${t['sites.Invoice.unit']}</th>
+                    <th>${t['sites.Invoice.quantity']}</th>
+                    <th>${t['sites.Invoice.unitPrice']}</th>
+                    <th>${t['sites.Invoice.total']}</th>
+                    <th>${t['sites.Invoice.itemWeight']}</th>
+                    <th>${t['sites.Invoice.totalWeight']}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -292,10 +281,10 @@ export class CreateComponent implements OnInit {
                       <td>${item.productName}</td>
                       <td>${this.getUnitName(item.unit)}</td>
                       <td>${item.quantity}</td>
-                      <td>${item.itemPrice.toFixed(2)}</td>
-                      <td>${item.price.toFixed(2)}</td>
-                      <td>${item.itemWeightPerKG.toFixed(3)}</td>
-                      <td>${item.weightPerKG.toFixed(3)}</td>
+                      <td>${(item.itemPrice ?? 0).toFixed(2)}</td>
+                      <td>${(item.price ?? 0).toFixed(2)}</td>
+                      <td>${(item.itemWeightPerKG ?? 0).toFixed(3)}</td>
+                      <td>${(item.weightPerKG ?? 0).toFixed(3)}</td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -303,126 +292,104 @@ export class CreateComponent implements OnInit {
 
               <table class="totals" style="margin-top: 30px;">
                 <tr>
-                  <td>${trans['sites.Invoice.totalWeight']}</td>
-                  <td>${invoice.totalWeightInKG.toFixed(2)} كجم</td>
+                  <td>${t['sites.Invoice.totalWeight']}</td>
+                  <td>${(invoice.totalWeightInKG ?? 0).toFixed(2)} كجم</td>
                 </tr>
                 <tr>
-                  <td>${trans['sites.Invoice.total']}</td>
-                  <td>${invoice.totalPrice.toFixed(2)}</td>
+                  <td>${t['sites.Invoice.total']}</td>
+                  <td>${(invoice.totalPrice ?? 0).toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td>${trans['sites.Invoice.tax']} (14%)</td>
-                  <td>${invoice.taxAmount.toFixed(2)}</td>
+                  <td>${t['sites.Invoice.tax']} </td>
+                  <td>14%</td>
                 </tr>
                 <tr>
-                  <td>${trans['sites.Invoice.finalTotal']}</td>
-                  <td>${invoice.totalNetPrice.toFixed(2)}</td>
+                  <td>${t['sites.Invoice.totalNetPrice']}</td>
+                  <td>${(invoice.totalNetPrice ?? 0).toFixed(2)}</td>
                 </tr>
               </table>
             </body>
           </html>
         `;
 
-          const printWindow = window.open();
-          if (printWindow) {
-            printWindow.document.open();
-            printWindow.document.write(printContent);
-            printWindow.document.close();
+        printWindow.document.open();
+        printWindow.document.write(printContent);
+        printWindow.document.close();
 
-            printWindow.onload = () => {
-              printWindow.focus();
-              printWindow.print();
-            };
-          }
-        }
+        printWindow.onload = () => {
+          printWindow.focus();
+          printWindow.print();
+        };
       }
-    });
-
+    }
   });
 }
 
 
-  downloadInvoiceAsPDF() {
-    this._pageService.getById(this.id).subscribe({
-      next: (res) => {
-        if (res.isSuccess && res.data) {
-          const invoice = res.data as InvoiceDetailsViewModel;
 
-          const doc = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-          });
+ downloadInvoiceAsPDF() {
+  this._pageService.getById(this.id).subscribe({
+    next: (res) => {
+      if (res.isSuccess && res.data) {
+        const invoice = res.data as InvoiceDetailsViewModel;
 
+        const doc = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
 
-          doc.setFontSize(16);
-          doc.text(`Sales invoice`, 105, 15, { align: 'center' });
+        doc.setFontSize(16);
+        doc.text('Sales Invoice', 105, 15, { align: 'center' });
 
+        doc.setFontSize(12);
+        doc.text(`Invoice Number: ${invoice.invoiceNumber}`, 14, 30);
+        doc.text(`Client: ${invoice.clientName}`, 14, 38);
+        doc.text(`Salesman: ${invoice.salesManName}`, 14, 46);
 
-          doc.setFontSize(12);
-          doc.text(`Invoice Number: ${invoice.invoiceNumber}`, 14, 30);
-          doc.text(`Client: ${invoice.clientName}`, 14, 38);
-          doc.text(`Salesman: ${invoice.salesManName}`, 14, 46);
+        const headers = [['#', 'Product', 'Unit', 'Quantity', 'Unit Price', 'Total', 'Item Weight', 'Total Weight']];
+        const body = invoice.sellingInvoicesDetails.map((item, index) => [
+          index + 1,
+          item.productName || '',
+          this.getUnitName(item.unit),
+          item.quantity ?? 0,
+          (item.itemPrice ?? 0).toFixed(2),
+          (item.price ?? 0).toFixed(2),
+          (item.itemWeightPerKG ?? 0).toFixed(3),
+          (item.weightPerKG ?? 0).toFixed(3)
+        ]);
 
-          const headers = [['#', 'Product', 'Unit', 'Quantity', 'Unit Price', 'Total', 'Item Weight', 'Total Weight']];
-          const body = invoice.sellingInvoicesDetails.map((item, index) => [
-            index + 1,
-            item.productName,
-            this.getUnitName(item.unit),
-            item.quantity,
-            item.itemPrice.toFixed(2),
-            item.price.toFixed(2),
-            item.itemWeightPerKG.toFixed(3),
-            item.weightPerKG.toFixed(3)
-          ]);
+        autoTable(doc, {
+          head: headers,
+          body: body,
+          startY: 55,
+          styles: {
+            fontSize: 10,
+            halign: 'center'
+          },
+          headStyles: {
+            fillColor: [151, 44, 204],
+            textColor: [255, 255, 255]
+          },
+          alternateRowStyles: {
+            fillColor: [245, 245, 245]
+          }
+        });
 
-          autoTable(doc, {
-            head: headers,
-            body: body,
-            startY: 55,
-            styles: {
-              fontSize: 10,
-              halign: 'center',
-              fontStyle: 'normal'
-            },
-            headStyles: {
-             fillColor: [151, 44, 204],
-              textColor: [255, 255, 255],
-              fontSize: 11,
-              fontStyle: 'bold',
-              halign: 'center',
-              valign: 'middle',
-            },
-            alternateRowStyles: {
-              fillColor: [240, 248, 255]
-            },
-            columnStyles: {
-              0: { cellWidth: 10 },
-              1: { cellWidth: 40 },
-              2: { cellWidth: 20 },
-              3: { cellWidth: 20 },
-              4: { cellWidth: 25 },
-              5: { cellWidth: 25 },
-              6: { cellWidth: 25 },
-              7: { cellWidth: 25 },
-            },
-          });
+        const finalY = (doc as any).lastAutoTable.finalY || 60;
+        doc.setFontSize(12);
+        doc.text(`Total Weight: ${(invoice.totalWeightInKG ?? 0).toFixed(2)} KG`, 14, finalY + 10);
+        doc.text(`Total: ${(invoice.totalPrice ?? 0).toFixed(2)}`, 14, finalY + 18);
+        doc.text(`Tax :14% `, 14, finalY + 26);
+        doc.text(`Total Net Price: ${(invoice.totalNetPrice ?? 0).toFixed(2)}`, 14, finalY + 34);
 
+        doc.save(`Invoice-${invoice.invoiceNumber}.pdf`);
+      } 
+    },
+   
+  });
+}
 
-          // الإجماليات
-          let finalY = (doc as any).lastAutoTable.finalY || 60;
-          doc.setFontSize(12);
-          doc.text(`Total Weight: ${invoice.totalWeightInKG.toFixed(2)} KG`, 14, finalY + 10);
-          doc.text(`Total: ${invoice.totalPrice.toFixed(2)}`, 14, finalY + 18);
-          doc.text(`Tax (14%): ${invoice.taxAmount.toFixed(2)}`, 14, finalY + 26);
-          doc.text(`Final Total: ${invoice.totalNetPrice.toFixed(2)}`, 14, finalY + 34);
-
-          // حفظ الملف
-          doc.save(`Invoice-${invoice.invoiceNumber}.pdf`);
-        }
-      }
-    });
-  }
 
   onClientChange() {
     this.loadProducts();
