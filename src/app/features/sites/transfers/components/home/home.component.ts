@@ -30,6 +30,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   item: transferCreateViewModel = new transferCreateViewModel();
   isDropdownVisible = false;
   products: any[] = [];
+    warehouseId: string;
   selectedProduct = '';
   cartErrorMessage: string = '';
   selectedItem: transferViewModel;
@@ -157,9 +158,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
+ OnWarehouseIdChange(warehouseId: any) {
+    this.warehouseId = warehouseId;
+    this.loadProducts();
 
+  }
   loadProducts() {
-    this._pageService.getProducts().subscribe((res: any) => {
+    this._pageService.getProducts(this.warehouseId).subscribe((res: any) => {
       if (res.isSuccess) {
         this.products = res.data;
       }
@@ -202,7 +207,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     this.loadWarehouses();
     this.loadSalesMen();
-    this.loadProducts();
+    // this.loadProducts();
 
     this.cartItems = [];
 

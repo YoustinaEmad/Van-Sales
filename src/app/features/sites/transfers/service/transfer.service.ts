@@ -61,8 +61,9 @@ export class TransferService {
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
-  getProducts() {
-    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+
+    getProducts(WarehouseId: string) {
+    return this._apiService.get(`/ProductSelectListEndpoint/SelectProductList?WarehouseId=${WarehouseId}`);
   }
   getById(ID: string) {
     return this._apiService.get(`/GetWarehouseToWarehouseTransactionByIdEndPoint/GetWarehouseToWarehouseTransactionById?ID=${ID}`,);
