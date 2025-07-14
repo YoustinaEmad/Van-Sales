@@ -17,8 +17,10 @@ constructor(private _router:Router,private _roleService:RoleService){}
   { id: 1, name: 'SuperAdmin' },
   { id: 2, name: 'Admin' },
   { id: 3, name: 'SalesMan' },
-  { id: 4, name: 'Supervisor' },
-    { id: 5, name: 'Manager' },
+  { id: 4, name: 'WarehouseManager' },
+    { id: 5, name: 'Storekeeper' },
+    { id: 6, name: 'SalesManager' },
+    { id: 7, name: 'SalesSupervisor' },
 ];
 
 viewRoleDetails(id: string){
