@@ -88,8 +88,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "productGroupName", Title: "sites.product.productGroupName", Selectable: false, Sortable: true },
       { Name: "grade", Title: "sites.product.grade", Selectable: false, Sortable: true },
       { Name: "productStatus", Title: "sites.product.productStatus", Selectable: false, Sortable: true },
-      { Name: "expiryDate", Title: "sites.product.expiryDate", Selectable: false, Sortable: true },
-      { Name: "expiryDate", Title: "sites.product.expiration", Selectable: false, Sortable: true },
+      // { Name: "expiryDate", Title: "sites.product.expiration", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.product.isActive", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.product.action", Selectable: false, Sortable: true },
     ];

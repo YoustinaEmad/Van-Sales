@@ -133,8 +133,7 @@
             <td>{{item.productGroupName}}</td>
             <td>{{getGradeName(item.grade)}}</td>
             <td>{{getStatusName(item.productStatus)}}</td>
-             <td>{{item.expiryDate}}</td>
-             <td>
+             <!-- <td>
               <span
                 class="status-chip"
                 [ngClass]="{
@@ -151,7 +150,7 @@
             {{ isExpired(item.expiryDate) ? ('sites.product.expired' | translate) : ('sites.product.available' | translate) }}
                 
               </span>
-            </td>
+            </td> -->
             
             <td>
               <div class="flex justify-content-center">

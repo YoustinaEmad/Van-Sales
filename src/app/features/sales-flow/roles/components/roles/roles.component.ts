@@ -9,43 +9,43 @@ import { RoleService } from '../../service/role.service';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent {
- page: CRUDIndexPage = new CRUDIndexPage();
+  page: CRUDIndexPage = new CRUDIndexPage();
 
-constructor(private _router:Router,private _roleService:RoleService){}
+  constructor(private _router: Router, private _roleService: RoleService) { }
 
- RolesEnum = [
-  { id: 1, name: 'SuperAdmin' },
-  { id: 2, name: 'Admin' },
-  { id: 3, name: 'SalesMan' },
-  { id: 4, name: 'WarehouseManager' },
+  RolesEnum = [
+    { id: 1, name: 'SuperAdmin' },
+    { id: 2, name: 'Admin' },
+    { id: 3, name: 'SalesMan' },
+    { id: 4, name: 'WarehouseManager' },
     { id: 5, name: 'Storekeeper' },
     { id: 6, name: 'SalesManager' },
     { id: 7, name: 'SalesSupervisor' },
-];
+  ];
 
-viewRoleDetails(id: string){
+  viewRoleDetails(id: string) {
 
-  this._router.navigate(['/salesflow/roles/roleDetails',id]);
+    this._router.navigate(['/salesflow/roles/roleDetails', id]);
 
-  // this._roleService.getRoleById(id).subscribe({
-  //   next: (res) => {
-  //     if (res.isSuccess) {
-  //       //this.item = res.data;
-  //       //this.item.id = this.id;
-  //       //this.editeform();
-  //       console.log(res.data);
-  //       this.page.isPageLoaded = true;
-  //      // this._router.navigate(['/salesflow/roles/roleDetails',id]);
+    // this._roleService.getRoleById(id).subscribe({
+    //   next: (res) => {
+    //     if (res.isSuccess) {
+    //       //this.item = res.data;
+    //       //this.item.id = this.id;
+    //       //this.editeform();
+    //       console.log(res.data);
+    //       this.page.isPageLoaded = true;
+    //      // this._router.navigate(['/salesflow/roles/roleDetails',id]);
 
-  //     }
-  //   },
-  //   error: (err) => {
-  //    // this._sharedService.showToastr(err);
-  //     this.page.isPageLoaded = true;
-  //   }
-  // });
-  // this._router.navigate(['/salesflow/roles/roleDetails',id]);
-}
+    //     }
+    //   },
+    //   error: (err) => {
+    //    // this._sharedService.showToastr(err);
+    //     this.page.isPageLoaded = true;
+    //   }
+    // });
+    // this._router.navigate(['/salesflow/roles/roleDetails',id]);
+  }
 
 
 }
