@@ -1,0 +1,81 @@
+<!-- عناوين الفاتورة -->
+<div *ngIf="invoice" class="invoice-preview">
+
+  <!-- العنوان + زر الرجوع -->
+  <div class="d-flex align-items-center gap-3 ">
+    <p class="mb-0 text-gray-900 ts-3">
+      <img src="/assets/icons/keyboard_backspace.svg" class="pointer" routerLink="/sites/invoice">
+    </p>
+    <h2 class="text-purple mb-0">{{ translations['sites.Invoice.salesInvoice'] }}</h2>
+  </div>
+
+  <!-- أزرار الطباعة والتحميل -->
+  <div class="d-flex justify-content-end gap-2 flex-wrap ">
+    <!-- زر طباعة -->
+    <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="printInvoice()">
+      {{ "sites.Invoice.print" | translate }}
+    </button>
+
+    <!-- زر تحميل PDF -->
+    <button pButton type="button" [ngStyle]="{
+      'border': '1px solid purple',
+      'color': 'purple',
+      'background-color': 'transparent'
+    }" class="rounded px-4 py-2" (click)="downloadInvoiceAsPDF()">
+      {{ "sites.Invoice.download" | translate }}
+    </button>
+  </div>
+
+  <!-- تفاصيل الفاتورة -->
+  <p><strong>{{ translations['sites.Invoice.invoiceNumber'] }}:</strong> {{ invoice.invoiceNumber }}</p>
+  <p><strong>{{ translations['sites.Invoice.client'] }}:</strong> {{ invoice.clientName }}</p>
+  <p><strong>{{ translations['sites.Invoice.salesMan'] }}:</strong> {{ invoice.salesManName }}</p>
+
+  <!-- جدول الأصناف -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ translations['sites.Invoice.product'] }}</th>
+        <th>{{ translations['sites.Invoice.unit'] }}</th>
+        <th>{{ translations['sites.Invoice.quantity'] }}</th>
+        <th>{{ translations['sites.Invoice.unitPrice'] }}</th>
+        <th>{{ translations['sites.Invoice.total'] }}</th>
+        <th>{{ translations['sites.Invoice.itemWeight'] }}</th>
+        <th>{{ translations['sites.Invoice.totalWeight'] }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoice.sellingInvoicesDetails; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.productName }}</td>
+        <td>{{ getUnitName(item.unit) }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.itemPrice?.toFixed(2) }}</td>
+        <td>{{ item.price?.toFixed(2) }}</td>
+        <td>{{ item.itemWeightPerKG?.toFixed(3) }}</td>
+        <td>{{ item.weightPerKG?.toFixed(3) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- الإجماليات -->
+  <table class="totals">
+    <tr>
+      <td>{{ translations['sites.Invoice.totalWeight'] }}</td>
+      <td>{{ invoice.totalWeightInKG?.toFixed(2) }} {{ "sites.Invoice.kg" | translate }}</td>
+    </tr>
+    <tr>
+      <td>{{ translations['sites.Invoice.total'] }}</td>
+      <td>{{ invoice.totalPrice?.toFixed(2) }}</td>
+    </tr>
+    <tr>
+      <td>{{ translations['sites.Invoice.tax'] }}</td>
+      <td>14%</td>
+    </tr>
+    <tr>
+      <td>{{ translations['sites.Invoice.totalNetPrice'] }}</td>
+      <td>{{ invoice.totalNetPrice?.toFixed(2) }}</td>
+    </tr>
+  </table>
+</div>

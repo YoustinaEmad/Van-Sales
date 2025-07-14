@@ -675,8 +675,8 @@
        "unitPrice":"Unit Price",
        "itemWeight":"Item Weight",
        "totalWeight":"Total Weight",
-       "finalTotal":"Final Total"
-
+       "finalTotal":"Final Total",
+"kg":"KG"
     }
   },
   "auth": {

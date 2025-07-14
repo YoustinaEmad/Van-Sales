@@ -53,7 +53,7 @@
 
     <div class="scolled mt-3 h-100">
         <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
-        <table class="table" *ngIf="!page.isSearching">
+        <table class="table table-hover pointer" *ngIf="!page.isSearching">
             <thead>
 
                 <tr class="th-header">
@@ -76,7 +76,7 @@
                     </td>
                 </tr>
                 <ng-container *ngFor="let item of items | paginate : page.options;let i=index;">
-                    <tr>
+                    <tr (click)="navigateToDetails(item.id)" >
                         <!-- Added Checkbox in the Second Column -->
                         <td>{{i+1}}</td>
                         <td>{{item.invoiceNumber}}</td>

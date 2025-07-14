@@ -660,11 +660,12 @@
  "maxQuantityError": "الكمية لا يمكن أن تتجاوز {{max}}",
  "print": "طباعة",
  "download": "تنزيل",
- "unit":"وحدة",
+ "unit":"الوحدة",
        "unitPrice":"سعر الوحدة",
        "itemWeight":"وزن العنصر",
        "totalWeight":"إجمالي الوزن",
-       "finalTotal":"الإجمالي النهائي"
+       "finalTotal":"الإجمالي النهائي",
+       "kg":"كجم"
     }
   },
   "auth": {

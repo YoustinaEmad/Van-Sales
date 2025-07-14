@@ -1,0 +1,25 @@
+
+.invoice-preview table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.invoice-preview th,
+.invoice-preview td {
+ 
+  padding: 8px;
+  font-size: 13px;
+}
+
+.invoice-preview th {
+  background-color: #972ccc;
+  color: white;
+}
+
+.invoice-preview .totals td {
+  font-weight: bold;
+  border: none;
+}
+.text-purple {
+  color: #972ccc;
+}

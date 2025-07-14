@@ -114,4 +114,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
+
+
+
+  navigateToDetails(id: string) {
+    this._router.navigate([`${this.pageRoute}/details/${id}`]);
+  }
 }
