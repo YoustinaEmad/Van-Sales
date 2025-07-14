@@ -633,7 +633,8 @@
       "successful":"Successful",
       "failed":"Failed",
       "notDone":"Not Done",
-      "dispatchNumber":"Dispatch Number"
+      "dispatchNumber":"Dispatch Number",
+      "pastOrTodayOnly":"Please select Past Date or Today Only"
     } ,
     "Invoice":{
       "invoice":"Bill",

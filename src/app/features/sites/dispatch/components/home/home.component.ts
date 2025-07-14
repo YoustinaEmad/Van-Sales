@@ -343,7 +343,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     this.pageCreate.form = this._sharedService.formBuilder.group({
       salesManID: [null, Validators.required],
-      visitDate: [new Date(), Validators.required],
+      visitDate: [new Date(), [Validators.required,this.validateNotFutureDate]],
       clientId: [null, Validators.required],
       dispatchStatus: [null, Validators.required]
     });
@@ -379,5 +379,20 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
+validateNotFutureDate(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) return null;
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  if (selectedDate > today) {
+    return { futureDate: 'sites.dispatch.pastOrTodayOnly' };
+  }
+
+  return null;
+}
 
 }

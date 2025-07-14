@@ -622,7 +622,8 @@
        "successful":"ناجحة",
       "failed":"فاشلة",
       "notDone":"لم تتم",
-      "dispatchNumber":"رقم الرحلة"
+      "dispatchNumber":"رقم الرحلة",
+      "pastOrTodayOnly":"الرجاء اختيار تاريخ اليوم أو الماضي فقط"
     } ,
      "Invoice":{
       "invoice":"فاتورة",
