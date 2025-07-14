@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { productCreateViewModel, productDetailsVM, productViewModel } from '../../interfaces/product';
 import { ApiService } from 'src/app/shared/service/api.service';
 import { ProductService } from '../../service/product.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -12,7 +12,7 @@ import { ProductService } from '../../service/product.service';
 export class ProductDetailsComponent {
 product: productDetailsVM | null = null;
 
-  constructor(private route: ActivatedRoute, private _apiService: ApiService,private _ProductService:ProductService) {}
+  constructor(private route: ActivatedRoute, private _apiService: ApiService,private _ProductService:ProductService,private location: Location) {}
  Grades = [
     { id: 1, name: 'HighGrade ' },
     { id: 2, name: 'LowGrade ' },
@@ -33,6 +33,9 @@ product: productDetailsVM | null = null;
 
 
 
+goBack() {
+  this.location.back();
+}
  getUnitName(unitId: number): string {
     const unit = this.Units.find(u => u.id === unitId);
     return unit ? unit.name.trim() : '';

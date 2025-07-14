@@ -48,7 +48,7 @@
                   <i class="pi pi-box" style="font-size: 1.2rem;"></i>
                 </div>
                 <div>
-                  <div class="fw-bold">{{ product.productName }}</div>
+                  <div class="fw-bold pointer" (click)="navigateToProductDetails(product.productId)">{{ product.productName }}</div>
                 </div>
               </div>
 

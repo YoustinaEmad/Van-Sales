@@ -146,4 +146,10 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
       }
     });
   }
+
+
+
+  navigateToProductDetails(productId: string) {
+    this._router.navigate(['/sites/product/details', productId]);
+  }
 }
