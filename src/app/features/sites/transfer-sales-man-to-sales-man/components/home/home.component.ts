@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from 'src/app/shared/service/shared.service';
 import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
-import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ControlType } from 'src/app/shared/models/enum/control-type.enum';
 
 
@@ -256,6 +256,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.item.transactionDetails?.map(detail => this.createDetailFormGroup(detail)) || []
         )
       },
+      { validators: [this.differentSalesManValidator()] }
     );
     this.pageCreate.form.get('fromSalesmanId')?.valueChanges.subscribe(value => {
       if (value) {
@@ -275,6 +276,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
   saveRequest(): void {
+    
     if (this.pageCreate.isSaving) return;
 
     if (this.pageCreate.form.invalid) {
@@ -408,4 +410,15 @@ navigateToTransferDetails(id: string) {
      this._router.navigate(['/sites/transferSalesManToSalesMan/details', id]);
   }
 
+differentSalesManValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const from = group.get('fromSalesmanId')?.value;
+      const to = group.get('toSalesManId')?.value;
+
+      return from && to && from === to
+        ? { sameSalesMan: true }
+        : null;
+    };
+  }
+  
 }

@@ -82,6 +82,9 @@
             <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId" label="sites.transferSalesManToSalesMan.toSalesMan"
                 placeholder="sites.transferSalesManToSalesMan.toSalesMan" [items]="salesManList">
             </ng-control>
+            <span *ngIf="pageCreate.form?.errors?.sameSalesMan && pageCreate.form?.touched" class="text-danger mx-2">
+               {{"sites.transferSalesManToSalesMan.sameSalesManError" | translate}}
+            </span>
         </div>
 
 

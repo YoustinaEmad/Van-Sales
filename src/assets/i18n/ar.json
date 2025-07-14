@@ -550,7 +550,8 @@
       "transactionDetails":"تفاصيل المعاملة",
       "deliveredDate":"تاريخ التسليم",
       "products":"المنتجات",
-      "storageType":"نوع التخزين"
+      "storageType":"نوع التخزين",
+      "sameSalesManError": "لا يمكن تحويل المنتجات إلى نفس المندوب"
     },
     "Brand": {
       "brand": "الماركة",

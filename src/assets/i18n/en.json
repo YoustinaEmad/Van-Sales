@@ -561,7 +561,8 @@
       "transactionDetails":"Transaction Details",
       "deliveredDate":"Delivered Date",
       "products":"Products",
-      "storageType":"Storage Type"
+      "storageType":"Storage Type",
+      "sameSalesManError": "You cannot transfer to the same SalesMan"
     },
     "Brand": {
       "brand": "Brand",
