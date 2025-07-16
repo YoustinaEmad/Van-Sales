@@ -562,7 +562,8 @@
       "deliveredDate":"Delivered Date",
       "products":"Products",
       "storageType":"Storage Type",
-      "sameSalesManError": "You cannot transfer to the same SalesMan"
+      "sameSalesManError": "You cannot transfer to the same SalesMan",
+      "maxQuantityExceeded":"Quantity cannot exceed "
     },
     "Brand": {
       "brand": "Brand",

@@ -551,7 +551,8 @@
       "deliveredDate":"تاريخ التسليم",
       "products":"المنتجات",
       "storageType":"نوع التخزين",
-      "sameSalesManError": "لا يمكن تحويل المنتجات إلى نفس المندوب"
+      "sameSalesManError": "لا يمكن تحويل المنتجات إلى نفس المندوب",
+      "maxQuantityExceeded":"الكمية لا يمكن أن تتجاوز {{max}}"
     },
     "Brand": {
       "brand": "الماركة",

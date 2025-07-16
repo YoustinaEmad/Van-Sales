@@ -73,17 +73,19 @@
 
         <div class="row p-2">
             <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="fromSalesmanId"
-                label="sites.transferSalesManToSalesMan.fromSalesMan" placeholder="sites.transferSalesManToSalesMan.fromSalesMan" [items]="salesManList">
+                label="sites.transferSalesManToSalesMan.fromSalesMan"
+                placeholder="sites.transferSalesManToSalesMan.fromSalesMan" [items]="salesManList">
             </ng-control>
         </div>
 
 
         <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId" label="sites.transferSalesManToSalesMan.toSalesMan"
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="toSalesManId"
+                label="sites.transferSalesManToSalesMan.toSalesMan"
                 placeholder="sites.transferSalesManToSalesMan.toSalesMan" [items]="salesManList">
             </ng-control>
             <span *ngIf="pageCreate.form?.errors?.sameSalesMan && pageCreate.form?.touched" class="text-danger mx-2">
-               {{"sites.transferSalesManToSalesMan.sameSalesManError" | translate}}
+                {{"sites.transferSalesManToSalesMan.sameSalesManError" | translate}}
             </span>
         </div>
 
@@ -109,7 +111,7 @@
             <tbody>
                 <tr *ngFor="let item of cartItems; let i = index">
                     <td>{{ item.productName }}</td>
-                    <td class="d-flex align-items-center gap-2">
+                    <!-- <td class="d-flex align-items-center gap-2">
                         <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
                             (click)="decreaseQuantity(i)">
                         </button>
@@ -118,7 +120,18 @@
                             (click)="increaseQuantity(i)">
                         </button>
 
+                    </td> -->
+                    <td>
+                        <input type="number" class="form-control form-control-sm text-center" style="height: 40px;" min="1"
+                            [max]="item.maxQuantity" [value]="item.quantity"
+                            (input)="onQuantityInputChange($event.target.value, i)" />
+                        <small *ngIf="item.quantity > item.maxQuantity" class="text-danger d-block mt-1">
+                            {{ 'sites.transferSalesManToSalesMan.maxQuantityExceeded' | translate }} {{ item.maxQuantity
+                            }}
+                        </small>
                     </td>
+
+
                     <td class="text-center">
                         <button pButton icon="pi pi-trash"
                             class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
@@ -137,7 +150,7 @@
             {{"sites.transferSalesManToSalesMan.cancel" | translate}}
         </button>
         <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
-            [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0" (click)="saveRequest()">
+             [disabled]="isSaveDisabled" (click)="saveRequest()">
             {{"sites.transferSalesManToSalesMan.save" | translate}}
         </button>
     </div>
@@ -152,7 +165,7 @@
 
     <table class="table table-hover pointer">
         <thead>
-            <tr class="th-header" >
+            <tr class="th-header">
                 <ng-container *ngFor="let colum of page.columns; let i = index">
                     <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
                         {{ colum.Title | translate }}
@@ -171,7 +184,7 @@
         </thead>
         <tbody>
             <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-                <tr >
+                <tr>
                     <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
                     <td (click)="navigateToTransferDetails(item.id)">{{ item.transactionNumber }}</td>
                     <td (click)="navigateToTransferDetails(item.id)">{{ item.fromSalesManName }}</td>
@@ -200,9 +213,10 @@
                             {{"sites.transferSalesManToSalesMan.reject" | translate}}
                         </button>
 
-                           <button *ngIf="item.transactionStatus === 1" pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
-                                aria-label="Edit" (click)="editSalesMan(item.id)">
-                            </button>
+                        <button *ngIf="item.transactionStatus === 1" pButton icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text p-button-info" aria-label="Edit"
+                            (click)="editSalesMan(item.id)">
+                        </button>
                     </td>
                 </tr>
             </ng-container>

@@ -421,4 +421,23 @@ differentSalesManValidator(): ValidatorFn {
     };
   }
   
+
+onQuantityInputChange(value: string, index: number): void {
+  let num = Number(value);
+  if (isNaN(num) || num < 1) {
+    num = 1;
+  }
+
+  this.cartItems[index].quantity = num;
+}
+get isSaveDisabled(): boolean {
+  return (
+    this.pageCreate.form?.invalid ||
+    this.page.isSaving ||
+    this.cartItems.length === 0 ||
+    this.cartItems.some(item => item.quantity > item.maxQuantity)
+  );
+}
+
+
 }
