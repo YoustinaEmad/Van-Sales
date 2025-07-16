@@ -152,4 +152,12 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
   navigateToProductDetails(productId: string) {
     this._router.navigate(['/sites/product/details', productId]);
   }
+
+
+onQuantityInputChange(newQty: number, index: number) {
+  if (newQty < 1) {
+    this.cartItems[index].quantity = 1;
+  }
+}
+
 }
