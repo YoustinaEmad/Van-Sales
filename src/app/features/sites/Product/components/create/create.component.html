@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-between align-items-center py-2">
   <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
-      routerLink="/sites/product"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} {{"sites.product.product"|translate}}</p>
+      routerLink="/sites/product"> {{(page.isEdit?'shared.edit':'shared.create')|translate}}
+    {{"sites.product.product"|translate}}</p>
   <div class="d-flex justify-content-end gap-2">
     <button type="button" class="bg-purple-50 py-2 px-4 color-purple-500 cr3 border-color bg-white"
       (click)="onCancel()">
@@ -64,25 +65,28 @@
                 </ng-control>
               </div>
               <div class="col-4">
-                <ng-control [form]="page.form" control="productAPI"
-                  label="sites.product.API" placeholder="sites.product.API" >
+                <ng-control [form]="page.form" control="productAPI" label="sites.product.API"
+                  placeholder="sites.product.API">
                 </ng-control>
               </div>
               <div class="col-4">
                 <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productGroupID"
-                  label="sites.product.productGroupName" placeholder="sites.product.productGroupName" [items]="productGroup">
+                  label="sites.product.productGroupName" placeholder="sites.product.productGroupName"
+                  [items]="productGroup">
                 </ng-control>
               </div>
-              <div class="col-6">
-                <ng-control [form]="page.form" control="code" label="sites.product.code" placeholder="sites.product.code"></ng-control>
+              <div class="col-4">
+                <ng-control [form]="page.form" control="code" label="sites.product.code"
+                  placeholder="sites.product.code"></ng-control>
               </div>
-              <div class="col-6">
-                <ng-control [form]="page.form" [type]="page.ControlType.INPUT_DATE_ONLY" control="expiryDate" label="sites.product.expiryDate"
+              <div class="col-4">
+                <!-- <ng-control [form]="page.form" [type]="page.ControlType.INPUT_DATE_ONLY" control="expiryDate" label="sites.product.expiryDate"
                   placeholder="sites.product.expiryDate"></ng-control>
                   <div *ngIf="page.form.get('expiryDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
                     {{ page.form.get('expiryDate')?.errors?.pastDate |translate}}
-                  </div>
-
+                  </div> -->
+                <ng-control [form]="page.form" control="safetyStocks" label="sites.product.safetyStocks"
+                  placeholder="sites.product.safetyStocks" (keypress)="numberOnly($event)"></ng-control>
               </div>
 
               <div class="col-4">
@@ -91,14 +95,13 @@
                   placeholder="sites.product.smallerUnitsOfMeasurements" (keypress)="numberOnly($event)"></ng-control>
               </div>
 
-              <div class="col-4">
+              <div class="col-12">
                 <ng-control [form]="page.form" control="numOfUnitPerCartoon" label="sites.product.numOfUnitPerCartoon"
                   placeholder="sites.product.numOfUnitPerCartoon" (keypress)="numberOnly($event)"></ng-control>
               </div>
 
               <div class="col-4">
-                <ng-control [form]="page.form" control="safetyStocks" label="sites.product.safetyStocks"
-                  placeholder="sites.product.safetyStocks"  (keypress)="numberOnly($event)"></ng-control>
+
               </div>
 
               <!-- <div class="col-6">
@@ -119,8 +122,8 @@
         <div *ngIf="selectedTab === TabEnum.Price" class="p-4 bg-white rounded">
           <div class="row ">
             <div class="col-6">
-              <ng-control [form]="page.form" control="retailPrice" label="sites.product.retailPrice" placeholder="sites.product.retailPrice"
-                (keypress)="numberOnly($event)"></ng-control>
+              <ng-control [form]="page.form" control="retailPrice" label="sites.product.retailPrice"
+                placeholder="sites.product.retailPrice" (keypress)="numberOnly($event)"></ng-control>
             </div>
 
             <div class="col-6">
@@ -140,40 +143,43 @@
         <div *ngIf="selectedTab === TabEnum.Other" class="p-4  ">
           <div class="row g-4">
             <div class="col-4">
-              <ng-control [form]="page.form" control="packSize" label="sites.product.packSize" placeholder="sites.product.packSize"
-                (keypress)="numberOnly($event)"></ng-control>
+              <ng-control [form]="page.form" control="packSize" label="sites.product.packSize"
+                placeholder="sites.product.packSize" (keypress)="numberOnly($event)"></ng-control>
             </div>
             <div class="col-4">
               <ng-control [form]="page.form" control="netWeightPerLitre" label="sites.product.netWeightPerLitre"
-                placeholder="sites.product.netWeightPerLitre"  (keypress)="numberOnly($event)"></ng-control>
+                placeholder="sites.product.netWeightPerLitre" (keypress)="numberOnly($event)"></ng-control>
 
             </div>
             <div class="col-4">
-              <ng-control [form]="page.form" control="weightPerKG" label="sites.product.weightPerKG" placeholder="sites.product.weightPerKG"
-                (keypress)="numberOnly($event)"  (keypress)="numberOnly($event)"></ng-control>
-              
+              <ng-control [form]="page.form" control="weightPerKG" label="sites.product.weightPerKG"
+                placeholder="sites.product.weightPerKG" (keypress)="numberOnly($event)"
+                (keypress)="numberOnly($event)"></ng-control>
+
             </div>
 
           </div>
           <div class="row mt-4">
             <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit" placeholder="sites.product.unit" [items]="ProductUnitList" ></ng-control>
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit"
+                placeholder="sites.product.unit" [items]="ProductUnitList"></ng-control>
             </div>
             <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade" label="sites.product.grade" placeholder="sites.product.grade" [items]="Grade"
-               ></ng-control>
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade"
+                label="sites.product.grade" placeholder="sites.product.grade" [items]="Grade"></ng-control>
             </div>
-           
-              <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productStatus" label="sites.product.productStatus" placeholder="sites.product.productStatus" [items]="ProductStatus"
-                   ></ng-control>
-              </div>
+
+            <div class="col-4">
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productStatus"
+                label="sites.product.productStatus" placeholder="sites.product.productStatus"
+                [items]="ProductStatus"></ng-control>
+            </div>
           </div>
-   <div class="row mt-4">
-              <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandID" label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"
-                   ></ng-control>
-              </div>
+          <div class="row mt-4">
+            <div class="col-4">
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandID"
+                label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"></ng-control>
+            </div>
           </div>
         </div>
       </div>

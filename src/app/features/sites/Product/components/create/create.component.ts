@@ -252,13 +252,13 @@ Tabs:any[]=[];
         packSize: [this.item.packSize, [Validators.required, Validators.min(1)]],
         netWeightPerLitre: [this.item.netWeightPerLitre, [Validators.required, Validators.min(1)]],
         weightPerKG: [this.item.weightPerKG, [Validators.required, Validators.min(1)]],
-        expiryDate: [
-          this.item.expiryDate || new Date(),
-          [
-            Validators.required,
-            this.validatePastDate
-          ],
-        ],
+        // expiryDate: [
+        //   this.item.expiryDate || new Date(),
+        //   [
+        //     Validators.required,
+        //     this.validatePastDate
+        //   ],
+        // ],
         unit: [this.item.unit, Validators.required],
         grade: [this.item.grade, Validators.required],
          brandID: [this.item.brandID, Validators.required],
