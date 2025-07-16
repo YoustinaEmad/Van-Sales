@@ -63,7 +63,7 @@ export class TransferService {
   }
 
     getProducts(WarehouseId: string) {
-    return this._apiService.get(`/ProductSelectListEndpoint/SelectProductList?WarehouseId=${WarehouseId}`);
+    return this._apiService.get(`/ProductSelectListByWarehouseIdEndPoint/ProductSelectListByWarehouseId?WarehouseId=${WarehouseId}`);
   }
   getById(ID: string) {
     return this._apiService.get(`/GetWarehouseToWarehouseTransactionByIdEndPoint/GetWarehouseToWarehouseTransactionById?ID=${ID}`,);

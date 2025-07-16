@@ -17,22 +17,24 @@
         <div class="form-body p-3">
             <div class="row g-2">
                 <div class="col-3">
-                    <ng-control [form]="page.searchForm" control="Data" label="sites.transfer.SalesMan OR Transaction_Number" placeholder="sites.transfer.SalesMan OR Transaction_Number">
+                    <ng-control [form]="page.searchForm" control="Data"
+                        label="sites.transfer.SalesMan OR Transaction_Number"
+                        placeholder="sites.transfer.SalesMan OR Transaction_Number">
 
                     </ng-control>
                 </div>
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="From" label="sites.transfer.fromDate"
                         [type]="page.ControlType.INPUT_DATE"></ng-control>
-                      
+
                 </div>
                 <div class="col-3">
                     <ng-control [form]="page.searchForm" control="To" label="sites.transfer.toDate"
-                    [type]="page.ControlType.INPUT_DATE"></ng-control>
-                       
+                        [type]="page.ControlType.INPUT_DATE"></ng-control>
+
                 </div>
                 <div class="col-3">
-                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" 
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm"
                         control="WarehouseToWarehouseStatus" (change)="onStatusChange($event.id
           )" label="sites.transfer.warehouseToWarehouseStatus" placeholder="sites.transfer.warehouseToWarehouseStatus"
                         [items]="WarehouseToWarehouseStatuslist"></ng-control>
@@ -40,14 +42,14 @@
 
                 <div class="col-3">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="FromWarehouseId"
-                        label="sites.transfer.fromWarehouse" placeholder="sites.transfer.fromWarehouse" [items]="WarehouseList"
-                        (change)="onFromWarehouseChange($event.id)">
+                        label="sites.transfer.fromWarehouse" placeholder="sites.transfer.fromWarehouse"
+                        [items]="WarehouseList" (change)="onFromWarehouseChange($event.id)">
                     </ng-control>
                 </div>
                 <div class="col-3">
                     <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="ToWarehouseId"
-                        label="sites.transfer.toWarehouse" placeholder="sites.transfer.toWarehouse" [items]="WarehouseList"
-                        (change)="onToWarehouseChange($event.id)">
+                        label="sites.transfer.toWarehouse" placeholder="sites.transfer.toWarehouse"
+                        [items]="WarehouseList" (change)="onToWarehouseChange($event.id)">
                     </ng-control>
                 </div>
                 <div class="col-3 d-flex align-items-end">
@@ -79,13 +81,14 @@
             <p class="mb-0 fw-bold"> {{"sites.transfer.transferProcess"|translate}}</p>
         </div>
         <div class="row p-2">
-            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID" label="sites.transfer.salesMan"
-                placeholder="sites.transfer.salesMan" [items]="SalesMen">
+            <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
+                label="sites.transfer.salesMan" placeholder="sites.transfer.salesMan" [items]="SalesMen">
             </ng-control>
         </div>
         <div class="row p-2">
             <ng-control [type]="pageCreate.ControlType.SELECT" [form]="pageCreate.form" control="fromWarehouseId"
-                label="sites.transfer.fromWarehouse" placeholder="sites.transfer.fromWarehouse" [items]="WarehouseList" (change)="OnWarehouseIdChange($event.id)">
+                label="sites.transfer.fromWarehouse" placeholder="sites.transfer.fromWarehouse" [items]="WarehouseList"
+                (change)="OnWarehouseIdChange($event.id)">
             </ng-control>
 
 
@@ -113,19 +116,19 @@
 
         <div class="scrolled mt-4" style="max-height: 300px; overflow-y: auto;">
             <table class="table" *ngIf="cartItems.length > 0">
-              <thead>
-                <tr class="th-header">
-                  <th>{{"sites.transfer.product"|translate}}</th>
-                  <th>{{"sites.transfer.quantity"|translate}}</th>
-                  <th class="text-center">{{"sites.transfer.action"|translate}}</th>
-                </tr>
-              </thead>
-          
-              <tbody>
-                <ng-container *ngFor="let item of cartItems; let i = index" >
-                  <tr>
-                    <td>{{ item.productName }}</td>
-                    <td class="d-flex align-items-center gap-2">
+                <thead>
+                    <tr class="th-header">
+                        <th>{{"sites.transfer.product"|translate}}</th>
+                        <th>{{"sites.transfer.quantity"|translate}}</th>
+                        <th class="text-center">{{"sites.transfer.action"|translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <ng-container *ngFor="let item of cartItems; let i = index">
+                        <tr>
+                            <td>{{ item.productName }}</td>
+                            <!-- <td class="d-flex align-items-center gap-2">
                       <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
                         (click)="decreaseQuantity(i)">
                       </button>
@@ -133,26 +136,41 @@
                       <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
                         (click)="increaseQuantity(i)">
                       </button>
-                    </td>
-                    <td class="text-center">
-                      <button pButton icon="pi pi-trash"
-                        class="p-button-rounded p-button-text p-button-danger p-0 pointer" aria-label="Delete"
-                        (click)="removeProduct(i)">
-                      </button>
-                    </td>
-                  </tr>
-                </ng-container>
-              </tbody>
+                    </td> -->
+                            <td>
+                                <input type="number" class="form-control form-control-sm text-center"
+                                    style="height: 40px;" min="1" [max]="getMaxQuantity(item.productId)"
+                                    [(ngModel)]="item.quantity"
+                                    (ngModelChange)="onQuantityInputChange(item.quantity, i)" />
+
+                                <small *ngIf="item.quantity > getMaxQuantity(item.productId)"
+                                    class="text-danger d-block mt-1">
+                                    {{ 'sites.transferSalesManToSalesMan.maxQuantityExceeded' | translate }} {{
+                                    getMaxQuantity(item.productId) }}
+                                </small>
+                            </td>
+
+
+
+                            <td class="text-center">
+                                <button pButton icon="pi pi-trash"
+                                    class="p-button-rounded p-button-text p-button-danger p-0 pointer"
+                                    aria-label="Delete" (click)="removeProduct(i)">
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
             </table>
-          
+
             <!-- No Data Found -->
             <div *ngIf="cartItems.length === 0" class="text-center py-4">
-              <span>{{ 'shared.no-data-found' | translate }}</span>
+                <span>{{ 'shared.no-data-found' | translate }}</span>
             </div>
-          </div>
-          
-          
-          
+        </div>
+
+
+
 
     </div>
     <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
@@ -162,7 +180,7 @@
             'background-color': 'transparent'
           }" class="rounded" (click)="closeCartDialog()">{{"sites.transfer.cancel"|translate}}</button>
         <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
-            [disabled]="pageCreate.form?.invalid || page.isSaving ||cartItems.length===0"
+           [disabled]="pageCreate.form?.invalid || page.isSaving || cartItems.length === 0 || hasInvalidQuantities()"
             (click)="saveTransfer()">{{"sites.transfer.save"|translate}}</button>
     </div>
 
@@ -180,7 +198,7 @@
         <table class="table table-hover pointer" *ngIf="!page.isSearching">
             <thead>
 
-                <tr class="th-header" >
+                <tr class="th-header">
 
 
                     <ng-container *ngFor="let colum of page.columns ;let i=index;">
@@ -205,7 +223,7 @@
 
                 <!-- Data Rows -->
                 <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
-                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }"  >
+                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }">
 
 
                         <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
@@ -216,7 +234,7 @@
                         <td>{{ getWarehouseStatusName(item.warehouseToWarehouseStatus) }}</td>
                         <td (click)="navigateToTransferDetails(item.id)">{{item.productsQuantity}}
                         <td>
-                            
+
                             <button *ngIf="item.warehouseToWarehouseStatus === 1" pButton icon="pi pi-pencil"
                                 class="p-button-rounded p-button-text p-button-info" aria-label="Edit"
                                 (click)="editTransaction(item.id)">
