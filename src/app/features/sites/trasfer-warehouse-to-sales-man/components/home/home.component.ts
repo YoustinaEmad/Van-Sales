@@ -374,5 +374,36 @@ export class HomeComponent extends CrudIndexBaseUtils {
 navigateToTransferDetails(id: string) {
      this._router.navigate(['/sites/transferWarehouseToSalesMan/details', id]);
   }
+
+
+
+getMaxQuantity(productId: string): number {
+  const product = this.products.find(p => p.id === productId);
+  return product ? product.maxQuantity : 1;
+}
+
+
+get isSaveDisabled(): boolean {
+  return (
+    this.pageCreate.form?.invalid ||
+    this.pageCreate.isSaving ||
+    this.cartItems.length === 0 ||
+    this.cartItems.some(item => {
+      const product = this.products.find(p => p.id === item.productId);
+      return product && (item.quantity > product.maxQuantity || item.quantity < 1);
+    })
+  );
+}
+onQuantityInputChange(value: number, index: number): void {
+  const item = this.cartItems[index];
+  const product = this.products.find(p => p.id === item.productId);
+  if (!product) return;
+
+  if (value < 1) {
+    item.quantity = 1;
+  } else if (value > product.maxQuantity) {
+  }
+}
+
 }
 
