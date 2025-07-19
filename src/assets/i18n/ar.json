@@ -371,7 +371,7 @@
       "safetyStocks": "أسهم السلامة",
       "retailPrice": "سعر التجزئة",
       "wholesalePrice": "سعر الجملة",
-      "vIPClientsPrice": "سعر عملاء vIP",
+      "vIPClientsPrice": "سعر عملاء B2C",
       "netWeightPerLitre": "الوزن الصافي لكل لتر",
       "weightPerKG": "الوزن لكل كجم",
       "futureDate": "الرجاء تحديد تاريخ مستقبلي.",
@@ -383,7 +383,7 @@
       "pricing":"التسعير",
       "retail":"بيع بالتجزئة",
       "wholesale":"بيع بالجملة",
-      "VIP":"VIP",
+      "VIP":"B2C",
       "packaging":"التعبئة والتغليف",
       "smallerUnits":"وحدات أصغر",
       "units/Cartoon":"وحدات/رسوم متحركة",
@@ -552,7 +552,7 @@
       "products":"المنتجات",
       "storageType":"نوع التخزين",
       "sameSalesManError": "لا يمكن تحويل المنتجات إلى نفس المندوب",
-      "maxQuantityExceeded":"الكمية لا يمكن أن تتجاوز {{max}}"
+      "maxQuantityExceeded":"الكمية لا يمكن أن تتجاوز"
     },
     "Brand": {
       "brand": "الماركة",

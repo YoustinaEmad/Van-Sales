@@ -292,7 +292,7 @@
       "transfer": "Transfers",
       "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
       "dispatch":"Dispatch",
-      "bills":"Bills"
+      "bills":"Incoices"
     },
     "Category": {
       "category": "Category",
@@ -381,7 +381,7 @@
       "safetyStocks": "Safety Stocks",
       "retailPrice": "Retail Price",
       "wholesalePrice": "Wholesale Price",
-      "vIPClientsPrice": "vIP Clients Price",
+      "vIPClientsPrice": "B2C Clients Price",
       "netWeightPerLitre": "Net Weight Per Litre",
       "weightPerKG": "weight Per KG",
       "futureDate": "Please select a future date.",
@@ -393,7 +393,7 @@
       "pricing":"Pricing",
       "retail":"Retail",
       "wholesale":"Wholesale",
-      "VIP":"VIP",
+      "VIP":"B2C",
       "packaging":"Packaging",
       "smallerUnits":"Smaller Units",
       "units/Cartoon":"Units/Cartoon",
@@ -638,10 +638,10 @@
       "pastOrTodayOnly":"Please select Past Date or Today Only"
     } ,
     "Invoice":{
-      "invoice":"Bill",
-      "invoices":"Bills",
-      "create":"Create Bill",
-      "invoiceNumber":"Bill Number",
+      "invoice":"Invoice",
+      "invoices":"Invoices",
+      "create":"Create Invoice",
+      "invoiceNumber":"Invoice Number",
       "clientName":"Client Name",
       "to":"To",
       "from":"From",
