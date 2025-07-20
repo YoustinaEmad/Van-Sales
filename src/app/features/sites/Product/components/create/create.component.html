@@ -50,7 +50,7 @@
       <!-- Tab Content -->
       <div class="tab-content mt-4">
         <!-- General Data Tab -->
-        <div *ngIf="selectedTab === TabEnum.GeneralData" class="px-4 bg-white rounded">
+        <div *ngIf="selectedTab === TabEnum.GeneralData" class="px-4 pb-4 bg-white rounded">
           <form [formGroup]="page.form">
             <div class="row g-4">
               <!-- Product Name -->
@@ -80,38 +80,27 @@
                   placeholder="sites.product.code"></ng-control>
               </div>
               <div class="col-4">
-                <!-- <ng-control [form]="page.form" [type]="page.ControlType.INPUT_DATE_ONLY" control="expiryDate" label="sites.product.expiryDate"
-                  placeholder="sites.product.expiryDate"></ng-control>
-                  <div *ngIf="page.form.get('expiryDate')?.errors?.pastDate" class="text-danger extra-small mt-1">
-                    {{ page.form.get('expiryDate')?.errors?.pastDate |translate}}
-                  </div> -->
                 <ng-control [form]="page.form" control="safetyStocks" label="sites.product.safetyStocks"
                   placeholder="sites.product.safetyStocks" (keypress)="numberOnly($event)"></ng-control>
               </div>
-
               <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit"
+                  placeholder="sites.product.unit" [items]="ProductUnitList"></ng-control>
+              </div>              <div class="col-4">
                 <ng-control [form]="page.form" control="smallerUnitsOfMeasurements"
                   label="sites.product.smallerUnitsOfMeasurements"
                   placeholder="sites.product.smallerUnitsOfMeasurements" (keypress)="numberOnly($event)"></ng-control>
               </div>
 
-              <div class="col-12">
+              <div class="col-4">
                 <ng-control [form]="page.form" control="numOfUnitPerCartoon" label="sites.product.numOfUnitPerCartoon"
                   placeholder="sites.product.numOfUnitPerCartoon" (keypress)="numberOnly($event)"></ng-control>
               </div>
 
               <div class="col-4">
-
+                <ng-control [form]="page.form" control="packSize" label="sites.product.packSize"
+                  placeholder="sites.product.packSize" (keypress)="numberOnly($event)"></ng-control>
               </div>
-
-              <!-- <div class="col-6">
-                  <label for="MetaTagKeywords" class="form-label d-block">Meta Tag Keywords</label>
-                  <p-chips formControlName="tags" [separator]="' '" [addOnBlur]="true"
-                    placeholder="Enter Meta Tag Keywords..."></p-chips>
-                  <small class="form-text text-muted">
-                    Press <strong> Space</strong> to add another tag.
-                  </small>
-                </div> -->
             </div>
           </form>
         </div>
@@ -142,28 +131,23 @@
         <!-- Other Data Tab -->
         <div *ngIf="selectedTab === TabEnum.Other" class="p-4  ">
           <div class="row g-4">
+            
+
             <div class="col-4">
-              <ng-control [form]="page.form" control="packSize" label="sites.product.packSize"
-                placeholder="sites.product.packSize" (keypress)="numberOnly($event)"></ng-control>
+              <ng-control [form]="page.form" control="weightPerKG" label="sites.product.weightPerKG"
+                placeholder="sites.product.weightPerKG" (keypress)="numberOnly($event)">
+              </ng-control>
+
             </div>
             <div class="col-4">
               <ng-control [form]="page.form" control="netWeightPerLitre" label="sites.product.netWeightPerLitre"
                 placeholder="sites.product.netWeightPerLitre" (keypress)="numberOnly($event)"></ng-control>
 
             </div>
-            <div class="col-4">
-              <ng-control [form]="page.form" control="weightPerKG" label="sites.product.weightPerKG"
-                placeholder="sites.product.weightPerKG" (keypress)="numberOnly($event)"
-                (keypress)="numberOnly($event)"></ng-control>
 
-            </div>
 
-          </div>
-          <div class="row mt-4">
-            <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit"
-                placeholder="sites.product.unit" [items]="ProductUnitList"></ng-control>
-            </div>
+
+           
             <div class="col-4">
               <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade"
                 label="sites.product.grade" placeholder="sites.product.grade" [items]="Grade"></ng-control>
@@ -174,8 +158,6 @@
                 label="sites.product.productStatus" placeholder="sites.product.productStatus"
                 [items]="ProductStatus"></ng-control>
             </div>
-          </div>
-          <div class="row mt-4">
             <div class="col-4">
               <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandID"
                 label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"></ng-control>
