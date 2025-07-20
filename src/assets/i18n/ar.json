@@ -338,7 +338,8 @@
       "noProductsFound": "لا توجد منتجات",
       "product": "المنتج",
       "totalWigthPerKG": "الوزن الكلى",
-      "totalProductsWight": "الوزن الكلى للمنتجات"
+      "totalProductsWight": "الوزن الكلى للمنتجات",
+      "warehouseNames":"المخازن"
     },
     "product": {
       "product": "منتج",

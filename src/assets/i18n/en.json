@@ -348,7 +348,8 @@
       "noProductsFound": "No Products Found",
       "product": "Product",
       "totalWigthPerKG": "Total Weigth",
-      "totalProductsWight": "Total Products Weight"
+      "totalProductsWight": "Total Products Weight",
+      "warehouseNames":"Warehouses"
     },
     "product": {
       "product": "Product",

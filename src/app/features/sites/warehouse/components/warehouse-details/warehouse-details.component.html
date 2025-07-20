@@ -66,6 +66,13 @@
                   class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">{{"sites.Warehouse.totalWigthPerKG"|translate}}:
                   {{ product.totalWeightPerKG }}</span>
               </div>
+              <div class="text-end mt-auto">
+                <span class="color-purple-700 bg-purple-50 cr7 px-2 py-1 ms-2">
+                  {{"sites.Warehouse.warehouseNames"|translate}}:
+                  {{ product.warehouseNames?.join(' , ') }}
+                </span>
+              </div>
+
             </div>
           </div>
         </div>
@@ -101,15 +108,10 @@
       <p class="form-label ">
         {{"sites.transfer.brand"|translate}} <span class="text-danger">*</span>
       </p>
-      <ng-control 
-      [type]="controlType.SELECT"
-      [form]="productForm"
-      control="selectedBrand"
-      placeholder="sites.transfer.brand"
-      [items]="brands"
-      (change)="onBrandChange($event)">
-    </ng-control>
-    
+      <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedBrand"
+        placeholder="sites.transfer.brand" [items]="brands" (change)="onBrandChange($event)">
+      </ng-control>
+
     </div>
     <div class="row p-2" style="font-size: 12px;">
       <!-- ✅ Product Select -->
@@ -117,8 +119,7 @@
         {{"sites.Warehouse.product"|translate}} <span class="text-danger">*</span>
       </p>
       <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
-        placeholder="sites.Warehouse.product" [items]="products"
-        (change)="onProductSelected($event)">
+        placeholder="sites.Warehouse.product" [items]="products" (change)="onProductSelected($event)">
       </ng-control>
     </div>
 
@@ -142,10 +143,9 @@
           </td> -->
           <td>
             <input type="number" class="form-control form-control-sm text-center" style="height: 40px;" min="1"
-               [(ngModel)]="item.quantity"
-              (ngModelChange)="onQuantityInputChange(item.quantity, i)" />
+              [(ngModel)]="item.quantity" (ngModelChange)="onQuantityInputChange(item.quantity, i)" />
 
-      
+
           </td>
 
           <td class="text-center">
@@ -166,7 +166,7 @@
       {{ "sites.request.cancel" | translate }}
     </button>
     <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
-       [disabled]="pageCreate.isSaving || cartItems.length === 0 " (click)="saveRequest()">
+      [disabled]="pageCreate.isSaving || cartItems.length === 0 " (click)="saveRequest()">
       {{ "sites.request.save" | translate }}
     </button>
   </div>

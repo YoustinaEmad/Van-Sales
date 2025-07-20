@@ -69,7 +69,7 @@ export class warehouseDetailsViewModel {
   longitude: string;
   buildingData: string;
   warehouseProducts: WarehouseProductViewModel[];
-
+warehouseNames:[]
 }
 
 export class WarehouseProductViewModel {
