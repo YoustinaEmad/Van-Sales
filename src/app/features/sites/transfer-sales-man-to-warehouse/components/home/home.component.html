@@ -46,10 +46,139 @@
     </form>
 </div>
 
-<!-- Sidebar -->
+<ng-container *ngIf="cartVisible">
+  <div class="sidebar" [class.open]="cartVisible">
+    <div class="sidebar-header d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+      <h4> {{"sites.transferWarehouseToSalesMan.addTransferOperation"|translate}}</h4>
+      <button class="btn-close" (click)="closeCartDialog()">&times;</button>
+    </div>
+    <div class="sidebar-body p-3">
+      <div class="transfer-process d-flex align-items-center mb-3">
+        <img src="../assets/images/circle-arrow-reload-02.png" alt="Transfer Process Icon" class="me-2"
+          style="width: 24px; height: 24px;" />
+        <p class="mb-0 fw-bold"> {{"sites.transferWarehouseToSalesMan.transferProcess"|translate}}</p>
+      </div>
+      <div class="row p-2">
 
+        <ng-control [type]="pageCreate.ControlType.SELECT" [form]="pageCreate.form" control="warehouseId"
+          label="sites.transferWarehouseToSalesMan.Warehouse" placeholder="sites.transferWarehouseToSalesMan.Warehouse"
+          [items]="WarehouseList" (change)="OnWarehouseIdChange($event.id)">
+        </ng-control>
+
+      </div>
+      <div class="row p-2">
+        <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="salesManID"
+          label="sites.transferWarehouseToSalesMan.salesMan" placeholder="sites.transferWarehouseToSalesMan.salesMan"
+          [items]="SalesMen">
+        </ng-control>
+
+      </div>
+
+
+      <div class="row p-2" style="font-size: 12px;">
+        <!-- ✅ Brand Select -->
+        <p class="form-label ">
+          {{"sites.transfer.brand"|translate}} <span class="text-danger">*</span>
+        </p>
+        <ng-control 
+        [type]="controlType.SELECT"
+        [form]="productForm"
+        control="selectedBrand"
+        placeholder="Brand"
+        [items]="brands"
+        (change)="onBrandChange($event)">
+      </ng-control>
+      
+      </div>
+      <div class="row p-2" style="font-size: 12px;">
+        <!-- ✅ Product Select -->
+        <p class="form-label ">
+          {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+        </p>
+        <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
+          placeholder="sites.transferWarehouseToSalesMan.product" [items]="products"
+          (change)="onProductSelected($event)">
+        </ng-control>
+      </div>
+
+
+
+
+      <div class="scrolled mt-4" style="max-height: 300px; overflow-y: auto;">
+        <table class="table" *ngIf="cartItems.length > 0">
+          <thead>
+            <tr class="th-header">
+              <th>{{"sites.transferWarehouseToSalesMan.product"|translate}}</th>
+              <th>{{"sites.transferWarehouseToSalesMan.quantity"|translate}}</th>
+              <th class="text-center">{{"sites.transferWarehouseToSalesMan.action"|translate}}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngFor="let item of cartItems; let i = index">
+              <tr>
+                <td>{{ item.productName }}</td>
+                <!-- <td class="d-flex align-items-center gap-2">
+                <button pButton icon="pi pi-minus" class="p-button-sm p-button-text p-button-secondary"
+                  (click)="decreaseQuantity(i)">
+                </button>
+                {{ item.quantity }}
+                <button pButton icon="pi pi-plus" class="p-button-sm p-button-text p-button-secondary"
+                  (click)="increaseQuantity(i)">
+                </button>
+              </td> -->
+
+                <td>
+                  <input type="number" class="form-control form-control-sm text-center" style="height: 40px;" min="1"
+                    [max]="getMaxQuantity(item.productId)" [(ngModel)]="item.quantity"
+                    (ngModelChange)="onQuantityInputChange(item.quantity, i)" />
+
+                  <small *ngIf="item.quantity > getMaxQuantity(item.productId)" class="text-danger d-block mt-1">
+                    {{ 'sites.transferSalesManToSalesMan.maxQuantityExceeded' | translate }} {{
+                    getMaxQuantity(item.productId) }}
+                  </small>
+                </td>
+
+                <td class="text-center">
+                  <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-0 pointer"
+                    aria-label="Delete" (click)="removeProduct(i)">
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+        <!-- No Data Found -->
+        <div *ngIf="cartItems.length === 0" class="text-center py-4">
+          <span>{{ 'shared.no-data-found' | translate }}</span>
+        </div>
+      </div>
+
+
+
+
+    </div>
+    <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">
+      <button pButton type="button" [ngStyle]="{
+          'border': '1px solid purple',
+          'color': 'purple',
+          'background-color': 'transparent'
+        }" class="rounded"
+        (click)="closeCartDialog()">{{"sites.transferWarehouseToSalesMan.cancel"|translate}}</button>
+      <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
+        [disabled]="isSaveDisabled"
+        (click)="saveTransfer()">{{"sites.transferWarehouseToSalesMan.save"|translate}}</button>
+    </div>
+
+
+
+  </div>
+</ng-container>
 
 <!-- Overlay -->
+<div class="overlay" *ngIf="cartVisible" (click)="closeCartDialog()"></div>
+<div>
 
 <div>
 

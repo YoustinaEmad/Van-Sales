@@ -34,14 +34,24 @@ export class TransferSalesManToWarehouseService {
 
   postOrUpdate(body: transferCreateViewModel) {
     if (body.id) return this._apiService.update(`/EditWarehouseToWarehouseTransactionEndpoint/EditWarehouseToWarehouseTransaction`, body)
-    else return this._apiService.post(`/StartWarehouseToWarehouseTransactionEndpoint/StartWarehouseToWarehouseTransaction`, body)
+    else return this._apiService.post(`/StartSalesmanToWarehouseTransactionEndPoint/StartSalesmanToWarehouseTransaction`, body)
   }
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
+  getProducts(salesmanID: string, BrandId?: string) {
+    let params = new HttpParams()
+      .set('salesmanID', salesmanID)
+      .set('StorageType', '1');
 
-  getProducts(WarehouseId: string) {
-    return this._apiService.get(`/ProductSelectListByWarehouseIdEndPoint/ProductSelectListByWarehouseId?WarehouseId=${WarehouseId}`);
+    if (BrandId) {
+      params = params.set('BrandId', BrandId);
+    }
+
+    return this._apiService.get(
+      `/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman`,
+      params
+    );
   }
   getById(ID: string) {
     return this._apiService.get(`/GetWarehouseToWarehouseTransactionByIdEndPoint/GetWarehouseToWarehouseTransactionById?ID=${ID}`,);
@@ -52,5 +62,8 @@ export class TransferSalesManToWarehouseService {
   }
   Rejected(body: RejectReasonViewModel) {
     return this._apiService.update(`/RejectSalesmanToWarehouseTransactionEndPoint/RejectSalesmanToWarehouseTransaction`, body);
+  }
+   getbrands(){
+    return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
   }
 }

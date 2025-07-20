@@ -29,24 +29,21 @@ export class RejectReasonViewModel {
 
 export class transferCreateViewModel {
     id: string;
-    salesManID: string;
-    fromWarehouseId: string;
-    toWarehouseId: string;
-    transactionDetailsVM: WarehouseToWarehouseTransactionDetailsVM[];
-    fromWarehouseName : string;
-    toWarehouseName : string;
-    warehouseToWarehouseStatus : number;
-    salesmanName : string;
-    transactionNumber : string;
+     salesManID: string;
+     warehouseId: string;
+     transactionDetails: SalesmanToWarehouseTransactionsDetailsDTO[];
+   salesManName: string;
+   warehouseName: string;
+     transactionStatus: number;
+     transactionNumber: string;
+     createdDate: Date;
 }
 
-export class WarehouseToWarehouseTransactionDetailsVM {
-    productID: string;
-    quantity: number;
-    productName?:string
-
-
+export interface SalesmanToWarehouseTransactionsDetailsDTO {
+  productID: string;
+  quantity: number;
 }
+
 export interface selectedProductViewModel {
     id: string;
     name: string;

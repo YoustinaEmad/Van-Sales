@@ -10,7 +10,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
 import { TransferSalesManToWarehouseService } from '../../service/transfer-sales-man-to-warehouse.service';
-import { GetAllProductAtCart, RejectReasonViewModel, transferCreateViewModel, TransferSalesManToWarehouse, transferSalesManToWarehouseSearchViewModel, WarehouseToWarehouseTransactionDetailsVM } from '../../interface/transfer-sales-man-to-warehouse';
+import { GetAllProductAtCart, RejectReasonViewModel, SalesmanToWarehouseTransactionsDetailsDTO, transferCreateViewModel, TransferSalesManToWarehouse, transferSalesManToWarehouseSearchViewModel, } from '../../interface/transfer-sales-man-to-warehouse';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,7 +25,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   override page: CRUDIndexPage = new CRUDIndexPage();
   pageCreate: CRUDCreatePage = new CRUDCreatePage();
-  override pageRoute = '/sites/transfers';
+  override pageRoute = '/sites/transferSalesManToWarehouse';
   modalRef: BsModalRef;
   item: transferCreateViewModel = new transferCreateViewModel();
   isDropdownVisible = false;
@@ -48,6 +48,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
   selectedItemReject: RejectReasonViewModel = new RejectReasonViewModel();
   override items: TransferSalesManToWarehouse[] = [];
   productForm: FormGroup;
+  selectedBrandId: string = '';
+  brands: any[] = [];
   cartItems: { productId: string; productName: string; quantity: number }[] = [];
   TransactionsStatus = [
     { id: 1, name: 'Pending' },
@@ -59,6 +61,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.initializePage();
     this.loadWarehouses();
     this.loadSalesMen();
+    this.loadBrands();
   }
   initializePage() {
     this.page.columns = [
@@ -148,14 +151,30 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.loadProducts();
 
   }
-  loadProducts() {
-    this._pageService.getProducts(this.warehouseId).subscribe((res: any) => {
-      if (res.isSuccess) {
-        this.products = res.data;
-      }
-    });
+    loadProducts() {
+    const fromSalesmanId = this.pageCreate.form.get('salesManID')?.value;
+    if (!fromSalesmanId) {
+      this.products = [];
+      return;
+    }
+  
+    this._pageService
+      .getProducts(fromSalesmanId, this.selectedBrandId) // ⬅️ هنا التعديل!
+      .subscribe((res: any) => {
+        if (res.isSuccess) {
+          this.products = res.data || [];
+          if (this.selectedBrandId) {
+            this.filteredProducts = this.products.filter(p => p.brandId === this.selectedBrandId);
+          } else {
+            this.filteredProducts = this.products;
+          }
+        }
+      });
   }
 
+
+
+  
   toggleSelectAll(event: any): void {
     const isChecked = event.target.checked;
     this.items.forEach(item => {
@@ -207,19 +226,19 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   createForm() {
     this.productForm = this._sharedService.formBuilder.group({
+      selectedBrand: [null],
       selectedProduct: [null]
     });
 
     this.pageCreate.form = this._sharedService.formBuilder.group(
       {
         salesManID: [this.item.salesManID, Validators.required],
-        fromWarehouseId: [this.item.fromWarehouseId, Validators.required],
-        toWarehouseId: [this.item.toWarehouseId, Validators.required],
-        transactionDetailsDTOs: this._sharedService.formBuilder.array(
-          this.item.transactionDetailsVM?.map(detail => this.createDetailFormGroup(detail)) || []
+        warehouseId: [this.item.warehouseId, Validators.required],
+        transactionDetails: this._sharedService.formBuilder.array(
+          this.item.transactionDetails?.map(detail => this.createDetailFormGroup(detail)) || []
         )
-      },
-      { validators: [this.differentWarehousesValidator()] }
+      }
+
     );
 
     this.pageCreate.isPageLoaded = true;
@@ -277,7 +296,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  createDetailFormGroup(detail: WarehouseToWarehouseTransactionDetailsVM): FormGroup {
+  createDetailFormGroup(detail: SalesmanToWarehouseTransactionsDetailsDTO): FormGroup {
     return this._sharedService.formBuilder.group({
       productID: [detail.productID, Validators.required],
       quantity: [detail.quantity, [Validators.required, Validators.min(1)]]
@@ -323,7 +342,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
         this.pageCreate.isSaving = false;
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
-          this._router.navigate(['/sites/transfers']);
+          this._router.navigate(['/sites/transferSalesManToWarehouse']);
           this.cartVisible = false;
           this.search();
         }
@@ -423,5 +442,25 @@ approveRequest(item: TransferSalesManToWarehouse) {
     }
   });
 }
+
+
+ loadBrands() {
+    this._pageService.getbrands().subscribe(res => {
+      if (res.isSuccess) {
+        this.brands = res.data || [];
+      }
+    });
+  }
+
+  onBrandChange(event: any) {
+    this.selectedBrandId = event?.id || null;
+
+    const fromSalesmanId = this.pageCreate.form.get('salesManID')?.value;
+    if (fromSalesmanId) {
+      this.loadProducts();
+    } else {
+      this.products = [];
+    }
+  }
 
 }
