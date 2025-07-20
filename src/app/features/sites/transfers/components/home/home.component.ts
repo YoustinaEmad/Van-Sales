@@ -30,7 +30,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   item: transferCreateViewModel = new transferCreateViewModel();
   isDropdownVisible = false;
   products: any[] = [];
-    warehouseId: string;
+  warehouseId: string;
   selectedProduct = '';
   cartErrorMessage: string = '';
   selectedItem: transferViewModel;
@@ -43,6 +43,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
   searchText: string = '';
   SalesMen: any[] = [];
   id: string;
+  selectedBrandId: string = '';
+  brands: any[] = [];
+
   override controlType = ControlType;
   override items: transferViewModel[] = [];
   productForm: FormGroup;
@@ -57,6 +60,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
     this.loadWarehouses();
+    this.loadBrands();
 
   }
   initializePage() {
@@ -64,12 +68,12 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
       { Name: "No", Title: "#", Selectable: true, Sortable: false },
       { Name: "transactionNumber", Title: "sites.transfer.transactionNumber", Selectable: false, Sortable: true },
-            { Name: "salesManName", Title: "sites.transfer.salesMan", Selectable: false, Sortable: true },
-            { Name: "fromWarehouseName", Title: "sites.transfer.fromWarehouse", Selectable: false, Sortable: true },
-            { Name: "toWarehouseName", Title: "sites.transfer.toWarehouse", Selectable: false, Sortable: true },
-            { Name: "warehouseToWarehouseStatus", Title: "sites.transfer.warehouseStatus", Selectable: false, Sortable: true },
-            { Name: "productsQuantity", Title: "sites.transfer.quantity", Selectable: false, Sortable: true },
-            { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true },
+      { Name: "salesManName", Title: "sites.transfer.salesMan", Selectable: false, Sortable: true },
+      { Name: "fromWarehouseName", Title: "sites.transfer.fromWarehouse", Selectable: false, Sortable: true },
+      { Name: "toWarehouseName", Title: "sites.transfer.toWarehouse", Selectable: false, Sortable: true },
+      { Name: "warehouseToWarehouseStatus", Title: "sites.transfer.warehouseStatus", Selectable: false, Sortable: true },
+      { Name: "productsQuantity", Title: "sites.transfer.quantity", Selectable: false, Sortable: true },
+      { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true },
 
 
     ];
@@ -78,7 +82,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
     this.createSearchForm();
-    
+
 
     this.activatedRoute.queryParams.subscribe(params => {
       this._sharedService.getFilterationFromURL(params, this.page.searchForm)
@@ -140,7 +144,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   onStatusChange(statusId: string) {
     this.selectedStatusId = statusId;
     this.page.searchForm.patchValue({ WarehouseToWarehouseStatus: statusId });
-    this.search(); // optionally trigger search on change
+    this.search(); 
   }
 
   loadWarehouses() {
@@ -158,18 +162,42 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     });
   }
- OnWarehouseIdChange(warehouseId: any) {
+  OnWarehouseIdChange(warehouseId: any) {
     this.warehouseId = warehouseId;
-    this.loadProducts();
-
+    if (this.selectedBrandId) {
+      this.loadProducts();
+    } else {
+      this.products = []; 
+    }
   }
+
   loadProducts() {
-    this._pageService.getProducts(this.warehouseId).subscribe((res: any) => {
+    if (!this.warehouseId) return;
+
+    this._pageService.getProducts(this.warehouseId, this.selectedBrandId).subscribe((res: any) => {
       if (res.isSuccess) {
-        this.products = res.data;
+        this.products = res.data || [];
       }
     });
   }
+
+  loadBrands() {
+    this._pageService.getbrands().subscribe(res => {
+      if (res.isSuccess) {
+        this.brands = res.data || [];
+      }
+    });
+  }
+
+  onBrandChange(event: any) {
+    this.selectedBrandId = event.id || event;
+    if (this.warehouseId) {
+      this.loadProducts();
+    } else {
+      this.products = []; 
+    }
+  }
+
 
   @ViewChild('confirmDeleteTemplate', { static: false }) confirmDeleteTemplate: any;
   showDeleteConfirmation(selectedItem: transferViewModel) {
@@ -207,16 +235,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     this.loadWarehouses();
     this.loadSalesMen();
-    // this.loadProducts();
-
     this.cartItems = [];
-
-
     this.createForm();
-
-
     this.pageCreate.form.reset();
-
     this.cartVisible = true;
   }
 
@@ -228,6 +249,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   createForm() {
     this.productForm = this._sharedService.formBuilder.group({
+      selectedBrand: [null],
       selectedProduct: [null]
     });
 
@@ -326,7 +348,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       this.cartItems.map(item => this._sharedService.formBuilder.group({
         productID: [item.productId, Validators.required],
         quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-        productName: [item.productName] // 👉 add this if needed
+        productName: [item.productName] 
       }))
     );
 
@@ -368,37 +390,36 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   }
 
-navigateToTransferDetails(id: string) {
-     this._router.navigate(['/sites/transfers/details', id]);
+  navigateToTransferDetails(id: string) {
+    this._router.navigate(['/sites/transfers/details', id]);
   }
 
 
 
   getMaxQuantity(productId: string): number {
-  const product = this.products.find(p => p.id === productId);
-  return product ? product.maxQuantity : 1;
-}
-
-
-onQuantityInputChange(value: number, index: number): void {
-  const item = this.cartItems[index];
-  const product = this.products.find(p => p.id === item.productId);
-  if (!product) return;
-
-  if (value < 1) {
-    item.quantity = 1;
-  } else if (value > product.maxQuantity) {
-    // لو حابة تمنعي الزيادة تلقائيًا:
-    // item.quantity = product.maxQuantity;
+    const product = this.products.find(p => p.id === productId);
+    return product ? product.maxQuantity : 1;
   }
-}
 
 
-hasInvalidQuantities(): boolean {
-  return this.cartItems.some(item => {
+  onQuantityInputChange(value: number, index: number): void {
+    const item = this.cartItems[index];
     const product = this.products.find(p => p.id === item.productId);
-    return product && item.quantity > product.maxQuantity;
-  });
-}
+    if (!product) return;
+
+    if (value < 1) {
+      item.quantity = 1;
+    } else if (value > product.maxQuantity) {
+      
+    }
+  }
+
+
+  hasInvalidQuantities(): boolean {
+    return this.cartItems.some(item => {
+      const product = this.products.find(p => p.id === item.productId);
+      return product && item.quantity > product.maxQuantity;
+    });
+  }
 
 }
