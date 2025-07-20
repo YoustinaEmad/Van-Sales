@@ -73,7 +73,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "ProductsQuantity", Title: "sites.transferSalesManToWarehose.productsQuantity", Selectable: false, Sortable: true },
       { Name: "CreatedDate", Title: "sites.transferSalesManToWarehose.createdDate", Selectable: false, Sortable: true },
       { Name: "TransactionStatus", Title: "sites.transferSalesManToWarehose.TransactionsStatus", Selectable: false, Sortable: true },
-      { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true }
+      // { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true }
 
     ];
     this.createSearchForm();
@@ -81,6 +81,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
       this._sharedService.getFilterationFromURL(params, this.page.searchForm)
       this.search();
     });
+
+
+
+
+    
   }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
@@ -242,6 +247,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
     );
 
     this.pageCreate.isPageLoaded = true;
+    this.pageCreate.form.get('salesManID')?.valueChanges.subscribe(() => {
+    this.loadProducts();
+  });
+
+  
   }
 
 
@@ -271,19 +281,28 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   }
 
-  getEditableItem() {
+ getEditableItem() {
     this._pageService.getById(this.id).subscribe({
       next: (res) => {
         if (res.isSuccess) {
           this.item = res.data;
           this.item.id = this.id;
-          this.cartItems = res.data.transactionDetailsDTOs.map(detail => ({
-            productId: detail.productID,
-            productName: detail.productName,
-            quantity: detail.quantity
-          }));
+
+
+          this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => {
+            const product = this.products.find(p => p.id === detail.productId);
+            return {
+              productId: detail.productId,
+              productName: detail.productName,
+              quantity: detail.quantity,
+              storageType: detail.storageType,
+              maxQuantity: product ? product.maxQuantity : null
+            };
+          });
+
 
           this.createForm();
+
           this.pageCreate.isPageLoaded = true;
         }
       },
@@ -292,7 +311,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
       },
     });
   }
-
 
 
 

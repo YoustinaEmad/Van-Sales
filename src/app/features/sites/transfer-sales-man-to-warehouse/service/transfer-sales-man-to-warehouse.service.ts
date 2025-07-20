@@ -54,7 +54,7 @@ export class TransferSalesManToWarehouseService {
     );
   }
   getById(ID: string) {
-    return this._apiService.get(`/GetWarehouseToWarehouseTransactionByIdEndPoint/GetWarehouseToWarehouseTransactionById?ID=${ID}`,);
+    return this._apiService.get(`/GetSalesmanToWarehouseTransactionByIdEndPoint/GetSalesmanToWarehouseTransactionById?ID=${ID}`,);
   }
 
   Approved(ID: string) {
