@@ -87,16 +87,35 @@
 
         </div>
       
+
         <div class="row p-2" style="font-size: 12px;">
+            <!-- ✅ Brand Select -->
             <p class="form-label ">
-                {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+              {{"sites.transfer.brand"|translate}} <span class="text-danger">*</span>
             </p>
-
+            <ng-control 
+            [type]="controlType.SELECT"
+            [form]="productForm"
+            control="selectedBrand"
+            placeholder="sites.transfer.brand"
+            [items]="brands"
+            (change)="onBrandChange($event)">
+          </ng-control>
+          
+          </div>
+          <div class="row p-2" style="font-size: 12px;">
+            <!-- ✅ Product Select -->
+            <p class="form-label ">
+              {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+            </p>
             <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
-                placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
+              placeholder="sites.transfer.product" [items]="products"
+              (change)="onProductSelected($event)">
             </ng-control>
-        </div>
+          </div>
 
+
+      
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
