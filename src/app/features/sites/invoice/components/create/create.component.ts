@@ -26,6 +26,8 @@ export class CreateComponent implements OnInit {
   showPrintButton: boolean = false;
   environment = environment;
   showDownloadOptions = false;
+  Brands: any[] = [];
+
   Units = [
     { id: 1, name: 'Cartoon  ' },
     { id: 2, name: 'Drum   ' },
@@ -69,28 +71,41 @@ export class CreateComponent implements OnInit {
         this.page.isEdit = true;
       }
       this.translate.get([
-    'sites.Invoice.salesInvoice',
-    'sites.Invoice.invoiceNumber',
-    'sites.Invoice.client',
-    'sites.Invoice.salesMan',
-    'sites.Invoice.index',
-    'sites.Invoice.product',
-    'sites.Invoice.unit',
-    'sites.Invoice.quantity',
-    'sites.Invoice.unitPrice',
-    'sites.Invoice.total',
-    'sites.Invoice.itemWeight',
-    'sites.Invoice.totalWeight',
-    'sites.Invoice.tax',
-    'sites.Invoice.totalNetPrice',
-    'sites.Invoice.totalWeightLabel'
-  ]).subscribe(trans => {
-    this.translations = trans;
-  });
+        'sites.Invoice.salesInvoice',
+        'sites.Invoice.invoiceNumber',
+        'sites.Invoice.client',
+        'sites.Invoice.salesMan',
+        'sites.Invoice.index',
+        'sites.Invoice.product',
+        'sites.Invoice.unit',
+        'sites.Invoice.quantity',
+        'sites.Invoice.unitPrice',
+        'sites.Invoice.total',
+        'sites.Invoice.itemWeight',
+        'sites.Invoice.totalWeight',
+        'sites.Invoice.tax',
+        'sites.Invoice.totalNetPrice',
+        'sites.Invoice.totalWeightLabel'
+      ]).subscribe(trans => {
+        this.translations = trans;
+      });
     });
 
-
+    this._pageService.getbrands().subscribe((res: any) => {
+      if (res && res.isSuccess) {
+        this.Brands = res.data || [];
+      }
+    });
+    
     this.createForm();
+    this.page.form.get('brandID')?.valueChanges.subscribe((brandID) => {
+      if (brandID) {
+        this.loadProductsByBrand(brandID);
+      }
+    });
+    
+
+
     this.page.form.get('productID')?.valueChanges.subscribe(productId => {
       this.onProductSelect(productId);
     });
@@ -100,6 +115,39 @@ export class CreateComponent implements OnInit {
       this.onClientChange();
     });
   }
+
+
+  loadProductsByBrand(brandID: string) {
+    const clientID = this.page.form.get('clientID')?.value;
+    const salesManID = this.getSalesmanIdFromToken();
+  
+    if (!clientID) {
+      //this._sharedService.showToastrError('اختر العميل أولا قبل تحديد البراند');
+      this.page.form.get('brandID')?.setValue(null);
+      return;
+    }
+      
+    const payload = {
+      SalesManID: salesManID,
+      ClientID: clientID,
+      StorageType: 2,
+      BrandID: brandID 
+    };
+  
+    this._pageService.getProducts(payload).subscribe((res: any) => {
+      if (res && res.isSuccess) {
+        this.Products = res.data || [];
+        this.allProducts = this.Products.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          price: p.itemPrice,
+          weight: p.itemWeightPerKG,
+          maxQuantity: p.maxQuantity
+        }));
+      }
+    });
+  }
+  
   onProductSelect(productId: string | null) {
     if (!productId) return;
     const selected = this.allProducts.find(p => p.id === productId);
@@ -129,7 +177,8 @@ export class CreateComponent implements OnInit {
       salesManID: [this.item.salesManID],
       notes: [this.item.notes],
       invoiceDetails: [this.item.invoiceDetails, Validators.required],
-      productID: [null]
+      productID: [null],
+      brandID: [null],
     });
     this.page.isPageLoaded = true;
   }
@@ -207,15 +256,15 @@ export class CreateComponent implements OnInit {
     });
   }
 
-printInvoice() {
-  const printWindow = window.open('', '_blank');
-  this._pageService.getById(this.id).subscribe({
-    next: (res) => {
-      if (res.isSuccess && res.data) {
-        const invoice = res.data as InvoiceDetailsViewModel;
-        const t = this.translations;
+  printInvoice() {
+    const printWindow = window.open('', '_blank');
+    this._pageService.getById(this.id).subscribe({
+      next: (res) => {
+        if (res.isSuccess && res.data) {
+          const invoice = res.data as InvoiceDetailsViewModel;
+          const t = this.translations;
 
-        const printContent = `
+          const printContent = `
           <html lang="ar" dir="rtl">
             <head>
               <meta charset="UTF-8">
@@ -312,83 +361,83 @@ printInvoice() {
           </html>
         `;
 
-        printWindow.document.open();
-        printWindow.document.write(printContent);
-        printWindow.document.close();
+          printWindow.document.open();
+          printWindow.document.write(printContent);
+          printWindow.document.close();
 
-        printWindow.onload = () => {
-          printWindow.focus();
-          printWindow.print();
-        };
+          printWindow.onload = () => {
+            printWindow.focus();
+            printWindow.print();
+          };
+        }
       }
-    }
-  });
-}
+    });
+  }
 
 
 
- downloadInvoiceAsPDF() {
-  this._pageService.getById(this.id).subscribe({
-    next: (res) => {
-      if (res.isSuccess && res.data) {
-        const invoice = res.data as InvoiceDetailsViewModel;
+  downloadInvoiceAsPDF() {
+    this._pageService.getById(this.id).subscribe({
+      next: (res) => {
+        if (res.isSuccess && res.data) {
+          const invoice = res.data as InvoiceDetailsViewModel;
 
-        const doc = new jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4'
-        });
+          const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+          });
 
-        doc.setFontSize(16);
-        doc.text('Sales Invoice', 105, 15, { align: 'center' });
+          doc.setFontSize(16);
+          doc.text('Sales Invoice', 105, 15, { align: 'center' });
 
-        doc.setFontSize(12);
-        doc.text(`Invoice Number: ${invoice.invoiceNumber}`, 14, 30);
-        doc.text(`Client: ${invoice.clientName}`, 14, 38);
-        doc.text(`Salesman: ${invoice.salesManName}`, 14, 46);
+          doc.setFontSize(12);
+          doc.text(`Invoice Number: ${invoice.invoiceNumber}`, 14, 30);
+          doc.text(`Client: ${invoice.clientName}`, 14, 38);
+          doc.text(`Salesman: ${invoice.salesManName}`, 14, 46);
 
-        const headers = [['#', 'Product', 'Unit', 'Quantity', 'Unit Price', 'Total', 'Item Weight', 'Total Weight']];
-        const body = invoice.sellingInvoicesDetails.map((item, index) => [
-          index + 1,
-          item.productName || '',
-          this.getUnitName(item.unit),
-          item.quantity ?? 0,
-          (item.itemPrice ?? 0).toFixed(2),
-          (item.price ?? 0).toFixed(2),
-          (item.itemWeightPerKG ?? 0).toFixed(3),
-          (item.weightPerKG ?? 0).toFixed(3)
-        ]);
+          const headers = [['#', 'Product', 'Unit', 'Quantity', 'Unit Price', 'Total', 'Item Weight', 'Total Weight']];
+          const body = invoice.sellingInvoicesDetails.map((item, index) => [
+            index + 1,
+            item.productName || '',
+            this.getUnitName(item.unit),
+            item.quantity ?? 0,
+            (item.itemPrice ?? 0).toFixed(2),
+            (item.price ?? 0).toFixed(2),
+            (item.itemWeightPerKG ?? 0).toFixed(3),
+            (item.weightPerKG ?? 0).toFixed(3)
+          ]);
 
-        autoTable(doc, {
-          head: headers,
-          body: body,
-          startY: 55,
-          styles: {
-            fontSize: 10,
-            halign: 'center'
-          },
-          headStyles: {
-            fillColor: [151, 44, 204],
-            textColor: [255, 255, 255]
-          },
-          alternateRowStyles: {
-            fillColor: [245, 245, 245]
-          }
-        });
+          autoTable(doc, {
+            head: headers,
+            body: body,
+            startY: 55,
+            styles: {
+              fontSize: 10,
+              halign: 'center'
+            },
+            headStyles: {
+              fillColor: [151, 44, 204],
+              textColor: [255, 255, 255]
+            },
+            alternateRowStyles: {
+              fillColor: [245, 245, 245]
+            }
+          });
 
-        const finalY = (doc as any).lastAutoTable.finalY || 60;
-        doc.setFontSize(12);
-        doc.text(`Total Weight: ${(invoice.totalWeightInKG ?? 0).toFixed(2)} KG`, 14, finalY + 10);
-        doc.text(`Total: ${(invoice.totalPrice ?? 0).toFixed(2)}`, 14, finalY + 18);
-        doc.text(`Tax :14% `, 14, finalY + 26);
-        doc.text(`Total Net Price: ${(invoice.totalNetPrice ?? 0).toFixed(2)}`, 14, finalY + 34);
+          const finalY = (doc as any).lastAutoTable.finalY || 60;
+          doc.setFontSize(12);
+          doc.text(`Total Weight: ${(invoice.totalWeightInKG ?? 0).toFixed(2)} KG`, 14, finalY + 10);
+          doc.text(`Total: ${(invoice.totalPrice ?? 0).toFixed(2)}`, 14, finalY + 18);
+          doc.text(`Tax :14% `, 14, finalY + 26);
+          doc.text(`Total Net Price: ${(invoice.totalNetPrice ?? 0).toFixed(2)}`, 14, finalY + 34);
 
-        doc.save(`Invoice-${invoice.invoiceNumber}.pdf`);
-      } 
-    },
-   
-  });
-}
+          doc.save(`Invoice-${invoice.invoiceNumber}.pdf`);
+        }
+      },
+
+    });
+  }
 
 
   onClientChange() {
@@ -462,8 +511,6 @@ printInvoice() {
 
     this.calculateTotal();
   }
-
-
 
 
   toggleDownloadOptions() {

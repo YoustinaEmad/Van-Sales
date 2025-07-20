@@ -51,22 +51,32 @@ export class InvoiceService {
   getById(ID: string) {
     return this._apiService.get(`/GetSellingInvoiceByIdEndPoint/GetSellingInvoiceById?ID=${ID}`);
   }
+
+  getbrands(){
+    return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
+  }
+
   getProducts(payload: {
     SalesManID: string;
     ClientID: string;
     StorageType: number;
+    BrandID?: string; // ✅ براند ID اختياري
   }) {
-    let params = new HttpParams();
-
-    params = params.set("SalesManID", payload.SalesManID);
-    params = params.set("ClientID", payload.ClientID);
-    params = params.set("StorageType", payload.StorageType.toString());
-
+    let params = new HttpParams()
+      .set("SalesManID", payload.SalesManID)
+      .set("ClientID", payload.ClientID)
+      .set("StorageType", payload.StorageType.toString());
+  
+    if (payload.BrandID) {
+      params = params.set("BrandID", payload.BrandID);
+    }
+  
     return this._apiService.get(
       '/ProductSelectListBySalesmanIDAndClientIDEndpoint/ProductSelectListBySalesmanIDAndClientID',
       params
     );
   }
+  
 
 
 }

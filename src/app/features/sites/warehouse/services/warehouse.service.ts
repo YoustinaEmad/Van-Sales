@@ -81,10 +81,23 @@ getWarehouseDetails(ID: string) {
   bulkDeactivate(ids: string[]) {
     return this._apiService.update(`/BulkDeactivateWarehouseEndpoint/BulkDectivatedWarehouses`, { ids });
   }
-   getProducts() {
-    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+  
+  getProducts(BrandId?: string) {
+    let params = new HttpParams();
+  
+    if (BrandId) {
+      params = params.set('BrandId', BrandId);
+    }
+  
+    return this._apiService.get(
+      `/ProductSelectListEndpoint/SelectProductList`,
+      params
+    );
   }
-
+  
+  getbrands(){
+    return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
+  }
 
    postProduct(body:WarehouseProductCreateViewModel ) {
    return this._apiService.post(`/AssignProductWarehouseEndpoint/AssignProductWarehouse`, body)

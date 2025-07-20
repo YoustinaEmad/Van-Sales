@@ -95,15 +95,33 @@
     </div>
 
     <!-- Dropdown لاختيار المنتج -->
+
     <div class="row p-2" style="font-size: 12px;">
-      <p class="form-label">
+      <!-- ✅ Brand Select -->
+      <p class="form-label ">
+        {{"sites.transfer.brand"|translate}} <span class="text-danger">*</span>
+      </p>
+      <ng-control 
+      [type]="controlType.SELECT"
+      [form]="productForm"
+      control="selectedBrand"
+      placeholder="sites.transfer.brand"
+      [items]="brands"
+      (change)="onBrandChange($event)">
+    </ng-control>
+    
+    </div>
+    <div class="row p-2" style="font-size: 12px;">
+      <!-- ✅ Product Select -->
+      <p class="form-label ">
         {{"sites.Warehouse.product"|translate}} <span class="text-danger">*</span>
       </p>
-
       <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
-        placeholder="sites.transfer.product" [items]="products" (change)="onProductSelected($event)">
+        placeholder="sites.Warehouse.product" [items]="products"
+        (change)="onProductSelected($event)">
       </ng-control>
     </div>
+
 
     <!-- جدول المنتجات المختارة -->
     <table class="table table-bordered mt-4">

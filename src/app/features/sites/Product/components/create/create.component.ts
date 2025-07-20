@@ -239,6 +239,7 @@ Tabs:any[]=[];
     const validators = this.page.isEdit
       ? []
       : [maxGreaterThanMinValidator(), quantityInRangeValidator()];
+  
     this.page.form = this._sharedService.formBuilder.group(
       {
         name: [this.item.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -252,26 +253,51 @@ Tabs:any[]=[];
         packSize: [this.item.packSize, [Validators.required, Validators.min(1)]],
         netWeightPerLitre: [this.item.netWeightPerLitre, [Validators.required, Validators.min(1)]],
         weightPerKG: [this.item.weightPerKG, [Validators.required, Validators.min(1)]],
-        // expiryDate: [
-        //   this.item.expiryDate || new Date(),
-        //   [
-        //     Validators.required,
-        //     this.validatePastDate
-        //   ],
-        // ],
         unit: [this.item.unit, Validators.required],
         grade: [this.item.grade, Validators.required],
-         brandID: [this.item.brandID, Validators.required],
-        productStatus: [this.item.productStatus, [Validators.required] ],
+        brandID: [this.item.brandID, Validators.required],
+        productStatus: [this.item.productStatus, [Validators.required]],
         categoryID: [this.item.categoryID, Validators.required],
         productGroupID: [this.item.productGroupID, [Validators.required]],
         productAPI: [this.item.productAPI, [Validators.required]],
-
       },
       { validators }
     );
+  
+    this.page.form.get('weightPerKG').valueChanges.subscribe(value => {
+      const calculated = Number(value) * 0.9 || 0;
+      this.page.form.get('netWeightPerLitre').setValue(calculated, { emitEvent: false });
+    });
+  
+    this.page.form.get('smallerUnitsOfMeasurements').valueChanges.subscribe(() => {
+      this.updatePackSize();
+    });
+    this.page.form.get('numOfUnitPerCartoon').valueChanges.subscribe(() => {
+      this.updatePackSize();
+    });
+  
 
+    this.page.form.get('unit').valueChanges.subscribe(unitValue => {
+      const selectedUnit = this.ProductUnitList.find(u => u.id === unitValue)?.name;
+    
+      const numUnitsControl = this.page.form.get('numOfUnitPerCartoon');
+    
+      if (selectedUnit === 'Pail' || selectedUnit === 'Drum') {
+        numUnitsControl.setValue(1, { emitEvent: false });
+        numUnitsControl.disable({ emitEvent: false });
+      } else if (selectedUnit === 'Cartoon') {
+        numUnitsControl.enable({ emitEvent: false });
+      }
+    });
+    
     this.page.isPageLoaded = true;
+  }
+  
+  updatePackSize() {
+    const smallerUnits = this.page.form.get('smallerUnitsOfMeasurements').value || 0;
+    const numUnits = this.page.form.get('numOfUnitPerCartoon').value || 0;
+    const calculated = smallerUnits * numUnits;
+    this.page.form.get('packSize').setValue(calculated, { emitEvent: false });
   }
   
 
