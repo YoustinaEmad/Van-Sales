@@ -90,16 +90,33 @@
 
       </div>
 
-      <div class="row p-2" style="font-size: 12px;">
-        <p class="form-label ">
-          {{"sites.transferWarehouseToSalesMan.product"|translate}} <span class="text-danger">*</span>
-        </p>
 
+      <div class="row p-2" style="font-size: 12px;">
+        <!-- ✅ Brand Select -->
+        <p class="form-label ">
+          {{"sites.transfer.brand"|translate}} <span class="text-danger">*</span>
+        </p>
+        <ng-control 
+        [type]="controlType.SELECT"
+        [form]="productForm"
+        control="selectedBrand"
+        placeholder="Brand"
+        [items]="brands"
+        (change)="onBrandChange($event)">
+      </ng-control>
+      
+      </div>
+      <div class="row p-2" style="font-size: 12px;">
+        <!-- ✅ Product Select -->
+        <p class="form-label ">
+          {{"sites.transfer.product"|translate}} <span class="text-danger">*</span>
+        </p>
         <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedProduct"
           placeholder="sites.transferWarehouseToSalesMan.product" [items]="products"
           (change)="onProductSelected($event)">
         </ng-control>
       </div>
+
 
 
 
@@ -166,7 +183,7 @@
         }" class="rounded"
         (click)="closeCartDialog()">{{"sites.transferWarehouseToSalesMan.cancel"|translate}}</button>
       <button pButton type="button" class="bg-purple-500 py-2 px-4 text-white border-0 rounded"
-          [disabled]="isSaveDisabled"
+        [disabled]="isSaveDisabled"
         (click)="saveTransfer()">{{"sites.transferWarehouseToSalesMan.save"|translate}}</button>
     </div>
 

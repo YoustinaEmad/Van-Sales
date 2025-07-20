@@ -43,6 +43,9 @@ export class HomeComponent extends CrudIndexBaseUtils {
   selectedItemReject: RejectReasonViewModel = new RejectReasonViewModel();
   warehouseId: string;
   id: string;
+  selectedBrandId: string = '';
+  brands: any[] = [];
+
   override controlType = ControlType;
   override items: WarehouseToSalesmanViewModel[] = [];
   productForm: FormGroup;
@@ -55,7 +58,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
     this.loadWarehouses();
-    
+    this.loadBrands();
+
 
   }
   OnWarehouseIdChange(warehouseId: any) {
@@ -147,13 +151,34 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
   loadProducts() {
-    this._pageService.getProducts(this.warehouseId).subscribe((res: any) => {
+    if (!this.warehouseId) return;
+
+    this._pageService.getProducts(this.warehouseId, this.selectedBrandId).subscribe((res: any) => {
       if (res.isSuccess) {
-        this.products = res.data;
+        this.products = res.data || [];
       }
     });
   }
 
+  loadBrands() {
+    this._pageService.getbrands().subscribe(res => {
+      if (res.isSuccess) {
+        this.brands = res.data;
+      }
+    });
+  }
+  onBrandChange(event: any) {
+    // 1️⃣ لو مافيش ID = null
+    this.selectedBrandId = event?.id || null;
+  
+    // 2️⃣ Call loadProducts دايمًا
+    if (this.warehouseId) {
+      this.loadProducts();
+    } else {
+      this.products = [];
+    }
+  }
+  
 
 
   
@@ -194,6 +219,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   createForm() {
     this.productForm = this._sharedService.formBuilder.group({
+      selectedBrand: [null],
       selectedProduct: [null]
     });
 

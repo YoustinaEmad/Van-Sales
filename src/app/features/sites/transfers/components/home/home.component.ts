@@ -108,7 +108,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
         productName: selected.name,
         quantity: 1
       });
-      this.productForm.reset(); // optional: clear selection after adding
+      this.productForm.reset();
     }
   }
 
@@ -144,7 +144,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   onStatusChange(statusId: string) {
     this.selectedStatusId = statusId;
     this.page.searchForm.patchValue({ WarehouseToWarehouseStatus: statusId });
-    this.search(); 
+    this.search();
   }
 
   loadWarehouses() {
@@ -167,7 +167,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     if (this.selectedBrandId) {
       this.loadProducts();
     } else {
-      this.products = []; 
+      this.products = [];
     }
   }
 
@@ -190,11 +190,14 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
   onBrandChange(event: any) {
-    this.selectedBrandId = event.id || event;
+    // 1️⃣ لو مافيش ID = null
+    this.selectedBrandId = event?.id || null;
+
+    // 2️⃣ Call loadProducts دايمًا
     if (this.warehouseId) {
       this.loadProducts();
     } else {
-      this.products = []; 
+      this.products = [];
     }
   }
 
@@ -348,7 +351,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       this.cartItems.map(item => this._sharedService.formBuilder.group({
         productID: [item.productId, Validators.required],
         quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-        productName: [item.productName] 
+        productName: [item.productName]
       }))
     );
 
@@ -410,7 +413,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     if (value < 1) {
       item.quantity = 1;
     } else if (value > product.maxQuantity) {
-      
+
     }
   }
 

@@ -47,9 +47,7 @@ export class TransfersWarehouseToWarehouseServiceService {
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
-  // getProducts(ID: string) {
-  //   return this._apiService.get(`/ProductSelectListBySalesmanIDEndpoint/SelectProductsListBySalesman?ID=${ID}`);
-  // }
+
 
   getProducts(salesmanID: string) {
     const params = new HttpParams()

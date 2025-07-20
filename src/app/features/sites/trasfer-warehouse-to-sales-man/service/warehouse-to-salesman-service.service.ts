@@ -43,9 +43,19 @@ export class WarehouseToSalesmanServiceService {
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
-  getProducts(WarehouseId: string) {
-    console.log(WarehouseId);
-    return this._apiService.get(`/ProductSelectListByWarehouseIdEndPoint/ProductSelectListByWarehouseId?WarehouseId=${WarehouseId}`);
+ 
+
+  getProducts(WarehouseId: string, BrandId?: string) {
+    let params = new HttpParams().set('WarehouseId', WarehouseId);
+
+    if (BrandId) {
+      params = params.set('BrandId', BrandId);
+    }
+
+    return this._apiService.get(
+      `/ProductSelectListByWarehouseIdEndPoint/ProductSelectListByWarehouseId`,
+      params
+    );
   }
 
   postOrUpdate(body: createWarehouseToSalesmanViewModel) {
@@ -62,5 +72,8 @@ export class WarehouseToSalesmanServiceService {
 
   getById(ID: string) {
     return this._apiService.get(`/GetByIDWarehouseToSalesmanTransactionsEndPoint/GetWarehouseToSalesmanTransactionById?ID=${ID}`,);
+  }
+  getbrands(){
+    return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
   }
 }
