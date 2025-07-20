@@ -68,7 +68,22 @@ export class RequestService {
   getSalesMen() {
     return this._apiService.get('/SalesmanSelectListEndpoint/SelectSalesmanList');
   }
-  getProducts() {
-    return this._apiService.get('/ProductSelectListEndpoint/SelectProductList');
+
+  getProducts(BrandId?: string) {
+    let params = new HttpParams();
+  
+    if (BrandId) {
+      params = params.set('BrandId', BrandId);
+    }
+  
+    return this._apiService.get(
+      `/ProductSelectListEndpoint/SelectProductList`,
+      params
+    );
   }
+  
+  getbrands(){
+    return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
+  }
+
 }

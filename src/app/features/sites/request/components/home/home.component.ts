@@ -40,6 +40,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
     override controlType = ControlType;
     override items: requestViewModel[] = [];
     productForm: FormGroup;
+    selectedBrandId: string = '';
+  brands: any[] = [];
     cartItems: { productId: string; productName: string; quantity: number }[] = [];
   override pageRoute = '/sites/request';
   RequestStatuslist = [
@@ -49,6 +51,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ];
   ngOnInit(): void {
     this.initializePage();
+    this.loadBrands() ;
   }
 
 
@@ -150,11 +153,23 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
   loadProducts() {
-    this._pageService.getProducts().subscribe((res: any) => {
+    this._pageService.getProducts(this.selectedBrandId).subscribe((res: any) => {
       if (res.isSuccess) {
         this.products = res.data;
       }
     });
+  }
+
+  loadBrands() {
+    this._pageService.getbrands().subscribe(res => {
+      if (res.isSuccess) {
+        this.brands = res.data;
+      }
+    });
+  }
+  onBrandChange(event: any) {
+    this.selectedBrandId = event?.id || null;
+    this.loadProducts();
   }
   toggleSelectAll(event: any): void {
     const isChecked = event.target.checked;
@@ -188,6 +203,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 createForm() {
     this.productForm = this._sharedService.formBuilder.group({
+      selectedBrand:[null],
       selectedProduct: [null]
     });
 
