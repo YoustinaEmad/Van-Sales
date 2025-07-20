@@ -90,6 +90,13 @@
                         {{"sites.layout.transferWarehouseToSalesMan" | translate}}
                     </a>
                 </li>
+                 <li>
+                    <a class="dropdown-item" routerLink="/sites/transferSalesManToWarehouse"
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: false }" (click)="closeDropdown()">
+                        {{"sites.layout.transferSalesManToWarehouse" | translate}}
+                    </a>
+                </li>
             </ul>
         </li>
 

@@ -282,7 +282,8 @@
       "transfer": "التحويلات",
       "transferWarehouseToSalesMan": "التحويلات من مخزن الى مندوب",
       "dispatch":"خط السير",
-      "bills":"الفواتير"
+      "bills":"الفواتير",
+      "transferSalesManToWarehouse": "التحويلات من مندوب الى مخزن"
     },
     "Category": {
       "category": "فئة",
@@ -521,7 +522,8 @@
       "createdDate":"تاريخ الإنشاء",
       "rejectReason":"سبب الرفض",
       "products":"المنتجات",
-      "status":"الحالة"
+      "status":"الحالة",
+      "brand":"الماركة"
     },
     "transferSalesManToSalesMan": {
       "transferSalesManToSalesMan": "تحويل من مندوب إلى مندوب",
@@ -624,7 +626,8 @@
       "failed":"فاشلة",
       "notDone":"لم تتم",
       "dispatchNumber":"رقم الرحلة",
-      "pastOrTodayOnly":"الرجاء اختيار تاريخ اليوم أو الماضي فقط"
+      "pastOrTodayOnly":"الرجاء اختيار تاريخ اليوم أو الماضي فقط",
+      "failedReason":"سبب الفشل"
     } ,
      "Invoice":{
       "invoice":"فاتورة",
@@ -667,6 +670,18 @@
        "totalWeight":"إجمالي الوزن",
        "finalTotal":"الإجمالي النهائي",
        "kg":"كجم"
+    } ,
+     "transferSalesManToWarehose":{
+      "title":"التحويلات من مندوب الى مخزن",
+      "defination":"تساعدك هذه الأداة في إدارة نقل مندوبي المبيعات إلى المستودعات بكفاءة، مما يمكنك من تصنيف المعلومات وتحديثها بسهولة لتوفير تجربة مستخدم منظمة بشكل جيد.",
+      "addTransferOperation":"أضف عملية نقل",
+      "Warehouse":"المخزن",
+      "SalesMan":"مندوب المبيعات",
+      "TransactionsStatus":"حالة المعاملات",
+      "transactionNumber":"رقم المعاملة",
+      "productsQuantity":"كمية المنتجات",
+      "createdDate":"تاريخ الإنشاء"
+
     }
   },
   "auth": {

@@ -52,4 +52,5 @@ export class createDispatchActualViewModel {
   salesManID:string;
   clientId:string;
   dispatchStatus:number;
+  failedReason:string;
 }

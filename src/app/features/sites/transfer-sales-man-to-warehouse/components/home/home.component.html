@@ -1,0 +1,158 @@
+<div class="row  p-3 cr3">
+
+    <div class="col-6 bg-gray-200 p-3 cr3">
+        <h4 class="text-lg font-semibold text-gray-900">{{"sites.transferSalesManToWarehose.title"|translate}}</h4>
+        <p class="text-sm text-gray-600 max-w-xl">
+            {{"sites.transferSalesManToWarehose.defination"|translate}}
+        </p>
+    </div>
+    <div class="col-6 d-flex justify-content-end align-items-center bg-gray-200 p-3 cr3">
+        <button class="bg-purple-500 py-2 px-4 text-white border-0 rounded" (click)="showCartDialog($event)">
+            {{"sites.transferSalesManToWarehose.addTransferOperation"|translate}}
+        </button>
+    </div>
+
+
+    <form [formGroup]="page.searchForm">
+        <div class="form-body p-3">
+            <div class="row g-2">
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="WarehouseId"
+                        label="sites.transferSalesManToWarehose.Warehouse" placeholder="sites.transferSalesManToWarehose.Warehouse" [items]="WarehouseList"></ng-control>
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="transactionStatus"
+                        label="sites.transferSalesManToWarehose.TransactionsStatus" placeholder="sites.transferSalesManToWarehose.TransactionsStatus"
+                        [items]="TransactionsStatus"></ng-control>
+
+                </div>
+                <div class="col-3">
+                    <ng-control [type]="controlType.SELECT" [form]="page.searchForm" control="SalesManID"
+                        label="sites.transferSalesManToWarehose.SalesMan" placeholder="sites.transferSalesManToWarehose.SalesMan" [items]="SalesMen"></ng-control>
+                </div>
+                <div class="col-3 d-flex align-items-end">
+                    <button class='color-brand-700 rb-btn  rb-btn-secondary rb-btn-sm  w-100' (click)="search()"
+                        [disabled]="page.searchForm.invalid || page.isSearching">
+                        <i class="uil uil-search"></i>
+                        <span class="rb-btn-text d-md-inline-block">
+                            {{'shared.search'|translate}}</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- Sidebar -->
+
+
+<!-- Overlay -->
+
+<div>
+
+
+    <div class="scrolled mt-3 h-100">
+        <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
+        <table class="table table-hover pointer" *ngIf="!page.isSearching">
+            <thead>
+
+                <tr class="th-header">
+
+
+                    <ng-container *ngFor="let colum of page.columns ;let i=index;">
+                        <th [class.pointer]="colum.Sortable" (click)="onSortClicked(colum)">
+                            {{colum.Title | translate}}
+                            <div *ngIf="colum.Sortable" class="d-inline-block"
+                                [ngClass]="(isColumnAscending(colum.Name)!=null) ? 'arrow-sort' : ''">
+                                <i class="uil uil-sort sort-icon"
+                                    [ngClass]="isColumnAscending(colum) ? 'sort-icon-ase' : 'sort-icon-des'"></i>
+                            </div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- No Data Found -->
+                <tr [hidden]="page.isSearching || items.length > 0">
+                    <td colspan="100%">
+                        <span>{{ 'shared.no-data-found' | translate }}</span>
+                    </td>
+                </tr>
+
+                <!-- Data Rows -->
+                <ng-container *ngFor="let item of items | paginate: page.options; let i = index">
+                    <tr [ngClass]="{ 'out-of-stock': item.quantity === 0 }">
+
+
+                        <td (click)="navigateToTransferDetails(item.id)">{{ i + 1 }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.transactionNumber }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.salesManName }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.warehouseName }}</td>
+                        <td (click)="navigateToTransferDetails(item.id)">{{item.productsQuantity}}
+                        <td (click)="navigateToTransferDetails(item.id)">{{ item.createdDate |date }}</td>
+                        <td>
+                            <!-- زر الموافقة -->
+                            <button class="no-border bg-green-500 cr3 color-gray-25 px-2"
+                                [disabled]="item.transactionStatus === 3" (click)="
+                item.transactionStatus === 1 &&
+                approveRequest(item, item.transactionStatus)
+              ">
+                                <img class="p-2" src="../assets/images/check.png" />
+                                {{"sites.transferSalesManToSalesMan.approve" | translate}}
+                            </button>
+
+                            <!-- زر الرفض -->
+                            <button class="m-2 no-border bg-red-500 cr3 color-gray-25 px-2"
+                                [disabled]="item.transactionStatus === 2" (click)="
+                item.transactionStatus === 1 &&
+                showRejectConfirmation(item)
+              ">
+                                <img class="p-2" src="../assets/images/close.png" />
+                                {{"sites.transferSalesManToSalesMan.reject" | translate}}
+                            </button>
+
+                        </td>
+                        <td>
+
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                                aria-label="Edit" (click)="editTransaction(item.id)">
+                            </button>
+                            <!-- <button class="bg-purple-100 py-2 px-2 color-purple-500 no-border cr3"
+                    (click)="openRestockModal(item, restockModal)" *ngIf="item.quantity === 0">
+                    ReStock
+                  </button> -->
+
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <ng-pagination [page]="page" (pageSizeChange)="onChangePageSize()" (pageChange)="getNextPrevData($event)">
+    </ng-pagination>
+</div>
+
+
+<ng-template #confirmRejectTemplate>
+    <div *ngIf="selectedItemReject">
+        <div class="modal-body modal-content text-center">
+            <p>{{"sites.transferWarehouseToSalesMan.rejectReason" | translate}}</p>
+            <textarea [(ngModel)]="selectedItemReject.rejectReason" class="form-control" rows="3"
+                [placeholder]="'sites.transferWarehouseToSalesMan.enter rejection reason' | translate">
+      </textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn cancel-btn me-auto" (click)="modalRef.hide()">
+                {{"sites.transferWarehouseToSalesMan.cancel" | translate}}
+            </button>
+            <button class="btn btn-without-icon bg-e5 ms-2" (click)="rejectRequest(); modalRef.hide()">
+                {{"sites.transferWarehouseToSalesMan.sendFeedback" | translate}}
+            </button>
+        </div>
+    </div>
+</ng-template>

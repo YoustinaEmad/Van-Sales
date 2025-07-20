@@ -292,7 +292,8 @@
       "transfer": "Transfers",
       "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
       "dispatch":"Dispatch",
-      "bills":"Invoices"
+      "bills":"Invoices",
+      "transferSalesManToWarehouse":"Transfer SalesMan To Warehouse"
     },
     "Category": {
       "category": "Category",
@@ -531,8 +532,8 @@
       "createdDate":"Created Date",
       "rejectReason":"Reject Reason",
       "products":"Products",
-      "status":"Status"
-      
+      "status":"Status",
+      "brand":"Brand"
     },
     "transferSalesManToSalesMan": {
       "transferSalesManToSalesMan": "Transfer SalesMan To SalesMan",
@@ -635,7 +636,8 @@
       "failed":"Failed",
       "notDone":"Not Done",
       "dispatchNumber":"Dispatch Number",
-      "pastOrTodayOnly":"Please select Past Date or Today Only"
+      "pastOrTodayOnly":"Please select Past Date or Today Only",
+      "failedReason":"Failed Reason"
     } ,
     "Invoice":{
       "invoice":"Invoice",
@@ -678,6 +680,18 @@
        "totalWeight":"Total Weight",
        "finalTotal":"Final Total",
 "kg":"KG"
+    } ,
+    "transferSalesManToWarehose":{
+      "title":"Transfer SalesMan to Warehouse",
+      "defination":"This tool helps you manage the transfer of salesmen to warehouses efficiently, allowing you to easily categorize and update information to ensure an organized user experience.",
+      "addTransferOperation":"Add Transfer Operation",
+      "Warehouse":"Warehouse",
+      "SalesMan":"SalesMan",
+      "TransactionsStatus":"Transactions Status",
+      "transactionNumber":"Transaction Number",
+      "productsQuantity":"Products Quantity",
+      "createdDate":"Created Date"
+
     }
   },
   "auth": {

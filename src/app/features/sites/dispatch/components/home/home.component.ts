@@ -345,7 +345,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       salesManID: [null, Validators.required],
       visitDate: [new Date(), [Validators.required,this.validateNotFutureDate]],
       clientId: [null, Validators.required],
-      dispatchStatus: [null, Validators.required]
+       dispatchStatus: [{ value: 2, disabled: true }],
+       failedReason: [null, Validators.required]
     });
 
     this.pageCreate.isPageLoaded = true;
