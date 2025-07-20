@@ -32,7 +32,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
   productForm: FormGroup;
   products: any[] = [];
   override controlType = ControlType;
-
+  selectedBrandId: string = '';
+  brands: any[] = [];
   cartProductsResult: AddSalesmanToSalesmanTransactionDetailsVM[] = [];
   filteredProducts = this.products;
   override searchViewModel: transferSalesManToSalesManSearchViewModel = new transferSalesManToSalesManSearchViewModel();
@@ -61,6 +62,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnInit(): void {
     this.initializePage();
     this.getSalesManList();
+    this.loadBrands();
 
   }
 
@@ -154,19 +156,47 @@ export class HomeComponent extends CrudIndexBaseUtils {
       }
     })
   }
-
   loadProducts() {
     const fromSalesmanId = this.pageCreate.form.get('fromSalesmanId')?.value;
     if (!fromSalesmanId) {
+      this.products = [];
       return;
     }
-    this._transfersWarehouseToWarehouseServiceService.getProducts(fromSalesmanId).subscribe((res: any) => {
+  
+    this._transfersWarehouseToWarehouseServiceService
+      .getProducts(fromSalesmanId, this.selectedBrandId) // ⬅️ هنا التعديل!
+      .subscribe((res: any) => {
+        if (res.isSuccess) {
+          this.products = res.data || [];
+          if (this.selectedBrandId) {
+            this.filteredProducts = this.products.filter(p => p.brandId === this.selectedBrandId);
+          } else {
+            this.filteredProducts = this.products;
+          }
+        }
+      });
+  }
+  
+
+  loadBrands() {
+    this._transfersWarehouseToWarehouseServiceService.getbrands().subscribe(res => {
       if (res.isSuccess) {
-        this.products = res.data;
-        this.filteredProducts = this.products;
+        this.brands = res.data || [];
       }
     });
   }
+
+  onBrandChange(event: any) {
+    this.selectedBrandId = event?.id || null;
+
+    const fromSalesmanId = this.pageCreate.form.get('fromSalesmanId')?.value;
+    if (fromSalesmanId) {
+      this.loadProducts();
+    } else {
+      this.products = [];
+    }
+  }
+
 
 
   @ViewChild('confirmRejectTemplate', { static: false }) confirmRejectTemplate: any;
@@ -245,6 +275,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   createForm() {
     this.productForm = this._sharedService.formBuilder.group({
+      selectedBrand: [null],
       selectedProduct: [null]
     });
 
@@ -276,7 +307,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
   saveRequest(): void {
-    
+
     if (this.pageCreate.isSaving) return;
 
     if (this.pageCreate.form.invalid) {
@@ -311,7 +342,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
           this.cartItems = [];
           this.pageCreate.form.reset();
           this.search();
-           this.pageCreate.isSaving = false;
+          this.pageCreate.isSaving = false;
         }
       },
       error: () => {
@@ -328,24 +359,24 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.cartItems.splice(index, 1);
 
   }
-//   increaseQuantity(index: number) {
-//     const item = this.cartItems[index];
-//     if (item.quantity < item.maxQuantity) {
-//       item.quantity++;
-//         this.cartItems = [...this.cartItems];
-//     }
-//   }
+  //   increaseQuantity(index: number) {
+  //     const item = this.cartItems[index];
+  //     if (item.quantity < item.maxQuantity) {
+  //       item.quantity++;
+  //         this.cartItems = [...this.cartItems];
+  //     }
+  //   }
 
-//  decreaseQuantity(index: number) {
-//   const item = this.cartItems[index];
-//   if (item.quantity > 1) {
-//     item.quantity--;
-//     this.cartItems = [...this.cartItems];
-//     this.cdr.detectChanges(); 
-//   }
-// }
+  //  decreaseQuantity(index: number) {
+  //   const item = this.cartItems[index];
+  //   if (item.quantity > 1) {
+  //     item.quantity--;
+  //     this.cartItems = [...this.cartItems];
+  //     this.cdr.detectChanges(); 
+  //   }
+  // }
 
-increaseQuantity(index: number): void {
+  increaseQuantity(index: number): void {
     const item = this.cartItems[index];
     const product = this.products.find(p => p.id === item.productId);
     if (product && item.quantity < product.maxQuantity) {
@@ -355,9 +386,9 @@ increaseQuantity(index: number): void {
 
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity > 1) {
-      this.cartItems[index].quantity -= 1;
-    }
-  }
+      this.cartItems[index].quantity -= 1;
+    }
+  }
   editSalesMan(id: string) {
     this.pageCreate.isEdit = true;
     this.id = id;
@@ -378,16 +409,16 @@ increaseQuantity(index: number): void {
           this.item.id = this.id;
 
 
-         this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => {
-          const product = this.products.find(p => p.id === detail.productId);
-          return {
-            productId: detail.productId,
-            productName: detail.productName,
-            quantity: detail.quantity,
-            storageType: detail.storageType,
-           maxQuantity: product ? product.maxQuantity : null 
-          };
-        });
+          this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => {
+            const product = this.products.find(p => p.id === detail.productId);
+            return {
+              productId: detail.productId,
+              productName: detail.productName,
+              quantity: detail.quantity,
+              storageType: detail.storageType,
+              maxQuantity: product ? product.maxQuantity : null
+            };
+          });
 
 
           this.createForm();
@@ -406,11 +437,11 @@ increaseQuantity(index: number): void {
       },
     });
   }
-navigateToTransferDetails(id: string) {
-     this._router.navigate(['/sites/transferSalesManToSalesMan/details', id]);
+  navigateToTransferDetails(id: string) {
+    this._router.navigate(['/sites/transferSalesManToSalesMan/details', id]);
   }
 
-differentSalesManValidator(): ValidatorFn {
+  differentSalesManValidator(): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => {
       const from = group.get('fromSalesmanId')?.value;
       const to = group.get('toSalesManId')?.value;
@@ -420,24 +451,24 @@ differentSalesManValidator(): ValidatorFn {
         : null;
     };
   }
-  
 
-onQuantityInputChange(value: string, index: number): void {
-  let num = Number(value);
-  if (isNaN(num) || num < 1) {
-    num = 1;
+
+  onQuantityInputChange(value: string, index: number): void {
+    let num = Number(value);
+    if (isNaN(num) || num < 1) {
+      num = 1;
+    }
+
+    this.cartItems[index].quantity = num;
   }
-
-  this.cartItems[index].quantity = num;
-}
-get isSaveDisabled(): boolean {
-  return (
-    this.pageCreate.form?.invalid ||
-    this.page.isSaving ||
-    this.cartItems.length === 0 ||
-    this.cartItems.some(item => item.quantity > item.maxQuantity)
-  );
-}
+  get isSaveDisabled(): boolean {
+    return (
+      this.pageCreate.form?.invalid ||
+      this.page.isSaving ||
+      this.cartItems.length === 0 ||
+      this.cartItems.some(item => item.quantity > item.maxQuantity)
+    );
+  }
 
 
 }
