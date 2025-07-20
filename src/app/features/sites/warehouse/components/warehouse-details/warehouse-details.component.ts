@@ -8,6 +8,7 @@ import { CRUDCreatePage } from 'src/app/shared/classes/crud-create.model';
 import { Validators } from '@angular/forms';
 import { CRUDIndexPage } from 'src/app/shared/models/crud-index.model';
 import { CrudIndexBaseUtils } from 'src/app/shared/classes/crud-index.utils';
+import { SelectBrandList } from '../../../invoice/interface/invoice-view-model';
 
 @Component({
   selector: 'app-warehouse-details',
@@ -24,9 +25,10 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
   cartVisible = false;
   products: any[] = [];
   cartItems: { productId: string; productName: string; quantity: number }[] = [];
-
+  selectedBrandId: string = '';
+  brands: any[] = [];
   productForm = this._sharedService.formBuilder.group({
-    selectedProduct: [null, Validators.required]
+    selectedBrand: [null], selectedProduct: [null]
   });
 
   WarehouseType = [
@@ -49,6 +51,7 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
     if (this.id) {
       this.getWarehouseDetails(this.id);
     }
+    this.loadBrands();
   }
 
   getWarehouseTypeName(id: number): string {
@@ -76,12 +79,27 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
   }
 
   loadProducts() {
-    this._WarehouseService.getProducts().subscribe((res: any) => {
+    this._WarehouseService.getProducts(this.selectedBrandId).subscribe((res: any) => {
       if (res.isSuccess) {
         this.products = res.data;
       }
     });
   }
+
+  loadBrands() {
+    this._WarehouseService.getbrands().subscribe(res => {
+      if (res.isSuccess) {
+        this.brands = res.data;
+      }
+    });
+  }
+  onBrandChange(event: any) {
+    this.selectedBrandId = event?.id || null;
+    this.loadProducts();
+  }
+
+
+
 
   onProductSelected(event: any): void {
     const selectedProductId = this.productForm.get('selectedProduct')?.value;
@@ -154,10 +172,10 @@ export class WarehouseDetailsComponent extends CrudIndexBaseUtils {
   }
 
 
-onQuantityInputChange(newQty: number, index: number) {
-  if (newQty < 1) {
-    this.cartItems[index].quantity = 1;
+  onQuantityInputChange(newQty: number, index: number) {
+    if (newQty < 1) {
+      this.cartItems[index].quantity = 1;
+    }
   }
-}
 
 }
