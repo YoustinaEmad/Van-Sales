@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransferService } from '../../service/transfer.service';
 import { transferCreateViewModel } from '../../interface/transfer';
 
@@ -22,7 +22,7 @@ item: transferCreateViewModel;
     { id: 1, name: 'Transaction' },
     { id: 2, name: 'selling' },
   ]
-  constructor(private route: ActivatedRoute, private _TransferService: TransferService) {}
+  constructor(private route: ActivatedRoute, private _TransferService: TransferService , private router: Router) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -54,4 +54,9 @@ item: transferCreateViewModel;
     const storageType = this.StorageType.find(s => s.id === storageTypeId);
     return storageType ? storageType.name.trim() : '';
   }
+
+
+  goToProductDetails(productId: string) {
+  this.router.navigate(['/sites/product/details', productId]);
+}
 }

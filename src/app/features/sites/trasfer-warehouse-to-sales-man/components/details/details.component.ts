@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { salesManToSalesManCreateViewNodel } from '../../../transfer-sales-man-to-sales-man/interface/transfer-sales-man-to-sales-man';
 import { WarehouseToSalesmanServiceService } from '../../service/warehouse-to-salesman-service.service';
 
@@ -20,7 +20,7 @@ item: salesManToSalesManCreateViewNodel;
     { id: 1, name: 'Transaction' },
     { id: 2, name: 'selling' },
   ]
-  constructor(private route: ActivatedRoute, private _WarehouseToSalesmanServiceService: WarehouseToSalesmanServiceService) {}
+  constructor(private route: ActivatedRoute, private _WarehouseToSalesmanServiceService: WarehouseToSalesmanServiceService,private router: Router) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -52,4 +52,7 @@ item: salesManToSalesManCreateViewNodel;
     const storageType = this.StorageType.find(s => s.id === storageTypeId);
     return storageType ? storageType.name.trim() : '';
   }
+  goToProductDetails(productId: string) {
+  this.router.navigate(['/sites/product/details', productId]);
+}
 }

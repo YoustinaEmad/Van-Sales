@@ -59,6 +59,7 @@
             (mouseover)="hover = i" 
             (mouseleave)="hover = -1"
             [ngStyle]="hover === i ? {'background-color': '#e2e6ea'} : {}"
+            (click)="goToProductDetails(product.productID)"
           >
             <td class="text-center">{{ i + 1 }}</td>
             <td>{{ product.productName }}</td>
