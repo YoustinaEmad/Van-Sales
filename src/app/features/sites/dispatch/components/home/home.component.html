@@ -127,9 +127,11 @@
                   </div>
                   <div class="row p-2">
                     <ng-control [type]="controlType.SELECT" [form]="pageCreate.form" control="dispatchStatus"
-                      label="sites.dispatch.status" placeholder="sites.dispatch.status" [items]="ActualDispatchStatus">
+                      label="sites.dispatch.status" placeholder="sites.dispatch.failed" [items]="ActualDispatchStatus">
                     </ng-control>
                   </div>
+
+
 
                   <div class="row p-2" style="font-size: 12px;">
                     <p class="form-label ">
@@ -140,7 +142,14 @@
                     </ng-control>
 
                   </div>
+                  <div class="row p-2">
+                    <ng-control [form]="pageCreate.form" control="failedReason"
+                      label="sites.dispatch.failedReason" placeholder="sites.dispatch.failedReason" >
+                    </ng-control>
 
+
+                  
+                  </div>
                 </div>
 
                 <div class="sidebar-footer d-flex justify-content-end gap-2 mt-4">

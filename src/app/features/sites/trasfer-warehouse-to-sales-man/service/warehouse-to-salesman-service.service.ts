@@ -63,8 +63,8 @@ export class WarehouseToSalesmanServiceService {
     else return this._apiService.post(`/StartWarehouseToSalesmanTransactionEndPoint/StartWarehouseToSalesmanTransaction`, body)
   }
 
-  Approved(ID:string) {
-    return this._apiService.update(`/ApproveWarehouseToSalesmanTransactionEndPoint/ApproveWarehouseToSalesmanTransaction`, {ID});
+  Approved(id:string) {
+    return this._apiService.update(`/ApproveWarehouseToSalesmanTransactionEndPoint/ApproveWarehouseToSalesmanTransaction`, {id});
   }
   Rejected(body:RejectReasonViewModel) {
     return this._apiService.update(`/RejectWarehouseToSalesmanTransactionEndPoint/RejectWarehouseToSalesmanTransaction`, body);
