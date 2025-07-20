@@ -728,7 +728,9 @@
       "Select Location": "حدد الموقع",
       "Upload New Image": "اضافة صورة جديدة",
       "Error Uploading": "خطا فى التحميل",
-      "clientType": "نوع العميل"
+      "clientType": "نوع العميل",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول"
     }
   }
 }

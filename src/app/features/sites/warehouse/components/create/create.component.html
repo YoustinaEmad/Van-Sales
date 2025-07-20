@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-between align-items-center py-2 ">
   <p class="mb-0 color-gray-600 ts-3"><img src="/assets/icons/keyboard_backspace.svg" class="pointer"
-      routerLink="/sites/warehouse"> {{(page.isEdit?'shared.edit':'shared.create')|translate}} {{"sites.Warehouse.warehouse"|translate}}</p>
+      routerLink="/sites/warehouse"> {{(page.isEdit?'shared.edit':'shared.create')|translate}}
+    {{"sites.Warehouse.warehouse"|translate}}</p>
   <button class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3" (click)="Save()"
     [disabled]="page.form?.invalid || page.isSaving">
     <span class="rb-btn-text">{{(page.isEdit?'shared.edit':'shared.create')|translate}}</span>
@@ -12,23 +13,26 @@
   <form [formGroup]="page.form">
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col">
-        <ng-control [form]="page.form" control="name" label="sites.Warehouse.warehouse" placeholder="sites.Warehouse.warehouse"></ng-control>
+        <ng-control [form]="page.form" control="name" label="sites.Warehouse.warehouse"
+          placeholder="sites.Warehouse.warehouse"></ng-control>
       </div>
       <div class="col">
-        <ng-control [form]="page.form" control="code" label="sites.Warehouse.code" placeholder="sites.Warehouse.code"></ng-control>
+        <ng-control [form]="page.form" control="code" label="sites.Warehouse.code"
+          placeholder="sites.Warehouse.code"></ng-control>
       </div>
       <div class="col">
-        <ng-control [form]="page.form" control="data" label="sites.Warehouse.data" placeholder="sites.Warehouse.data"></ng-control>
+        <ng-control [form]="page.form" control="data" label="sites.Warehouse.data"
+          placeholder="sites.Warehouse.data"></ng-control>
       </div>
       <div class="col">
-        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="warehouseType" label="sites.Warehouse.warehouseType"
-          placeholder="sites.Warehouse.warehouseType" [items]="WarehouseType">
+        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="warehouseType"
+          label="sites.Warehouse.warehouseType" placeholder="sites.Warehouse.warehouseType" [items]="WarehouseType">
         </ng-control>
       </div>
       <div class="col">
         <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="governorateId"
-          (change)="onGovernorateChange($event.id)" label="sites.Warehouse.governorate" placeholder="sites.Warehouse.governorate"
-          [items]="governorateList">
+          (change)="onGovernorateChange($event.id)" label="sites.Warehouse.governorate"
+          placeholder="sites.Warehouse.governorate" [items]="governorateList">
         </ng-control>
       </div>
       <div class="col">
@@ -37,21 +41,36 @@
         </ng-control>
       </div>
       <div class="col">
-        <ng-control [form]="page.form" control="street" label="sites.Warehouse.street" placeholder="sites.Warehouse.street"></ng-control>
+        <ng-control [form]="page.form" control="street" label="sites.Warehouse.street"
+          placeholder="sites.Warehouse.street"></ng-control>
       </div>
       <div class="col">
-        <ng-control [form]="page.form" control="landmark" label="sites.Warehouse.landmark" placeholder="sites.Warehouse.landmark"></ng-control>
+        <ng-control [form]="page.form" control="landmark" label="sites.Warehouse.landmark"
+          placeholder="sites.Warehouse.landmark"></ng-control>
       </div>
       <div class="col">
         <ng-control [form]="page.form" control="buildingData" label="sites.Warehouse.buildingData"
           placeholder="sites.Warehouse.buildingData"></ng-control>
       </div>
-     
-     
+
+      <div class="col">
+        <ng-control [form]="page.form" control="latitude" label="sites.Warehouse.latitude"
+          placeholder="sites.Warehouse.latitude">
+        </ng-control>
+      </div>
+      <div class="col">
+        <ng-control [form]="page.form" control="longitude" label="sites.Warehouse.longitude"
+          placeholder="sites.Warehouse.longitude">
+        </ng-control>
+      </div>
     </div>
-    <div class="col-6"  >
+
+
+    <div class="col-6">
       <label for="map" class="form-label">{{"sites.Warehouse.selectLocation"|translate}}</label>
       <div id="map" style="height: 300px; width: 65%;"></div>
     </div>
+
+
   </form>
 </ng-container>

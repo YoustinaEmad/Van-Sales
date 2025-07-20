@@ -292,7 +292,7 @@
       "transfer": "Transfers",
       "transferWarehouseToSalesMan": "Transfer Warehouse To SalesMan",
       "dispatch":"Dispatch",
-      "bills":"Incoices"
+      "bills":"Invoices"
     },
     "Category": {
       "category": "Category",
@@ -739,7 +739,9 @@
       "Select Location": "Select Location",
       "Upload New Image": "Upload New Image",
       "Error Uploading": "Error Uploading",
-      "clientType": "Client Type"
+      "clientType": "Client Type",
+      "latitude":"Latitude",
+      "longitude":"Longitude"
     }
   }
 }
