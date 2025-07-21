@@ -374,7 +374,7 @@
       "retailPrice": "سعر التجزئة",
       "wholesalePrice": "سعر الجملة",
       "vIPClientsPrice": "سعر عملاء B2C",
-      "netWeightPerLitre": "الوزن الصافي لكل لتر",
+"netWeightPerKG": "الوزن الصافي لكل كيلو جرام",
       "weightPerKG": "الوزن لكل كجم",
       "futureDate": "الرجاء تحديد تاريخ مستقبلي.",
       "brandName": "اسم الماركة",
@@ -408,7 +408,10 @@
       " No warehouse data available.":"لا تتوفر بيانات المستودع.",
       "activ":"مفعل",
       "disActiv":"غير مفعل",
-      "EGP":"جنيه مصري"
+      "EGP":"جنيه مصري",
+  "totalNetWeightPerKG": "إجمالي الوزن الصافي بالكيلو",
+  "totalWeightPerKG": "إجمالي الوزن بالكيلو",
+  "totalPackSize": "إجمالي حجم العبوة"
     },
     "ProductGroup": {
       "productGroup": "مجموعة المنتجات",

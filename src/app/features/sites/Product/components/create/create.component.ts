@@ -95,12 +95,12 @@ export class CreateComponent implements OnInit, OnDestroy {
     { id: 1, name: 'HighGrade' },
     { id: 2, name: 'LowGrade' },
   ]
-  ProductStatus=
-  [
-    { id: 1, name: 'Available' },
-    { id: 2, name: 'Unavailable' },
-    
-  ]
+  ProductStatus =
+    [
+      { id: 1, name: 'Available' },
+      { id: 2, name: 'Unavailable' },
+
+    ]
 
   // Tabs = [
   //   {
@@ -127,7 +127,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   //     isSelected: false,
   //   },
   // ];
-Tabs:any[]=[];
+  Tabs: any[] = [];
   // Variable to hold the uploaded image
   selectedImage: string | null = null;
 
@@ -176,7 +176,7 @@ Tabs:any[]=[];
       if (params.has('id')) {
         this.id = params.get('id');
         this.page.isEdit = true;
-        
+
       }
     });
 
@@ -244,15 +244,21 @@ Tabs:any[]=[];
       {
         name: [this.item.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
         code: [this.item.code, [Validators.required, Validators.maxLength(50)]],
-        smallerUnitsOfMeasurements: [this.item.smallerUnitsOfMeasurements, [Validators.required, Validators.min(1)]],
+        smallerUnitsOfMeasurements: [this.item.smallerUnitsOfMeasurements, Validators.required],
         wholesalePrice: [this.item.wholesalePrice || '', Validators.required],
         retailPrice: [this.item.retailPrice, [Validators.required, Validators.min(1)]],
         numOfUnitPerCartoon: [this.item.numOfUnitPerCartoon, [Validators.required, Validators.min(1)]],
         vipClientsPrice: [this.item.vipClientsPrice, [Validators.required, Validators.min(1)]],
         safetyStocks: [this.item.safetyStocks, [Validators.required, Validators.min(1)]],
         packSize: [this.item.packSize, [Validators.required, Validators.min(1)]],
-        netWeightPerLitre: [this.item.netWeightPerLitre, [Validators.required, Validators.min(1)]],
-        weightPerKG: [this.item.weightPerKG, [Validators.required, Validators.min(1)]],
+  
+        // 🛑 القيم المحسوبة → معطلة
+        netWeightPerKG: [{ value: this.item.netWeightPerKG, disabled: true }, [Validators.required]],
+        weightPerKG: [{ value: this.item.weightPerKG, disabled: true }, [Validators.required]],
+        totalPackSize: [{ value: this.item.totalPackSize, disabled: true }, Validators.required],
+        totalWeightPerKG: [{ value: this.item.totalWeightPerKG, disabled: true }, Validators.required],
+        totalNetWeightPerKG: [{ value: this.item.totalNetWeightPerKG, disabled: true }, Validators.required],
+  
         unit: [this.item.unit, Validators.required],
         grade: [this.item.grade, Validators.required],
         brandID: [this.item.brandID, Validators.required],
@@ -264,24 +270,51 @@ Tabs:any[]=[];
       { validators }
     );
   
-    this.page.form.get('weightPerKG').valueChanges.subscribe(value => {
-      const calculated = Number(value) * 0.9 || 0;
-      this.page.form.get('netWeightPerLitre').setValue(calculated, { emitEvent: false });
+    // ✅ الحسبة التلقائية
+    this.page.form.get('packSize').valueChanges.subscribe(packSizeValue => {
+      const packSize = Number(packSizeValue) || 0;
+  
+      const weightPerKG = packSize;
+      this.page.form.get('weightPerKG').setValue(weightPerKG, { emitEvent: false });
+  
+      const netWeightPerKG = weightPerKG * 0.9;
+      this.page.form.get('netWeightPerKG').setValue(netWeightPerKG, { emitEvent: false });
+  
+      const numUnits = Number(this.page.form.get('numOfUnitPerCartoon').value) || 0;
+  
+      const totalPackSize = packSize * numUnits;
+      const totalWeightPerKG = weightPerKG * numUnits;
+      const totalNetWeightPerKG = netWeightPerKG * numUnits;
+  
+      this.page.form.get('totalPackSize').setValue(totalPackSize, { emitEvent: false });
+      this.page.form.get('totalWeightPerKG').setValue(totalWeightPerKG, { emitEvent: false });
+      this.page.form.get('totalNetWeightPerKG').setValue(totalNetWeightPerKG, { emitEvent: false });
     });
   
-    this.page.form.get('smallerUnitsOfMeasurements').valueChanges.subscribe(() => {
-      this.updatePackSize();
-    });
-    this.page.form.get('numOfUnitPerCartoon').valueChanges.subscribe(() => {
-      this.updatePackSize();
+    this.page.form.get('numOfUnitPerCartoon').valueChanges.subscribe(numUnitsValue => {
+      const packSize = Number(this.page.form.get('packSize').value) || 0;
+      const numUnits = Number(numUnitsValue) || 0;
+  
+      const weightPerKG = packSize;
+      this.page.form.get('weightPerKG').setValue(weightPerKG, { emitEvent: false });
+  
+      const netWeightPerKG = weightPerKG * 0.9;
+      this.page.form.get('netWeightPerKG').setValue(netWeightPerKG, { emitEvent: false });
+  
+      const totalPackSize = packSize * numUnits;
+      const totalWeightPerKG = weightPerKG * numUnits;
+      const totalNetWeightPerKG = netWeightPerKG * numUnits;
+  
+      this.page.form.get('totalPackSize').setValue(totalPackSize, { emitEvent: false });
+      this.page.form.get('totalWeightPerKG').setValue(totalWeightPerKG, { emitEvent: false });
+      this.page.form.get('totalNetWeightPerKG').setValue(totalNetWeightPerKG, { emitEvent: false });
     });
   
-
     this.page.form.get('unit').valueChanges.subscribe(unitValue => {
       const selectedUnit = this.ProductUnitList.find(u => u.id === unitValue)?.name;
-    
+  
       const numUnitsControl = this.page.form.get('numOfUnitPerCartoon');
-    
+  
       if (selectedUnit === 'Pail' || selectedUnit === 'Drum') {
         numUnitsControl.setValue(1, { emitEvent: false });
         numUnitsControl.disable({ emitEvent: false });
@@ -289,17 +322,15 @@ Tabs:any[]=[];
         numUnitsControl.enable({ emitEvent: false });
       }
     });
-    
+  
     this.page.isPageLoaded = true;
   }
   
-  updatePackSize() {
-    const smallerUnits = this.page.form.get('smallerUnitsOfMeasurements').value || 0;
-    const numUnits = this.page.form.get('numOfUnitPerCartoon').value || 0;
-    const calculated = smallerUnits * numUnits;
-    this.page.form.get('packSize').setValue(calculated, { emitEvent: false });
-  }
-  
+
+
+
+
+
 
 
   Save() {
@@ -319,10 +350,17 @@ Tabs:any[]=[];
     //   ).toISOString();
     // }
 
+  // ✅ إضافة القيم المعطّلة يدويًا
+  this.item.totalPackSize = this.page.form.get('totalPackSize').value;
+  this.item.totalWeightPerKG = this.page.form.get('totalWeightPerKG').value;
+  this.item.totalNetWeightPerKG = this.page.form.get('totalNetWeightPerKG').value;
+  this.item.weightPerKG = this.page.form.get('weightPerKG').value;
+  this.item.netWeightPerKG = this.page.form.get('netWeightPerKG').value;
     this._productService.postOrUpdate(this.item).subscribe({
       next: (res) => {
         this.page.isSaving = false;
         this.page.responseViewModel = res;
+        
         this._sharedService.showToastr(res);
         if (res.isSuccess) {
           console.log(res)
@@ -346,16 +384,16 @@ Tabs:any[]=[];
       item.isSelected = item.ID === tabID;
     });
   }
-getAllBrands() {
+  getAllBrands() {
     this._productService.getBrands().subscribe({
       next: (res) => {
         if (res.isSuccess) {
           this.Brands = res.data;
-        } 
+        }
       }
     });
   }
-  
+
   numberOnly(event: any) {
     return this._sharedService.numberOnly(event);
   }

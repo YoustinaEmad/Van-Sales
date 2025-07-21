@@ -51,15 +51,16 @@
         </div>
       </div>
 
-      <!-- Card: Dimensions -->
-      <div class="col-md-6 col-xl-4">
-        <div class="card rounded-4 shadow-sm p-3 h-100">
-          <h6 class="text-purple-700 mb-3">📏 {{"sites.product.dimensions"|translate}}</h6>
-          <p><strong>{{"sites.product.packSize"|translate}}:</strong> {{ product.packSize }}</p>
-          <p><strong>{{"sites.product.netWeight(L)"|translate}}:</strong> {{ product.netWeightPerLitre }}</p>
-          <p><strong>{{"sites.product.weight(KG)"|translate}}:</strong> {{ product.weightPerKG }}</p>
+        <!-- Card: Total Stock Summary -->
+        <div class="col-md-6 col-xl-4">
+          <div class="card rounded-4 shadow-sm p-3 h-100 bg-light">
+            <h6 class="text-purple-700 mb-3">📦 {{"sites.product.totalStock"|translate}}</h6>
+            <p class="mb-2"><strong>{{"sites.product.totalQuantity"|translate}}:</strong> {{ product.totalQuantity }}</p>
+            <p class="mb-0"><strong>{{"sites.product.totalWeight"|translate}}:</strong> {{ product.totalWeight }} KG</p>
+          </div>
         </div>
-      </div>
+  
+  
 
       <!-- Card: Classification -->
       <div class="col-md-6 col-xl-4">
@@ -85,17 +86,21 @@
       <div class="col-md-6 col-xl-4">
         <div class="card rounded-4 shadow-sm p-3 h-100">
           <h6 class="text-purple-700 mb-3">📌 {{"sites.product.otherInfo"|translate}}</h6>
-          <p><strong>{{"sites.product.expiryDate"|translate}}:</strong> {{ product.expiryDate | date }}</p>
           <p><strong>{{"sites.product.API"|translate}}:</strong> {{ product.productAPI }}</p>
         </div>
       </div>
 
-      <!-- Card: Total Stock Summary -->
+    
+      <!-- Card: Dimensions -->
       <div class="col-md-6 col-xl-4">
-        <div class="card rounded-4 shadow-sm p-3 h-100 bg-light">
-          <h6 class="text-purple-700 mb-3">📦 {{"sites.product.totalStock"|translate}}</h6>
-          <p class="mb-2"><strong>{{"sites.product.totalQuantity"|translate}}:</strong> {{ product.totalQuantity }}</p>
-          <p class="mb-0"><strong>{{"sites.product.totalWeight"|translate}}:</strong> {{ product.totalWeight }} KG</p>
+        <div class="card rounded-4 shadow-sm p-3 h-100">
+          <h6 class="text-purple-700 mb-3">📏 {{"sites.product.dimensions"|translate}}</h6>
+          <p><strong>{{"sites.product.packSize"|translate}}:</strong> {{ product.packSize }}</p>
+          <p><strong>{{"sites.product.weightPerKG"|translate}}:</strong> {{ product.weightPerKG }}</p>
+          <p><strong>{{"sites.product.netWeightPerKG"|translate}}:</strong> {{ product.netWeightPerKG }}</p>
+          <p><strong>{{"sites.product.totalPackSize"|translate}}:</strong> {{ product.totalPackSize }}</p>
+          <p><strong>{{"sites.product.totalWeightPerKG"|translate}}:</strong> {{ product.totalWeightPerKG }}</p>
+          <p><strong>{{"sites.product.totalNetWeightPerKG"|translate}}:</strong> {{ product.totalNetWeightPerKG }}</p>
         </div>
       </div>
 

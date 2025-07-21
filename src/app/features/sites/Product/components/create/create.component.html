@@ -83,24 +83,28 @@
                 <ng-control [form]="page.form" control="safetyStocks" label="sites.product.safetyStocks"
                   placeholder="sites.product.safetyStocks" (keypress)="numberOnly($event)"></ng-control>
               </div>
+
               <div class="col-4">
-                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit"
-                  placeholder="sites.product.unit" [items]="ProductUnitList"></ng-control>
-              </div>              <div class="col-4">
                 <ng-control [form]="page.form" control="smallerUnitsOfMeasurements"
                   label="sites.product.smallerUnitsOfMeasurements"
-                  placeholder="sites.product.smallerUnitsOfMeasurements" (keypress)="numberOnly($event)"></ng-control>
+                  placeholder="sites.product.smallerUnitsOfMeasurements"></ng-control>
               </div>
 
               <div class="col-4">
-                <ng-control [form]="page.form" control="numOfUnitPerCartoon" label="sites.product.numOfUnitPerCartoon"
-                  placeholder="sites.product.numOfUnitPerCartoon" (keypress)="numberOnly($event)"></ng-control>
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade"
+                  label="sites.product.grade" placeholder="sites.product.grade" [items]="Grade"></ng-control>
               </div>
 
               <div class="col-4">
-                <ng-control [form]="page.form" control="packSize" label="sites.product.packSize"
-                  placeholder="sites.product.packSize" (keypress)="numberOnly($event)"></ng-control>
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productStatus"
+                  label="sites.product.productStatus" placeholder="sites.product.productStatus"
+                  [items]="ProductStatus"></ng-control>
               </div>
+              <div class="col-4">
+                <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandID"
+                  label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"></ng-control>
+              </div>
+
             </div>
           </form>
         </div>
@@ -131,7 +135,20 @@
         <!-- Other Data Tab -->
         <div *ngIf="selectedTab === TabEnum.Other" class="p-4  ">
           <div class="row g-4">
-            
+
+            <div class="col-4">
+              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="unit" label="sites.product.unit"
+                placeholder="sites.product.unit" [items]="ProductUnitList"></ng-control>
+            </div>
+            <div class="col-4">
+              <ng-control [form]="page.form" control="numOfUnitPerCartoon" label="sites.product.numOfUnitPerCartoon"
+                placeholder="sites.product.numOfUnitPerCartoon" (keypress)="numberOnly($event)"></ng-control>
+            </div>
+
+            <div class="col-4">
+              <ng-control [form]="page.form" control="packSize" label="sites.product.packSize"
+                placeholder="sites.product.packSize" (keypress)="numberOnly($event)"></ng-control>
+            </div>
 
             <div class="col-4">
               <ng-control [form]="page.form" control="weightPerKG" label="sites.product.weightPerKG"
@@ -140,28 +157,23 @@
 
             </div>
             <div class="col-4">
-              <ng-control [form]="page.form" control="netWeightPerLitre" label="sites.product.netWeightPerLitre"
-                placeholder="sites.product.netWeightPerLitre" (keypress)="numberOnly($event)"></ng-control>
-
+              <ng-control [form]="page.form" control="totalPackSize" label="sites.product.totalPackSize"
+                placeholder="sites.product.totalPackSize" (keypress)="numberOnly($event)"></ng-control>
             </div>
-
-
-
-           
             <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="grade"
-                label="sites.product.grade" placeholder="sites.product.grade" [items]="Grade"></ng-control>
+              <ng-control [form]="page.form" control="netWeightPerKG" label="sites.product.netWeightPerKG"
+                placeholder="sites.product.netWeightPerKG" (keypress)="numberOnly($event)"></ng-control>
             </div>
 
             <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="productStatus"
-                label="sites.product.productStatus" placeholder="sites.product.productStatus"
-                [items]="ProductStatus"></ng-control>
+              <ng-control [form]="page.form" control="totalWeightPerKG" label="sites.product.totalWeightPerKG"
+                placeholder="sites.product.totalWeightPerKG" (keypress)="numberOnly($event)"></ng-control>
             </div>
             <div class="col-4">
-              <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="brandID"
-                label="sites.product.brand" placeholder="sites.product.brand" [items]="Brands"></ng-control>
+              <ng-control [form]="page.form" control="totalNetWeightPerKG" label="sites.product.totalNetWeightPerKG"
+                placeholder="sites.product.totalNetWeightPerKG" (keypress)="numberOnly($event)"></ng-control>
             </div>
+
           </div>
         </div>
       </div>

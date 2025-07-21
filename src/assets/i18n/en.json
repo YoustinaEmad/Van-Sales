@@ -384,7 +384,7 @@
       "retailPrice": "Retail Price",
       "wholesalePrice": "Wholesale Price",
       "vIPClientsPrice": "B2C Clients Price",
-      "netWeightPerLitre": "Net Weight Per Litre",
+      "netWeightPerKG": "Net Weight Per KG",
       "weightPerKG": "weight Per KG",
       "futureDate": "Please select a future date.",
       "brandName": "Brand Name",
@@ -418,7 +418,10 @@
       "No warehouse data available.":" No warehouse data available",
         "activ":"Active",
       "disActiv":"DisActive",
-      "EGP":"EGP"
+      "EGP":"EGP",
+      "totalNetWeightPerKG":"TotalNetWeightPerKG",
+      "totalWeightPerKG":"TotalWeightPerKG",
+      "totalPackSize":"TotalPackSize"
     },
     "ProductGroup": {
       "productGroup": "ProductGroup",

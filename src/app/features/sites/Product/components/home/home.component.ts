@@ -88,7 +88,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "productGroupName", Title: "sites.product.productGroupName", Selectable: false, Sortable: true },
       { Name: "grade", Title: "sites.product.grade", Selectable: false, Sortable: true },
       { Name: "productStatus", Title: "sites.product.productStatus", Selectable: false, Sortable: true },
-      // { Name: "expiryDate", Title: "sites.product.expiration", Selectable: false, Sortable: true },
+      { Name: "netWeightPerKG", Title: "sites.product.netWeightPerKG", Selectable: false, Sortable: true },
+      { Name: "totalPackSize", Title: "sites.product.totalPackSize", Selectable: false, Sortable: true },
+      { Name: "totalWeightPerKG", Title: "sites.product.totalWeightPerKG", Selectable: false, Sortable: true },
+      { Name: "totalNetWeightPerKG", Title: "sites.product.totalNetWeightPerKG", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.product.isActive", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.product.action", Selectable: false, Sortable: true },
     ];
@@ -293,34 +296,100 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
   generatePDF() {
-    const doc = new jsPDF();
-
-    // Title
-    doc.setFontSize(18);
+    const doc = new jsPDF({
+      orientation: 'l',
+      unit: 'mm',
+      format: 'a3'
+    });
+  
+    doc.setFontSize(15);
     doc.text('Products List', 14, 15);
-
-    // Table Headers
-    const headers = [['No', 'Product Name', 'Category', 'Subcategory', 'Price (EGP)', 'Quantity']];
-
-    // Table Data
+  
+    const headers = [[
+      'No', 'Name', 'Code', 'Units', 'Wholesale', 'Retail', 'VIP',
+      'Per Carton', 'Safety', 'Pack Size', 'Weight/KG', 'Net Weight',
+      'Total Pack', 'Total Weight', 'Total Net Wt',
+      'Unit', 'Grade', 'Status', 'Category', 'Group', 'API', 'Brand', 'Active'
+    ]];
+  
     const data = this.items.map((item, index) => [
       index + 1,
       item.name,
+      item.code,
+      item.smallerUnitsOfMeasurements,
+      item.wholesalePrice,
+      item.retailPrice,
+      item.vipClientsPrice,
+      item.numOfUnitPerCartoon,
+      item.safetyStocks,
+      item.packSize,
+      item.weightPerKG,
+      item.netWeightPerKG,
+      item.totalPackSize,
+      item.totalWeightPerKG,
+      item.totalNetWeightPerKG,
+      this.getUnitName(item.unit),
+      this.getGradeName(item.grade),
+      this.getStatusName(item.productStatus),
       item.categoryName,
-      item.unit,
-      item.packSize
+      item.productGroupName,
+      item.productAPI,
+      item.brandName,
+      item.isActive ? 'Yes' : 'No'
     ]);
-
-    // Generate Table
+  
     autoTable(doc, {
       head: headers,
       body: data,
-      startY: 20
+      startY: 20,
+      styles: {
+        fontSize: 9,
+        cellPadding: 2,
+        halign: 'center', // ✅ يسنتـر المحتوى أفقياً
+        valign: 'middle', // ✅ يسنتـر المحتوى رأسياً
+      },
+      headStyles: {
+        fillColor: [41, 128, 185],
+        textColor: 255,
+        fontSize: 10,
+        halign: 'center',
+        valign: 'middle',
+      },
+      bodyStyles: {
+        halign: 'center',
+        valign: 'middle',
+      },
+      columnStyles: {
+        0: { cellWidth: 12 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 20 },
+        3: { cellWidth: 15 },
+        4: { cellWidth: 15 },
+        5: { cellWidth: 15 },
+        6: { cellWidth: 15 },
+        7: { cellWidth: 12 },
+        8: { cellWidth: 15 },
+        9: { cellWidth: 12 },
+        10: { cellWidth: 18 },
+        11: { cellWidth: 18 },
+        12: { cellWidth: 18 },
+        13: { cellWidth: 18 },
+        14: { cellWidth: 18 },
+        15: { cellWidth: 18 },
+        16: { cellWidth: 22 },
+        17: { cellWidth: 22 },
+        18: { cellWidth: 20 },
+        19: { cellWidth: 20 },
+        20: { cellWidth: 20 },
+        21: { cellWidth: 15 },
+        22: { cellWidth: 18 },
+      },
     });
-
-    // Save the PDF
+  
     doc.save('products.pdf');
   }
+  
+  
 
   toggleDownloadOptions() {
     this.showDownloadOptions = !this.showDownloadOptions;
