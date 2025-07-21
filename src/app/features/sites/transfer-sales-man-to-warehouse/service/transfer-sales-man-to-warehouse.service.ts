@@ -63,7 +63,7 @@ export class TransferSalesManToWarehouseService {
   Rejected(body: RejectReasonViewModel) {
     return this._apiService.update(`/RejectSalesmanToWarehouseTransactionEndPoint/RejectSalesmanToWarehouseTransaction`, body);
   }
-   getbrands(){
+  getbrands() {
     return this._apiService.get('/SelectBrandListEndpoint/SelectBrandList');
   }
 }

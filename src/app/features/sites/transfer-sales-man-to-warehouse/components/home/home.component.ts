@@ -73,7 +73,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "ProductsQuantity", Title: "sites.transferSalesManToWarehose.productsQuantity", Selectable: false, Sortable: true },
       { Name: "CreatedDate", Title: "sites.transferSalesManToWarehose.createdDate", Selectable: false, Sortable: true },
       { Name: "TransactionStatus", Title: "sites.transferSalesManToWarehose.TransactionsStatus", Selectable: false, Sortable: true },
-      // { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true }
+      { Name: "Action", Title: "sites.transfer.action", Selectable: false, Sortable: true }
 
     ];
     this.createSearchForm();
@@ -85,7 +85,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-    
+
   }
   override createSearchForm() {
     this.page.searchForm = this._sharedService.formBuilder.group({
@@ -156,13 +156,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
     this.loadProducts();
 
   }
-    loadProducts() {
+  loadProducts() {
     const fromSalesmanId = this.pageCreate.form.get('salesManID')?.value;
     if (!fromSalesmanId) {
       this.products = [];
       return;
     }
-  
+
     this._pageService
       .getProducts(fromSalesmanId, this.selectedBrandId) // ⬅️ هنا التعديل!
       .subscribe((res: any) => {
@@ -179,7 +179,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
 
-  
+
   toggleSelectAll(event: any): void {
     const isChecked = event.target.checked;
     this.items.forEach(item => {
@@ -248,10 +248,10 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
     this.pageCreate.isPageLoaded = true;
     this.pageCreate.form.get('salesManID')?.valueChanges.subscribe(() => {
-    this.loadProducts();
-  });
+      this.loadProducts();
+    });
 
-  
+
   }
 
 
@@ -281,28 +281,21 @@ export class HomeComponent extends CrudIndexBaseUtils {
     }
   }
 
- getEditableItem() {
+
+  getEditableItem() {
     this._pageService.getById(this.id).subscribe({
       next: (res) => {
         if (res.isSuccess) {
           this.item = res.data;
           this.item.id = this.id;
-
-
-          this.cartItems = res.data.transactionDetailsByIdDTOs.map(detail => {
-            const product = this.products.find(p => p.id === detail.productId);
-            return {
-              productId: detail.productId,
-              productName: detail.productName,
-              quantity: detail.quantity,
-              storageType: detail.storageType,
-              maxQuantity: product ? product.maxQuantity : null
-            };
-          });
-
+          const details = res.data.warehouseToSalesmanTransactionDetailsDTO || [];
+          this.cartItems = details.map(detail => ({
+            productId: detail.productID,
+            productName: detail.productName,
+            quantity: detail.quantity
+          }));
 
           this.createForm();
-
           this.pageCreate.isPageLoaded = true;
         }
       },
@@ -311,6 +304,8 @@ export class HomeComponent extends CrudIndexBaseUtils {
       },
     });
   }
+
+
 
 
 
@@ -372,17 +367,20 @@ export class HomeComponent extends CrudIndexBaseUtils {
     });
   }
 
-
   editTransaction(id: string) {
-    this.pageCreate.isEdit = true;  // Tell the system we are in edit mode
+    this.pageCreate.isEdit = true;
     this.id = id;
-    this.cartVisible = true;         // Open the modal/sidebar
-    this.loadWarehouses();           // Load warehouses (if needed)
-    this.loadSalesMen();             // Load salesmen (if needed)
-    this.loadProducts();             // Load products (if needed)
-    this.getEditableItem();          // Fetch the transfer data and fill the form
+    this.cartVisible = true;
 
+    this.loadWarehouses();
+    this.loadSalesMen();
+
+    this.getEditableItem(); // هنا بس!
+
+    // لا تنادي loadProducts() هنا إطلاقاً
+    // لأنها بتنعمل داخل getEditableItem -> createForm() -> .valueChanges
   }
+
 
   navigateToTransferDetails(id: string) {
     this._router.navigate(['/sites/transfers/details', id]);
@@ -443,26 +441,26 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-approveRequest(item: TransferSalesManToWarehouse) {
-  this._pageService.Approved(item.id).subscribe({
-    next: (response) => {
-      this.page.isSaving = false;
-      if (response.isSuccess) {
-        console.log(response);
-        this._sharedService.showToastr(response);
-        this.initializePage();
-        this.status = 'Approve';
+  approveRequest(item: TransferSalesManToWarehouse) {
+    this._pageService.Approved(item.id).subscribe({
+      next: (response) => {
+        this.page.isSaving = false;
+        if (response.isSuccess) {
+          console.log(response);
+          this._sharedService.showToastr(response);
+          this.initializePage();
+          this.status = 'Approve';
+        }
+      },
+      error: (error) => {
+        this.page.isSaving = false;
+        this._sharedService.showToastr(error.message);
       }
-    },
-    error: (error) => {
-      this.page.isSaving = false;
-      this._sharedService.showToastr(error.message);
-    }
-  });
-}
+    });
+  }
 
 
- loadBrands() {
+  loadBrands() {
     this._pageService.getbrands().subscribe(res => {
       if (res.isSuccess) {
         this.brands = res.data || [];
