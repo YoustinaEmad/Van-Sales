@@ -602,6 +602,10 @@ export class CreateComponent implements OnInit {
     this.selectedProductUnit = null;
   }
 
+  getSellingName(unitId: number): string {
+    const unit = this.SellingUnit.find(u => u.id === unitId);
+    return unit ? unit.name.trim() : '';
+  }
   
 
 }

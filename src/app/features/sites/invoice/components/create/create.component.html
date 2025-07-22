@@ -205,8 +205,10 @@
                                     {{ calculateAdjustedWeights(item).itemWeightPerKG }}
                                 </td>
 
-                                <td class="text-center align-middle">{{getUnitName(item.unit)}}</td>
-
+                                <td class="text-center align-middle">
+                                    {{ getUnitName(item.unit) }}<span *ngIf="item.sellingUnitId"> ({{ getSellingName(item.sellingUnitId) }})</span>
+                                  </td>
+                                  
 
 
 
