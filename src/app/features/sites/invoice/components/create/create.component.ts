@@ -25,6 +25,7 @@ export class CreateComponent implements OnInit {
   translations: any = {};
   showPrintButton: boolean = false;
   environment = environment;
+  hideActionButtons: boolean = false;
   showDownloadOptions = false;
   Brands: any[] = [];
 
@@ -108,6 +109,8 @@ export class CreateComponent implements OnInit {
     this.page.form.get('brandID')?.valueChanges.subscribe((brandID) => {
       if (brandID) {
         this.loadProductsByBrand(brandID);
+      } else {
+        this.loadProducts();
       }
     });
 
@@ -154,8 +157,8 @@ export class CreateComponent implements OnInit {
           unit: p.unit,
           numOfUnitPerCartoon: p.numOfUnitPerCartoon
         }));
-        
-        
+
+
       }
     });
   }
@@ -203,10 +206,10 @@ export class CreateComponent implements OnInit {
     this.page.isSaving = true;
     const salesManID = this.getSalesmanIdFromToken();
     const formValues = this.page.form.value;
-  
+
     const invoiceDetails = this.selectedProducts.map(p => {
       const { itemWeightPerKG, itemNetWeightPerKG } = this.calculateAdjustedWeights(p);
-    
+
       return {
         productId: p.id,
         itemWeightPerKG: Number(itemWeightPerKG),
@@ -216,8 +219,8 @@ export class CreateComponent implements OnInit {
         sellingUnit: p.sellingUnitId
       };
     });
-    
-  
+
+
     const payload: InvoiceCreateViewModel = {
       id: this.item.id,
       clientID: formValues.clientID,
@@ -225,7 +228,7 @@ export class CreateComponent implements OnInit {
       notes: formValues.notes,
       invoiceDetails: invoiceDetails
     };
-  
+
     this._pageService.postOrUpdate(payload).subscribe({
       next: (res) => {
         this.page.isSaving = false;
@@ -234,6 +237,15 @@ export class CreateComponent implements OnInit {
         if (res.isSuccess) {
           this.id = res.data?.sellingInvoiceId || this.id;
           this.showPrintButton = true;
+
+          this.page.form.reset();
+          this.selectedProducts = [];
+          this.total = 0;
+          this.taxAmount = 0;
+          this.netInvoice = 0;
+          this.netWeight = 0;
+          this.hideActionButtons = true;
+
         }
       },
       error: () => {
@@ -241,27 +253,27 @@ export class CreateComponent implements OnInit {
       },
     });
   }
-  
+
   calculateNetWeightPerKG(item: any): number {
     return item.weight * item.quantity; // لو دي هي المعادلة
   }
   calculateAdjustedWeights(p: any) {
     let itemWeightPerKG = p.weight;
     let itemNetWeightPerKG = p.netWeight; // الوزن الصافي الأصلي
-  
+
     if (p.sellingUnitId === 1) {
       itemWeightPerKG = itemWeightPerKG * p.numOfUnitPerCartoon;
       itemNetWeightPerKG = itemNetWeightPerKG * p.numOfUnitPerCartoon;
     }
-  
+
     return {
       itemWeightPerKG,
       itemNetWeightPerKG
     };
   }
-  
-  
-  
+
+
+
   loadClients() {
     this._pageService.getClients().subscribe((res: any) => {
       if (res && res.isSuccess) {
@@ -294,7 +306,7 @@ export class CreateComponent implements OnInit {
           unit: p.unit,
           numOfUnitPerCartoon: p.numOfUnitPerCartoon
         }));
-        
+
       }
     });
   }
@@ -520,16 +532,16 @@ export class CreateComponent implements OnInit {
     this.total = this.selectedProducts.reduce((sum, item) => {
       return sum + (item.price * item.quantity);
     }, 0);
-  
+
     this.taxAmount = (this.total * 0.14);
     this.netInvoice = this.total + this.taxAmount;
-  
+
     this.netWeight = this.selectedProducts.reduce((sum, item) => {
       const { itemNetWeightPerKG } = this.calculateAdjustedWeights(item);
       return sum + (itemNetWeightPerKG * item.quantity);
     }, 0);
   }
-  
+
 
   onCancel() {
     this.page.form.reset();
