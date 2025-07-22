@@ -145,7 +145,7 @@
 
 
                     <div class="col-12 d-flex justify-content-end">
-                        <button type="button" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
+                        <button type="button" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"    [disabled]="!canAddProduct()"
                             (click)="addProduct()">
                             {{ "sites.Invoice.addProduct" | translate }}
                         </button>
