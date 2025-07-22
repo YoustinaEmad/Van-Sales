@@ -8,7 +8,6 @@ export interface salesManViewModel {
     address :string;
     birthDate :Date;
     appointmentDate :Date;
-    classification :number;
     path :string;
     isActive:boolean;
     selected?: boolean; 
@@ -25,7 +24,6 @@ export interface salesManViewModel {
     address :string;
     birthDate :Date;
     appointmentDate :Date;
-    classification :number;
     path:string;
     warehousesIDs:string[];
     userName:string;
@@ -38,7 +36,6 @@ export interface salesManViewModel {
     Name: string;
     NationalNumber:string;
     Mobile:string;
-    Classification:number;
     WareHouseId :string;
   }
   export class salesManActivateViewModel {

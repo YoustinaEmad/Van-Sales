@@ -39,23 +39,7 @@
         <ng-control [form]="page.form" control="address" label="sites.salesMan.address" placeholder="sites.salesMan.address"></ng-control>
       </div>
     </div>
-    <div class="row row-cols-lg-3  g-2 pb-5">
-      <div class="col-4">
-        <ng-control [form]="page.form" control="birthDate" label="sites.salesMan.birthDate"
-          [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
-
-
-      </div>
-      <div class="col-4">
-        <ng-control [form]="page.form" control="appointmentDate" label="sites.salesMan.appointmentDate"
-          [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
-      </div>
-      <div class="col-4">
-        <ng-control [type]="page.ControlType.SELECT" [form]="page.form" control="classification"
-          label="sites.salesMan.classification" placeholder="sites.salesMan.classification" [items]="classifies">
-        </ng-control>
-      </div>
-    </div>
+   
     <div class="row row-cols-lg-3  g-2 pb-5">
       <div class="col-4">
         <ng-control [form]="page.form" control="userName" label="sites.salesMan.username" placeholder="sites.salesMan.username"></ng-control>
@@ -70,7 +54,18 @@
         <p class="text text-danger font-12" *ngIf="!isEqualPassword"> {{"sites.salesMan.Passwords do not match"|translate}}</p>
       </div>
     </div>
+ <div class="row row-cols-lg-3  g-2 pb-5">
+      <div class="col-4">
+        <ng-control [form]="page.form" control="birthDate" label="sites.salesMan.birthDate"
+          [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
 
+
+      </div>
+      <div class="col-4">
+        <ng-control [form]="page.form" control="appointmentDate" label="sites.salesMan.appointmentDate"
+          [type]="page.ControlType.INPUT_DATE_ONLY"></ng-control>
+      </div>
+    </div>
     <div class="d-flex"  *ngIf="!page.isEdit">
       <div class="d-flex flex-column w-50 checkboxes">
         <div *ngFor="let warehouse of warehousesList">
@@ -91,7 +86,7 @@
               <ng-template #uploadTemplate>
                 <label for="fileInput" class="text-primary cursor-pointer">
                   <i class="fa fa-upload fa-2x mb-2 color-brand-500"></i>
-                  <p class="color-brand-500" *ngIf="!image.uploaded">{{"sites.salesMan.UploadNewImage"|translate}}</p>
+                  <p class="color-purple-500" *ngIf="!image.uploaded">{{"sites.salesMan.UploadNewImage"|translate}}</p>
                   <p class="text-danger" *ngIf="image.error">{{"sites.salesMan.ErrorUploading"|translate}}</p>
                 </label>
                 <input #file type="file" id="fileInput" class="d-none" (change)="onImageUpload(file.files)" />

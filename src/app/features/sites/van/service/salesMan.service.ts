@@ -25,9 +25,6 @@ export class salesMan {
       if (searchViewModel.Mobile) {
         params = params.set("Mobile", searchViewModel.Mobile);
       }
-      if (searchViewModel.Classification) {
-        params = params.set("Classification", searchViewModel.Classification);
-      }
       if (searchViewModel.WareHouseId) {
         params = params.set("WareHouseId", searchViewModel.WareHouseId);
       }
