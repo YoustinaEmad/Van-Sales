@@ -558,7 +558,8 @@
       "products":"المنتجات",
       "storageType":"نوع التخزين",
       "sameSalesManError": "لا يمكن تحويل المنتجات إلى نفس المندوب",
-      "maxQuantityExceeded":"الكمية لا يمكن أن تتجاوز"
+      "maxQuantityExceeded":"الكمية لا يمكن أن تتجاوز" ,
+      "minQuantityError":"الحد الادني هو 1"
     },
     "Brand": {
       "brand": "الماركة",

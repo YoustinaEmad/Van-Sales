@@ -70,16 +70,16 @@
 
               <!-- Table -->
               <div class="table-responsive px-3 pb-3">
-                <table class="table custom-clean-table text-center mb-0">
+                <table class="table custom-clean-table text-center mb-0 table-hover pointer">
                   <thead>
                     <tr>
-                      <th>{{"sites.dispatch.status"|translate}}</th>
-                      <th>{{"sites.dispatch.visitDate"|translate}}</th>
-                      <th>{{"sites.dispatch.client"|translate}}</th>
+                      <th >{{"sites.dispatch.status"|translate}}</th>
+                      <th >{{"sites.dispatch.visitDate"|translate}}</th>
+                      <th >{{"sites.dispatch.client"|translate}}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of dispatch.details">
+                    <tr *ngFor="let row of dispatch.details" (click)="navigateToDetails(row.clientID)">
                       <td>
                         <span class="status-badge" [ngClass]="{
                   'completed': row.dispatchStatus === 1,
@@ -225,7 +225,7 @@
 
               <!-- Table -->
               <div class="table-responsive px-3 pb-3 ">
-                <table class="table custom-clean-table2 text-center mb-0 ">
+                <table class="table custom-clean-table2 text-center mb-0 table-hover pointer" >
                   <thead>
                     <tr>
                       <!-- <th>حالة خط السير</th> -->
@@ -234,7 +234,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of dispatch.details">
+                    <tr *ngFor="let row of dispatch.details" (click)="navigateToDetails(row.clientID)">
                       <!-- <td>
                 <span class="badge status-badge">
                   {{ row.status }}

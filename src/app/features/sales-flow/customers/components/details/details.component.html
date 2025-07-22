@@ -2,7 +2,7 @@
   <div class="card shadow-sm border-0 rounded-4 p-4">
     <!-- العنوان -->
     <div class="d-flex align-items-center mb-4">
-      <img src="/assets/icons/keyboard_backspace.svg" class="me-2 pointer" style="width: 20px; height: 20px;" routerLink="/salesflow/customers" alt="Back" />
+      <img src="/assets/icons/keyboard_backspace.svg" class="me-2 pointer" style="width: 20px; height: 20px;"  (click)="goBack()" alt="Back" />
       <h3 class="mb-0 color-purple-700">{{ customer.name }} {{ "sites.Warehouse.details" | translate }}</h3>
     </div>
 

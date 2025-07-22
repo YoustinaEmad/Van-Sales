@@ -300,6 +300,11 @@ export class HomeComponent extends CrudIndexBaseUtils {
   ngOnDestroy(): void { }
   saveTransfer(): void {
     if (this.pageCreate.isSaving) return;
+    const hasInvalidQuantity = this.cartItems.some(item => item.quantity < 1);
+
+  if (hasInvalidQuantity) {
+    return; 
+  }
     if (this.pageCreate.form.invalid) {
       return;
     }
@@ -420,16 +425,16 @@ get isSaveDisabled(): boolean {
     })
   );
 }
-onQuantityInputChange(value: number, index: number): void {
-  const item = this.cartItems[index];
-  const product = this.products.find(p => p.id === item.productId);
-  if (!product) return;
+onQuantityInputChange(value: string, index: number): void {
+  let num = Number(value);
 
-  if (value < 1) {
-    item.quantity = 1;
-  } else if (value > product.maxQuantity) {
+  if (isNaN(num)) {
+    num = 0;
   }
+
+  this.cartItems[index].quantity = num;
 }
+
 
 }
 

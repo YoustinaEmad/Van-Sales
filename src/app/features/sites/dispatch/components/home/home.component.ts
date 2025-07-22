@@ -396,4 +396,8 @@ validateNotFutureDate(control: AbstractControl): ValidationErrors | null {
   return null;
 }
 
+
+  navigateToDetails(id: string) {
+    this._router.navigate(['/salesflow/customers/details', id]);
+  }
 }
