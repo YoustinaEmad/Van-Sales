@@ -675,7 +675,7 @@
        "finalTotal":"الإجمالي النهائي",
        "kg":"كجم" ,
        "addProduct":"اضافة منتج",
-       "sellingUnit":"وحدة البيع"
+       "sellingUnitId":"وحدة البيع"
     } ,
      "transferSalesManToWarehose":{
       "title":"التحويلات من مندوب الى مخزن",
