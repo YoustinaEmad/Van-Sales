@@ -144,12 +144,11 @@
 
 
                     <div class="col-12 d-flex justify-content-end">
-                        <button type="button"
-                          class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
-                          (click)="addProduct()">
-                          {{ "sites.Invoice.addProduct" | translate }}
+                        <button type="button" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
+                            (click)="addProduct()">
+                            {{ "sites.Invoice.addProduct" | translate }}
                         </button>
-                      </div>
+                    </div>
                 </div>
             </div>
 
@@ -172,7 +171,7 @@
                                 <th class="text-center">{{ "sites.Invoice.price" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.totalPrice" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.weight" | translate }}</th>
-
+                                <th class="text-center">{{ "sites.Invoice.unit" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.action" | translate }}</th>
 
                             </tr>
@@ -205,7 +204,8 @@
                                     {{item.weight }}
                                     <input type="hidden" [(ngModel)]="item.weight">
                                 </td>
-
+                                
+                                <td class="text-center align-middle">{{getUnitName(item.unit)}}</td>
 
 
 
@@ -223,7 +223,7 @@
 
                             </tr>
                             <tr *ngIf="selectedProducts.length === 0">
-                                <td colspan="6" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}
+                                <td colspan="7" class="text-muted"> {{ "sites.Invoice.noProductsAdded" | translate }}
                                 </td>
                             </tr>
                         </tbody>
