@@ -46,4 +46,15 @@
   }
 
 
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #fff; /* أو أي لون header */
+    z-index: 2;
+  }
   
