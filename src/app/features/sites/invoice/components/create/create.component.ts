@@ -33,6 +33,11 @@ export class CreateComponent implements OnInit {
     { id: 2, name: 'Drum   ' },
     { id: 3, name: 'Pail   ' },
   ]
+  SellingUnit = [
+    { id: 1, name: 'Cartoon' },
+    { id: 2, name: 'Piece' },
+  ]
+
   controlType = ControlType;
   @ViewChild('downloadButton') downloadButton: ElementRef;
   @ViewChild('downloadOptions') downloadOptions: ElementRef;
@@ -50,6 +55,8 @@ export class CreateComponent implements OnInit {
 
   ) {
   }
+  selectedProductUnit: number | null = null;
+
   Clients: any[] = [];
   Products: any[] = [];
   selectedProducts: any[] = [];
@@ -96,14 +103,14 @@ export class CreateComponent implements OnInit {
         this.Brands = res.data || [];
       }
     });
-    
+
     this.createForm();
     this.page.form.get('brandID')?.valueChanges.subscribe((brandID) => {
       if (brandID) {
         this.loadProductsByBrand(brandID);
       }
     });
-    
+
 
 
     this.page.form.get('productID')?.valueChanges.subscribe(productId => {
@@ -120,20 +127,20 @@ export class CreateComponent implements OnInit {
   loadProductsByBrand(brandID: string) {
     const clientID = this.page.form.get('clientID')?.value;
     const salesManID = this.getSalesmanIdFromToken();
-  
+
     if (!clientID) {
       //this._sharedService.showToastrError('اختر العميل أولا قبل تحديد البراند');
       this.page.form.get('brandID')?.setValue(null);
       return;
     }
-      
+
     const payload = {
       SalesManID: salesManID,
       ClientID: clientID,
       StorageType: 2,
-      BrandID: brandID 
+      BrandID: brandID
     };
-  
+
     this._pageService.getProducts(payload).subscribe((res: any) => {
       if (res && res.isSuccess) {
         this.Products = res.data || [];
@@ -142,27 +149,24 @@ export class CreateComponent implements OnInit {
           name: p.name,
           price: p.itemPrice,
           weight: p.itemWeightPerKG,
-          maxQuantity: p.maxQuantity
+          maxQuantity: p.maxQuantity,
+          unit: p.unit
         }));
       }
     });
   }
-  
+
   onProductSelect(productId: string | null) {
     if (!productId) return;
     const selected = this.allProducts.find(p => p.id === productId);
-    if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
-      this.selectedProducts.push({
-        ...selected,
-        quantity: 1,
-        isEditing: false
-      });
-      this.calculateTotal();
+    if (selected) {
+      this.selectedProductUnit = selected.unit; // 💡 خزّن الـ unit هنا
+    } else {
+      this.selectedProductUnit = null;
     }
-
-    this.selectedProductId = null;
-    this.page.form.get('productID')?.setValue(null);
   }
+
+
 
   deleteProduct(index: number) {
     this.selectedProducts.splice(index, 1);
@@ -179,6 +183,8 @@ export class CreateComponent implements OnInit {
       invoiceDetails: [this.item.invoiceDetails, Validators.required],
       productID: [null],
       brandID: [null],
+      sellingUnitId: [null] // ✅ حقل جديد للوحدة الفرعية
+
     });
     this.page.isPageLoaded = true;
   }
@@ -194,6 +200,8 @@ export class CreateComponent implements OnInit {
     const salesManID = this.getSalesmanIdFromToken();
     const formValues = this.page.form.value;
     const invoiceDetails = this.selectedProducts.map(p => ({
+      
+      sellingUnitId: p.sellingUnitId,
       productId: p.id,
       itemWeightPerKG: p.weight,
       quantity: p.quantity,
@@ -250,7 +258,8 @@ export class CreateComponent implements OnInit {
           name: p.name,
           price: p.itemPrice,
           weight: p.itemWeightPerKG,
-          maxQuantity: p.maxQuantity
+          maxQuantity: p.maxQuantity,
+          unit: p.unit
         }));
       }
     });
@@ -516,5 +525,32 @@ export class CreateComponent implements OnInit {
   toggleDownloadOptions() {
     this.showDownloadOptions = !this.showDownloadOptions;
   }
+  addProduct() {
+    const productId = this.page.form.get('productID')?.value;
+    const sellingUnitId = this.page.form.get('sellingUnitId')?.value;
+
+    if (!productId) return;
+
+    const selected = this.allProducts.find(p => p.id === productId);
+    if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
+      this.selectedProducts.push({
+        ...selected,
+        sellingUnitId: selected.unit === 1 ? sellingUnitId : null, // ✅ دي صح كدا
+        quantity: 1,
+        isEditing: false,
+        numOfUnitPerCartoon: selected.numOfUnitPerCartoon // ✅ أضيفيها هنا
+
+      });
+      this.calculateTotal();
+    }
+
+    this.page.form.patchValue({
+      productID: null,
+      sellingUnitId: null
+    });
+    this.selectedProductUnit = null;
+  }
+
+
 
 }
