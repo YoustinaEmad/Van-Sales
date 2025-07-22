@@ -336,7 +336,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   Save() {
     if (this.page.isSaving || this.page.form.invalid) return;
     this.page.isSaving = true;
-    Object.assign(this.item, this.page.form.value);
+    Object.assign(this.item, this.page.form.getRawValue());
     //this.item.availableDate = moment(this.item.availableDate).format('YYYY-MM-DD');
     //this.item.isActive = this.isActivated;
     //this.item.isActivePoint=this.isActivatedPoint;

@@ -586,10 +586,10 @@ export class CreateComponent implements OnInit {
     if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
       this.selectedProducts.push({
         ...selected,
-        sellingUnitId: selected.unit === 1 ? sellingUnitId : null, // ✅ دي صح كدا
+        sellingUnitId: selected.unit === 1 ? sellingUnitId : null, 
         quantity: 1,
         isEditing: false,
-        numOfUnitPerCartoon: selected.numOfUnitPerCartoon // ✅ أضيفيها هنا
+        numOfUnitPerCartoon: selected.numOfUnitPerCartoon 
 
       });
       this.calculateTotal();
