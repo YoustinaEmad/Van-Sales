@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/service/api.service';
 import { CustomersService } from '../../service/customers.service';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -40,7 +41,8 @@ export class DetailsComponent extends CrudIndexBaseUtils {
     private route: ActivatedRoute,
     private api: ApiService,
     private _CustomersService: CustomersService,
-    private _router: Router
+    private _router: Router,
+    private location: Location
   ) {
     super(_sharedService);
   }
@@ -77,4 +79,7 @@ export class DetailsComponent extends CrudIndexBaseUtils {
  getImageUrl(imagePath: string): string {
     return `${environment.api}/` + imagePath;
   }
+  goBack() {
+  this.location.back();
+}
 }
