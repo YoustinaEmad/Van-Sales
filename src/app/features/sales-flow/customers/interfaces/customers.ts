@@ -8,6 +8,7 @@ export interface customerViewModel {
   path:string;
   mobile:number;
   clientType:number;
+  religion : number;
   selected?: boolean; 
 }
 export class customerSearchViewModel {
@@ -42,6 +43,7 @@ export class customerCreateViewModel {
   clientGroupId?: string;
   email?: string;
   paths?: string[];
+   religion : number;
   clientType:number;
 }
 export class changePasswordViewModel {

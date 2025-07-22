@@ -749,7 +749,8 @@
       "Error Uploading": "خطا فى التحميل",
       "clientType": "نوع العميل",
       "latitude": "خط العرض",
-      "longitude": "خط الطول"
+      "longitude": "خط الطول",
+      "religion":"الديانة"
     }
   }
 }

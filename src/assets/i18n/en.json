@@ -759,7 +759,8 @@
       "Error Uploading": "Error Uploading",
       "clientType": "Client Type",
       "latitude":"Latitude",
-      "longitude":"Longitude"
+      "longitude":"Longitude",
+      "religion":"Religion"
     }
   }
 }
