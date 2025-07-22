@@ -190,7 +190,7 @@ export class CreateComponent implements OnInit {
       invoiceDetails: [this.item.invoiceDetails, Validators.required],
       productID: [null],
       brandID: [null],
-      sellingUnitId: [null] // ✅ حقل جديد للوحدة الفرعية
+      sellingUnitId: [null,Validators.required] // ✅ حقل جديد للوحدة الفرعية
 
     });
     this.page.isPageLoaded = true;
@@ -607,5 +607,17 @@ export class CreateComponent implements OnInit {
     return unit ? unit.name.trim() : '';
   }
   
+  canAddProduct(): boolean {
+  const productId = this.page.form.get('productID')?.value;
+  const sellingUnitId = this.page.form.get('sellingUnitId')?.value;
+
+  if (!productId) return false;
+
+
+  if (this.selectedProductUnit === 1 && !sellingUnitId) return false;
+
+  return true;
+}
+
 
 }
