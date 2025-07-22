@@ -326,46 +326,44 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   ngOnDestroy(): void { }
 
-  saveTransfer(): void {
-    if (this.pageCreate.isSaving) return;
-    if (this.pageCreate.form.invalid) {
-      return;
-    }
-
-    // Prepare FormArray for transactionDetailsDTOs
-    const detailsFormArray = this._sharedService.formBuilder.array(
-      this.cartItems.map(item => this._sharedService.formBuilder.group({
-        productID: [item.productId, Validators.required],
-        quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-        productName: [item.productName] // 👉 add this if needed
-      }))
-    );
-
-
-    // ✅ Set the cart items into the form
-    this.pageCreate.form.setControl('transactionDetailsDTOs', detailsFormArray);
-
-    // Now assign the form value to your model
-    Object.assign(this.item, this.pageCreate.form.value);
-
-    this.pageCreate.isSaving = true;
-    this._pageService.postOrUpdate(this.item).subscribe({
-      next: (res) => {
-        //this.item.transactionDetailsVM = this.cartItems;
-        this.pageCreate.isSaving = false;
-        this._sharedService.showToastr(res);
-        if (res.isSuccess) {
-          this._router.navigate(['/sites/transferSalesManToWarehouse']);
-          this.cartVisible = false;
-          this.search();
-        }
-      },
-      error: (err) => {
-        this._sharedService.showToastr(err);
-        this.pageCreate.isSaving = false;
-      }
-    });
+ saveTransfer(): void {
+  if (this.pageCreate.isSaving) return;
+  if (this.pageCreate.form.invalid) {
+    return;
   }
+
+  // تجهيز transactionDetails بنفس أسماء الـ backend
+  const detailsFormArray = this._sharedService.formBuilder.array(
+    this.cartItems.map(item => this._sharedService.formBuilder.group({
+      productId: [item.productId, Validators.required], 
+      quantity: [item.quantity, [Validators.required, Validators.min(1)]]
+    }))
+  );
+
+  // 👈 استخدام اسم الحقل المطلوب
+  this.pageCreate.form.setControl('transactionDetails', detailsFormArray);
+
+  // نسخ القيم إلى العنصر
+  Object.assign(this.item, this.pageCreate.form.value);
+
+  this.pageCreate.isSaving = true;
+  this._pageService.postOrUpdate(this.item).subscribe({
+    next: (res) => {
+      this.pageCreate.isSaving = false;
+      this._sharedService.showToastr(res);
+      if (res.isSuccess) {
+        this._router.navigate(['/sites/transferSalesManToWarehouse']);
+        this.cartVisible = false;
+        this.search();
+      }
+    },
+    error: (err) => {
+      this._sharedService.showToastr(err);
+      this.pageCreate.isSaving = false;
+    }
+  });
+}
+
 
   editTransaction(id: string) {
     this.pageCreate.isEdit = true;
