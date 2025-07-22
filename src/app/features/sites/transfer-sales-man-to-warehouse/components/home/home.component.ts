@@ -326,43 +326,43 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
   ngOnDestroy(): void { }
 
- saveTransfer(): void {
-  if (this.pageCreate.isSaving) return;
-  if (this.pageCreate.form.invalid) {
-    return;
-  }
-
-  // تجهيز transactionDetails بنفس أسماء الـ backend
-  const detailsFormArray = this._sharedService.formBuilder.array(
-    this.cartItems.map(item => this._sharedService.formBuilder.group({
-      productId: [item.productId, Validators.required], 
-      quantity: [item.quantity, [Validators.required, Validators.min(1)]]
-    }))
-  );
-
-  // 👈 استخدام اسم الحقل المطلوب
-  this.pageCreate.form.setControl('transactionDetails', detailsFormArray);
-
-  // نسخ القيم إلى العنصر
-  Object.assign(this.item, this.pageCreate.form.value);
-
-  this.pageCreate.isSaving = true;
-  this._pageService.postOrUpdate(this.item).subscribe({
-    next: (res) => {
-      this.pageCreate.isSaving = false;
-      this._sharedService.showToastr(res);
-      if (res.isSuccess) {
-        this._router.navigate(['/sites/transferSalesManToWarehouse']);
-        this.cartVisible = false;
-        this.search();
-      }
-    },
-    error: (err) => {
-      this._sharedService.showToastr(err);
-      this.pageCreate.isSaving = false;
+  saveTransfer(): void {
+    if (this.pageCreate.isSaving) return;
+    if (this.pageCreate.form.invalid) {
+      return;
     }
-  });
-}
+
+    // تجهيز transactionDetails بنفس أسماء الـ backend
+    const detailsFormArray = this._sharedService.formBuilder.array(
+      this.cartItems.map(item => this._sharedService.formBuilder.group({
+        productId: [item.productId, Validators.required],
+        quantity: [item.quantity, [Validators.required, Validators.min(1)]]
+      }))
+    );
+
+    // 👈 استخدام اسم الحقل المطلوب
+    this.pageCreate.form.setControl('transactionDetails', detailsFormArray);
+
+    // نسخ القيم إلى العنصر
+    Object.assign(this.item, this.pageCreate.form.value);
+
+    this.pageCreate.isSaving = true;
+    this._pageService.postOrUpdate(this.item).subscribe({
+      next: (res) => {
+        this.pageCreate.isSaving = false;
+        this._sharedService.showToastr(res);
+        if (res.isSuccess) {
+          this._router.navigate(['/sites/transferSalesManToWarehouse']);
+          this.cartVisible = false;
+          this.search();
+        }
+      },
+      error: (err) => {
+        this._sharedService.showToastr(err);
+        this.pageCreate.isSaving = false;
+      }
+    });
+  }
 
 
   editTransaction(id: string) {
@@ -391,46 +391,33 @@ export class HomeComponent extends CrudIndexBaseUtils {
     return product ? product.maxQuantity : 1;
   }
 
+  onQuantityInputChange(value: string, index: number): void {
+    let num = Number(value);
 
-onQuantityInputChange(value: number, index: number): void {
-  setTimeout(() => {
-    const item = this.cartItems[index];
-    const product = this.products.find(p => p.id === item.productId);
-    if (!product) return;
-
-    if (!value || value < 1 || isNaN(value)) {
-      item.quantity = 1;
-    } else if (value > product.maxQuantity) {
-      item.quantity = product.maxQuantity;
-    } else {
-      item.quantity = value;
+    if (isNaN(num)) {
+      num = 1;
     }
-  });
-}
 
-preventInvalidInput(event: KeyboardEvent) {
-  if (['e', 'E', '+', '-', '.'].includes(event.key)) {
-    event.preventDefault();
+    this.cartItems[index].quantity = num;
   }
-}
 
 
-get isSaveDisabled(): boolean {
-  if (!this.pageCreate?.form) return true;
+  get isSaveDisabled(): boolean {
+    if (!this.pageCreate?.form) return true;
 
-  const hasInvalidQuantity = this.cartItems.some(item => {
-    const product = this.products.find(p => p.id === item.productId);
-    if (!product) return true; 
-    return item.quantity < 1 || item.quantity > product.maxQuantity;
-  });
+    const hasInvalidQuantity = this.cartItems.some(item => {
+      const product = this.products.find(p => p.id === item.productId);
+      if (!product) return true;
+      return item.quantity < 1 || item.quantity > product.maxQuantity;
+    });
 
-  return (
-    this.pageCreate.form.invalid ||
-    this.pageCreate.isSaving ||
-    this.cartItems.length === 0 ||
-    hasInvalidQuantity
-  );
-}
+    return (
+      this.pageCreate.form.invalid ||
+      this.pageCreate.isSaving ||
+      this.cartItems.length === 0 ||
+      hasInvalidQuantity
+    );
+  }
 
 
   hasInvalidQuantities(): boolean {

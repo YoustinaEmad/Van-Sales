@@ -127,9 +127,11 @@
 
                 <td>
                   <input type="number" class="form-control form-control-sm text-center" style="height: 40px;" min="1"
-                    [max]="getMaxQuantity(item.productId)" [(ngModel)]="item.quantity"
-                    (ngModelChange)="onQuantityInputChange(item.quantity, i)" (keydown)="preventInvalidInput($event)" />
-
+                    [max]="item.maxQuantity" [value]="item.quantity"
+                    (input)="onQuantityInputChange($event.target.value, i)" />
+                  <small *ngIf="item.quantity < 1" class="text-danger d-block mt-1">
+                    {{ 'sites.transferSalesManToSalesMan.minQuantityError' | translate }}
+                  </small>
 
                   <small *ngIf="item.quantity > getMaxQuantity(item.productId)" class="text-danger d-block mt-1">
                     {{ 'sites.transferSalesManToSalesMan.maxQuantityExceeded' | translate }} {{
