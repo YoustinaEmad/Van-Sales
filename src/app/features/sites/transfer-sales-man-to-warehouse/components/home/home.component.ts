@@ -383,7 +383,7 @@ export class HomeComponent extends CrudIndexBaseUtils {
 
 
   navigateToTransferDetails(id: string) {
-    this._router.navigate(['/sites/transfers/details', id]);
+    this._router.navigate(['/sites/transferSalesManToWarehouse/details', id]);
   }
 
 
@@ -394,18 +394,45 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-  onQuantityInputChange(value: number, index: number): void {
+onQuantityInputChange(value: number, index: number): void {
+  setTimeout(() => {
     const item = this.cartItems[index];
     const product = this.products.find(p => p.id === item.productId);
     if (!product) return;
 
-    if (value < 1) {
+    if (!value || value < 1 || isNaN(value)) {
       item.quantity = 1;
     } else if (value > product.maxQuantity) {
-      // لو حابة تمنعي الزيادة تلقائيًا:
-      // item.quantity = product.maxQuantity;
+      item.quantity = product.maxQuantity;
+    } else {
+      item.quantity = value;
     }
+  });
+}
+
+preventInvalidInput(event: KeyboardEvent) {
+  if (['e', 'E', '+', '-', '.'].includes(event.key)) {
+    event.preventDefault();
   }
+}
+
+
+get isSaveDisabled(): boolean {
+  if (!this.pageCreate?.form) return true;
+
+  const hasInvalidQuantity = this.cartItems.some(item => {
+    const product = this.products.find(p => p.id === item.productId);
+    if (!product) return true; 
+    return item.quantity < 1 || item.quantity > product.maxQuantity;
+  });
+
+  return (
+    this.pageCreate.form.invalid ||
+    this.pageCreate.isSaving ||
+    this.cartItems.length === 0 ||
+    hasInvalidQuantity
+  );
+}
 
 
   hasInvalidQuantities(): boolean {

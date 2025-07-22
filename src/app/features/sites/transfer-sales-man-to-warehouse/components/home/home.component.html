@@ -80,7 +80,7 @@
       <div class="row p-2" style="font-size: 12px;">
         <!-- ✅ Brand Select -->
         <p class="form-label ">
-          {{"sites.transfer.brand"|translate}} 
+          {{"sites.transfer.brand"|translate}}
         </p>
         <ng-control [type]="controlType.SELECT" [form]="productForm" control="selectedBrand" placeholder="Brand"
           [items]="brands" (change)="onBrandChange($event)">
@@ -128,7 +128,8 @@
                 <td>
                   <input type="number" class="form-control form-control-sm text-center" style="height: 40px;" min="1"
                     [max]="getMaxQuantity(item.productId)" [(ngModel)]="item.quantity"
-                    (ngModelChange)="onQuantityInputChange(item.quantity, i)" />
+                    (ngModelChange)="onQuantityInputChange(item.quantity, i)" (keydown)="preventInvalidInput($event)" />
+
 
                   <small *ngIf="item.quantity > getMaxQuantity(item.productId)" class="text-danger d-block mt-1">
                     {{ 'sites.transferSalesManToSalesMan.maxQuantityExceeded' | translate }} {{
@@ -241,9 +242,9 @@
                 </button>
 
               </td>
-              <td >
-                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info" *ngIf="item.transactionStatus==1"
-                  aria-label="Edit" (click)="editTransaction(item.id)">
+              <td>
+                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info"
+                  *ngIf="item.transactionStatus==1" aria-label="Edit" (click)="editTransaction(item.id)">
                 </button>
               </td>
             </tr>
