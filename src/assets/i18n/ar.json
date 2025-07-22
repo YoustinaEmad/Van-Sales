@@ -673,7 +673,9 @@
        "itemWeight":"وزن العنصر",
        "totalWeight":"إجمالي الوزن",
        "finalTotal":"الإجمالي النهائي",
-       "kg":"كجم"
+       "kg":"كجم" ,
+       "addProduct":"اضافة منتج",
+       "sellingUnit":"وحدة البيع"
     } ,
      "transferSalesManToWarehose":{
       "title":"التحويلات من مندوب الى مخزن",
@@ -750,7 +752,14 @@
       "clientType": "نوع العميل",
       "latitude": "خط العرض",
       "longitude": "خط الطول",
-      "religion":"الديانة"
+      "religion":"الديانة",
+      "deActive":"غير مفعل",
+      "activate":"مفعل",
+      "basicInfo": "معلومات أساسية",
+      "contactInfo": "معلومات التواصل",
+      "addressInfo": "معلومات العنوان",
+      "otherInfo": "بيانات اخري",
+      "image": "الصورة"
     }
   }
 }
