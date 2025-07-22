@@ -122,27 +122,34 @@
                         </ng-control>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <ng-control
-                        [type]="controlType.SELECT"
-                        [form]="page.form"
-                        control="brandID"
-                        label="Brand"
-                        placeholder="Select Brand"
-                        [items]="Brands"
-                        bindValue="id"
-                        bindLabel="name">
-                      </ng-control>
-                      
-                      </div>
-                      
-                      <div class="col-md-6 mb-3">
-                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productID"
-                          label="sites.Invoice.product" placeholder="sites.Invoice.product" [items]="allProducts"
-                          bindValue="id" bindLabel="name">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="brandID" label="Brand"
+                            placeholder="Select Brand" [items]="Brands" bindValue="id" bindLabel="name">
                         </ng-control>
-                      </div>
-                      
 
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="productID"
+                            label="sites.Invoice.product" placeholder="sites.Invoice.product" [items]="allProducts"
+                            bindValue="id" bindLabel="name">
+                        </ng-control>
+                    </div>
+                    <!-- يظهر فقط لو الـ unit == 1 -->
+                    <div class="col-md-6 mb-3" *ngIf="selectedProductUnit === 1">
+                        <ng-control [type]="controlType.SELECT" [form]="page.form" control="sellingUnitId"
+                            label="sites.Invoice.sellingUnitId" placeholder="sites.Invoice.sellingUnitId"
+                            [items]="SellingUnit" bindValue="id" bindLabel="name">
+                        </ng-control>
+                    </div>
+
+
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button"
+                          class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
+                          (click)="addProduct()">
+                          {{ "sites.Invoice.addProduct" | translate }}
+                        </button>
+                      </div>
                 </div>
             </div>
 
@@ -165,7 +172,9 @@
                                 <th class="text-center">{{ "sites.Invoice.price" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.totalPrice" | translate }}</th>
                                 <th class="text-center">{{ "sites.Invoice.weight" | translate }}</th>
+
                                 <th class="text-center">{{ "sites.Invoice.action" | translate }}</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -196,6 +205,10 @@
                                     {{item.weight }}
                                     <input type="hidden" [(ngModel)]="item.weight">
                                 </td>
+
+
+
+
                                 <!-- Edit button toggles edit mode -->
                                 <td class="text-center align-middle">
                                     <div

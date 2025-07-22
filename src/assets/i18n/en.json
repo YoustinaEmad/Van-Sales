@@ -686,7 +686,7 @@
        "finalTotal":"Final Total",
 "kg":"KG",
 "addProduct":"Add Product",
-"sellingUnit":"Selling Unit"
+"sellingUnitId":"Selling Unit"
     } ,
     "transferSalesManToWarehose":{
       "title":"Transfer SalesMan to Warehouse",

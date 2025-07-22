@@ -35,6 +35,8 @@ export class SellingInvoicesDetailsVM {
     itemWeightPerKG: number;
     quantity: number;
     itemPrice: number;
+    sellingUnitId?: number;
+
 }
 
 export class InvoiceDetailsViewModel {

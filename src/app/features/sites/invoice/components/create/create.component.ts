@@ -34,6 +34,11 @@ export class CreateComponent implements OnInit {
     { id: 2, name: 'Drum   ' },
     { id: 3, name: 'Pail   ' },
   ]
+  SellingUnit = [
+    { id: 1, name: 'Cartoon' },
+    { id: 2, name: 'Piece' },
+  ]
+
   controlType = ControlType;
   @ViewChild('downloadButton') downloadButton: ElementRef;
   @ViewChild('downloadOptions') downloadOptions: ElementRef;
@@ -51,6 +56,8 @@ export class CreateComponent implements OnInit {
 
   ) {
   }
+  selectedProductUnit: number | null = null;
+
   Clients: any[] = [];
   Products: any[] = [];
   selectedProducts: any[] = [];
@@ -97,14 +104,14 @@ export class CreateComponent implements OnInit {
         this.Brands = res.data || [];
       }
     });
-    
+
     this.createForm();
     this.page.form.get('brandID')?.valueChanges.subscribe((brandID) => {
       if (brandID) {
         this.loadProductsByBrand(brandID);
       }
     });
-    
+
 
 
     this.page.form.get('productID')?.valueChanges.subscribe(productId => {
@@ -121,20 +128,20 @@ export class CreateComponent implements OnInit {
   loadProductsByBrand(brandID: string) {
     const clientID = this.page.form.get('clientID')?.value;
     const salesManID = this.getSalesmanIdFromToken();
-  
+
     if (!clientID) {
       //this._sharedService.showToastrError('اختر العميل أولا قبل تحديد البراند');
       this.page.form.get('brandID')?.setValue(null);
       return;
     }
-      
+
     const payload = {
       SalesManID: salesManID,
       ClientID: clientID,
       StorageType: 2,
-      BrandID: brandID 
+      BrandID: brandID
     };
-  
+
     this._pageService.getProducts(payload).subscribe((res: any) => {
       if (res && res.isSuccess) {
         this.Products = res.data || [];
@@ -142,28 +149,29 @@ export class CreateComponent implements OnInit {
           id: p.id,
           name: p.name,
           price: p.itemPrice,
-          weight: p.itemWeightPerKG,
-          maxQuantity: p.maxQuantity
+          weight: p.itemWeightPerKG, // الوزن الإجمالي
+          netWeight: p.itemNetWeightPerKG, // ✅ الوزن الصافي الفعلي من الـ API
+          maxQuantity: p.maxQuantity,
+          unit: p.unit,
+          numOfUnitPerCartoon: p.numOfUnitPerCartoon
         }));
+        
+        
       }
     });
   }
-  
+
   onProductSelect(productId: string | null) {
     if (!productId) return;
     const selected = this.allProducts.find(p => p.id === productId);
-    if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
-      this.selectedProducts.push({
-        ...selected,
-        quantity: 1,
-        isEditing: false
-      });
-      this.calculateTotal();
+    if (selected) {
+      this.selectedProductUnit = selected.unit; // 💡 خزّن الـ unit هنا
+    } else {
+      this.selectedProductUnit = null;
     }
-
-    this.selectedProductId = null;
-    this.page.form.get('productID')?.setValue(null);
   }
+
+
 
   deleteProduct(index: number) {
     this.selectedProducts.splice(index, 1);
@@ -180,6 +188,8 @@ export class CreateComponent implements OnInit {
       invoiceDetails: [this.item.invoiceDetails, Validators.required],
       productID: [null],
       brandID: [null],
+      sellingUnitId: [null] // ✅ حقل جديد للوحدة الفرعية
+
     });
     this.page.isPageLoaded = true;
   }
@@ -194,12 +204,21 @@ export class CreateComponent implements OnInit {
     this.page.isSaving = true;
     const salesManID = this.getSalesmanIdFromToken();
     const formValues = this.page.form.value;
-    const invoiceDetails = this.selectedProducts.map(p => ({
-      productId: p.id,
-      itemWeightPerKG: p.weight,
-      quantity: p.quantity,
-      itemPrice: p.price
-    }));
+  
+    const invoiceDetails = this.selectedProducts.map(p => {
+      const { itemWeightPerKG, itemNetWeightPerKG } = this.calculateAdjustedWeights(p);
+    
+      return {
+        productId: p.id,
+        itemWeightPerKG: Number(itemWeightPerKG),
+        quantity: p.quantity,
+        itemPrice: Number(p.price),
+        itemNetWeightPerKG: Number(itemNetWeightPerKG),
+        sellingUnit: p.sellingUnitId
+      };
+    });
+    
+  
     const payload: InvoiceCreateViewModel = {
       id: this.item.id,
       clientID: formValues.clientID,
@@ -207,6 +226,7 @@ export class CreateComponent implements OnInit {
       notes: formValues.notes,
       invoiceDetails: invoiceDetails
     };
+  
     this._pageService.postOrUpdate(payload).subscribe({
       next: (res) => {
         this.page.isSaving = false;
@@ -215,6 +235,7 @@ export class CreateComponent implements OnInit {
         if (res.isSuccess) {
           this.id = res.data?.sellingInvoiceId || this.id;
           this.showPrintButton = true;
+
          this.page.form.reset();
         this.selectedProducts = [];
         this.total = 0;
@@ -222,6 +243,7 @@ export class CreateComponent implements OnInit {
         this.netInvoice = 0;
         this.netWeight = 0;
         this.hideActionButtons = true;
+
         }
       },
       error: () => {
@@ -229,7 +251,27 @@ export class CreateComponent implements OnInit {
       },
     });
   }
-
+  
+  calculateNetWeightPerKG(item: any): number {
+    return item.weight * item.quantity; // لو دي هي المعادلة
+  }
+  calculateAdjustedWeights(p: any) {
+    let itemWeightPerKG = p.weight;
+    let itemNetWeightPerKG = p.netWeight; // الوزن الصافي الأصلي
+  
+    if (p.sellingUnitId === 1) {
+      itemWeightPerKG = itemWeightPerKG * p.numOfUnitPerCartoon;
+      itemNetWeightPerKG = itemNetWeightPerKG * p.numOfUnitPerCartoon;
+    }
+  
+    return {
+      itemWeightPerKG,
+      itemNetWeightPerKG
+    };
+  }
+  
+  
+  
   loadClients() {
     this._pageService.getClients().subscribe((res: any) => {
       if (res && res.isSuccess) {
@@ -256,9 +298,13 @@ export class CreateComponent implements OnInit {
           id: p.id,
           name: p.name,
           price: p.itemPrice,
-          weight: p.itemWeightPerKG,
-          maxQuantity: p.maxQuantity
+          weight: p.itemWeightPerKG, // الوزن الإجمالي
+          netWeight: p.itemNetWeightPerKG, // ✅ الوزن الصافي الفعلي من الـ API
+          maxQuantity: p.maxQuantity,
+          unit: p.unit,
+          numOfUnitPerCartoon: p.numOfUnitPerCartoon
         }));
+        
       }
     });
   }
@@ -479,16 +525,21 @@ export class CreateComponent implements OnInit {
 
 
 
+
   calculateTotal() {
     this.total = this.selectedProducts.reduce((sum, item) => {
       return sum + (item.price * item.quantity);
     }, 0);
+  
     this.taxAmount = (this.total * 0.14);
     this.netInvoice = this.total + this.taxAmount;
+  
     this.netWeight = this.selectedProducts.reduce((sum, item) => {
-      return sum + (item.weight * item.quantity);
+      const { itemNetWeightPerKG } = this.calculateAdjustedWeights(item);
+      return sum + (itemNetWeightPerKG * item.quantity);
     }, 0);
   }
+  
 
   onCancel() {
     this.page.form.reset();
@@ -523,5 +574,32 @@ export class CreateComponent implements OnInit {
   toggleDownloadOptions() {
     this.showDownloadOptions = !this.showDownloadOptions;
   }
+  addProduct() {
+    const productId = this.page.form.get('productID')?.value;
+    const sellingUnitId = this.page.form.get('sellingUnitId')?.value;
+
+    if (!productId) return;
+
+    const selected = this.allProducts.find(p => p.id === productId);
+    if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
+      this.selectedProducts.push({
+        ...selected,
+        sellingUnitId: selected.unit === 1 ? sellingUnitId : null, // ✅ دي صح كدا
+        quantity: 1,
+        isEditing: false,
+        numOfUnitPerCartoon: selected.numOfUnitPerCartoon // ✅ أضيفيها هنا
+
+      });
+      this.calculateTotal();
+    }
+
+    this.page.form.patchValue({
+      productID: null,
+      sellingUnitId: null
+    });
+    this.selectedProductUnit = null;
+  }
+
+
 
 }
