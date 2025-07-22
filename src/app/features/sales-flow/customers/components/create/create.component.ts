@@ -55,6 +55,11 @@ export class CreateComponent implements OnInit {
     { id: 2, name: 'Wholesale' },
     { id: 3, name: 'VIPClients' }
   ];
+
+  Religion=[
+     { id: 1, name: 'Islam ' },
+    { id: 2, name: 'Christianity' },
+  ]
   constructor(private _router: Router, private _customersService: CustomersService, private _sharedService: SharedService,
     private _activatedRoute: ActivatedRoute, private _apiService: ApiService, private _cityService: CityService, private _companyService: CompanyService
   ) {
@@ -144,6 +149,7 @@ export class CreateComponent implements OnInit {
       landmark: [this.item.landmark],
       latitude: [this.item.latitude ],
       longitude: [this.item.longitude ],
+        religion: [this.item.religion,Validators.required ],
       email: [this.item.email, [Validators.email]],
 
       clientGroupId: [this.item.clientGroupId, Validators.required],

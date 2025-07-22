@@ -80,7 +80,6 @@ export class CreateComponent implements OnInit, OnDestroy {
       birthDate: [this.item.birthDate || new Date(), ],
 
       appointmentDate: [this.item.appointmentDate || new Date(),],
-      classification: [this.item.classification, [Validators.required]],
       warehousesIDs: [this.item.warehousesIDs],
       userName: [this.item.userName, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       password: [this.item.password, this.page.isEdit ? [] : [Validators.required]],

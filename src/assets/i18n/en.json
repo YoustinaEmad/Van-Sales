@@ -683,7 +683,9 @@
        "itemWeight":"Item Weight",
        "totalWeight":"Total Weight",
        "finalTotal":"Final Total",
-"kg":"KG"
+"kg":"KG",
+"addProduct":"Add Product",
+"sellingUnit":"Selling Unit"
     } ,
     "transferSalesManToWarehose":{
       "title":"Transfer SalesMan to Warehouse",
@@ -759,7 +761,15 @@
       "Error Uploading": "Error Uploading",
       "clientType": "Client Type",
       "latitude":"Latitude",
-      "longitude":"Longitude"
+      "longitude":"Longitude",
+      "religion":"Religion",
+       "deActive":"DeActive",
+      "activate":"Active",
+      "basicInfo": "basic Info",
+      "contactInfo": "contact Info",
+      "addressInfo": "address Info",
+      "otherInfo": "other Info",
+      "image": "Image"
     }
   }
 }

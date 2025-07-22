@@ -51,8 +51,8 @@ export class CustomersService {
   }
 
 
-  getTodownloadPDF(searchViewModel: customerSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number ) {
-    
+  getTodownloadPDF(searchViewModel: customerSearchViewModel, orderBy: string, isAscending: boolean, pageIndex: number, pageSize: number) {
+
 
     let params = new HttpParams();
     if (searchViewModel.Name) {
@@ -67,7 +67,7 @@ export class CustomersService {
     if (searchViewModel.NationalNumber) {
       params = params.set("NationalNumber", searchViewModel.NationalNumber);
     }
-    
+
     if (searchViewModel.Mobile) {
       params = params.set("Mobile", searchViewModel.Mobile);
     }
@@ -77,14 +77,12 @@ export class CustomersService {
   getById(ID: string) {
     return this._apiService.get(`/GetClientByIdEndPoint/GetClientById?ID=${ID}`,);
   }
- 
 
-  postOrUpdate(body:customerCreateViewModel ) {
+
+  postOrUpdate(body: customerCreateViewModel) {
     if (body.id) return this._apiService.update(`/EditClientEndpoint/Put`, body)
     else return this._apiService.post(`/CreateClientEndPoint/Post`, body)
   }
-
-
 
   updateActivated(body: customerActivateViewModel) {
     return this._apiService.update(`/ActivateClientsEndPoint/ActiveClient`, body);
@@ -94,7 +92,7 @@ export class CustomersService {
     return this._apiService.update(`/DeactivateClientsEndPoint/DeactivateClient`, body);
   }
 
-  
+
   getClientGroups() {
     return this._apiService.get('/SelectClientGroupListEndPoint/SelectClientGroupList');
   }
@@ -104,19 +102,19 @@ export class CustomersService {
 
   getCities(governorateId?: string) {
     let url: string;
-  
+
     if (governorateId) {
       url = `/SelectCityListEndPoint/SelectCityList?governorateId=${governorateId}`;
     } else {
       url = `/SelectCityListEndPoint/SelectCityList`;
     }
-  
-    return this._apiService.get(url); 
+
+    return this._apiService.get(url);
   }
   uploadImage(formData: FormData) {
     return this._apiService.postMedia('/UploadMediaEndPoint/UploadMedia', formData, true);
   }
-  
+
   getCustomerExcel(searchViewModel: customerSearchViewModel) {
     let params = new HttpParams();
     if (searchViewModel.Name) {
@@ -139,17 +137,14 @@ export class CustomersService {
   bulkDelete(ids: string[]) {
     return this._apiService.remove(`/BulkDeleteDiscountEndPoint/BulkDeleteDiscount`, { ids });
   }
-  bulkActivate(ids :string[])
-  {
+  bulkActivate(ids: string[]) {
     return this._apiService.update(`/BulkActivateClientsEndpoint/ActivateClients`, { ids });
   }
 
-  bulkDeactivate(ids :string[])
-  {
+  bulkDeactivate(ids: string[]) {
     return this._apiService.update(`/BulkDeactivateClientsEndpoint/DeactivateClients`, { ids });
   }
-  changePassword(body :changePasswordViewModel)
-  {
+  changePassword(body: changePasswordViewModel) {
     return this._apiService.update(`/ChangePasswordEndPoint/ChangePassword`, body);
   }
 }

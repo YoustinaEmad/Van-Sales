@@ -109,7 +109,7 @@
   </form>
   <div class="scolled mt-3 h-100">
     <app-table-skelton *ngIf="page.isSearching" [columns]="page.columns"></app-table-skelton>
-    <table class="table " *ngIf="!page.isSearching">
+    <table class="table table-hover pointer" *ngIf="!page.isSearching">
       <thead>
         <tr class="th-header">
           <th>
@@ -139,23 +139,19 @@
             <td>
               <input type="checkbox" [(ngModel)]="item.selected" />
             </td>
-            <td>{{i+1}}</td>
-            <td>{{item.name}}</td>
+            <td (click)="navigateToDetails(item.id)">{{i+1}}</td>
+            <td (click)="navigateToDetails(item.id)">{{item.name}}</td>
             <td>
               <div class="flex justify-content-center">
                 <p-inputSwitch [(ngModel)]="item.isActive"
                   (ngModelChange)="updateActivation(item.id,item.isActive)"></p-inputSwitch>
               </div>
             </td>
-            <td>{{item.clientGroupName}}</td>
-            <td>{{getClientType(item.clientType)}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.nationalNumber}}</td>
-            <td>{{item.mobile}}</td>
-            <td>
-              <img [src]="getImageUrl(item.path)" alt="Cust Image" class="img-thumbnail"
-                style="width: 100px; height: 50px;">
-            </td>
+            <td (click)="navigateToDetails(item.id)">{{item.clientGroupName}}</td>
+            <td (click)="navigateToDetails(item.id)">{{getClientType(item.clientType)}}</td>
+            <td (click)="navigateToDetails(item.id)">{{item.email}}</td>
+            <td (click)="navigateToDetails(item.id)">{{item.nationalNumber}}</td>
+            <td (click)="navigateToDetails(item.id)">{{item.mobile}}</td>
             <td>
               <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-info pointer p-0"
                 aria-label="Edit" (click)="editCustomer(item.id)">

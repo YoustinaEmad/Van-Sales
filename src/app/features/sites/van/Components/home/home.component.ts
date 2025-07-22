@@ -56,7 +56,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: "Address  ", Title: "sites.salesMan.address", Selectable: false, Sortable: true },
       { Name: "BirthDate  ", Title: "sites.salesMan.birthDate", Selectable: false, Sortable: true },
       { Name: "AppointmentDate   ", Title: "sites.salesMan.appointmentDate", Selectable: false, Sortable: true },
-      { Name: "Classification   ", Title: "sites.salesMan.classification", Selectable: false, Sortable: true },
       { Name: "Image  ", Title: "sites.salesMan.image", Selectable: false, Sortable: true },
       { Name: "isActive", Title: "sites.salesMan.isActive", Selectable: false, Sortable: true },
       { Name: "Action", Title: "sites.salesMan.action", Selectable: false, Sortable: true },
@@ -79,7 +78,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
       Name: [this.searchViewModel.Name],
       NationalNumber: [this.searchViewModel.NationalNumber],
       Mobile: [this.searchViewModel.Mobile],
-      Classification:[this.searchViewModel.Classification],
       WareHouseId:[this.searchViewModel.WareHouseId]
     });
     this.page.isPageLoaded = true;
@@ -236,8 +234,5 @@ export class HomeComponent extends CrudIndexBaseUtils {
   getImageUrl(imagePath: string): string {
     return `${environment.api}/` + imagePath;
    }
-   getClassificationName(classificationId: number): string {
-    const classification = this.classifies.find(c => c.id === classificationId);
-    return classification ? classification.name : 'Unknown';
-  }
+ 
 }

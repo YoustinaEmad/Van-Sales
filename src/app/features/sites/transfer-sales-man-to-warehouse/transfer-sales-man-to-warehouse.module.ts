@@ -11,10 +11,11 @@ import { TableModule } from 'primeng/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CalendarModule } from 'primeng/calendar';
+import { DetailsComponent } from './components/details/details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-
+  { path: 'details/:id', component: DetailsComponent }
 
 ];
 
@@ -22,6 +23,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
+    DetailsComponent,
 
   ],
   imports: [

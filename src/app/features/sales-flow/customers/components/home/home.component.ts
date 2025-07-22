@@ -82,7 +82,6 @@ export class HomeComponent extends CrudIndexBaseUtils {
       { Name: 'Email', Title: 'salesflow.customers.email', Selectable: false, Sortable: true },
       { Name: 'National Number', Title: 'salesflow.customers.nationalNumber', Selectable: false, Sortable: true },
       { Name: 'Mobile', Title: 'salesflow.customers.mobile', Selectable: false, Sortable: true },
-      { Name: "Path", Title: "salesflow.customers.Img", Selectable: false, Sortable: true },
       { Name: 'Action', Title: 'salesflow.customers.action', Selectable: false, Sortable: true },
 
 
@@ -354,6 +353,13 @@ export class HomeComponent extends CrudIndexBaseUtils {
   toggleDownloadOptions() {
     this.showDownloadOptions = !this.showDownloadOptions;
   }
+
+
+
+    navigateToDetails(id: string) {
+    this._router.navigate(['/salesflow/customers/details', id]);
+  }
+
 }
 
 

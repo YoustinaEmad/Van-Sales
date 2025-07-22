@@ -1,34 +1,35 @@
 export interface customerViewModel {
-  id:string;
-  name:string;
-  isActive:boolean;
-  clientGroupName:string;
-  email:string;
-  nationalNumber:string;
-  path:string;
-  mobile:number;
-  clientType:number;
-  selected?: boolean; 
+  id: string;
+  name: string;
+  isActive: boolean;
+  clientGroupName: string;
+  email: string;
+  nationalNumber: string;
+  path: string;
+  mobile: number;
+  clientType: number;
+  religion: number;
+  selected?: boolean;
 }
 export class customerSearchViewModel {
-  Name:string;
-  Email:string;
-  NationalNumber:string;
-  ClientGroupId:string;
-  From:Date;
-  To:Date;
-  clientType:number;
-  Mobile:string;
+  Name: string;
+  Email: string;
+  NationalNumber: string;
+  ClientGroupId: string;
+  From: Date;
+  To: Date;
+  clientType: number;
+  Mobile: string;
 }
 export class customerSelectedViewModel {
-  id:string;
-  name:string;
+  id: string;
+  name: string;
 }
-export class customerActivateViewModel{
-  id:string;
+export class customerActivateViewModel {
+  id: string;
 }
 export class customerCreateViewModel {
-  id:string;
+  id: string;
   name: string;
   nationalNumber?: string;
   gender?: string;
@@ -42,10 +43,35 @@ export class customerCreateViewModel {
   clientGroupId?: string;
   email?: string;
   paths?: string[];
-  clientType:number;
+  religion: number;
+  clientType: number;
 }
 export class changePasswordViewModel {
-  password:string;
+  password: string;
   confirmPassword: string;
-  iD:string
+  iD: string
+}
+
+
+export class customerDetailsViewModel {
+  id: string;
+  nationalNumber: string;
+  name: string;
+  clientGroupId: string;
+  clientGroupName: string;
+  isActive: boolean;
+  gender: number;
+  mobile: string;
+  email: string;
+  governorateId: string;
+  governorateName: string;
+  cityId: string;
+  cityName: string;
+  street: string;
+  landmark: string;
+  latitude: number;
+  longitude: number;
+  clientType: number;
+  religion: number;
+  path:string;
 }

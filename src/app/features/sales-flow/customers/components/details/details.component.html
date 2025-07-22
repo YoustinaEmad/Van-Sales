@@ -1,0 +1,74 @@
+<div class="container py-4 px-3">
+  <div class="card shadow-sm border-0 rounded-4 p-4">
+    <!-- العنوان -->
+    <div class="d-flex align-items-center mb-4">
+      <img src="/assets/icons/keyboard_backspace.svg" class="me-2 pointer" style="width: 20px; height: 20px;" routerLink="/salesflow/customers" alt="Back" />
+      <h3 class="mb-0 color-purple-700">{{ customer.name }} {{ "sites.Warehouse.details" | translate }}</h3>
+    </div>
+
+    <ng-container *ngIf="customer; else loading">
+      <!-- 👤 البيانات الأساسية -->
+      <div class="card mb-4 border rounded-4 p-3">
+        <h5 class="mb-3 text-muted">{{ 'salesflow.customers.basicInfo' | translate }}</h5>
+        <div class="row">
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.name' | translate }}:</strong> {{ customer.name }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.nationalNumber' | translate }}:</strong> {{ customer.nationalNumber }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.clientGroup' | translate }}:</strong> {{ customer.clientGroupName }}</div>
+        </div>
+      </div>
+
+
+      <div class="card mb-4 border rounded-4 p-3">
+        <h5 class="mb-3 text-muted">{{ 'salesflow.customers.contactInfo' | translate }}</h5>
+        <div class="row">
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.mobile' | translate }}:</strong> {{ customer.mobile }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.email' | translate }}:</strong> {{ customer.email }}</div>
+          <div class="col-md-4">
+            <strong>{{ 'salesflow.customers.active' | translate }}:</strong>
+            <span [ngClass]="customer.isActive ? 'text-success' : 'text-danger'">
+              {{ customer.isActive ? ('salesflow.customers.activate' | translate) : ('salesflow.customers.deActive' | translate) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card mb-4 border rounded-4 p-3">
+        <h5 class="mb-3 text-muted">{{ 'salesflow.customers.addressInfo' | translate }}</h5>
+        <div class="row">
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.governorate' | translate }}:</strong> {{ customer.governorateName }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.city' | translate }}:</strong> {{ customer.cityName }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.street' | translate }}:</strong> {{ customer.street }}</div>
+          <div class="col-md-4 mt-3"><strong>{{ 'salesflow.customers.landmark' | translate }}:</strong> {{ customer.landmark }}</div>
+          <div class="col-md-4 mt-3"><strong>{{ 'salesflow.customers.latitude' | translate }}:</strong> {{ customer.latitude }}</div>
+          <div class="col-md-4 mt-3"><strong>{{ 'salesflow.customers.longitude' | translate }}:</strong> {{ customer.longitude }}</div>
+        </div>
+      </div>
+
+
+      <div class="card mb-2 border rounded-4 p-3">
+        <h5 class="mb-3 text-muted">{{ 'salesflow.customers.otherInfo' | translate }}</h5>
+        <div class="row">
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.gender' | translate }}:</strong> {{ getgenderOptionsName(customer.gender) }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.clientType' | translate }}:</strong> {{ getClientTypeName(customer.clientType) }}</div>
+          <div class="col-md-4"><strong>{{ 'salesflow.customers.religion' | translate }}:</strong> {{ getReligionName(customer.religion) }}</div>
+        </div>
+      </div>
+
+
+       <div class="card mb-2 border rounded-4 p-3">
+        <h5 class="mb-3 text-muted">{{ 'salesflow.customers.image' | translate }}</h5>
+        <div class="row">
+          <div class="col-md-4"> <img [src]="getImageUrl(customer.path)" alt="Cust Image" class="img-thumbnail"
+                style="width: 200px; height: 100px;"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+    </ng-template>
+  </div>
+</div>
