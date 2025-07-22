@@ -56,4 +56,6 @@ item: transferCreateViewModel;
   goToProductDetails(productId: string) {
   this.router.navigate(['/sites/product/details', productId]);
 }
+
+
 }
