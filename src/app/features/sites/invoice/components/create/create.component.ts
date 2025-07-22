@@ -25,6 +25,7 @@ export class CreateComponent implements OnInit {
   translations: any = {};
   showPrintButton: boolean = false;
   environment = environment;
+  hideActionButtons: boolean = false;
   showDownloadOptions = false;
   Brands: any[] = [];
 
@@ -214,7 +215,13 @@ export class CreateComponent implements OnInit {
         if (res.isSuccess) {
           this.id = res.data?.sellingInvoiceId || this.id;
           this.showPrintButton = true;
-          // this._router.navigate(['/sites/invoice']);
+         this.page.form.reset();
+        this.selectedProducts = [];
+        this.total = 0;
+        this.taxAmount = 0;
+        this.netInvoice = 0;
+        this.netWeight = 0;
+        this.hideActionButtons = true;
         }
       },
       error: () => {
