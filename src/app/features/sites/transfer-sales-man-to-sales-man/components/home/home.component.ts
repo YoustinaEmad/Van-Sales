@@ -453,22 +453,24 @@ export class HomeComponent extends CrudIndexBaseUtils {
   }
 
 
-  onQuantityInputChange(value: string, index: number): void {
-    let num = Number(value);
-    if (isNaN(num) || num < 1) {
-      num = 1;
-    }
+onQuantityInputChange(value: string, index: number): void {
+  let num = Number(value);
 
-    this.cartItems[index].quantity = num;
+  if (isNaN(num)) {
+    num = 1;
   }
-  get isSaveDisabled(): boolean {
-    return (
-      this.pageCreate.form?.invalid ||
-      this.page.isSaving ||
-      this.cartItems.length === 0 ||
-      this.cartItems.some(item => item.quantity > item.maxQuantity)
-    );
-  }
+
+  this.cartItems[index].quantity = num;
+}
+
+get isSaveDisabled(): boolean {
+  return (
+    this.pageCreate.form?.invalid ||
+    this.page.isSaving ||
+    this.cartItems.length === 0 ||
+    this.cartItems.some(item => item.quantity > item.maxQuantity || item.quantity < 1)
+  );
+}
 
 
 }

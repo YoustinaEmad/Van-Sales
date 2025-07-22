@@ -568,7 +568,8 @@
       "products":"Products",
       "storageType":"Storage Type",
       "sameSalesManError": "You cannot transfer to the same SalesMan",
-      "maxQuantityExceeded":"Quantity cannot exceed "
+      "maxQuantityExceeded":"Quantity cannot exceed ",
+      "minQuantityError":"Minmum Quantity is 1"
     },
     "Brand": {
       "brand": "Brand",
