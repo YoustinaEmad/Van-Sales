@@ -50,9 +50,15 @@
                 </div>
                 <div class="mb-3">
                     <div class="mb-3 d-flex justify-content-between align-items-center px-1">
-                        <label>{{ "sites.Invoice.netItemWeightPerKG" | translate }}</label>
-                        <span class="text-dark">{{ netWeight | number:'1.2-2' }}</span>
+                        <label>{{ "sites.Invoice.totalWeightPerKG" | translate }}</label>
+                        <span class="text-dark">{{ totalWeight | number:'1.2-2' }}</span>
+                    </div>
+                </div>
 
+                <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-between align-items-center px-1">
+                        <label>{{ "sites.Invoice.totalNetItemWeightPerKG" | translate }}</label>
+                        <span class="text-dark">{{ netWeight | number:'1.2-2' }}</span>
                     </div>
                 </div>
 
@@ -145,8 +151,8 @@
 
 
                     <div class="col-12 d-flex justify-content-end">
-                        <button type="button" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"    [disabled]="!canAddProduct()"
-                            (click)="addProduct()">
+                        <button type="button" class="bg-purple-500 py-2 px-4 color-gray-25 no-border cr3"
+                            [disabled]="!canAddProduct()" (click)="addProduct()">
                             {{ "sites.Invoice.addProduct" | translate }}
                         </button>
                     </div>
@@ -198,7 +204,7 @@
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>
                                 <td class="text-center align-middle">
-                                    {{ (item.quantity * item.price)  }} ج.م
+                                    {{ (item.quantity * item.price) }} ج.م
                                     <input type="hidden" [(ngModel)]="item.price">
                                 </td>
                                 <td class="text-center align-middle">
@@ -206,9 +212,10 @@
                                 </td>
 
                                 <td class="text-center align-middle">
-                                    {{ getUnitName(item.unit) }}<span *ngIf="item.sellingUnitId"> ({{ getSellingName(item.sellingUnitId) }})</span>
-                                  </td>
-                                  
+                                    {{ getUnitName(item.unit) }}<span *ngIf="item.sellingUnitId"> ({{
+                                        getSellingName(item.sellingUnitId) }})</span>
+                                </td>
+
 
 
 

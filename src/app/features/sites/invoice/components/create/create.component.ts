@@ -67,7 +67,7 @@ export class CreateComponent implements OnInit {
   taxAmount: number = 0;
   netInvoice: number = 0;
   netWeight: number = 0;
-
+  totalWeight: number = 0;
   allProducts = [
 
   ];
@@ -190,7 +190,7 @@ export class CreateComponent implements OnInit {
       invoiceDetails: [this.item.invoiceDetails, Validators.required],
       productID: [null],
       brandID: [null],
-      sellingUnitId: [null,Validators.required] // ✅ حقل جديد للوحدة الفرعية
+      sellingUnitId: [null, Validators.required] // ✅ حقل جديد للوحدة الفرعية
 
     });
     this.page.isPageLoaded = true;
@@ -253,6 +253,26 @@ export class CreateComponent implements OnInit {
       },
     });
   }
+  calculateTotal() {
+    this.total = this.selectedProducts.reduce((sum, item) => {
+      return sum + (item.price * item.quantity);
+    }, 0);
+  
+    this.taxAmount = (this.total * 0.14);
+    this.netInvoice = this.total + this.taxAmount;
+  
+    this.netWeight = this.selectedProducts.reduce((sum, item) => {
+      const { itemNetWeightPerKG } = this.calculateAdjustedWeights(item);
+      return sum + (itemNetWeightPerKG * item.quantity);
+    }, 0);
+  
+    // ✅ احسبي الوزن الإجمالي بنفس المنطق
+    this.totalWeight = this.selectedProducts.reduce((sum, item) => {
+      const { itemWeightPerKG } = this.calculateAdjustedWeights(item);
+      return sum + (itemWeightPerKG * item.quantity);
+    }, 0);
+  }
+  
 
   calculateNetWeightPerKG(item: any): number {
     return item.weight * item.quantity; // لو دي هي المعادلة
@@ -528,19 +548,19 @@ export class CreateComponent implements OnInit {
 
 
 
-  calculateTotal() {
-    this.total = this.selectedProducts.reduce((sum, item) => {
-      return sum + (item.price * item.quantity);
-    }, 0);
+  // calculateTotal() {
+  //   this.total = this.selectedProducts.reduce((sum, item) => {
+  //     return sum + (item.price * item.quantity);
+  //   }, 0);
 
-    this.taxAmount = (this.total * 0.14);
-    this.netInvoice = this.total + this.taxAmount;
+  //   this.taxAmount = (this.total * 0.14);
+  //   this.netInvoice = this.total + this.taxAmount;
 
-    this.netWeight = this.selectedProducts.reduce((sum, item) => {
-      const { itemNetWeightPerKG } = this.calculateAdjustedWeights(item);
-      return sum + (itemNetWeightPerKG * item.quantity);
-    }, 0);
-  }
+  //   this.netWeight = this.selectedProducts.reduce((sum, item) => {
+  //     const { itemNetWeightPerKG } = this.calculateAdjustedWeights(item);
+  //     return sum + (itemNetWeightPerKG * item.quantity);
+  //   }, 0);
+  // }
 
 
   onCancel() {
@@ -586,10 +606,10 @@ export class CreateComponent implements OnInit {
     if (selected && !this.selectedProducts.find(p => p.id === selected.id)) {
       this.selectedProducts.push({
         ...selected,
-        sellingUnitId: selected.unit === 1 ? sellingUnitId : null, 
+        sellingUnitId: selected.unit === 1 ? sellingUnitId : null,
         quantity: 1,
         isEditing: false,
-        numOfUnitPerCartoon: selected.numOfUnitPerCartoon 
+        numOfUnitPerCartoon: selected.numOfUnitPerCartoon
 
       });
       this.calculateTotal();
@@ -606,18 +626,18 @@ export class CreateComponent implements OnInit {
     const unit = this.SellingUnit.find(u => u.id === unitId);
     return unit ? unit.name.trim() : '';
   }
-  
+
   canAddProduct(): boolean {
-  const productId = this.page.form.get('productID')?.value;
-  const sellingUnitId = this.page.form.get('sellingUnitId')?.value;
+    const productId = this.page.form.get('productID')?.value;
+    const sellingUnitId = this.page.form.get('sellingUnitId')?.value;
 
-  if (!productId) return false;
+    if (!productId) return false;
 
 
-  if (this.selectedProductUnit === 1 && !sellingUnitId) return false;
+    if (this.selectedProductUnit === 1 && !sellingUnitId) return false;
 
-  return true;
-}
+    return true;
+  }
 
 
 }
